@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    
+    {{include('client/links/cssLink.html.twig')}}
+    {% block stylesheets %}
+        {{ ux_controller_link_tags() }}
+    {% endblock %}
+    
+    {% block javascripts %}
+            {% block importmap %}
+                {{ importmap('app') }}
+            {% endblock %}
+    {% endblock %}
+</head>
+
+<body>
+    <body>
+        
+        
+        {% block body %}{% endblock %}
+    </body>
+    {{include('client/links/jsLink.html.twig')}}
+    
+</html>
