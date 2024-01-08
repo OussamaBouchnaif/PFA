@@ -110,7 +110,7 @@ class TestController extends AbstractController
 
     }
     
-   /* #[Route('/pub', name: 'appt')]
+    #[Route('/pub', name: 'appt')]
     public function publish(HubInterface $hub): Response
     {
         $update = new Update(
@@ -121,5 +121,5 @@ class TestController extends AbstractController
         $hub->publish($update);
 
         return new Response('published!');
-    }*/
+    }
 }
