@@ -29,7 +29,7 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
             $client->setPrenom($faker->firstName);
             $client->setEmail($faker->email);
             $client->setPassword($faker->password); // À remplacer par la méthode appropriée pour générer un mot de passe sécurisé
-            $client->setAddress($faker->streetAddress);
+            $client->setAdresse($faker->streetAddress);
             $client->setDateInscription($faker->dateTimeThisDecade);
             $client->setStatusCompte($faker->randomElement(['actif', 'inactif'])); // Choix aléatoire entre 'actif' et 'inactif'
             $client->setVille($faker->city);

@@ -1,0 +1,22 @@
+.login{
+    margin-top: 50px;
+}
+.roww{
+    margin-top: 50px;
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: solid 1px #6a7964;
+}
+.roww .form_group{
+    width: 100%;
+}
+@media (max-width: 768px) {
+    .login {
+        width: 100%; 
+    }
+    .roww {
+        width:90%;
+    }
+
+}

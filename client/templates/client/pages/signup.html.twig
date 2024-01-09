@@ -1,0 +1,75 @@
+{% extends 'client/base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block body %}
+    {{ include('client/partials/head.html.twig') }}
+    <!-- multistep form -->
+    <div class="all_container">
+        <div class="all_r">
+                <div class="content">
+                    <div class="title">Sign up</div>
+                    {{form_start(form)}}
+                        <div class="user-details">
+                            
+                            <div class="form_group">                               
+                                {{ form_widget(form.nom,{'attr':{'placeholder':'Enter your first name'}}) }}
+                                <span class="text-danger">{{ form_errors(form.nom) }}</span>
+                            </div>
+                            <div class="form_group">                               
+                                {{ form_widget(form.prenom,{'attr':{'placeholder':'Enter your last name'}}) }}
+                                <span class="text-danger">{{ form_errors(form.prenom) }}</span>
+                            </div>
+                            <div class="form_group">
+                                
+                                {{ form_widget(form.email,{'attr':{'placeholder':'Email'}}) }}
+                                <span class="text-danger">{{ form_errors(form.email) }}</span>
+                                
+                            </div>
+                            <div class="form_group">
+                                
+                                {{ form_widget(form.phoneNumber,{'attr':{'placeholder':'Phone Number'}}) }}
+                                <span class="text-danger">{{ form_errors(form.phoneNumber) }}</span>
+                            </div>
+                            <div class="form_group">
+                                
+                                {{ form_widget(form.ville,{'attr':{'placeholder':'Your City'}}) }}
+                                <span class="text-danger">{{ form_errors(form.ville) }}</span>
+                            </div>
+                            <div class="form_group">
+                               
+                                {{ form_widget(form.adresse,{'attr':{'placeholder':'Your Address'}}) }}
+                                <span class="text-danger">{{ form_errors(form.adresse) }}</span>
+
+                            </div>
+                            <div class="form_group">
+                                
+                                {{ form_widget(form.password.first,{'attr':{'placeholder':'Password'}}) }}
+                                <span class="text-danger">{{ form_errors(form.password.first) }}</span>
+                            </div>
+                            <div class="form_group">
+                                
+                                {{ form_widget(form.password.second,{'attr':{'placeholder':'Confirm Password'}}) }}
+                                <span class="text-danger">{{ form_errors(form.password.second) }}</span>
+                            </div>
+                            <div class="form_group genre">
+                                {{form_widget(form.genre)}}
+                            </div>
+                            
+                        </div>
+                        <div class="form_group group_3 ">
+                            <button class="btn btn-primary" type="submit">sign up</button>
+                            <label for="remember_box d-flex">
+                                <input id="remember_box" type="checkbox">
+                                <span> Remember me </span>
+                            </label>
+                        </div>
+                        <a href="#">Lost your password?</a>
+                        <p>Already have ana account ? <a href="login.php">Login</a></p>
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+  </div>
+
+{% endblock %}
+

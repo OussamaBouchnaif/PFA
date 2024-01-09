@@ -1,0 +1,41 @@
+
+{% extends 'client/base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+{% block stylesheets %}
+    <style>
+        
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    {{ include('client/partials/head.html.twig') }}
+    <div class="container login">
+        <div class="roww">
+            <div class="user-actions">
+                <form action="#">
+                    <div class="form_group">
+                        <label>Username or email <span>*</span></label>
+                        <input type="text">
+                    </div>
+                    <div class="form_group">
+                        <label>Password  <span>*</span></label>
+                        <input type="password">
+                    </div>
+                    <div class="form_group group_3 ">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <label for="remember_box">
+                            <input id="remember_box" type="checkbox">
+                            <span> Remember me </span>
+                        </label>
+                    </div>
+                    <a href="#">Lost your password?</a>
+                
+                </form>
+                        
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+/*custom font*/
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+:root{
+    --main:#6a7964;
+    --text:#171427;
+    --bg:#fff;
+	--main-half:#ffeeee;
+    --maiyyn:#efc4c4;
+}
+
+.all_container{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.all_r{
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+  
+  height: 80vh;
+}
+.all_r .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+.all_r .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--main-half), var(--main));
+}
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .form_group{
+    width:50%;
+    padding: 0px 10px;
+}
+
+form .genre{
+  z-index:10;
+}
+.content{
+    border : solid 1px #6a7964;
+    padding : 27px;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: var(--main);
+}
+
+ form .gender-details .gender-title{
+  font-size: 20px;
+  font-weight: 500;
+ }
+
+ 
+ @media(max-width: 584px){
+ .container{
+  max-width: 100%;
+}
+
+  form .category{
+    width: 100%;
+  }
+  .content form .user-details{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .user-details::-webkit-scrollbar{
+    width: 5px;
+  }
+  }
+  @media(max-width: 459px){
+  .container .content .category{
+    flex-direction: column;
+  }
+}

@@ -41,7 +41,7 @@ class Commande
 
     public function __construct()
     {
-        $this->date_commande = new \DateTimeImmutable();
+        $this->dateCommande = new \DateTimeImmutable();
         $this->ligneCommandes = new ArrayCollection();
     }
 
