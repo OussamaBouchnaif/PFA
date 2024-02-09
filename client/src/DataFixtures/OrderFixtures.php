@@ -35,8 +35,9 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
             $client->setVille($faker->city);
             $client->setPtsFidelite($faker->numberBetween(1, 1000)); // Nombre aléatoire entre 1 et 1000
             $client->setAddressLivSup($faker->streetAddress);
+            $client->setRoles(['ROLE_CLIENT']);
 
-            $code = new CodePromo();
+           /* $code = new CodePromo();
             $code->setCode(substr($faker->word, 0, 10));
             $code->setDescription("Static description for testing");
             $code->setPourcentage($faker->numberBetween(1, 50));
@@ -50,10 +51,12 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
             $commande->setTotal($faker->randomFloat(2, 50, 500)); // Montant total aléatoire entre 50 et 500
             $commande->setClient($client);
             $commande->setCodePromo($code);
-
-            $manager->persist($client);
             $manager->persist($code);
             $manager->persist($commande);
+            */
+
+            $manager->persist($client);
+            
         }
         $manager->flush();
     }

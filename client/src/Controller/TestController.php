@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Technicien;
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Client;
