@@ -14,17 +14,25 @@
     <div class="container login">
         <div class="roww">
             <div class="user-actions">
-                <form action="#">
+                {% if error == true and error != null %}
+                    <div class="alert alert-danger">
+                        <p>Invalid credentials. Please try again.</p>
+                    </div>
+                {% endif %}
+                {{form_start(form)}}
                     <div class="form_group">
                         <label>Username or email <span>*</span></label>
-                        <input type="text">
+                        {{ form_widget(form.email,{'attr':{'placeholder':'Enter your Email'}}) }}
+                        
                     </div>
                     <div class="form_group">
                         <label>Password  <span>*</span></label>
-                        <input type="password">
+                        {{ form_widget(form.password,{'attr':{'placeholder':'Enter your Password'}}) }}
+                        
                     </div>
                     <div class="form_group group_3 ">
                         <button class="btn btn-primary" type="submit">Login</button>
+                         
                         <label for="remember_box">
                             <input id="remember_box" type="checkbox">
                             <span> Remember me </span>
@@ -32,7 +40,7 @@
                     </div>
                     <a href="#">Lost your password?</a>
                 
-                </form>
+                {{form_end(form)}}
                         
             </div>
         </div>

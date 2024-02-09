@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Client;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ServiceEntityRepository<Client>
@@ -16,9 +19,30 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ClientRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $manager;
+    private UserPasswordHasherInterface $passwordEncoder;
+    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager, UserPasswordHasherInterface $passwordEncoder)
     {
         parent::__construct($registry, Client::class);
+        $this->manager =$manager;
+        $this->passwordEncoder = $passwordEncoder;
+        
+    }
+    public function authenticateClient($email, $password): bool
+    {
+        $client = $this->findOneBy(['email' => $email]);
+
+        if (!$client) {
+            return false;
+        }
+
+        return $this->passwordEncoder->isPasswordValid($client, $password);
+    }
+    public function addClient(Client $client)
+    {
+        $client->setPlainPassword($client->getPassword());
+        $this->manager->persist($client);
+        $this->manager->flush();
     }
 
 //    /**
