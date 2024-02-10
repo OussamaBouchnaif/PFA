@@ -360,4 +360,5 @@ class Client extends Personne implements UserInterface, PasswordAuthenticatedUse
 
         return $this;
     }
+   
 }

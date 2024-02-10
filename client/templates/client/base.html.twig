@@ -20,8 +20,9 @@
 <body>
     <body>
         
-        
+        {{ include('client/partials/head.html.twig') }}
         {% block body %}{% endblock %}
+        {{include('client/partials/footer.html.twig')}}
     </body>
     {{include('client/links/jsLink.html.twig')}}
     
