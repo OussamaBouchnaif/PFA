@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[UniqueEntity("email")]
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\EntityListeners(["App\EntityListener\UserListener"])]
-class Client extends Personne implements UserInterface, PasswordAuthenticatedUserInterface
+class Client extends Personne 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
