@@ -1,0 +1,44 @@
+{# templates/dashboard/camera/graph.html.twig #}
+{% extends 'dashboard/base.html.twig' %}
+
+
+{% block title %}Camera Graph{% endblock %}
+
+{% block body %}
+    <canvas id="cameraChart" width="800" height="400"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('cameraChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    {% for cameraData in camerasData %}
+                        '{{ cameraData.category }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Number of Cameras',
+                    data: [
+                        {% for cameraData in camerasData %}
+                            {{ cameraData.count }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

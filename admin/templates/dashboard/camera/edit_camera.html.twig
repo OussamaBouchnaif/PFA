@@ -1,0 +1,34 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Edit Camera{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-container {
+            width: 50%;
+            margin: 0 auto; /* Center the form horizontally */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+    <br>
+          <h1 class="text-center mb-4">Edit Camera</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.nom) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.prix) }}
+        {{ form_row(form.stock) }}
+        {{ form_row(form.dateAjout) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.categorie) }}
+
+        {{ form_row(form.valider) }}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

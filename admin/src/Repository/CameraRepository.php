@@ -5,20 +5,41 @@ namespace App\Repository;
 use App\Entity\Camera;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
-/**
- * @extends ServiceEntityRepository<Camera>
- *
- * @method Camera|null find($id, $lockMode = null, $lockVersion = null)
- * @method Camera|null findOneBy(array $criteria, array $orderBy = null)
- * @method Camera[]    findAll()
- * @method Camera[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class CameraRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Camera::class);
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * Get paginated cameras.
+     *
+     * @param int $page
+     * @param int $limit
+     * @return PaginationInterface
+     */
+    public function findPaginatedCameras(int $page = 1, int $limit = 10): PaginationInterface
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'ASC');
+
+        return $this->getPaginator()->paginate(
+            $queryBuilder,
+            $page,
+            $limit
+        );
+    }
+
+    private function getPaginator(): PaginatorInterface
+    {
+        return $this->paginator;
     }
 
 //    /**

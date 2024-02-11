@@ -28,7 +28,10 @@ class Categorie
     {
         $this->cameras = new ArrayCollection();
     }
-
+    public function __toString()
+    {
+        return $this->nom; // Assuming there is a property named "nom" in your Categorie entity
+    }
     public function getId(): ?int
     {
         return $this->id;
