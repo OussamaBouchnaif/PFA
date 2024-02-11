@@ -16,15 +16,15 @@ class SecurityController extends AbstractController
 {
    
     #[Route('/signup', name: 'app_signup')]
-    public function Signup(Request $request, ClientRepository $repository): Response
+    public function signup(Request $request, ClientRepository $repository): Response
     {
         $form = $this->createForm(ClientType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->IsValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $client = $form->getData();
             $repository->addClient($client);
-
+            
             return $this->redirectToRoute('app_test');
         }
 

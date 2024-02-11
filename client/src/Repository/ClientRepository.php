@@ -19,31 +19,23 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class ClientRepository extends ServiceEntityRepository
 {
-    private EntityManagerInterface $manager;
-    private UserPasswordHasherInterface $passwordEncoder;
-    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager, UserPasswordHasherInterface $passwordEncoder)
+    
+    
+
+    public function __construct(ManagerRegistry $registry, UserPasswordHasherInterface $passwordEncoder)
     {
         parent::__construct($registry, Client::class);
-        $this->manager =$manager;
-        $this->passwordEncoder = $passwordEncoder;
-        
+           
     }
-    public function authenticateClient($email, $password): bool
-    {
-        $client = $this->findOneBy(['email' => $email]);
-
-        if (!$client) {
-            return false;
-        }
-
-        return $this->passwordEncoder->isPasswordValid($client, $password);
-    }
+   
     public function addClient(Client $client)
     {
+        $manager = $this->getEntityManager();
         $client->setPlainPassword($client->getPassword());
-        $this->manager->persist($client);
-        $this->manager->flush();
+        $manager->persist($client);
+        $manager->flush();
     }
+    
 
 //    /**
 //     * @return Client[] Returns an array of Client objects
