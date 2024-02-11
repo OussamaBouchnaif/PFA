@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block body %}
+<br>
+    <div class="row row-sm">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body h-100">
+                    <div class="row row-sm ">
+                        <div class="col-xl-5 col-lg-12 col-md-12">
+                            <div class="preview-pic tab-content">
+                                {% for image in camera.imageCameras %}
+                                    <div class="tab-pane{% if loop.first %} active{% endif %}" id="pic-{{ loop.index }}">
+                                        <img src="{{ asset('uploads/' ~ image.image) }}" alt="Camera Image" />
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                {% for image in camera.imageCameras %}
+                                    <li{% if loop.first %} class="active"{% endif %}>
+                                        <a data-target="#pic-{{ loop.index }}" data-toggle="tab">
+                                            <img src="{{ asset('uploads/' ~ image.image) }}" alt="Camera Image" />
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="details col-xl-7 col-lg-12 col-md-12 mt-4 mt-xl-0">
+                            <h4 class="product-title mb-1">{{ camera.nom }}</h4>
+                            <p class="text-muted tx-13 mb-1">{{ camera.description }}</p>
+                            <div class="rating mb-1">                               
+                            </div>
+                            <h6 class="price">current price: <span class="h3 ml-2">Prix: {{ camera.prix }}</span></h6>
+                            <p class="product-description">{{ camera.description }}</p>
+                           
+						</div>
+					</div>
+				</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{# dashboard/camera/upload_photo.html.twig #}
+
+{% extends 'dashboard/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ecf0fa;
+            color: #495057;
+        }
+
+       
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #007bff;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+<br>
+
+
+    <h1 class="text-center mb-4" >Upload Photo</h1>
+
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+        {{ form_row(form.photo) }}
+        <button type="submit">Upload Photo</button>
+    {{ form_end(form) }}
+{% endblock %}
