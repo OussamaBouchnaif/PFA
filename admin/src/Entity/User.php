@@ -7,13 +7,27 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User extends Personne
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $prenom = null;
+
+    #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column(length: 70)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $password = null;
 
     #[ORM\Column(length: 10)]
     private ?string $numtele = null;
@@ -98,9 +112,22 @@ class User extends Personne
     /**
      * Get the value of roles
      */ 
-  
+    public function getRoles()
+    {
+        return $this->roles;
+    }
 
-    
+    /**
+     * Set the value of roles
+     *
+     * @return  self
+     */ 
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 
     /**
      * Get the value of image

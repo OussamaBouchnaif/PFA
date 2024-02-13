@@ -30,12 +30,23 @@ class ClientRepository extends ServiceEntityRepository
    
     public function addClient(Client $client)
     {
-        $manager = $this->getEntityManager();
         $client->setPlainPassword($client->getPassword());
-        $manager->persist($client);
+        $this->doSave($client,true);
+    }
+
+    private function doSave($object,bool $isPersist = false):void
+    {
+        $manager = $this->getEntityManager();
+        if(true === $isPersist)
+        {
+            $manager->persist($object);
+        }
         $manager->flush();
     }
     
+
+
+
 
 //    /**
 //     * @return Client[] Returns an array of Client objects

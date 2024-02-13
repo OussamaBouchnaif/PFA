@@ -21,7 +21,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ClientType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->IsValid()) {
             $client = $form->getData();
             $repository->addClient($client);
             
@@ -38,9 +38,7 @@ class SecurityController extends AbstractController
              return $this->redirectToRoute('app_test');
          }
 
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

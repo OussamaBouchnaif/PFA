@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageCameraRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImageCameraRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ImageCameraRepository::class)]
 class ImageCamera
@@ -11,13 +12,16 @@ class ImageCamera
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['camera:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['camera:read'])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'imageCameras')]
     #[ORM\JoinColumn(nullable: false)]
+    
     private ?Camera $camera = null;
 
     public function getId(): ?int

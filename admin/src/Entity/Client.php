@@ -2,35 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+#[UniqueEntity("email")]
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 
-class Client
+class Client extends Personne 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $password = null;
-
     #[ORM\Column(length: 100, nullable: true)]
+    #[Assert\NotBlank()]
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -40,6 +33,7 @@ class Client
     private ?string $statusCompte = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank()]
     private ?string $ville = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
@@ -57,14 +51,29 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\Column(length: 15, nullable: true)]
+    #[Assert\Regex(
+        "/^[0-9]{10}$/","Please enter a valid phone"
+    )]
+    private ?string $phoneNumber = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $genre = null;
+
     public function __construct()
     {
-        
+        $this->dateInscription = new \DateTimeImmutable();
+        $this->statusCompte = "actif";
+        $this->addressLivSup = "Adress sup";
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
     }
 
+    public function getRole()
+    {
+        return $this->roles;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -118,17 +127,7 @@ class Client
         return $this;
     }
 
-    public function getAddress(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAddress(?string $adresse): static
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
+    
 
     public function getDateInscription(): ?\DateTimeInterface
     {
@@ -283,4 +282,83 @@ class Client
     {
         return $this->getId();
     }
+
+    /**
+     * Get the value of adresse
+     */ 
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set the value of adresse
+     *
+     * @return  self
+     */ 
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainPassword
+     */ 
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set the value of plainPassword
+     *
+     * @return  self
+     */ 
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+    public function getRoles(): array
+    {
+        return [''];
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): static
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+   
 }

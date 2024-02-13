@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 
@@ -16,27 +19,35 @@ class Camera
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['camera:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['camera:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 400)]
+    #[Groups(['camera:read'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['camera:read'])]
     private ?float $prix = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['camera:read'])]
     private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['camera:read'])]
     private ?\DateTimeInterface $dateAjout = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
+    
     private Collection $avisCameras;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class)]
@@ -46,6 +57,7 @@ class Camera
     private Collection $ligneCommandes;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
+    #[Groups(['camera:read'])]
     private Collection $imageCameras;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
