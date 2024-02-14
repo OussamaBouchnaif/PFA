@@ -226,8 +226,10 @@
                             <div class="single_product">
                                  <div class="product_thumb">
                                     <a href="product-details.html" >
-                                        <img src="{{asset('admin/uploads/' ~ camera )}}"  style="width:80px; " >
-                                        <img class="primary_img" src="assets/img/product/product1.jpg" alt="consectetur">
+                                        {% for i in camera.getImageCameras() %}
+                                            <img src="{{ i.getImage() }}" alt="Camera Image">
+                                        {% endfor %}
+                                        
                                     </a>
                                     <div class="product_action">
                                         <ul>

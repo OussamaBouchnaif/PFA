@@ -2,21 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageCameraRepository;
+use App\Repository\LigneReductionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ImageCameraRepository::class)]
-class ImageCamera
+#[ORM\Entity(repositoryClass: LigneReductionRepository::class)]
+class LigneReduction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    #[ORM\ManyToOne(inversedBy: 'ligneReductions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Reduction $reduction = null;
 
-    #[ORM\ManyToOne(inversedBy: 'imageCameras')]
+    #[ORM\ManyToOne(inversedBy: 'ligneReductions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Camera $camera = null;
 
@@ -25,14 +26,14 @@ class ImageCamera
         return $this->id;
     }
 
-    public function getImage(): ?string
+    public function getReduction(): ?Reduction
     {
-        return '/uploads/' . $this->image;
+        return $this->reduction;
     }
 
-    public function setImage(?string $image): static
+    public function setReduction(?Reduction $reduction): static
     {
-        $this->image = $image;
+        $this->reduction = $reduction;
 
         return $this;
     }

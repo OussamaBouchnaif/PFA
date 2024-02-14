@@ -13,14 +13,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class TestController extends AbstractController
 {
-    #[Route("/api/welcome", name: "test", methods: ['GET'])]
-    public function test(CameraRepository $cameraRepository, SerializerInterface $serializer): JsonResponse
-    {
-        $cameras = $cameraRepository->findAll();
-        $data = $serializer->serialize($cameras, 'json', ['groups' => 'camera:read']);
-
-        return new JsonResponse($data, Response::HTTP_OK, [], true);
-      
-    }
+    
 }
 
