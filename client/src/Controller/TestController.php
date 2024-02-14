@@ -21,26 +21,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TestController extends AbstractController
 {
-    private $client;
-    private $serializer;
-    public function __construct(HttpClientInterface $client,SerializerInterface $serializer)
-    {
-        $this->client = $client;
-        $this->serializer = $serializer;
-    }
-
-   
-    #[Route("/fetch",name:"ftchmessage")]
-    public function fetchMessage(): JsonResponse
-    {
-        
-        
-        $response = $this->client->request('GET', 'http://admin/api/welcome');
-        $content = $response->getContent();
-
-       
-       return new JsonResponse($content, Response::HTTP_OK, [], true);
-    }
+    
 
 
 

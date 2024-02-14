@@ -30,11 +30,6 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     #[Assert\Email()]
     protected ?string $email = null;
 
-
-    #[ORM\Column(length: 20)]
-    #[Assert\NotBlank()]
-    private ?string $ville = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     protected ?string $password = null;
@@ -44,14 +39,7 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     #[ORM\Column]
     protected array $roles = [];
 
-    #[ORM\Column(length: 15, nullable: true)]
-    #[Assert\Regex(
-        "/^[0-9]{10}$/","Please enter a valid phone"
-    )]
-    private ?string $phoneNumber = null;
-
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $genre = null;
+   
     public function getNom(): ?string
     {
         return $this->nom;
@@ -132,66 +120,6 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of ville
-     */ 
-    public function getVille()
-    {
-        return $this->ville;
-    }
-
-    /**
-     * Set the value of ville
-     *
-     * @return  self
-     */ 
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of phoneNumber
-     */ 
-    public function getPhoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * Set the value of phoneNumber
-     *
-     * @return  self
-     */ 
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of genre
-     */ 
-    public function getGenre()
-    {
-        return $this->genre;
-    }
-
-    /**
-     * Set the value of genre
-     *
-     * @return  self
-     */ 
-    public function setGenre($genre)
-    {
-        $this->genre = $genre;
 
         return $this;
     }
