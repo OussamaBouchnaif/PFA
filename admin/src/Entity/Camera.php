@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 
+
 class Camera
 {
     #[ORM\Id]
