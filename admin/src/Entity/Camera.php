@@ -5,76 +5,92 @@ namespace App\Entity;
 use App\Repository\CameraRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
-
+#[Vich\Uploadable]
 class Camera
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[Groups(['camera:read'])]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private $id;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['camera:read'])]
-    private ?string $nom = null;
+    private $nom;
 
     #[ORM\Column(length: 400)]
-    #[Groups(['camera:read'])]
-    private ?string $description = null;
+    private $description;
 
-    #[ORM\Column]
-    #[Groups(['camera:read'])]
-    private ?float $prix = null;
+    #[ORM\Column(type: 'float')]
+    private $prix;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['camera:read'])]
-    private ?int $stock = null;
+    #[ORM\Column(type: 'smallint')]
+    private $stock;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['camera:read'])]
-    private ?\DateTimeInterface $dateAjout = null;
+    #[ORM\Column(type: 'date')]
+    private $dateAjout;
 
     #[ORM\Column(length: 50, nullable: true)]
-    
-    private ?string $status = null;
+    private $status;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
-    
-    private Collection $avisCameras;
+    #[Vich\UploadableField(mapping: 'camera_images', fileNameProperty: 'imageCameras')]
+    private $imageFile;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class)]
-    private Collection $favoritCameras;
+            /**
+         * @ORM\OneToMany(mappedBy="camera", targetEntity=ImageCamera::class)
+         */
+        private $imageCameras;
+        /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+        /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneCommande::class)]
-    private Collection $ligneCommandes;
+    #[ORM\Column(length: 40)]
+    private $couleur;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
-    #[Groups(['camera:read'])]
-    private Collection $imageCameras;
+    #[ORM\Column(type: 'boolean')]
+    private $visionNoctrune;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
-    private Collection $ligneReductions;
+    #[ORM\Column(type: 'float')]
+    private $poids;
 
-    #[ORM\ManyToOne(inversedBy: 'cameras')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Categorie $categorie = null;
+    #[ORM\Column(length: 200)]
+    private $materiaux;
+
+    #[ORM\Column(length: 40)]
+    private $resolution;
+
+    #[ORM\Column(length: 20)]
+    private $angleVision;
+
+    #[ORM\Column(type: 'boolean')]
+    private $connectivite;
+
+    #[ORM\Column(type: 'float')]
+    private $stockage;
+
+    #[ORM\Column(length: 40)]
+    private $alimentation;
+
+    #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
+    private $blogs;
 
     public function __construct()
     {
-        $this->avisCameras = new ArrayCollection();
-        $this->favoritCameras = new ArrayCollection();
-        $this->ligneCommandes = new ArrayCollection();
         $this->imageCameras = new ArrayCollection();
-        $this->ligneReductions = new ArrayCollection();
+        
+        $this->blogs = new ArrayCollection();
     }
+
+    // Getters et setters
 
     public function getId(): ?int
     {
@@ -86,7 +102,7 @@ class Camera
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
 
@@ -98,7 +114,7 @@ class Camera
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -110,7 +126,7 @@ class Camera
         return $this->prix;
     }
 
-    public function setPrix(float $prix): static
+    public function setPrix(float $prix): self
     {
         $this->prix = $prix;
 
@@ -122,7 +138,7 @@ class Camera
         return $this->stock;
     }
 
-    public function setStock(int $stock): static
+    public function setStock(int $stock): self
     {
         $this->stock = $stock;
 
@@ -134,7 +150,7 @@ class Camera
         return $this->dateAjout;
     }
 
-    public function setDateAjout(\DateTimeInterface $dateAjout): static
+    public function setDateAjout(\DateTimeInterface $dateAjout): self
     {
         $this->dateAjout = $dateAjout;
 
@@ -146,122 +162,83 @@ class Camera
         return $this->status;
     }
 
-    public function setStatus(?string $status): static
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 
         return $this;
     }
+    
 
-    /**
-     * @return Collection<int, AvisCamera>
-     */
-    public function getAvisCameras(): Collection
+    public function getImageFile(): ?File
     {
-        return $this->avisCameras;
+        return $this->imageFile;
+    }
+   
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            // Il est nécessaire de changer quelque chose dans l'entité pour que Doctrine puisse la mettre à jour
+            $this->updatedAt = new \DateTime();
+        }
     }
 
-    public function addAvisCamera(AvisCamera $avisCamera): static
+    public function getCategorie(): ?Categorie
     {
-        if (!$this->avisCameras->contains($avisCamera)) {
-            $this->avisCameras->add($avisCamera);
-            $avisCamera->setCamera($this);
-        }
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
-
-    public function removeAvisCamera(AvisCamera $avisCamera): static
+    
+    public function setImageCameras($imageCameras): self
     {
-        if ($this->avisCameras->removeElement($avisCamera)) {
-            // set the owning side to null (unless already changed)
-            if ($avisCamera->getCamera() === $this) {
-                $avisCamera->setCamera(null);
+        if ($imageCameras instanceof Collection || is_array($imageCameras)) {
+            foreach ($imageCameras as $imageCamera) {
+                $imageCamera->setCamera($this);
+                $this->addImageCamera($imageCamera);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, FavoritCamera>
-     */
-    public function getFavoritCameras(): Collection
-    {
-        return $this->favoritCameras;
-    }
-
-    public function addFavoritCamera(FavoritCamera $favoritCamera): static
-    {
-        if (!$this->favoritCameras->contains($favoritCamera)) {
-            $this->favoritCameras->add($favoritCamera);
-            $favoritCamera->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoritCamera(FavoritCamera $favoritCamera): static
-    {
-        if ($this->favoritCameras->removeElement($favoritCamera)) {
-            // set the owning side to null (unless already changed)
-            if ($favoritCamera->getCamera() === $this) {
-                $favoritCamera->setCamera(null);
+        } elseif ($imageCameras === null) {
+            // If $imageCameras is null, remove all existing associations
+            foreach ($this->imageCameras as $imageCamera) {
+                $imageCamera->setCamera(null);
+                $this->removeImageCamera($imageCamera);
             }
+        } else {
+            throw new \InvalidArgumentException("setImageCameras expects an array or a Collection of ImageCamera objects.");
         }
-
+    
         return $this;
     }
+    
+
 
     /**
-     * @return Collection<int, LigneCommande>
-     */
-    public function getLigneCommandes(): Collection
-    {
-        return $this->ligneCommandes;
-    }
-
-    public function addLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if (!$this->ligneCommandes->contains($ligneCommande)) {
-            $this->ligneCommandes->add($ligneCommande);
-            $ligneCommande->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if ($this->ligneCommandes->removeElement($ligneCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneCommande->getCamera() === $this) {
-                $ligneCommande->setCamera(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ImageCamera>
+     * @return Collection|ImageCamera[]
      */
     public function getImageCameras(): Collection
     {
         return $this->imageCameras;
     }
 
-    public function addImageCamera(ImageCamera $imageCamera): static
+    public function addImageCamera(ImageCamera $imageCamera): self
     {
         if (!$this->imageCameras->contains($imageCamera)) {
-            $this->imageCameras->add($imageCamera);
+            $this->imageCameras[] = $imageCamera;
             $imageCamera->setCamera($this);
         }
 
         return $this;
     }
 
-    public function removeImageCamera(ImageCamera $imageCamera): static
+    public function removeImageCamera(ImageCamera $imageCamera): self
     {
         if ($this->imageCameras->removeElement($imageCamera)) {
             // set the owning side to null (unless already changed)
@@ -273,44 +250,137 @@ class Camera
         return $this;
     }
 
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): self
+    {
+        $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    public function getVisionNoctrune(): ?bool
+    {
+        return $this->visionNoctrune;
+    }
+
+    public function setVisionNoctrune(bool $visionNoctrune): self
+    {
+        $this->visionNoctrune = $visionNoctrune;
+
+        return $this;
+    }
+
+    public function getPoids(): ?float
+    {
+        return $this->poids;
+    }
+
+    public function setPoids(float $poids): self
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getMateriaux(): ?string
+    {
+        return $this->materiaux;
+    }
+
+    public function setMateriaux(string $materiaux): self
+    {
+        $this->materiaux = $materiaux;
+
+        return $this;
+    }
+
+    public function getResolution(): ?string
+    {
+        return $this->resolution;
+    }
+
+    public function setResolution(string $resolution): self
+    {
+        $this->resolution = $resolution;
+
+        return $this;
+    }
+
+    public function getAngleVision(): ?string
+    {
+        return $this->angleVision;
+    }
+
+    public function setAngleVision(string $angleVision): self
+    {
+        $this->angleVision = $angleVision;
+
+        return $this;
+    }
+
+    public function getConnectivite(): ?bool
+    {
+        return $this->connectivite;
+    }
+
+    public function setConnectivite(bool $connectivite): self
+    {
+        $this->connectivite = $connectivite;
+
+        return $this;
+    }
+
+    public function getStockage(): ?float
+    {
+        return $this->stockage;
+    }
+
+    public function setStockage(float $stockage): self
+    {
+        $this->stockage = $stockage;
+
+        return $this;
+    }
+
+    public function getAlimentation(): ?string
+    {
+        return $this->alimentation;
+    }
+
+    public function setAlimentation(string $alimentation): self
+    {
+        $this->alimentation = $alimentation;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, LigneReduction>
+     * @return Collection|Blog[]
      */
-    public function getLigneReductions(): Collection
+    public function getBlogs(): Collection
     {
-        return $this->ligneReductions;
+        return $this->blogs;
     }
 
-    public function addLigneReduction(LigneReduction $ligneReduction): static
+    public function addBlog(Blog $blog): self
     {
-        if (!$this->ligneReductions->contains($ligneReduction)) {
-            $this->ligneReductions->add($ligneReduction);
-            $ligneReduction->setCamera($this);
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->addCamera($this);
         }
 
         return $this;
     }
 
-    public function removeLigneReduction(LigneReduction $ligneReduction): static
+    public function removeBlog(Blog $blog): self
     {
-        if ($this->ligneReductions->removeElement($ligneReduction)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneReduction->getCamera() === $this) {
-                $ligneReduction->setCamera(null);
-            }
+        if ($this->blogs->removeElement($blog)) {
+            $blog->removeCamera($this);
         }
-
-        return $this;
-    }
-
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): static
-    {
-        $this->categorie = $categorie;
 
         return $this;
     }

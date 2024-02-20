@@ -16,11 +16,7 @@
         {{ ux_controller_link_tags() }}
     {% endblock %}
     
-    {% block javascripts %}
-            {% block importmap %}
-                {{ importmap('app') }}
-            {% endblock %}
-    {% endblock %}
+    
 </head>
 
 <body>
@@ -1319,6 +1315,10 @@
             
         </div>
         {{include('dashboard/links/jslink.html.twig')}}
+        {% block javascripts %}
+            {% block importmap %}
+            {% endblock %}
+    {% endblock %}
     </body>
     
     

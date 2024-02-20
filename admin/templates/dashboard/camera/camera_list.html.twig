@@ -4,12 +4,21 @@
 
 {% block stylesheets %}
     {{ parent() }}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
-    <style>
- 
+<style> 
+     .dataTables_wrapper .dataTables_paginate {
+    text-align: center;
+    }
+  
+     body{
+        background-color: #ffffff;
+
+     }    
         .container {
-            margin-top: 20px;
+        margin-top: 20px;
         }
 
         .page-title {
@@ -26,316 +35,232 @@
             margin-right: 10px;
         }
 
-        .search-container {
-            margin-bottom: 20px;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
-            text-align: center;
+            background-color: #ffffff;
+            border: 1px black;
         }
 
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+                        border: 1px black;
+
         }
 
         th {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border: 1px black;
+
             background-color: #f2f2f2;
             color: #333;
             font-weight: bold;
+            padding: 60px;
+
         }
-        .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
 
-.pagination ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.pagination li {
-    display: inline-block;
-    margin: 0 5px;
-}
-.table thead th {
-    vertical-align: bottom;
-    padding: 22px;
-}
-.pagination a, .pagination span {
-    padding: 8px 12px;
-    border: 1px solid #007bff;
-    color: #007bff;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: background-color 0.3s;
-}
-
-.pagination a:hover {
-    background-color: #f2f2f2;
-}
-
-.pagination .active a, .pagination .active span {
-    background-color: #007bff;
-    color: #fff;
-}
-
-thead{
-   padding: 60px;
-}
-
-
-        @media (max-width: 768px) {
-            .search-container {
-                text-align: center;
-            }
-
-            #searchInput {
-                width: 100%;
-            }
+        .custom-header {
+            background-color: #ffffff;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            line-height: 2em;
         }
-         .custom-header {
-        background-color: #007bff;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        font-weight: bold;
-        line-height: 2em;
-    }
-   
-       
-  
-       .btn-primary-custom {
-        background-color: #3498db; 
-        color: #fff;
-    }
 
-    .btn-info-custom {
-        background-color: #2ecc71; 
-        color: #fff; 
-    }
+        .btn-primary-custom {
+            background-color: #3498db;
+            color: #fff;
+        }
 
-    .btn-success-custom {
-        background-color: #e67e22; 
-             color: #fff; 
-    }
-</style>
+        .btn-info-custom {
+            background-color: #2ecc71;
+            color: #fff;
+        }
 
-        
-    </style>
+        .btn-success-custom {
+            background-color: #e67e22;
+            color: #fff;
+        }
 
-{% endblock %}
+            </style> 
+
+        {% endblock %}
 
 {% block body %}
     <div class="container">
         <h1 class="text-center mb-4"> Liste des caméras </h1>
         <br>
        <div class="action-buttons">
-        <button type="button" class="btn btn-primary-custom" onclick="confirmPrint()">
+         <button type="button" class="btn btn-primary-custom" onclick="confirmPrint()">
             Imprimer le tableau
-        </button>
+            </button>
 
-        <button type="button" class="btn btn-info-custom" onclick="confirmExport()">
+            <button type="button" class="btn btn-info-custom" onclick="confirmExport()">
             Exporter vers Excel
-        </button>
-    <a href="{{ path('Add_camera') }}" class="btn btn-success-custom">
-        Ajouter une nouvelle caméra
-    </a>
-     </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par nom..." oninput="filterTable()">
+            </button>
+            <a href="{{ path('Addcamera') }}" class="btn btn-success">
+            Ajouter une nouvelle caméra
+            </a>        
         </div>
-
-       <table id="datatable" class="table table-bordered table-hover text-center">
-    <thead>
-       <tr class="align-middle custom-header-bg">
-    <th class="custom-header text-center">Nom</th>
-    <th class="custom-header text-center">Description</th>
-    <th class="custom-header text-center">Prix</th>
-    <th class="custom-header text-center">Date Ajout</th>
-    <th class="custom-header text-center">Statut</th>
-    <th class="custom-header text-center">Stock</th>
-    <th class="custom-header text-center">Catégorie</th>               
-    <th class="custom-header text-center">Action</th>
-</tr>
-
-    </thead>
-    <tbody>
-        {% for camera in pagination %}
-            <tr>
-                <td class="align-middle text-center">{{ camera.nom }}</td>
-                <td class="align-middle text-center">{{ camera.description }}</td>
-                <td class="align-middletext-center">{{ camera.prix }}</td>
-                <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d H:i:s') : '' }}</td>
-                <td class="align-middle text-center">{{ camera.status }}</td>
-                <td class="align-middle text-center">{{ camera.stock }}</td>
-                <td class="align-middle text-center">{{ camera.categorie.nom }}</td>
-                <td class="text-center align-middle">
-                   
-                     <button class="btn btn-danger" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                    <a href="{{ path('Edit_camera',{id:camera.id}) }}" class="btn btn-warning">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="{{ path('upload_photo', {'id': camera.id}) }}" class="btn btn-success">
-                        <i class="fas fa-download"></i>
-                    </a>
-                    <a href="{{ path('camera_details', {'id': camera.id}) }}" class="btn btn-info">
-                        <i class="fas fa-info-circle"></i>
-                    </a>
-                </td>
+     <table id="myTable" class="table">
+        <thead>
+            <tr class="align-middle custom-header-bg">
+                <th class="custom-header text-center">Nom</th>
+                <th class="custom-header text-center">Description</th>
+                <th class="custom-header text-center">Prix</th>
+                <th class="custom-header text-center">Date Ajout</th>
+                <th class="custom-header text-center">Statut</th>
+                <th class="custom-header text-center">Stock</th>
+                <th class="custom-header text-center">Catégorie</th>               
+                <th class="custom-header text-center">Action</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-   {# {% if pagination.getTotalItemCount > pagination.getItemNumberPerPage %}
-    <div class="pagination">
-        {{ knp_pagination_render(pagination) }}
+        </thead>
+        <tbody>
+                {% for camera in cameras %}
+                 <tr>
+                    <td class="align-middle text-center">{{ camera.nom }}</td>
+                    <td class="align-middle text-center">{{ camera.description }}</td>
+                    <td class="align-middle text-center">{{ camera.prix }}</td>
+                    <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="align-middle text-center">{{ camera.status }}</td>
+                    <td class="align-middle text-center">{{ camera.stock }}</td>
+                    <td class="align-middle text-center">{{ camera.categorie }}</td>
+                    <td class="text-center align-middle">
+                        <button class="btn btn-danger" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <a href="{{ path('Edit_camera',{id:camera.id}) }}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ path('camera_details', {'id': camera.id}) }}" class="btn btn-info">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+        <br>
+        <br>
     </div>
 
-    
-{% endif %} 
+{% endblock %}
 
-<ul class="pagination">
-		<li class="page-item"><a class="page-link" href="#"><i class="icon ion-ios-arrow-back"></i></a></li>
-		<li class="page-item active"><a class="page-link" href="#">1</a></li>
-		<li class="page-item"><a class="page-link" href="#">2</a></li>
-		<li class="page-item"><a class="page-link" href="#">3</a></li>
-		<li class="page-item"><a class="page-link" href="#"><i class="icon ion-ios-arrow-forward"></i></a></li>
-	</ul> #}
-{% if pagination.getTotalItemCount > pagination.getItemNumberPerPage %}
-    <div class="pagination">
-        {{ knp_pagination_render(pagination) }}
-    </div>
-{% endif %}
-
-
-
-
-    </div>
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
-      function printTable() {
-    var printWindow = window.open('', '_blank');
-    printWindow.document.open();
-    printWindow.document.write('<html><head><title>Print Table</title>');
-    printWindow.document.write('<style>');
-    printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-    printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-    printWindow.document.write('th {font-weight: bold; text-align: center;}');
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<table>');
-    printWindow.document.write('<thead>');
-    printWindow.document.write('<tr>');
-    printWindow.document.write('<th>Nom</th>');
-    printWindow.document.write('<th>Description</th>');
-    printWindow.document.write('<th>Prix</th>');
-    printWindow.document.write('<th>Date Ajout</th>');
-    printWindow.document.write('<th>Status</th>');
-    printWindow.document.write('<th>Stock</th>');
-    printWindow.document.write('<th>Catégorie</th>');
-    printWindow.document.write('</tr>');
-    printWindow.document.write('</thead>');
-    printWindow.document.write('<tbody>');
-    
-    var tableRows = document.getElementById('datatable').querySelectorAll('tr');
-    for (var i = 0; i < tableRows.length; i++) {
-        var row = tableRows[i];
-        var rowData = row.querySelectorAll('td');
-        if (rowData.length > 0) {
-            printWindow.document.write('<tr>');
-            for (var j = 0; j < rowData.length; j++) {
-                if (j !== rowData.length - 1) {
-                    printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+                "language": {
+                "emptyTable": "Aucun élément trouvé",
+                "info": "Affichage _START_ à _END_ sur _TOTAL_ éléments",
+                "infoEmpty": "Aucune donnée disponible",
+                "search": "Rechercher:",
+                "paginate": {
+                    "first": "Premier",
+                    "last": "Dernier",
+                    "next": "Suivant",
+                    "previous": "Précédent"
                 }
             }
-            printWindow.document.write('</tr>');
-        }
-    }
-    
-    printWindow.document.write('</tbody>');
-    printWindow.document.write('</table>');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print();
-}
+        });
+    });
+ </script>
 
-
-      function exportToExcel() {
-    var table = document.getElementById('datatable');
-    var rows = table.querySelectorAll('tr');
-    var csvData = [];
-
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var rowData = [];
-        var cols = row.querySelectorAll('td');
-
-        for (var j = 0; j < cols.length; j++) {
-            rowData.push(cols[j].innerText);
-        }
-
-        csvData.push(rowData.join(';')); 
-    }
-
-    var csvContent = 'data:text/csv;charset=utf-8,';
-    csvContent += 'Nom;Description;Prix;Date Ajout;Status;Stock;Catégorie\n';
-
-    for (var i = 0; i < csvData.length; i++) {
-        csvContent += csvData[i] + '\n';
-    }
-
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'liste_camera.csv'); 
-    document.body.appendChild(link);
-    link.click();
-}
-
-
-       function filterTable() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("datatable");
-    tr = table.getElementsByTagName("tr");
-
-    var found = false;
-
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-                found = true;
-            } else {
-                tr[i].style.display = "none";
+    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+    <script>  
+    document.addEventListener('DOMContentLoaded', function () {
+            var addCameraModal = document.getElementById('addCameraModal');
+            var addCameraForm = document.getElementById('addCameraForm');
+            document.querySelector('[data-bs-target="#addCameraModal"]').addEventListener('click', function () {
+                var modal = new bootstrap.Modal(addCameraModal);
+                modal.show();
+            });
+            addCameraForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Empêcher le comportement de soumission par défaut
+            });
+        });
+    function printTable() {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+        printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+        printWindow.document.write('th {font-weight: bold; text-align: center;}');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<table>');
+        printWindow.document.write('<thead>');
+        printWindow.document.write('<tr>');
+        printWindow.document.write('<th>Nom</th>');
+        printWindow.document.write('<th>Description</th>');
+        printWindow.document.write('<th>Prix</th>');
+        printWindow.document.write('<th>Date Ajout</th>');
+        printWindow.document.write('<th>Status</th>');
+        printWindow.document.write('<th>Stock</th>');
+        printWindow.document.write('<th>Catégorie</th>');
+        printWindow.document.write('</tr>');
+        printWindow.document.write('</thead>');
+        printWindow.document.write('<tbody>');
+        
+        var tableRows = document.getElementById('myTable').querySelectorAll('tr');
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var rowData = row.querySelectorAll('td');
+            if (rowData.length > 0) {
+                printWindow.document.write('<tr>');
+                for (var j = 0; j < rowData.length; j++) {
+                    if (j !== rowData.length - 1) {
+                        printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+                    }
+                }
+                printWindow.document.write('</tr>');
             }
         }
+        
+        printWindow.document.write('</tbody>');
+        printWindow.document.write('</table>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
     }
 
-    if (!found) {
-        var noResultRow = document.createElement("tr");
-        var noResultCell = document.createElement("td");
-        noResultCell.setAttribute("colspan", "8"); 
-        noResultCell.textContent = "Aucun produit trouvé.";
-        noResultRow.appendChild(noResultCell);
-        table.appendChild(noResultRow);
+    function exportToExcel() {
+        var table = document.getElementById('myTable');
+        var rows = table.querySelectorAll('tr');
+        var csvData = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var rowData = [];
+            var cols = row.querySelectorAll('td');
+
+            for (var j = 0; j < cols.length; j++) {
+                rowData.push(cols[j].innerText);
+            }
+
+            csvData.push(rowData.join(';')); 
+        }
+
+        var csvContent = 'data:text/csv;charset=utf-8,';
+        csvContent += 'Nom;Description;Prix;Date Ajout;Status;Stock;Catégorie\n';
+
+        for (var i = 0; i < csvData.length; i++) {
+            csvContent += csvData[i] + '\n';
+        }
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'liste_camera.csv'); 
+        document.body.appendChild(link);
+        link.click();
     }
-}
-// les confirmation 
 
    function openUploadPhotoModal(cameraId) {
         var modal = document.getElementById('uploadPhotoModal');
@@ -356,10 +281,10 @@ thead{
     }
 }
 
-function confirmExport() {
-    if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-        exportToExcel();
+    function confirmExport() {
+        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
+            exportToExcel();
+        }
     }
-}
     </script>
 {% endblock %}
