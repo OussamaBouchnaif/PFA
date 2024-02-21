@@ -59,11 +59,8 @@ class Client extends Personne
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
-<<<<<<< Updated upstream
         $this->roles[] = 'client';
-=======
-        
->>>>>>> Stashed changes
+
     }
 
     public function getRole()
