@@ -100,7 +100,7 @@
             <button type="button" class="btn btn-info-custom" onclick="confirmExport()">
             Exporter vers Excel
             </button>
-            <a href="{{ path('Addcamera') }}" class="btn btn-success">
+            <a href="{{ path('Add_camera') }}" class="btn btn-success">
             Ajouter une nouvelle caméra
             </a>        
         </div>
@@ -126,7 +126,7 @@
                     <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d H:i:s') : '' }}</td>
                     <td class="align-middle text-center">{{ camera.status }}</td>
                     <td class="align-middle text-center">{{ camera.stock }}</td>
-                    <td class="align-middle text-center">{{ camera.categorie }}</td>
+                    <td class="align-middle text-center">{{ camera.categorie.nom }}</td>
                     <td class="text-center align-middle">
                         <button class="btn btn-danger" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
                             <i class="fas fa-trash"></i>
