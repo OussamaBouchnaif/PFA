@@ -1,0 +1,78 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Liste des clients{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets_dashboard/css/client.css') }}">
+{% endblock %}
+
+
+{% block body %}
+     <div class="container">
+        <h1 class="text-center mb-4 page-title">Liste des clients</h1>
+
+        <!-- Recherche par e-mail -->
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par e-mail...">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" onclick="searchByEmail()">Rechercher</button>
+            </div>
+        </div>
+
+        <!-- Tableau des clients -->
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="thick-header">Nom</th>
+                    <th class="thick-header">Prénom</th>
+                    <th class="thick-header">Email</th>
+                    <th class="thick-header">Mot de passe</th>
+                    <th class="thick-header">Adresse</th>
+                    <th class="thick-header">Inscription </th>
+                    <th class="thick-header">Statut</th>
+                    <th class="thick-header">Adresses Sup</th>
+                    <th class="thick-header">Compte</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in pagination %}
+                    <tr>
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.email }}</td>
+                        <td><input type="password" value="{{ client.password }}" name="password" id="password_{{ client.id }}" onmouseover="mouseoverPass('{{ client.id }}');" onmouseout="mouseoutPass('{{ client.id }}');" /></td>
+                        <td>{{ client.adresse }}</td>
+                        <td>{{ client.dateInscription|date('d/m/Y') }}</td>
+                        <td>{{ client.statusCompte }}</td>
+                        <td>{{ client.addressLivSup }}</td>
+                        <td>
+                            <div class="toggle-container">
+                                <label class="toggle-label">Désactiver</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" onclick="confirmDesactivation('{{ client.id }}')">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        {{ knp_pagination_render(pagination) }}
+
+    </div>
+    
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets_dashboard/js/client.js') }}"></script>
+{% endblock %}
+
+
+{% endblock %}
