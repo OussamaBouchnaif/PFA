@@ -59,6 +59,8 @@ class Client extends Personne
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->roles[] = 'client';
+
     }
 
     public function getRole()
