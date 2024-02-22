@@ -29,7 +29,7 @@ services:
         - 
             version: 'latest'
             region: 'us-east-1' # ou toute autre région, même fictive pour MinIO
-            endpoint: 'http://minio:9000'
+            endpoint: '%env(AWS_S3_ENDPOINT)%'
             use_path_style_endpoint: true
             credentials:
                 key: 'access1234'

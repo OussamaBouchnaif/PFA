@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[UniqueEntity("email")]
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ApiResource()]
+
 class Client extends Personne 
 {
     #[ORM\Id]
