@@ -24,3 +24,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Aws\S3\S3Client:
+        arguments:
+        - 
+            version: 'latest'
+            region: 'us-east-1' # ou toute autre région, même fictive pour MinIO
+            endpoint: 'http://minio:9000'
+            use_path_style_endpoint: true
+            credentials:
+                key: 'access1234'
+                secret: 'secret1234'

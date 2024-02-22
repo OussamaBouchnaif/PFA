@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ClientRepository;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[UniqueEntity("email")]
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-
+#[ApiResource()]
 class Client extends Personne 
 {
     #[ORM\Id]
@@ -32,9 +33,7 @@ class Client extends Personne
     #[ORM\Column(length: 20)]
     private ?string $statusCompte = null;
 
-    #[ORM\Column(length: 20)]
-    #[Assert\NotBlank()]
-    private ?string $ville = null;
+    
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $pts_fidelite = null;
@@ -51,14 +50,7 @@ class Client extends Personne
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
 
-    #[ORM\Column(length: 15, nullable: true)]
-    #[Assert\Regex(
-        "/^[0-9]{10}$/","Please enter a valid phone"
-    )]
-    private ?string $phoneNumber = null;
-
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $genre = null;
+   
 
     public function __construct()
     {
@@ -68,6 +60,8 @@ class Client extends Personne
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->roles[] = 'client';
+
     }
 
     public function getRole()
@@ -153,17 +147,6 @@ class Client extends Personne
         return $this;
     }
 
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): static
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
 
     public function getPtsFidelite(): ?int
     {
@@ -303,17 +286,7 @@ class Client extends Personne
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(?string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
+    
 
     /**
      * Get the value of plainPassword
@@ -349,16 +322,5 @@ class Client extends Personne
         return [''];
     }
 
-    public function getGenre(): ?string
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(?string $genre): static
-    {
-        $this->genre = $genre;
-
-        return $this;
-    }
    
 }

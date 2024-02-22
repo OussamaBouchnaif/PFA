@@ -38,12 +38,6 @@ class CameraType extends AbstractType
                 'html5' => false, 
                 'format' => 'yyyy-MM-dd', 
             ])
-
-            ->add('imageFile', VichFileType::class, [
-                'label' => 'Image',
-                'required' => true,
-            ])
-
             ->add('status', TextType::class, 
             ['label' => 'Statut', 'required' => false, 
             'attr' => ['class' => 'form-control']
@@ -65,11 +59,7 @@ class CameraType extends AbstractType
             ->add('connectivite', ChoiceType::class, ['label' => 'Connectivité', 'choices' => ['Oui' => true, 'Non' => false], 'attr' => ['class' => 'form-control']])
             ->add('stockage', TextType::class, ['label' => 'Stockage', 'attr' => ['class' => 'form-control']])
             ->add('alimentation', TextType::class, ['label' => 'Alimentation', 'attr' => ['class' => 'form-control']])
-            
-            ->add('valider', SubmitType::class, [
-                'label' => 'Valider',
-                'attr' => ['class' => 'btn btn-primary'],
-            ]);
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

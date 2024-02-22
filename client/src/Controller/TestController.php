@@ -24,24 +24,6 @@ class TestController extends AbstractController
     
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     #[Route('/', name: 'app_test')]
     public function index(): Response
     {

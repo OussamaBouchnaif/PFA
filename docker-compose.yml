@@ -102,6 +102,20 @@ services:
             - database
         networks:
              - inner_net
+    minio:
+        image: minio/minio
+        environment:
+            MINIO_ROOT_USER: access1234
+            MINIO_ROOT_PASSWORD: secret1234
+        volumes:
+            - ./data/minio:/data
+        command: server /data --console-address ":9001"
+        ports:
+            - 9000:9000
+            - 9001:9001
+        networks:
+            - inner_net
+            
     caddy:
         container_name: "caddy_for_mercure"
         networks:
