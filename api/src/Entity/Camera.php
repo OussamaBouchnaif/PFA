@@ -6,12 +6,23 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CameraRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\SerializerInterface;
+use ApiPlatform\Metadata\Get;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
-#[ApiResource()]
+#[ApiResource(
+        operations: [
+            new Get(normalizationContext: ['groups' => 'conference:item']),
+            new GetCollection(normalizationContext: ['groups' => 'conference:list'])
+        ],
+        
+        paginationEnabled: false,
+    )]
 class Camera
 {
     #[ORM\Id]
@@ -20,21 +31,27 @@ class Camera
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 400)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?float $prix = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?\DateTimeInterface $dateAjout = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
@@ -47,6 +64,7 @@ class Camera
     private Collection $ligneCommandes;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
+    #[Groups(['conference:list', 'conference:item'])]
     private Collection $imageCameras;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
@@ -57,30 +75,39 @@ class Camera
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $couleur = null;
 
     #[ORM\Column]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?bool $visionNoctrune = null;
 
     #[ORM\Column]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?float $poids = null;
 
     #[ORM\Column(length: 200)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $materiaux = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $resolution = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $angleVision = null;
 
     #[ORM\Column]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?bool $connectivite = null;
 
     #[ORM\Column]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?float $stockage = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $alimentation = null;
 
     #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]

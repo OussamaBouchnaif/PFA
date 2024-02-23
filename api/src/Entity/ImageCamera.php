@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageCameraRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImageCameraRepository;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ImageCameraRepository::class)]
 #[Vich\Uploadable]
@@ -18,6 +19,7 @@ class ImageCamera
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $image = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
