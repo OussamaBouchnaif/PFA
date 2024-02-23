@@ -8,6 +8,7 @@ use App\Entity\Commande;
 use App\Entity\CodePromo;
 use Symfony\Component\Mercure\Update;
 use App\Repository\CommandeRepository;
+use App\Service\CallApiCameraService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\HttpClient\HttpClient;
@@ -22,6 +23,11 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 class TestController extends AbstractController
 {
     
+    #[Route('/testapi',name:'testapid')]
+    public function tdt(CallApiCameraService $call):Response
+    {
+        dd($call->getCameraData());
+    }
 
 
     #[Route('/', name: 'app_test')]

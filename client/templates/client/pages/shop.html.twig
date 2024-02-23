@@ -3,6 +3,22 @@
 
 {% block title %}Shop{% endblock %}
 
+{% block stylesheets %}
+    <style>
+        .card-box img {
+            width: 90%; /* ou une largeur fixe */
+            height: auto; /* maintient le ratio de l'image */
+            max-height: 200px; /* ajustez selon la hauteur désirée */
+            object-fit: cover; /* assure que l'image couvre l'espace défini sans perdre ses proportions */
+         }
+         .product_thumb{
+            height:205px;
+         }
+         
+    </style>
+
+{% endblock %}
+
 {% block body %}
     
     <!--shop  area start -->
@@ -220,16 +236,15 @@
                         </div>
                     </div>
                      <!--shop toolbar end-->
-                     <div class="row shop_wrapper">
-                     {% for camera in cameras %}
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-6 ">
-                            <div class="single_product">
-                                 <div class="product_thumb">
-                                    <a href="product-details.html" >
-                                        {% for i in camera.getImageCameras() %}
-                                            <img src="{{ i.getImage() }}" alt="Camera Image">
+                    <div class="row shop_wrapper">
+                        {%  for camera in cameras['hydra:member'] %}
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
+                            <div class="single_product card-box">
+                                <div class="product_thumb">
+                                    <a href="product-details.html">
+                                        {% for imageCamera in camera.imageCameras %}
+                                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
                                         {% endfor %}
-                                        
                                     </a>
                                     <div class="product_action">
                                         <ul>
@@ -256,9 +271,9 @@
                                             <li><span>(2)</span></li>
                                         </ul>
                                     </div>
-                                    <h4 class="product_name"><a href="product-details.html">Basic White Simple Sneaker</a></h4>
+                                    <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
                                     <div class="price_box">
-                                        <span class="current_price">$43.00</span>
+                                        <span class="current_price">${{camera.prix}}</span>
                                         <span class="old_price">$46.00</span>
                                     </div>
                                     <div class="add_to_cart">
@@ -266,14 +281,14 @@
                                     </div>
                                 </div>
                                 <div class="product_list_content">
-                                    <h4 class="product_name"><a href="product-details.html">Basic White Simple Sneaker</a></h4>
+                                    <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
                                     <p><a href="#">shows</a></p>
                                     <div class="price_box">
-                                        <span class="current_price">$43.00</span>
+                                        <span class="current_price">${{camera.prix}}</span>
                                         <span class="old_price">$46.00</span>
                                     </div>
                                     <div class="product_desc">
-                                        <p>Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. Viva..</p>
+                                        <p>{{camera.description}}</p>
                                     </div>
                                     <div class="add_to_cart">
                                         <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
@@ -282,7 +297,8 @@
                                 </div>
                             </div>
                         </div>
-                     {% endfor %} 
+                        
+                        {% endfor %} 
                     </div>
                     <div class="pagination_style pagination justify-content-center">
                         <ul class="d-flex">
@@ -304,6 +320,80 @@
     </div>
     <!--shop  area end-->
 
+     <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><i class="ion-android-close"></i></span>
+                </button>
+                <div class="modal_body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="modal_zoom_gallery">
+                                   <div class="product_zoom_thumb">
+                                        <img src="assets/img/product/big-product/product1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="modal_right">
+                                    <div class="modal_title mb-10">
+                                        <h2>Donec Ac Tempus</h2>
+                                    </div>
+                                    <div class="modal_price mb-10">
+                                        <span class="new_price">$64.99</span>
+                                        <span class="old_price" >$78.99</span>
+                                    </div>
+                                    <div class="modal_description mb-15">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,  </p>
+                                    </div>
+                                    <div class="variants_selects">
+                                        <div class="variants_size">
+                                           <h2>size</h2>
+                                           <select class="select_option">
+                                               <option selected value="1">s</option>
+                                               <option value="1">m</option>
+                                               <option value="1">l</option>
+                                               <option value="1">xl</option>
+                                               <option value="1">xxl</option>
+                                           </select>
+                                        </div>
+                                        <div class="variants_color">
+                                           <h2>color</h2>
+                                           <select class="select_option">
+                                               <option selected value="1">purple</option>
+                                               <option value="1">violet</option>
+                                               <option value="1">black</option>
+                                               <option value="1">pink</option>
+                                               <option value="1">orange</option>
+                                           </select>
+                                        </div>
+                                        <div class="modal_add_to_cart">
+                                            <form action="#">
+                                                <input min="1" max="100" step="2" value="1" type="number">
+                                                <button type="submit">add to cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal_social">
+                                        <h2>Share this product</h2>
+                                        <ul>
+                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}
 
