@@ -6,15 +6,18 @@
 {% block stylesheets %}
     <style>
         .card-box img {
-            width: 90%; /* ou une largeur fixe */
-            height: auto; /* maintient le ratio de l'image */
-            max-height: 200px; /* ajustez selon la hauteur désirée */
-            object-fit: cover; /* assure que l'image couvre l'espace défini sans perdre ses proportions */
+            width: 90%; 
+            height: auto; 
+            max-height: 200px; 
+            object-fit: cover; 
          }
          .product_thumb{
             height:205px;
          }
-         
+         .variants_size{
+            display: flex;
+            gap: 8px;
+         }
     </style>
 
 {% endblock %}
@@ -242,8 +245,10 @@
                             <div class="single_product card-box">
                                 <div class="product_thumb">
                                     <a href="product-details.html">
+                                        {% set img = '' %}
                                         {% for imageCamera in camera.imageCameras %}
-                                            <img src="'%env(ENDPOINT_MINIO)%'/{{imageCamera.image}}" alt="Camera Image">
+                                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
+                                            {% set img = imageCamera.image %}
                                         {% endfor %}
                                     </a>
                                     <div class="product_action">
@@ -251,7 +256,7 @@
                                             <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
                                             data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
 
-                                            <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+                                            <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
                                             <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
                                             data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                                         </ul>
@@ -339,7 +344,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="modal_right">
                                     <div class="modal_title mb-10">
-                                        <h2>Donec Ac Tempus</h2>
+                                        <h2 class="txt-title"></h2>
                                     </div>
                                     <div class="modal_price mb-10">
                                         <span class="new_price">$64.99</span>
@@ -348,26 +353,65 @@
                                     <div class="modal_description mb-15">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,  </p>
                                     </div>
-                                    <div class="variants_selects">
-                                        <div class="variants_size">
-                                           <h2>size</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">s</option>
-                                               <option value="1">m</option>
-                                               <option value="1">l</option>
-                                               <option value="1">xl</option>
-                                               <option value="1">xxl</option>
-                                           </select>
+                                    <div class="variants_selects ">
+                                        <div class="variants_size" >
+                                            <div class="w-100" >
+                                                <h2>Angle Vision</h2>
+                                                <select class="select_option w-100">    
+                                                    <option selected value="1">90 degrés</option>
+                                                    <option value="1">120 degrés</option>
+                                                    <option value="1">180 degrés</option>
+                                                    <option value="1">360 degrés</option>
+                                                </select>
+                                            </div>
+                                            <div class="w-100">
+                                                <h2>Resolution</h2>
+                                                <select class="select_option w-100">   
+                                                    <option selected value="1">SD (Standard Definition)</option>
+                                                    <option value="1">HD (High Definition) </option>
+                                                    <option value="1">4K (Ultra High Definition)</option>
+                                                    
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="variants_color">
-                                           <h2>color</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">purple</option>
-                                               <option value="1">violet</option>
-                                               <option value="1">black</option>
-                                               <option value="1">pink</option>
-                                               <option value="1">orange</option>
-                                           </select>
+                                        <div class="variants_size">
+                                            <div class="w-100" >
+                                                <h2>Stockage</h2>
+                                                <select class="select_option w-100">
+                                                    <option selected value="1">2000 G</option>
+                                                    <option value="1">100 G</option>
+                                                    <option value="1">500 G</option>
+                                                    <option value="1">1000 G</option>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="w-100">
+                                                <h2>Materiaux</h2>
+                                                <select class="select_option w-100">
+                                                    <option selected value="1">Aluminium</option>
+                                                    <option value="1">Acier</option>
+                                                    <option value="1">Plastique</option>
+                                                    <option value="1">Polycarbonate</option>
+                                                    <option value="1">Silicone</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="panel-default">
+                                            <div class="variants_size">
+                                                <h2>Conectivite</h2>
+                                            </div>
+                                            
+                                            <div class="panel_radio">
+                                                <input id="" name="r" type="radio" data-target="createp_account" />
+                                                <span class="checkmark"></span>
+                                            </div>
+                                            <label for="payment1" data-toggle="collapse" data-target="#panel1" >Yes</label>
+                                            <div class="panel_radio">
+                                                <input id="" name="r" type="radio" data-target="createp_account" />
+                                                <span class="checkmark"></span>
+                                            </div>
+                                            <label for="payment1" data-toggle="collapse" data-target="#panel1" >Now</label>
+                                            
                                         </div>
                                         <div class="modal_add_to_cart">
                                             <form action="#">
@@ -397,7 +441,32 @@
     
 {% endblock %}
 
+{% block javascripts %}
 
+   <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        // Écoute du clic sur les boutons de vue rapide
+        document.querySelectorAll('.quick_view').forEach(button => {
+            button.addEventListener('click', function() {
+            var name = this.getAttribute('data-name');
+            var price = this.getAttribute('data-price');
+            var description = this.getAttribute('data-description');
+            var image = this.getAttribute('data-image');
+            
+            // Mettre à jour le contenu du modal
+            document.querySelector('#modal_box .modal_title h2').textContent = name;
+            document.querySelector('#modal_box .modal_price .new_price').textContent = "$" + price;
+            document.querySelector('#modal_box .modal_description p').textContent = description;
+            document.querySelector('#modal_box .modal_zoom_gallery .product_zoom_thumb img').src = image;
+            
+            // Vous pouvez ajouter d'autres mises à jour ici pour les tailles, couleurs, etc.
+            });
+        });
+        });
+    </script>
+
+
+{% endblock %}
 
 
 
