@@ -4,18 +4,32 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Client;
-use App\Entity\CodePromo;
 use App\Entity\Commande;
-use App\Repository\CommandeRepository;
+use App\Entity\CodePromo;
 use Symfony\Component\Mercure\Update;
+use App\Repository\CommandeRepository;
+use App\Service\CallApiCameraService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TestController extends AbstractController
 {
+    
+    #[Route('/testapi',name:'testapid')]
+    public function tdt(CallApiCameraService $call):Response
+    {
+        dd($call->getCameraData());
+    }
+
+
     #[Route('/', name: 'app_test')]
     public function index(): Response
     {
@@ -55,12 +69,7 @@ class TestController extends AbstractController
     }
 
 
-    #[Route('/login', name: 'login')]
-    public function dash(): Response
-    {
-        return $this->render('client/pages/login.html.twig');
-    }
-  
+    
 
 
     

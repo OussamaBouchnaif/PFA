@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 
@@ -55,6 +56,36 @@ class Camera
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(length: 40)]
+    private ?string $couleur = null;
+
+    #[ORM\Column]
+    private ?bool $visionNoctrune = null;
+
+    #[ORM\Column]
+    private ?float $poids = null;
+
+    #[ORM\Column(length: 200)]
+    private ?string $materiaux = null;
+
+    #[ORM\Column(length: 40)]
+    private ?string $resolution = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $angleVision = null;
+
+    #[ORM\Column]
+    private ?bool $connectivite = null;
+
+    #[ORM\Column]
+    private ?float $stockage = null;
+
+    #[ORM\Column(length: 40)]
+    private ?string $alimentation = null;
+
+    #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
+    private Collection $blogs;
+
     public function __construct()
     {
         $this->avisCameras = new ArrayCollection();
@@ -62,6 +93,7 @@ class Camera
         $this->ligneCommandes = new ArrayCollection();
         $this->imageCameras = new ArrayCollection();
         $this->ligneReductions = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -302,4 +334,151 @@ class Camera
 
         return $this;
     }
+
+    /**
+     * Get the value of imageCameras
+     */ 
+    
+
+    /**
+     * Set the value of imageCameras
+     *
+     * @return  self
+     */
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): static
+    {
+        $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    public function isVisionNoctrune(): ?bool
+    {
+        return $this->visionNoctrune;
+    }
+
+    public function setVisionNoctrune(bool $visionNoctrune): static
+    {
+        $this->visionNoctrune = $visionNoctrune;
+
+        return $this;
+    }
+
+    public function getPoids(): ?float
+    {
+        return $this->poids;
+    }
+
+    public function setPoids(float $poids): static
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getMateriaux(): ?string
+    {
+        return $this->materiaux;
+    }
+
+    public function setMateriaux(string $materiaux): static
+    {
+        $this->materiaux = $materiaux;
+
+        return $this;
+    }
+
+    public function getResolution(): ?string
+    {
+        return $this->resolution;
+    }
+
+    public function setResolution(string $resolution): static
+    {
+        $this->resolution = $resolution;
+
+        return $this;
+    }
+
+    public function getAngleVision(): ?string
+    {
+        return $this->angleVision;
+    }
+
+    public function setAngleVision(string $angleVision): static
+    {
+        $this->angleVision = $angleVision;
+
+        return $this;
+    }
+
+    public function isConnectivite(): ?bool
+    {
+        return $this->connectivite;
+    }
+
+    public function setConnectivite(bool $connectivite): static
+    {
+        $this->connectivite = $connectivite;
+
+        return $this;
+    }
+
+    public function getStockage(): ?float
+    {
+        return $this->stockage;
+    }
+
+    public function setStockage(float $stockage): static
+    {
+        $this->stockage = $stockage;
+
+        return $this;
+    }
+
+    public function getAlimentation(): ?string
+    {
+        return $this->alimentation;
+    }
+
+    public function setAlimentation(string $alimentation): static
+    {
+        $this->alimentation = $alimentation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Blog>
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): static
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs->add($blog);
+            $blog->addCamera($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): static
+    {
+        if ($this->blogs->removeElement($blog)) {
+            $blog->removeCamera($this);
+        }
+
+        return $this;
+    } 
+    
 }
