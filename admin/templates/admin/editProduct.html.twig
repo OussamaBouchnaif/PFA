@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add camera{% endblock %}
+{% block title %}Edit camera {% endblock %}
 
 
 {% block stylesheets %}
@@ -17,12 +17,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
+                                <h4 class="mb-sm-0">Edit Product</h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
+                                        <li class="breadcrumb-item active">Edit Product</li>
                                     </ol>
                                 </div>
 
@@ -176,12 +176,7 @@
                                     </div>
                                     <!-- end card body -->
                                 </div>
-                                <!-- end card -->
-                                {# <div class="text-end mb-3">
-                            <button type="submit"  class="btn btn-success">Ajouter</button>
-                                </div> #}
-                                               
-
+                                <!-- end card -->             
                             </div>
                             <!-- end col -->
 
@@ -246,25 +241,18 @@
                             {{ form_widget(form.connectivite, {'attr': {'class': 'form-control'}}) }}                                            </div>
                                         </div>
                                     </div>
-                                    <!-- end card body -->
-                                </div>
-                                 {# {{ form_end(form) }} #}
-                                 <button type="submit" class="btn btn-success">Enregistrer</button>
+                                </div>                      
+                            </div>
+                             <button type="submit" class="btn btn-success">Enregistrer</button>
                     <a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
                 
+                                {{ form_end(form) }}
 
-                                <!-- end card -->
-                {{ form_end(form) }}
-
-                                
-                                <!-- end card -->
-
-                            </div>
                             <!-- end col -->
                         </div>
                         <!-- end row -->
 
-                    
+
                 </div>
                 <!-- container-fluid -->
             </div>
