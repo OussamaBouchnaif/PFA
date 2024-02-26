@@ -74,12 +74,14 @@ class CameraController extends AbstractController
             return $this->redirectToRoute('camera');
         } 
         return $this->render('admin/addProduct.html.twig', [
+     
             'form' => $formCamera->createView(),'formI' => $formImage->createView(),
         ]);
     }
 
 
-        #[Route('/Edit_camera/{id}', name: 'Edit_camera')]
+    
+    #[Route('/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
     {
         // Créer le formulaire de modification de la caméra avec les données de la caméra existante
@@ -90,16 +92,13 @@ class CameraController extends AbstractController
         // Créer le formulaire de modification de l'image de la caméra
         $formImage = $this->createForm(PhotoType::class, null, [
             'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-
+        ]); 
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-
         // Vérifier si le formulaire de modification de la caméra est soumis et valide
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Si le formulaire est soumis et valide, enregistrer les modifications dans la base de données
             $entityManager->flush();
-
             // Ajouter un message flash pour confirmer la modification
             $this->addFlash('success', 'Camera updated successfully!');
 
@@ -109,12 +108,16 @@ class CameraController extends AbstractController
 
         // Afficher le formulaire de modification de la caméra
         return $this->render('admin/editProduct.html.twig', [
+
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
         ]);
     }
 
         
+    
+    
+
     
 
     #[Route('/Delete_camera/{id}', name: 'Delete_camera')]

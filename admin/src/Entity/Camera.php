@@ -7,10 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
-
 class Camera
 {
     #[ORM\Id]
@@ -18,18 +17,25 @@ class Camera
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "Le nom ne peut pas être vide")]
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message: "La description ne peut pas être vide")]
     #[ORM\Column(length: 400)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide")]
+    #[Assert\GreaterThan(value: 0, message: "Le prix doit être supérieur à zéro")]
+    #[ORM\Column(type: 'float')]
     private ?float $prix = null;
 
+    #[Assert\NotBlank(message: "Le stock ne peut pas être vide")]
+    #[Assert\GreaterThan(value: 0, message: "Le stock doit être supérieur à zéro")]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $stock = null;
 
+    #[Assert\NotBlank(message: "La date d'ajout ne peut pas être vide")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateAjout = null;
 
@@ -55,30 +61,41 @@ class Camera
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    #[Assert\NotBlank(message: "La couleur ne peut pas être vide")]
     #[ORM\Column(length: 40)]
     private ?string $couleur = null;
 
-    #[ORM\Column]
+    #[Assert\NotNull(message: "La vision nocturne doit être définie")]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $visionNoctrune = null;
 
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le poids ne peut pas être vide")]
+    #[Assert\GreaterThan(value: 0, message: "Le poids doit être supérieur à zéro")]
+    #[ORM\Column(type: 'float')]
     private ?float $poids = null;
 
+    #[Assert\NotBlank(message: "Le matériau ne peut pas être vide")]
     #[ORM\Column(length: 200)]
     private ?string $materiaux = null;
 
+    #[Assert\NotBlank(message: "La résolution ne peut pas être vide")]
     #[ORM\Column(length: 40)]
     private ?string $resolution = null;
 
+    #[Assert\NotBlank(message: "L'angle de vision ne peut pas être vide")]
     #[ORM\Column(length: 20)]
     private ?string $angleVision = null;
 
-    #[ORM\Column]
+    #[Assert\NotNull(message: "La connectivité doit être définie")]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $connectivite = null;
 
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le stockage ne peut pas être vide")]
+    #[Assert\GreaterThan(value: 0, message: "Le stockage doit être supérieur à zéro")]
+    #[ORM\Column(type: 'float')]
     private ?float $stockage = null;
 
+    #[Assert\NotBlank(message: "L'alimentation ne peut pas être vide")]
     #[ORM\Column(length: 40)]
     private ?string $alimentation = null;
 
