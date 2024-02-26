@@ -21,7 +21,7 @@ class CameraController extends AbstractController
     #[Route('/', name: 'ds')]
     public function dash(): Response
     {
-        return $this->render('admin/addProduct.html.twig');
+        return $this->render('admin/test.html.twig');
     }
 
     #[Route('/camera/details/{id}', name: 'camera_details')]
