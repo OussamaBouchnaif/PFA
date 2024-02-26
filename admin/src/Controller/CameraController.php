@@ -21,13 +21,23 @@ class CameraController extends AbstractController
     #[Route('/', name: 'ds')]
     public function dash(): Response
     {
+        return $this->render('admin/test.html.twig');
+    }
+    #[Route('/add', name: 'd')]
+    public function add(): Response
+    {
         return $this->render('admin/addProduct.html.twig');
+    }
+    #[Route('/cus', name: 'cus')]
+    public function cus(): Response
+    {
+        return $this->render('admin/customers.html.twig');
     }
 
     #[Route('/camera/details/{id}', name: 'camera_details')]
     public function cameraDetails(Camera $camera, CameraRepository $cameraRepository): Response
     {
-        return $this->render('dashboard/camera/camera-details.html.twig', ['camera' => $camera]);
+        return $this->render('admin/details.html.twig', ['camera' => $camera]);
     }
 
     #[Route('/camera', name: 'camera')]
@@ -35,7 +45,7 @@ class CameraController extends AbstractController
     {
          $cameras = $cameraRepository->findAll();
 
-         return $this->render('dashboard/camera/camera_list.html.twig', [
+         return $this->render('admin/test.html.twig', [
             'cameras' => $cameras,
         ]);
         
@@ -63,10 +73,12 @@ class CameraController extends AbstractController
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         } 
-        return $this->render('dashboard/camera/camera_form.html.twig', [
+        return $this->render('admin/addProduct.html.twig', [
+     
             'form' => $formCamera->createView(),'formI' => $formImage->createView(),
         ]);
     }
+
 
     
     #[Route('/Edit_camera/{id}', name: 'Edit_camera')]
@@ -80,29 +92,29 @@ class CameraController extends AbstractController
         // Créer le formulaire de modification de l'image de la caméra
         $formImage = $this->createForm(PhotoType::class, null, [
             'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-    
+        ]); 
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-    
         // Vérifier si le formulaire de modification de la caméra est soumis et valide
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Si le formulaire est soumis et valide, enregistrer les modifications dans la base de données
             $entityManager->flush();
-    
             // Ajouter un message flash pour confirmer la modification
             $this->addFlash('success', 'Camera updated successfully!');
-    
+
             // Rediriger vers la liste des caméras ou une autre page appropriée
             return $this->redirectToRoute('camera');
         }
-    
+
         // Afficher le formulaire de modification de la caméra
-        return $this->render('dashboard/camera/edit_camera.html.twig', [
+        return $this->render('admin/editProduct.html.twig', [
+
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
         ]);
     }
+
+        
     
     
 
