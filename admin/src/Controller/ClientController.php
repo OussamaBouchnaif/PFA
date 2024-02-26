@@ -29,7 +29,7 @@ class ClientController extends AbstractController
         );
 
         // Rendre la vue avec la pagination
-        return $this->render('dashboard/client/client_list.html.twig', [
+        return $this->render('admin/client/client_list.html.twig', [
             'pagination' => $pagination,
         ]);
     }
