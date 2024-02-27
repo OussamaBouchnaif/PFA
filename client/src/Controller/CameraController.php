@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Camera;
 use App\Repository\CameraRepository;
-use App\Service\CallApiCameraService;
+use App\Service\Api\CallApiCameraService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

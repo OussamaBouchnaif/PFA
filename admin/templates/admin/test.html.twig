@@ -319,7 +319,7 @@
                                             <div class="row g-4">
                                                 <div class="col-sm-auto">
                                                     <div>
-                                                        <a href="{{ path('Add_camera') }}" class="btn btn-success" id="addproduct-btn">
+                                                        <a href="{{ path('addtest') }}" class="btn btn-success" id="addproduct-btn">
                                                         <i class="ri-add-line align-bottom me-1"></i> Add Product</a>
                                                    
                                             <button type="button" class="btn btn-primary" onclick="confirmPrint()">
@@ -408,7 +408,7 @@
                                                     <td class="align-middle text-center">{{ camera.stock }}</td>
                                                     <td class="align-middle text-center">{{ camera.categorie.nom }}</td>
                                                     <td class="text-center align-middle">
-                                                        <button  class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                        <button  class="dropdown-item text-muted">
                                                             <i class="ri-delete-bin-line align-bottom me-2"></i> <!-- Icône pour la suppression -->
                                                         </button>
                                                         <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
@@ -490,7 +490,7 @@
 
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
     <script>  
-    document.addEventListener('DOMContentLoaded', function () {
+     document.addEventListener('DOMContentLoaded', function () {
             var addCameraModal = document.getElementById('addCameraModal');
             var addCameraForm = document.getElementById('addCameraForm');
             document.querySelector('[data-bs-target="#addCameraModal"]').addEventListener('click', function () {

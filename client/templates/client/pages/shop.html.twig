@@ -6,17 +6,28 @@
 {% block stylesheets %}
     <style>
         .card-box img {
-            width: 90%; 
-            height: auto; 
+            width: 70%; 
+            margin: auto;
+            height: auto;
+            
             max-height: 200px; 
             object-fit: cover; 
          }
          .product_thumb{
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
             height:205px;
          }
          .variants_size{
             display: flex;
             gap: 8px;
+         }
+         .product-details.html
+         {
+            
          }
     </style>
 
@@ -240,7 +251,7 @@
                     </div>
                      <!--shop toolbar end-->
                     <div class="row shop_wrapper">
-                        {%  for camera in cameras['hydra:member'] %}
+                        {%  for camera in cameras %}
                         <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                             <div class="single_product card-box">
                                 <div class="product_thumb">
