@@ -40,7 +40,7 @@ class TestController extends AbstractController
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         } 
-        return $this->render('dashboard/camera/camera_form.html.twig', [
+        return $this->render('admin/addProduct.html.twig', [
             'form' => $formCamera->createView(),'formI' => $formImage->createView(),
         ]);
     }
