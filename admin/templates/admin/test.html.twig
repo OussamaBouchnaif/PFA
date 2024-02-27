@@ -12,7 +12,11 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
     <style>
         #myTable{
-            border: 1px rgb(218, 212, 212);
+            border: 1px white;
+        }
+        tr{
+                        border: 1px white;
+
         }
     </style>
 {% endblock %}
@@ -64,83 +68,17 @@
 
                                     <div class="accordion accordion-flush filter-accordion">
 
-                                        <div class="card-body border-bottom">
-                                            <div>
-                                                <p class="text-muted text-uppercase fs-13 fw-medium mb-2">Products</p>
-                                                <ul class="list-unstyled mb-0 filter-list">
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Grocery</h5>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Fashion</h5>
-                                                            </div>
-                                                            <div class="flex-shrink-0 ms-2">
-                                                                <span class="badge bg-light text-muted">5</span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Watches</h5>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Electronics</h5>
-                                                            </div>
-                                                            <div class="flex-shrink-0 ms-2">
-                                                                <span class="badge bg-light text-muted">5</span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Furniture</h5>
-                                                            </div>
-                                                            <div class="flex-shrink-0 ms-2">
-                                                                <span class="badge bg-light text-muted">6</span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Automotive Accessories</h5>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Appliances</h5>
-                                                            </div>
-                                                            <div class="flex-shrink-0 ms-2">
-                                                                <span class="badge bg-light text-muted">7</span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a href="#" class="d-flex py-1 align-items-center">
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="fs-14 mb-0 listname">Kids</h5>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                       <div class="card-body border-bottom">
+                                        <div>
+                                            <label for="categorySelect">Select Category:</label>
+                                        <select class="form-control" id="categorySelect">
+                                            <option value="all">All Categories</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.getNom() }}">{{ category.getNom() }}</option>
+                                            {% endfor %}
+                                        </select>
                                         </div>
+                                    </div>
 
                                         <div class="card-body border-bottom">
                                             <p class="text-muted text-uppercase fs-13 fw-medium mb-4">Price</p>
@@ -328,20 +266,11 @@
 
                                             <button type="button" class="btn btn-success" onclick="confirmExport()">
                                                 <i class="ri-file-excel-line align-middle me-1"></i> Exporter vers Excel
-                                            </button>
-
-                                            {# <a href="{{ path('addtest') }}" class="btn btn-danger">
-                                                <i class="ri-camera-add-line align-middle me-1"></i> Ajouter une nouvelle caméra
-                                            </a> #}
+                                            </button>                                       
                                         </div>
                                                 </div>
                                                 <div class="col-sm">
-                                                    <div class="d-flex justify-content-sm-end">
-                                                        <div class="search-box ms-2">
-                                                            <input type="text" class="form-control" id="searchProductList" placeholder="Search Products...">
-                                                            <i class="ri-search-line search-icon"></i>
-                                                        </div>
-                                                    </div>
+                                                   d
                                                 </div>
                                             </div>
                                         </div>
@@ -396,9 +325,8 @@
                                             {% for camera in cameras %}
                                                 <tr>
                                                    <td class="align-middle text-center">
-                                                    {# {% for imageCamera in camera.imageCameras %}
-                                                   <img src="{{ asset('uploads/' ~ imageCamera.filename) }}" alt="Photo de la caméra" class="rounded-circle avatar-xxs me-1" />
-                                                    {% endfor %} #}
+                                                    {% for imageCamera in camera.imageCameras %}
+                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">                                                    {% endfor %}
 
                                                    </td>
                                                     <td class="align-middle text-center">{{ camera.nom }}</td>
@@ -406,16 +334,15 @@
                                                     <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
                                                     <td class="align-middle text-center">{{ camera.status }}</td>
                                                     <td class="align-middle text-center">{{ camera.stock }}</td>
-                                                    <td class="align-middle text-center">{{ camera.categorie.nom }}</td>
-                                                    <td class="text-center align-middle">
-                                                        <button  class="dropdown-item text-muted">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i> <!-- Icône pour la suppression -->
-                                                        </button>
+                                                    <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
+                                                    <td class="text-center align-middle">                                          
+                                                        <button  class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                            <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
                                                         <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i> <!-- Icône pour la modification -->
+                                                            <i class="ri-pencil-line align-bottom me-2"></i>Edit
                                                         </a>
                                                         <a class="dropdown-item text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
-                                                            <i class="ri-eye-fill align-bottom me-2"></i> <!-- Icône pour la visualisation des détails -->
+                                                            <i class="ri-eye-fill align-bottom me-2"></i> View
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -480,6 +407,25 @@
         
     </div>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal body content goes here -->
+                Your modal content goes here...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 
@@ -546,6 +492,72 @@
         printWindow.document.close();
         printWindow.print();
     }
+     
+    function filterTableByCategory(category) {
+    const rows = document.querySelectorAll('#myTable tbody tr');
+    
+    rows.forEach(function(row) {
+        const categoryCell = row.querySelector('.category-cell');
+        const rowCategory = categoryCell.textContent.trim();
+        
+        if (category === '' || rowCategory === category) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionnez l'élément de liste déroulante des catégories
+    var categorySelect = document.getElementById('categorySelect');
+
+    // Ajoutez un écouteur d'événements de changement à l'élément de liste déroulante
+    categorySelect.addEventListener('change', function() {
+        // Récupérez la valeur sélectionnée dans la liste déroulante
+        var selectedCategory = categorySelect.value;
+
+        // Appelez la fonction pour filtrer la table par catégorie
+        filterTableByCategory(selectedCategory);
+    });
+});
+
+function filterTableByCategory(categoryName) {
+    // Sélectionnez toutes les lignes de la table
+    var rows = document.querySelectorAll('#myTable tbody tr');
+
+    // Parcourez toutes les lignes de la table
+    rows.forEach(function(row) {
+        // Vérifiez si la catégorie de cette ligne correspond à celle sélectionnée ou si toutes les catégories sont sélectionnées
+        if (categoryName === 'All' || row.querySelector('.category-cell').textContent.trim() === categoryName) {
+            // Affichez la ligne si la catégorie correspond ou si toutes les catégories sont sélectionnées
+            row.style.display = '';
+        } else {
+            // Masquez la ligne si la catégorie ne correspond pas
+            row.style.display = 'none';
+        }
+    });
+}
+
+
+
+
+function filterTableByCategory(categoryName) {
+    // Sélectionnez toutes les lignes de la table
+    var rows = document.querySelectorAll('#myTable tbody tr');
+
+    // Parcourez toutes les lignes de la table
+    rows.forEach(function(row) {
+        // Vérifiez si le nom de la catégorie de cette ligne correspond à celui sélectionné
+        if (row.querySelector('td:nth-child(7)').textContent.trim() === categoryName) {
+            // Affichez la ligne si la catégorie correspond
+            row.style.display = '';
+        } else {
+            // Masquez la ligne si la catégorie ne correspond pas
+            row.style.display = 'none';
+        }
+    });
+}
+
+
 
     function exportToExcel() {
         var table = document.getElementById('myTable');
