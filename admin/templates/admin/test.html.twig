@@ -57,13 +57,10 @@
                                                 <h5 class="fs-16">Filters</h5>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <a href="#" class="text-decoration-underline" id="clearall">Clear All</a>
+                                                <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
                                             </div>
-                                        </div>
 
-                                        <div class="filter-choices-input">
-                                            <input class="form-control" data-choices data-choices-removeItem type="text" id="filter-choices-input" value="T-Shirts" />
-                                        </div>
+                                    </div>                                   
                                     </div>
 
                                     <div class="accordion accordion-flush filter-accordion">
@@ -80,12 +77,14 @@
                                         </div>
                                     </div>
 
-                                        <div class="card-body border-bottom">
+                                       <div class="card-body border-bottom">
                                             <p class="text-muted text-uppercase fs-13 fw-medium mb-4">Price</p>
 
                                             <div id="product-price-range"></div>
                                             <div class="formCost d-flex gap-2 align-items-center mt-3">
-                                                <input class="form-control form-control-sm" type="text" id="minCost" value="0" /> <span class="fw-semibold text-muted">to</span> <input class="form-control form-control-sm" type="text" id="maxCost" value="1000" />
+                                                <input class="form-control form-control-sm" type="text" id="minCost"  />
+                                                <span class="fw-semibold text-muted">to</span>
+                                                <input class="form-control form-control-sm" type="text" id="maxCost"  />
                                             </div>
                                         </div>
 
@@ -270,7 +269,7 @@
                                         </div>
                                                 </div>
                                                 <div class="col-sm">
-                                                   d
+                                                  
                                                 </div>
                                             </div>
                                         </div>
@@ -308,7 +307,7 @@
                                         <!-- end card header -->
                                         <div class="card-body">
 
-                                 <table id="myTable" class="table">
+                                     <table id="myTable" class="table">
                                         <thead>
                                             <tr class="align-middle custom-header-bg">
                                                 <th class="custom-header text-center">Photo</th>
@@ -317,38 +316,39 @@
                                                 <th class="custom-header text-center">Date Ajout</th>
                                                 <th class="custom-header text-center">Statut</th>
                                                 <th class="custom-header text-center">Stock</th>
-                                                <th class="custom-header text-center">Catégorie</th>               
+                                                <th class="custom-header text-center">Catégorie</th>
                                                 <th class="custom-header text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
-                                                <tr>
-                                                   <td class="align-middle text-center">
+                                            <tr>
+                                                <td class="align-middle text-center">
                                                     {% for imageCamera in camera.imageCameras %}
-                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">                                                    {% endfor %}
-
-                                                   </td>
-                                                    <td class="align-middle text-center">{{ camera.nom }}</td>
-                                                    <td class="align-middle text-center">{{ camera.prix }}</td>
-                                                    <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
-                                                    <td class="align-middle text-center">{{ camera.status }}</td>
-                                                    <td class="align-middle text-center">{{ camera.stock }}</td>
-                                                    <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
-                                                    <td class="text-center align-middle">                                          
-                                                        <button  class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
-                                                        <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i>Edit
-                                                        </a>
-                                                        <a class="dropdown-item text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
-                                                            <i class="ri-eye-fill align-bottom me-2"></i> View
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
+                                                    {% endfor %}
+                                                </td>
+                                                <td class="align-middle text-center">{{ camera.nom }}</td>
+                                                <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
+                                                <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
+                                                <td class="align-middle text-center">{{ camera.status }}</td>
+                                                <td class="align-middle text-center">{{ camera.stock }}</td>
+                                                <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
+                                                <td class="text-center align-middle">
+                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
+                                                    </button>
+                                                    <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
+                                                        <i class="ri-pencil-line align-bottom me-2"></i>Edit
+                                                    </a>
+                                                    <a class="dropdown-item text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
+                                                        <i class="ri-eye-fill align-bottom me-2"></i> View
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             {% endfor %}
                                         </tbody>
-                                  </table>
+                                    </table>
 
 
                                             <div class="tab-content text-muted">
@@ -362,7 +362,7 @@
                                                 </div>
                                                 <!-- end tab pane -->
 
-                                                <div class="tab-pane" id="productnav-draft" role="tabpanel">
+                                                <div class="noDataMessage" id="productnav-draft" role="tabpanel">
                                                     <div class="py-4 text-center">
                                                         <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
                                                         </lord-icon>
@@ -407,25 +407,6 @@
         
     </div>
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Modal body content goes here -->
-                Your modal content goes here...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 
@@ -615,5 +596,76 @@ function filterTableByCategory(categoryName) {
             exportToExcel();
         }
     }
+
+
+     document.addEventListener('DOMContentLoaded', function() {
+        // Sélectionner les éléments d'entrée pour les valeurs de prix
+        var minCostInput = document.getElementById('minCost');
+        var maxCostInput = document.getElementById('maxCost');
+
+        // Ajouter des écouteurs d'événements pour détecter les changements de valeur
+        minCostInput.addEventListener('input', filterTableByPrice);
+        maxCostInput.addEventListener('input', filterTableByPrice);
+    });
+
+  function filterTableByPrice() {
+    // Récupérer les valeurs de prix minimales et maximales
+    var minPrice = parseFloat(document.getElementById('minCost').value);
+    var maxPrice = parseFloat(document.getElementById('maxCost').value);
+
+    // Sélectionner toutes les lignes du tableau
+    var rows = document.querySelectorAll('#myTable tbody tr');
+
+    // Variable pour indiquer si au moins une ligne est affichée
+    var atLeastOneRowDisplayed = false;
+
+    // Parcourir toutes les lignes du tableau
+    rows.forEach(function(row) {
+        // Récupérer le prix de la caméra dans cette ligne
+        var cameraPrice = parseFloat(row.querySelector('.price-cell').textContent);
+
+        // Vérifier si le prix est compris dans la plage sélectionnée
+        if (cameraPrice >= minPrice && cameraPrice <= maxPrice) {
+            // Afficher la ligne si le prix est dans la plage
+            row.style.display = '';
+            atLeastOneRowDisplayed = true;
+        } else {
+            // Masquer la ligne si le prix n'est pas dans la plage
+            row.style.display = 'none';
+        }
+    });
+
+    // Afficher un message si aucune ligne n'est affichée
+    if (!atLeastOneRowDisplayed) {
+        document.getElementById('noDataMessage').style.display = 'block';
+    } else {
+        document.getElementById('noDataMessage').style.display = 'none';
+    }
+}
+
+
+
+  
+function clearAllFilters() {
+    // Réinitialiser les valeurs des champs de filtre pour la catégorie
+    document.getElementById('categorySelect').value = 'All';
+
+    // Réinitialiser les valeurs des champs de filtre pour le prix
+    document.getElementById('minCost').value = '0';
+    document.getElementById('maxCost').value = '1000';
+
+    // Réinitialiser les filtres de la catégorie
+    filterTableByCategory('All');
+
+    // Réinitialiser les filtres du prix
+    filterTableByPrice();
+}
+
+
+
+
+
+
+
     </script>
 {% endblock %}
