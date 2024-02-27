@@ -51,15 +51,11 @@
 
                                                 <!-- The slideshow/carousel -->
                                                 <div class="carousel-inner">
-                                                    {# <div class="carousel-item active">
-                                                    <img src="assets/images/products/img-8.png" alt="Los Angeles" class="d-block w-100">
-                                                    </div> #}
+                                                   
                                                     <div class="carousel-item">
-                                                    {% for image in camera.imageCameras %}
-                                                        <div class="tab-pane{% if loop.first %} active{% endif %}" id="pic-{{ loop.index }}">
-                                                            <img src="{{ asset('uploads/' ~ image.image) }}" alt="Camera Image" />
-                                                        </div>
-                                                    {% endfor %}
+                                                     <div class="carousel-item active">
+                                                    <img src="assets/images/products/img-8.png" alt="Los Angeles" class="d-block w-100">
+                                                    </div>
                                                     </div>
                                                     
                                                 </div>
