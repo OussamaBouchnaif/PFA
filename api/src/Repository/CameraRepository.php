@@ -22,7 +22,10 @@ class CameraRepository extends ServiceEntityRepository
     }
 
 
-    
+    public function getcamerabycatergorie()
+    {
+        
+    }
 
 //    /**
 //     * @return Camera[] Returns an array of Camera objects
