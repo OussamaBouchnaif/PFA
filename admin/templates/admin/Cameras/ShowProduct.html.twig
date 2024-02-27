@@ -104,7 +104,11 @@
                                             </div>
                                             <div class="flex-shrink-0">
 <<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
+<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                                 <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+=======
+                                                <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+>>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
 =======
                                                 <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
 >>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
@@ -318,11 +322,18 @@
                                             <button type="button" class="btn btn-success" onclick="confirmExport()">
                                                 <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
                                             </button>                                       
+<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                             </div>
                                                     </div>
                                                     <div class="col-sm">
                                                     
                                                     </div>
+=======
+                                        </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                  
+>>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                                 </div>
                                             </div>
 
@@ -374,6 +385,7 @@
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
+<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                             <tr>                                
                                                 <td>
                                                     <div class="avatar-group">
@@ -385,6 +397,13 @@
                                                     </div>
                                                     
 
+=======
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    {% for imageCamera in camera.imageCameras %}
+                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
+                                                    {% endfor %}
+>>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                                 </td>
                                                 <td class="align-middle text-center">{{ camera.nom }}</td>
                                                 <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
@@ -392,6 +411,7 @@
                                                 <td class="align-middle text-center">{{ camera.status }}</td>
                                                 <td class="align-middle text-center">{{ camera.stock }}</td>
                                                 <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
+<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                                 <td class="text-center align-middle horizontal-buttons">
                                                     <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
                                                         <i class="ri-delete-bin-line align-bottom me-2"></i> 
@@ -409,6 +429,20 @@
 
                                                 </td>
                                              </tr>
+=======
+                                                <td class="text-center align-middle">
+                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
+                                                    </button>
+                                                    <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
+                                                        <i class="ri-pencil-line align-bottom me-2"></i>Edit
+                                                    </a>
+                                                    <a class="dropdown-item text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
+                                                        <i class="ri-eye-fill align-bottom me-2"></i> View
+                                                    </a>
+                                                </td>
+                                            </tr>
+>>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                             {% endfor %}
                                         </tbody>
                                     </table>
@@ -426,10 +460,18 @@
                                                 <!-- end tab pane -->
 
                                                 <div class="noDataMessage" id="productnav-draft" role="tabpanel">
+<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                                    <div class="py-4 text-center" id="noDataMessage" style="display: none;">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
                                                     <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
                                                 </div>
+=======
+                                                    <div class="py-4 text-center">
+                                                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
+                                                        </lord-icon>
+                                                        <h5 class="mt-4">Sorry! No Result Found</h5>
+                                                    </div>
+>>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                                 </div>
                                                 <!-- end tab pane -->
                                             </div>
