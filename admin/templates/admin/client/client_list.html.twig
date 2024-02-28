@@ -90,16 +90,6 @@
     <div class="container">
         <h1 class="text-center mb-4">Liste des clients</h1>
 
-        <!-- Recherche par e-mail -->
-        <div class="row mb-3">
-            <div class="col">
-                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par e-mail...">
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-primary" onclick="searchByEmail()">Rechercher</button>
-            </div>
-        </div>
-
         <!-- Tableau des clients -->
         <table id="myTable" class="table">
             <thead>
@@ -151,6 +141,12 @@
     <script src="{{ asset('assets_dashboard/js/client.js') }}"></script>
     <script>
         $(document).ready(function() {
+    // Destroy the existing DataTable instance (if it exists)
+    if ($.fn.DataTable.isDataTable('#myTable')) {
+        $('#myTable').DataTable().destroy();
+    }
+
+    // Initialize the DataTable plugin on the table
     $('#myTable').DataTable({
         "language": {
             "emptyTable": "Aucun élément trouvé",
@@ -163,10 +159,10 @@
                 "next": "Suivant",
                 "previous": "Précédent"
             }
-        },
-        "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "Tous"] ] // Add this option for "Show entries"
+        }
     });
 });
+
 
     </script>
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
