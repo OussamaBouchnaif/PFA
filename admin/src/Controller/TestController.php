@@ -41,7 +41,8 @@ class TestController extends AbstractController
             return $this->redirectToRoute('camera');
         } 
         return $this->render('admin/addProduct.html.twig', [
-            'form' => $formCamera->createView(),'formI' => $formImage->createView(),
+     
+            'form' => $formCamera->createView(),'formImage' => $formImage->createView(),
         ]);
     }
 }
