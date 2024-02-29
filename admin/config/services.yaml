@@ -33,4 +33,4 @@ services:
             use_path_style_endpoint: true
             credentials:
                 key: 'access1234'
-                secret: 'scret1234'
+                secret: 'secret1234'

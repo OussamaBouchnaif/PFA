@@ -15,9 +15,21 @@ class CallApiCameraService
         $this->appDefaultApi = $appDefaultApi;
         $this->serializer = $serializer;
     }
-    public function getCameraData():array
+    public function getAllCamera():array
     {
-        $response = $this->appDefaultApi->request('GET', '/api/cameras',['headers' => [
+        return $this->getCameraData('api/cameras');
+    }
+    public function getCameraByCategorie(String $categorie):array
+    {
+        return $this->getCameraData('api/cameras/?categorie.nom='.$categorie);
+    }
+    public function getCameraByPrix(int $prix1 , int $prix2)
+    {
+        return $this->getCameraData('api/cameras/?prix%5Bbetween%5D='.$prix1.'..'.$prix2);
+    }
+    public function getCameraData(String $endpoint):array
+    {
+        $response = $this->appDefaultApi->request('GET', $endpoint,['headers' => [
             'Content-Type' => 'application/json',
         ]]);
         $jsonData = $response->getContent(); 

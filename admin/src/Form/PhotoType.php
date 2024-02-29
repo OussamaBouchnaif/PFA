@@ -15,13 +15,10 @@ class PhotoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', VichImageType::class, [
-                    
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'required' => false
-            ]);
+        ->add('imageFile', VichImageType::class, [
+            'required' => false,
+           
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
