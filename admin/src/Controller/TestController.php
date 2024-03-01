@@ -27,10 +27,10 @@ class TestController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-    
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+        dd($formCamera->getData());
+        if ($formCamera->isSubmitted() ) {
             $camera = $formCamera->getData();
-            $image = $formImage->getData()->getimageFile();
+            $image = $formImage->getData()->getImageFile();
             
             $imageCamera->setImage($image); 
             $camera->addImageCamera($imageCamera);

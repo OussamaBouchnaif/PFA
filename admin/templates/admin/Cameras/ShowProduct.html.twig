@@ -7,6 +7,7 @@
 {% block stylesheets %}
     {{ parent() }}
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
@@ -15,9 +16,54 @@
             border: 1px white;
         }
         tr{
-                        border: 1px white;
+         border: 1px white;
 
         }
+        .horizontal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .horizontal-buttons .dropdown-item,
+    .horizontal-buttons .text-muted {
+        margin-right: 10px; /* Adjust spacing between buttons */
+    }
+    .custom-header-bg {
+        background-color: #f8f9fa; /* Custom header background color */
+    }
+
+    .custom-header {
+        color: #495057; /* Custom header text color */
+    }
+
+    .price-cell {
+        color: #28a745; /* Price cell text color */
+    }
+
+    .category-cell {
+        color: #007bff; /* Category cell text color */
+    }
+
+    
+
+    .horizontal-buttons .dropdown-item:hover,
+    .horizontal-buttons .text-muted:hover {
+        color: #0056b3; /* Change color on hover */
+    }
+
+    .dropdown-item i {
+        color: #777; /* Default icon color */
+    }
+
+    /* Hover effect for table rows */
+    tbody tr:hover {
+        background-color: #f0f0f0; /* Change background color on hover */
+    }
+
+    /* Add spacing between table rows */
+    tbody tr:not(:last-child) {
+        margin-bottom: 10px; /* Adjust spacing between rows */
+    }
     </style>
 {% endblock %}
 
@@ -57,7 +103,7 @@
                                                 <h5 class="fs-16">Filters</h5>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
                                             </div>
 
                                     </div>                                   
@@ -256,23 +302,23 @@
                                             <div class="row g-4">
                                                 <div class="col-sm-auto">
                                                     <div>
-                                                        <a href="{{ path('addtest') }}" class="btn btn-success" id="addproduct-btn">
+                                                        <a href="{{ path('Add_camera') }}" class="btn btn-success" id="addproduct-btn">
                                                         <i class="ri-add-line align-bottom me-1"></i> Add Product</a>
                                                    
                                             <button type="button" class="btn btn-primary" onclick="confirmPrint()">
-                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer le tableau
+                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
                                             </button>
 
                                             <button type="button" class="btn btn-success" onclick="confirmExport()">
-                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter vers Excel
+                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
                                             </button>                                       
-                                        </div>
-                                                </div>
-                                                <div class="col-sm">
-                                                  
+                                            </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                    
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
                                         <div class="card-header">
                                             <div class="row align-items-center">
@@ -322,35 +368,30 @@
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
-
-                                                <tr>
-                                                    <td>
-                                                        <div class="avatar-group">
-                                                            {% for imageCamera in camera.imageCameras %}
-                                                            <a href="javascript: void(0);" class="avatar-group-item "  data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
-                                                                <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt=""  class="rounded-circle avatar-xxs">
-                                                            </a>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </td>
-                                                   
-                                                    <td class="align-middle text-center">{{ camera.nom }}</td>
-                                                    <td class="align-middle text-center">{{ camera.prix }}</td>
-                                                    <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
-                                                    <td class="align-middle text-center">{{ camera.status }}</td>
-                                                    <td class="align-middle text-center">{{ camera.stock }}</td>
-                                                    <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
-                                                    <td class="text-center align-middle">                                          
-                                                        <button  class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
-                                                        <a class="dropdown-item text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i>Edit
-                                                        </a>
-                                                        <a class="dropdown-item text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
-                                                            <i class="ri-eye-fill align-bottom me-2"></i> View
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    {% for imageCamera in camera.imageCameras %}
+                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
+                                                    {% endfor %}
+                                                </td>
+                                                <td class="align-middle text-center">{{ camera.nom }}</td>
+                                                <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
+                                                <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
+                                                <td class="align-middle text-center">{{ camera.status }}</td>
+                                                <td class="align-middle text-center">{{ camera.stock }}</td>
+                                                <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
+                                                <td class="text-center align-middle horizontal-buttons">
+                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> 
+                                                    </button>
+                                                    <a class="text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
+                                                        <i class="ri-pencil-line align-bottom me-2"></i> 
+                                                    </a>
+                                                    <a class="text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
+                                                        <i class="ri-eye-fill align-bottom me-2"></i> 
+                                                    </a>
+                                                </td>
+                                             </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
@@ -422,7 +463,7 @@
 
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
     <script>  
-     document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
             var addCameraModal = document.getElementById('addCameraModal');
             var addCameraForm = document.getElementById('addCameraForm');
             document.querySelector('[data-bs-target="#addCameraModal"]').addEventListener('click', function () {
@@ -479,20 +520,8 @@
         printWindow.print();
     }
      
-    function filterTableByCategory(category) {
-    const rows = document.querySelectorAll('#myTable tbody tr');
-    
-    rows.forEach(function(row) {
-        const categoryCell = row.querySelector('.category-cell');
-        const rowCategory = categoryCell.textContent.trim();
-        
-        if (category === '' || rowCategory === category) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-}document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
     // Sélectionnez l'élément de liste déroulante des catégories
     var categorySelect = document.getElementById('categorySelect');
 
@@ -501,14 +530,16 @@
         // Récupérez la valeur sélectionnée dans la liste déroulante
         var selectedCategory = categorySelect.value;
 
-        // Appelez la fonction pour filtrer la table par catégorie
+        // Appelez la fonction pour filtrer la table par catégorie et afficher/masquer le message en conséquence
         filterTableByCategory(selectedCategory);
     });
 });
-
 function filterTableByCategory(categoryName) {
     // Sélectionnez toutes les lignes de la table
     var rows = document.querySelectorAll('#myTable tbody tr');
+
+    // Variable pour suivre si des résultats sont trouvés ou non
+    var resultsFound = false;
 
     // Parcourez toutes les lignes de la table
     rows.forEach(function(row) {
@@ -516,32 +547,28 @@ function filterTableByCategory(categoryName) {
         if (categoryName === 'All' || row.querySelector('.category-cell').textContent.trim() === categoryName) {
             // Affichez la ligne si la catégorie correspond ou si toutes les catégories sont sélectionnées
             row.style.display = '';
+            resultsFound = true;
         } else {
             // Masquez la ligne si la catégorie ne correspond pas
             row.style.display = 'none';
         }
     });
+
+    // Sélectionner l'élément de message
+    var messageElement = document.getElementById('productnav-draft');
+
+    // Afficher le message si aucun résultat n'est trouvé
+    if (!resultsFound) {
+        messageElement.style.display = 'block'; // Afficher le message
+    } else {
+        messageElement.style.display = 'none'; // Masquer le message
+    }
 }
 
 
 
 
-function filterTableByCategory(categoryName) {
-    // Sélectionnez toutes les lignes de la table
-    var rows = document.querySelectorAll('#myTable tbody tr');
 
-    // Parcourez toutes les lignes de la table
-    rows.forEach(function(row) {
-        // Vérifiez si le nom de la catégorie de cette ligne correspond à celui sélectionné
-        if (row.querySelector('td:nth-child(7)').textContent.trim() === categoryName) {
-            // Affichez la ligne si la catégorie correspond
-            row.style.display = '';
-        } else {
-            // Masquez la ligne si la catégorie ne correspond pas
-            row.style.display = 'none';
-        }
-    });
-}
 
 
 

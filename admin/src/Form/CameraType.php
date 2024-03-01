@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use App\Entity\Camera;
@@ -39,18 +38,13 @@ class CameraType extends AbstractType
                 'html5' => false, 
                 'format' => 'yyyy-MM-dd', 
             ])
-            ->add('status', TextType::class, 
-            ['label' => 'Statut', 'required' => false, 
-            'attr' => ['class' => 'form-control']
-            ])
-
+            ->add('status', TextType::class, ['label' => 'Statut', 'required' => false, 'attr' => ['class' => 'form-control']])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class, 
                 'choice_label' => 'nom',
                 'label' => 'Catégorie', 
                 'attr' => ['class' => 'form-control'], 
             ])
-        
             ->add('couleur', TextType::class, ['label' => 'Couleur', 'attr' => ['class' => 'form-control']])
             ->add('visionNoctrune', ChoiceType::class, ['label' => 'Vision Nocturne', 'choices' => ['Oui' => true, 'Non' => false], 'attr' => ['class' => 'form-control']])
             ->add('poids', TextType::class, ['label' => 'Poids', 'attr' => ['class' => 'form-control']])

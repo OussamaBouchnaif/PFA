@@ -20,26 +20,18 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class CameraController extends AbstractController
 {
-    #[Route('/', name: 'ds')]
-    public function dash(): Response
-    {
-        return $this->render('admin/test.html.twig');
-    }
-    #[Route('/add', name: 'd')]
-    public function add(): Response
-    {
-        return $this->render('admin/addProduct.html.twig');
-    }
+   
+   
     #[Route('/cus', name: 'cus')]
     public function cus(): Response
     {
-        return $this->render('admin/customers.html.twig');
+        return $this->render('admin/Cameras/customers.html.twig');
     }
 
     #[Route('/camera/details/{id}', name: 'camera_details')]
     public function cameraDetails(Camera $camera, CameraRepository $cameraRepository): Response
     {
-        return $this->render('admin/details.html.twig', [
+        return $this->render('admin/Cameras/details.html.twig', [
             'camera' => $camera,
             
     ]);
@@ -50,7 +42,7 @@ class CameraController extends AbstractController
         $cameras = $cameraRepository->findAll();
         $categories = $categorieRepository->findAll(); // Récupérer toutes les catégories depuis le repository
 
-        return $this->render('admin/test.html.twig', [
+        return $this->render('admin/Cameras/ShowProduct.html.twig', [
             'cameras' => $cameras,
             'categories' => $categories, // Passer les catégories à la vue Twig
         ]);
@@ -59,7 +51,7 @@ class CameraController extends AbstractController
     #[Route('/Add_camera', name: 'Add_camera')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $camera = new Camera();
+       $camera = new Camera();
         $imageCamera = new ImageCamera();
         $formCamera = $this->createForm(CameraType::class, $camera);
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
@@ -68,25 +60,24 @@ class CameraController extends AbstractController
     
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             $camera = $formCamera->getData();
-            $image = $formImage->getData()->getimageFile();
+            $image = $formImage->getData();
             
-            $imageCamera->setImage($image); 
-            $camera->addImageCamera($imageCamera);
-            $entityManager->persist($imageCamera);
+            $image->setCamera($camera);
+            $entityManager->persist($image);
             $entityManager->persist($camera);
             $entityManager->flush();
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         } 
-        return $this->render('admin/addProduct.html.twig', [
+        return $this->render('admin/Cameras/addProduct.html.twig', [
      
-            'form' => $formCamera->createView(),'formI' => $formImage->createView(),
+            'form' => $formCamera->createView(),'formI' => $formImage->createView()
         ]);
     }
 
 
     
-            #[Route('/Edit_camera/{id}', name: 'Edit_camera')]
+      #[Route('/Edit_camera/{id}', name: 'Edit_camera')]
         public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
         {
             $formCamera = $this->createForm(CameraType::class, $camera, [
@@ -106,7 +97,7 @@ class CameraController extends AbstractController
                 return $this->redirectToRoute('camera');
             }
 
-            return $this->render('admin/editProduct.html.twig', [
+            return $this->render('admin/Cameras/editProduct.html.twig', [
                 'form' => $formCamera->createView(),
                 'formI' => $formImage->createView(),
             ]);
