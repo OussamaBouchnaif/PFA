@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add camera{% endblock %}
+{% block title %}Edit camera {% endblock %}
 
 
 {% block stylesheets %}
@@ -17,12 +17,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
+                                <h4 class="mb-sm-0">Edit Product</h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
+                                        <li class="breadcrumb-item active">Edit Product</li>
                                     </ol>
                                 </div>
 
@@ -57,13 +57,9 @@
                                     <div class="card-body">
                                         
                                         <div id="drop-area">
-                                            
-                                            {{ form_label(formImage.imageFile) }}
-                                            {{ form_widget(formImage.imageFile, {'attr': {'class': 'form-control'}}) }}
-                                        <button type="button"
-                                            class="add-another-collection-widget"
-                                            data-list-selector="#product-images-fields-list">Add another Product Image
-                                        </button>
+                                            <h3>Drag & Drop Files Here</h3>
+                                                    {{ form_label(formI.imageFile) }}
+                                                    {{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div id="gallery"></div>
                                     </div>
@@ -102,17 +98,12 @@
                                                             {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
                                                         </div>
                                                     </div>
+
                                                 </div>
                                                 <!-- end row -->
 
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-sm-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="stocks-input">Stocks</label>
-                                                            <input type="text" class="form-control" id="stocks-input" placeholder="Stocks" required>
-                                                            <div class="invalid-feedback">Please Enter a product stocks.</div>
-                                                        </div>
-                                                    </div>
+                                                   
                                                     <div class="col-lg-3 col-sm-6">
                                                         <div class="mb-3">                                                  
                                                             {{ form_label(form.resolution) }}
@@ -123,7 +114,6 @@
                                                         <div class="mb-3">
                                                             {{ form_label(form.status) }}
                                                             <div class="input-group mb-3">
-                                                                <span class="input-group-text" id="product-discount-addon">%</span>
                                                             {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                         </div>
@@ -180,12 +170,7 @@
                                     </div>
                                     <!-- end card body -->
                                 </div>
-                                <!-- end card -->
-                                {# <div class="text-end mb-3">
-                            <button type="submit"  class="btn btn-success">Ajouter</button>
-                                </div> #}
-                                               
-
+                                <!-- end card -->             
                             </div>
                             <!-- end col -->
 
@@ -250,25 +235,18 @@
                             {{ form_widget(form.connectivite, {'attr': {'class': 'form-control'}}) }}                                            </div>
                                         </div>
                                     </div>
-                                    <!-- end card body -->
-                                </div>
-                                 {# {{ form_end(form) }} #}
-                                 <button type="submit" class="btn btn-success">Enregistrer</button>
+                                </div>  
+                                    <button type="submit" class="btn btn-success">Enregistrer</button>
                                     <a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
-                
-
-                                <!-- end card -->
-                {{ form_end(form) }}
-
-                                
-                                <!-- end card -->
-
+                                    {{ form_end(form) }}                 
                             </div>
+                              
+
                             <!-- end col -->
                         </div>
                         <!-- end row -->
 
-                    
+
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -293,26 +271,5 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    $('.add-another-collection-widget').click(function (e) {
-        var list = $($(this).attr('data-list-selector'));
-        // Try to find the counter of the list or use the length of the list
-        var counter = list.data('widget-counter') | list.children().length;
 
-        // grab the prototype template
-        var newWidget = list.attr('data-prototype');
-        // replace the "__name__" used in the id and name of the prototype
-        // with a number that's unique to your emails
-        // end name attribute looks like name="contact[emails][2]"
-        newWidget = newWidget.replace(/__name__/g, counter);
-        // Increase the counter
-        counter++;
-        // And store it, the length cannot be used if deleting widgets is allowed
-        list.data('widget-counter', counter);
-
-        // create a new list element and add it to the list
-        var newElem = $(list.attr('data-widget-tags')).html(newWidget);
-        newElem.appendTo(list);
-    });
-</script>
 {% endblock %}
