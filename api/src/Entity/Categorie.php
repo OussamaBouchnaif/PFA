@@ -23,6 +23,7 @@ class Categorie
     private ?string $nom = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Camera::class)]
