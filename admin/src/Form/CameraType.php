@@ -1,23 +1,23 @@
 <?php
-
 namespace App\Form;
 
 use App\Entity\Camera;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CameraType extends AbstractType
 {
@@ -38,18 +38,13 @@ class CameraType extends AbstractType
                 'html5' => false, 
                 'format' => 'yyyy-MM-dd', 
             ])
-            ->add('status', TextType::class, 
-            ['label' => 'Statut', 'required' => false, 
-            'attr' => ['class' => 'form-control']
-            ])
-
+            ->add('status', TextType::class, ['label' => 'Statut', 'required' => false, 'attr' => ['class' => 'form-control']])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class, 
                 'choice_label' => 'nom',
                 'label' => 'Catégorie', 
                 'attr' => ['class' => 'form-control'], 
             ])
-        
             ->add('couleur', TextType::class, ['label' => 'Couleur', 'attr' => ['class' => 'form-control']])
             ->add('visionNoctrune', ChoiceType::class, ['label' => 'Vision Nocturne', 'choices' => ['Oui' => true, 'Non' => false], 'attr' => ['class' => 'form-control']])
             ->add('poids', TextType::class, ['label' => 'Poids', 'attr' => ['class' => 'form-control']])
@@ -59,7 +54,7 @@ class CameraType extends AbstractType
             ->add('connectivite', ChoiceType::class, ['label' => 'Connectivité', 'choices' => ['Oui' => true, 'Non' => false], 'attr' => ['class' => 'form-control']])
             ->add('stockage', TextType::class, ['label' => 'Stockage', 'attr' => ['class' => 'form-control']])
             ->add('alimentation', TextType::class, ['label' => 'Alimentation', 'attr' => ['class' => 'form-control']])
-            ;
+           ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

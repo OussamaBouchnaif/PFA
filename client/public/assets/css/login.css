@@ -1,6 +1,7 @@
 .login{
     margin-top:50px ;
     margin-bottom:50px;
+    
 }
 .roww{
     margin-top: 50px;
@@ -9,7 +10,9 @@
     padding: 20px;
     border: solid 1px #6a7964;
     
+    
 }
+
 .roww .form_group{
     width: 100%;
 }
