@@ -3,64 +3,7 @@
 
 {% block title %}Shop{% endblock %}
 
-{% block stylesheets %}
-    <style>
-        .card-box img {
-            width: 70%; 
-            margin: auto;
-            height: auto;
-            
-            max-height: 200px; 
-            object-fit: cover; 
-         }
-         .product_thumb{
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            height:205px;
-         }
-         .variants_size{
-            display: flex;
-            gap: 8px;
-         }
-         .shop_banner {
-            position: relative;
-            width: 100%; /* ou une largeur spécifique */
-            height: 300px; /* ou la hauteur que vous désirez */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0,0,0,0.6);
-        }
-        
-        .shop_banner_bgimg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Assure que l'image couvre la div sans être déformée */
-            z-index: -1;
-            
 
-             /* Place l'image derrière le texte */
-        }
-        .shop_banner_bgimg img{
-            background-attachment: fixed
-        }
-        
-        .shop_banner_text {
-            position: absolute;
-            top: 70px;
-            left: 10px;
-            z-index: 1; /* Assure que le texte reste au-dessus de l'image */
-            color: white; /* ou toute autre couleur désirée */
-            text-align: center; /* Centre le texte */
-        }
-        
-    </style>
-
-{% endblock %}
 
 {% block body %}
     
@@ -76,12 +19,23 @@
                                 <h2>Categories</h2>
                                 <ul>
                                     
-                                    <li class="widget_sub_categories"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
+                                    <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
-                                            <li><a href="{{path('app_camera')}}"> All <span>104</span></a></li>
                                             {% for cat in categories %}
-                                            <li><a href="{{path('filter_cat',{id:cat.id})}}">{{cat.nom}} <span>68</span></a></li>
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" value="" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li class="widget_sub_"><a href="javascript:void(0)" data-toggle="collapse" data-target="#women">Reduction</a>
+                                        <ul class="widget_dropdown_categories collapse show" id="women">
+                                            <li><a href=""> All <span>104</span></a></li>
+                                            
+                                            <li><a href="">10%<span>68</span></a></li>
+                                            <li><a href="">20%<span>68</span></a></li>
+                                            <li><a href="">30%<span>68</span></a></li>
+                                            <li><a href="">40%<span>68</span></a></li>
+                                            <li><a href="">50%<span>68</span></a></li>
+                                            
                                         </ul>
                                     </li>
                                     
@@ -91,32 +45,30 @@
                             <div class="widget_list widget_filter">
                                 <div class="filter__list slider_range">
                                     <h3>price</h3>
-                                    <form action="{{path('filter_price')}}" method="get" id="price-filter-form">
+                                    <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                        <input type="text" name="price_range" id="amount" v readonly style="border:0; color:#f6931f; font-weight:bold;">
                                         
                                     </form>
                                 </div>
 
                                 <div class="filter__list widget_size">
-                                    <h3> size</h3>
+                                    <h3>ANGLE VISION</h3>
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0)">S </a>
+                                            <a href="{{path('camera_search',{angle:'90'})}}" >90</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"> M</a>
+                                            <a href="{{path('camera_search',{angle:'120'})}}" >120</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)">L</a>
+                                            <a href="{{path('camera_search',{angle:'180'})}}" >180</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"> XL</a>
+                                            <a href="{{path('camera_search',{angle:'360'})}}" >360</a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)">XLL</a>
-                                        </li>
+                                       
                                     </ul>
                                 </div>
                                 <div class="filter__list widget_color">
@@ -201,7 +153,7 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="index.html">home</a></li>
-                            <li>shop</li>
+                            <li><a href="{{path('app_camera')}}">shop</a></li>
                         </ul>
                     </div>
                     <!--breadcrumbs area end-->
@@ -246,86 +198,30 @@
                         </div>
                     </div>
                      <!--shop toolbar end-->
-                    <div class="row shop_wrapper" id="results-container">
-                        {%  for camera in cameras %}
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
-                            <div class="single_product card-box">
-                                <div class="product_thumb">
-                                    <a href="product-details.html">
-                                        {% set img = '' %}
-                                        {% for imageCamera in camera.imageCameras %}
-                                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
-                                            {% set img = imageCamera.image %}
-                                        {% endfor %}
-                                    </a>
-                                    <div class="product_action">
-                                        <ul>
-                                            <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                            data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                            <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                            <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                            data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product_label">
-                                        <span>-18%</span>
-                                    </div>
-                                </div>
-                                <div class="product_content grid_content text-center">
-                                    <div class="product_ratting">
-                                        <ul class="d-flex justify-content-center">
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><span>(2)</span></li>
-                                        </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
-                                    <div class="price_box">
-                                        <span class="current_price">${{camera.prix}}</span>
-                                        <span class="old_price">$46.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                    </div>
-                                </div>
-                                <div class="product_list_content">
-                                    <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
-                                    <p><a href="#">shows</a></p>
-                                    <div class="price_box">
-                                        <span class="current_price">${{camera.prix}}</span>
-                                        <span class="old_price">$46.00</span>
-                                    </div>
-                                    <div class="product_desc">
-                                        <p>{{camera.description}}</p>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        {% endfor %} 
-                    </div>
-                    <div class="pagination_style pagination justify-content-center">
-                        <ul class="d-flex">
-                            <li><a href="#"> << </a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a class="current" href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">>></a></li>
+                    
+                    {{include('client/pages/cameras.html.twig')}}
+                    
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {{ cameras.currentPageNumber == 1 ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ cameras.currentPageNumber > 1 ? path('camera_search', {'page': cameras.currentPageNumber - 1}) : '#' }}" aria-label="Previous">
+                                    <span aria-hidden="true">Previous</span>
+                                </a>
+                            </li>
+                            {% for page in 1..cameras.pageCount %}
+                                <li class="page-item {{ page == cameras.currentPageNumber ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ path('camera_search', {'page': page}) }}">{{ page }}</a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item {{ cameras.currentPageNumber == cameras.pageCount ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ cameras.currentPageNumber < cameras.pageCount ? path('camera_search', {'page': cameras.currentPageNumber + 1}) : '#' }}" aria-label="Next">
+                                    <span aria-hidden="true">Next</span>
+                                </a>
+                            </li>
                         </ul>
-                    </div>
-
-                    <!--shop toolbar end-->
-                    <!--shop wrapper end-->
+                    </nav>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -449,31 +345,6 @@
 {% endblock %}
 
 {% block javascripts %}
-
-   <script >
-        
-        document.addEventListener("DOMContentLoaded", function() {
-        // Écoute du clic sur les boutons de vue rapide
-        document.querySelectorAll('.quick_view').forEach(button => {
-            button.addEventListener('click', function() {
-            var name = this.getAttribute('data-name');
-            var price = this.getAttribute('data-price');
-            var description = this.getAttribute('data-description');
-            var image = this.getAttribute('data-image');
-            
-            // Mettre à jour le contenu du modal
-            document.querySelector('#modal_box .modal_title h2').textContent = name;
-            document.querySelector('#modal_box .modal_price .new_price').textContent = "$" + price;
-            document.querySelector('#modal_box .modal_description p').textContent = description;
-            document.querySelector('#modal_box .modal_zoom_gallery .product_zoom_thumb img').src = image;
-            
-            // Vous pouvez ajouter d'autres mises à jour ici pour les tailles, couleurs, etc.
-            });
-        });
-        });
-    </script>
-
-
 {% endblock %}
 
 
