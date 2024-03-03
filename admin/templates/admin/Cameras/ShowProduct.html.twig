@@ -114,11 +114,13 @@
                                        <div class="card-body border-bottom">
                                         <div>
                                             <label for="categorySelect">Select Category:</label>
-                                        <select class="form-control" id="categorySelect">
-                                            <option value="all">All Categories</option>
+                                        <select class="form-control" id="categorySelect" placeholder="Sélectionnez une catégorie">
+                                            <option disabled selected hidden>Sélectionnez une catégorie</option>
                                             {% for category in categories %}
                                                 <option value="{{ category.getNom() }}">{{ category.getNom() }}</option>
                                             {% endfor %}
+                                        </select>
+
                                         </select>
                                         </div>
                                     </div>
@@ -364,7 +366,7 @@
                                                 <th class="custom-header text-center">Stock</th>
                                                 <th class="custom-header text-center">Catégorie</th>
                                                 <th class="custom-header text-center">Action</th>
-                                            </tr>
+                                          </tr>
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
@@ -409,11 +411,10 @@
                                                 <!-- end tab pane -->
 
                                                 <div class="noDataMessage" id="productnav-draft" role="tabpanel">
-                                                    <div class="py-4 text-center">
-                                                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
-                                                        </lord-icon>
-                                                        <h5 class="mt-4">Sorry! No Result Found</h5>
-                                                    </div>
+                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
+                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
+                                                    <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
+                                                </div>
                                                 </div>
                                                 <!-- end tab pane -->
                                             </div>
@@ -535,33 +536,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 function filterTableByCategory(categoryName) {
-    // Sélectionnez toutes les lignes de la table
-    var rows = document.querySelectorAll('#myTable tbody tr');
+    // Récupérer la table DataTable
+    var table = $('#myTable').DataTable();
 
-    // Variable pour suivre si des résultats sont trouvés ou non
-    var resultsFound = false;
-
-    // Parcourez toutes les lignes de la table
-    rows.forEach(function(row) {
-        // Vérifiez si la catégorie de cette ligne correspond à celle sélectionnée ou si toutes les catégories sont sélectionnées
-        if (categoryName === 'All' || row.querySelector('.category-cell').textContent.trim() === categoryName) {
-            // Affichez la ligne si la catégorie correspond ou si toutes les catégories sont sélectionnées
-            row.style.display = '';
-            resultsFound = true;
-        } else {
-            // Masquez la ligne si la catégorie ne correspond pas
-            row.style.display = 'none';
-        }
-    });
-
-    // Sélectionner l'élément de message
-    var messageElement = document.getElementById('productnav-draft');
-
-    // Afficher le message si aucun résultat n'est trouvé
-    if (!resultsFound) {
-        messageElement.style.display = 'block'; // Afficher le message
+    // Si le nom de la catégorie est "All", réinitialiser le filtre de la colonne et afficher toutes les données
+    if (categoryName === 'All') {
+        table.column(6).search('').draw();
     } else {
-        messageElement.style.display = 'none'; // Masquer le message
+        // Sinon, appliquer le filtre de la colonne pour la catégorie sélectionnée
+        table.column(6).search(categoryName).draw();
     }
 }
 
