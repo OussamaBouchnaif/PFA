@@ -27,12 +27,18 @@ class TestController extends AbstractController
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         // Vérification de la soumission du formulaire de la caméra
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Récupération des données du formulaire de la caméra
 =======
+=======
+>>>>>>> 289cd85 (search by categories)
         // dd($formCamera->getData());
+=======
+
+>>>>>>> eec5c15 (search by categories)
         if ($formCamera->isSubmitted() ) {
 >>>>>>> 892e2ed (fixer camera final)
             $camera = $formCamera->getData();

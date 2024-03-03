@@ -23,7 +23,11 @@
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
                                             {% for cat in categories %}
+<<<<<<< HEAD
                                             <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+=======
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" name="categorie" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+>>>>>>> 289cd85 (search by categories)
                                             {% endfor %}
                                         </ul>
                                     </li>

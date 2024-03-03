@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+<<<<<<< HEAD
     setupQuickViewButtons(); // Initialiser pour la première charge de page
    
     // Initialisation du curseur de sélection de la plage de prix
@@ -16,6 +17,25 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchData({ 'price_range': priceRange });
         }
     });
+=======
+    // Gestion de la recherche par catégorie avec AJAX
+    /*document.querySelectorAll('.widget_sub_categories a').forEach(function (categoryLink) {
+        categoryLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            const categoryId = this.getAttribute('data-id'); // Utiliser data-id pour les liens de catégorie
+            
+            fetch(`/cat`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('results-container').innerHTML = html;
+                    // Une fois les nouveaux éléments chargés, réinitialiser les écouteurs pour la vue rapide
+                    setupQuickViewButtons();
+                })
+                .catch(error => console.error('Error loading the cameras:', error));
+        });
+
+    });*/
+>>>>>>> 289cd85 (search by categories)
 
     // Initialisation du champ de montant
     $("#amount").val("$" + $("#slider-range").slider("values", 0) +

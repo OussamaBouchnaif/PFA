@@ -27,10 +27,18 @@ class CameraController extends AbstractController
     }
 
     #[Route('/camera/search', name: 'camera_search')]
+<<<<<<< HEAD
     public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session): Response
     {     
         $page = $request->query->getInt('page',1);        
         $categorie = $catrepo->findAll();
+=======
+    public function search(Request $request, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session,PaginatorInterface $paginatorInterface): Response
+    {
+        
+        $searchCriteria = $session->get('searchCriteria', array());
+
+>>>>>>> 289cd85 (search by categories)
         $newCriteria = [
             'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
@@ -60,11 +68,21 @@ class CameraController extends AbstractController
             'items'=>$callApiCameraService->getItems(),
         ]);
     }
+<<<<<<< HEAD
 
   
     
     
  
+=======
+    
+    #[Route('/cat',name:'categorie')]
+    public function dd(Request $request):Response
+    {
+        dd($request->query->get('categorie'));
+    }
+
+>>>>>>> 289cd85 (search by categories)
    
 
 }
