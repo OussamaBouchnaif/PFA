@@ -42,6 +42,7 @@ class TestController extends AbstractController
                 // Récupération des données du formulaire de l'image
                 $image = $formImage->getData();
 
+<<<<<<< HEAD
                 // Association de l'image à la caméra
                 $image->setCamera($camera);
 
@@ -50,6 +51,10 @@ class TestController extends AbstractController
             }
 
             // Persist de la caméra
+=======
+            $image->setCamera($camera);
+            $entityManager->persist($image);
+>>>>>>> 75e5fef (merge conflit)
             $entityManager->persist($camera);
             $entityManager->flush();
 
