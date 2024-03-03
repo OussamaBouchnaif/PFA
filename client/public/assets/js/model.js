@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Gestion de la recherche par catégorie avec AJAX
-    document.querySelectorAll('.widget_sub_categories a').forEach(function (categoryLink) {
+    /*document.querySelectorAll('.widget_sub_categories a').forEach(function (categoryLink) {
         categoryLink.addEventListener('click', function (e) {
             e.preventDefault();
             const categoryId = this.getAttribute('data-id'); // Utiliser data-id pour les liens de catégorie
             
-            fetch(`/search`)
+            fetch(`/cat`)
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('results-container').innerHTML = html;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => console.error('Error loading the cameras:', error));
         });
 
-    });
+    });*/
 
     // Fonction pour configurer les boutons de vue rapide
     function setupQuickViewButtons() {
