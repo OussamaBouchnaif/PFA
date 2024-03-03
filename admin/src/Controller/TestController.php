@@ -27,7 +27,11 @@ class TestController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
+<<<<<<< HEAD
         // dd($formCamera->getData());
+=======
+
+>>>>>>> eec5c15 (search by categories)
         if ($formCamera->isSubmitted() ) {
             $camera = $formCamera->getData();
 

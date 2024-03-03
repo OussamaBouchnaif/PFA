@@ -22,7 +22,7 @@
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
                                             {% for cat in categories %}
-                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" value="" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" name="categorie" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -323,16 +323,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="modal_social">
-                                        <h2>Share this product</h2>
-                                        <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -28,7 +28,6 @@ class CameraController extends AbstractController
     #[Route('/camera/search', name: 'camera_search')]
     public function search(Request $request, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session,PaginatorInterface $paginatorInterface): Response
     {
-        // Récupère les critères de recherche existants de la session ou initialise un tableau vide
         
         $searchCriteria = $session->get('searchCriteria', array());
 
@@ -58,7 +57,12 @@ class CameraController extends AbstractController
             'categories'=> $categorie,
         ]);
     }
-
+    
+    #[Route('/cat',name:'categorie')]
+    public function dd(Request $request):Response
+    {
+        dd($request->query->get('categorie'));
+    }
 
    
 
