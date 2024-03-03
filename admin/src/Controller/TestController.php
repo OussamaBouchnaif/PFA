@@ -33,7 +33,6 @@ class TestController extends AbstractController
 
             $image = $formImage->getData();
 
-            
             $image->setCamera($camera);
             $entityManager->persist($image);
             $entityManager->persist($camera);
