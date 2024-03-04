@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 use App\Entity\Client;
 use App\Form\ClientStatusType;
@@ -10,27 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ClientController extends AbstractController
 {
     #[Route('/clients', name: 'client_list')]
-    public function listClients(Request $request, ClientRepository $clientRepository, PaginatorInterface $paginator): Response
+    public function listClients(Request $request, ClientRepository $clientRepository): Response
     {
-        // Récupérer le numéro de la page 
-        $page = $request->query->getInt('page', 1);
+        $clients = $clientRepository->findAll();
 
-        $query = $clientRepository->createQueryBuilder('c')->getQuery();
-
-        // Paginer 
-        $pagination = $paginator->paginate(
-            $query, 
-            $page, 
-            5 
-        );
-
-        // Rendre la vue avec la pagination
         return $this->render('admin/client/client_list.html.twig', [
-            'pagination' => $pagination,
+            'clients' => $clients,
         ]);
     }
 
@@ -61,4 +50,26 @@ class ClientController extends AbstractController
         // Rediriger vers la liste des clients
         return $this->redirectToRoute('client_list');
     }
+
+    #[Route('/update-account-status', name: 'update_account_status')]
+public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
+{
+    $clientId = $request->request->get('clientId');
+    $accountStatus = $request->request->get('accountStatus');
+
+    // Récupérer le client à partir de l'ID
+    $client = $entityManager->getRepository(Client::class)->find($clientId);
+
+    // Vérifier si le client existe
+    if (!$client) {
+        return new JsonResponse('error', JsonResponse::HTTP_NOT_FOUND);
+    }
+
+    // Basculer l'état du compte entre actif et inactif
+    $newStatus = $accountStatus === 'active' ? 'inactive' : 'active';
+    $client->setStatusCompte($newStatus);
+    $entityManager->flush();
+
+    return new JsonResponse('success', JsonResponse::HTTP_OK);
+}
 }
