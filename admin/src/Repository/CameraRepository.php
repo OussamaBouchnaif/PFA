@@ -41,6 +41,14 @@ class CameraRepository extends ServiceEntityRepository
     {
         return $this->paginator;
     }
+    public function Rechereche( String $Status ): array
+    {    
+        return $this->createQueryBuilder('c')
+        ->andWhere('c.status = :status')
+        ->setParameter('status', $status)
+        ->getQuery()
+        ->getResult();
+    }
 
 //    /**
 //     * @return Camera[] Returns an array of Camera objects

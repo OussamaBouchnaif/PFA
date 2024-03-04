@@ -1,5 +1,9 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    http_client:
+        scoped_clients:
+            app.default_api:
+                base_uri: '%env(ENDPOINT_API)%'
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
     annotations: false

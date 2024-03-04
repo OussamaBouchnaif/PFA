@@ -2,16 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
+
+
+
 use Doctrine\ORM\Mapping as ORM;
+
+use ApiPlatform\Metadata\ApiFilter;
 use App\Repository\CameraRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use Symfony\UX\Turbo\Attribute\Broadcast;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\SerializerInterface;
-use ApiPlatform\Metadata\Get;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
@@ -23,6 +28,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         
         paginationEnabled: false,
     )]
+#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact'])]
+#[ApiFilter(RangeFilter::class, properties: ['prix'])]
 class Camera
 {
     #[ORM\Id]
@@ -72,6 +79,7 @@ class Camera
 
     #[ORM\ManyToOne(inversedBy: 'cameras')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 40)]

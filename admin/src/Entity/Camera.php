@@ -17,26 +17,25 @@ class Camera
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank(message: "Le nom ne peut pas être vide")]
+    
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
-    #[Assert\NotBlank(message: "La description ne peut pas être vide")]
+    
     #[ORM\Column(length: 400)]
     private ?string $description = null;
 
-    #[Assert\NotBlank(message: "Le prix ne peut pas être vide")]
-    #[Assert\GreaterThan(value: 0, message: "Le prix doit être supérieur à zéro")]
+   
     #[ORM\Column(type: 'float')]
     private ?float $prix = null;
 
-    #[Assert\NotBlank(message: "Le stock ne peut pas être vide")]
-    #[Assert\GreaterThan(value: 0, message: "Le stock doit être supérieur à zéro")]
+   
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $stock = null;
 
-    #[Assert\NotBlank(message: "La date d'ajout ne peut pas être vide")]
+    
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\DateTime]
     private ?\DateTimeInterface $dateAjout = null;
 
     #[ORM\Column(length: 50, nullable: true)]

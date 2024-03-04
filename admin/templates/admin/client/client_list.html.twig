@@ -4,62 +4,49 @@
 
 {% block stylesheets %}
     {{ parent() }}
-       <link rel="stylesheet" href="{{ asset('assets_dashboard/css/client.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
     <style> 
-         .dataTables_wrapper .dataTables_paginate {
-    text-align: center;
-    }
-  
-     body{
-        background-color: #ffffff;
-
-     }    
-        .container {
-        margin-top: 20px;
+        .dataTables_wrapper .dataTables_paginate {
+            text-align: center;
         }
-
+        body {
+            background-color: #ffffff;
+        }
+        .container {
+            margin-top: 20px;
+        }
         .page-title {
             margin-bottom: 20px;
             font-size: 24px;
             font-weight: bold;
         }
-
         .action-buttons {
             margin-bottom: 20px;
         }
-
         .action-buttons button {
             margin-right: 10px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             background-color: #ffffff;
-            border: 1px black;
+            border: 1px solid black;
         }
-
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-                        border: 1px black;
-
+            border: 1px solid black;
         }
-
         th {
-            border: 1px black;
-
             background-color: #f2f2f2;
             color: #333;
             font-weight: bold;
             padding: 60px;
-
         }
-
         .custom-header {
             background-color: #ffffff;
             color: #fff;
@@ -68,17 +55,14 @@
             font-weight: bold;
             line-height: 2em;
         }
-
         .btn-primary-custom {
             background-color: #3498db;
             color: #fff;
         }
-
         .btn-info-custom {
             background-color: #2ecc71;
             color: #fff;
         }
-
         .btn-success-custom {
             background-color: #e67e22;
             color: #fff;
@@ -88,9 +72,16 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center mb-4">Liste des clients</h1>
-
-        <!-- Tableau des clients -->
+        <h1 class="text-center mb-4"> Liste des clients </h1>
+        <br>
+        <div class="action-buttons">
+            <button type="button" class="btn btn-primary-custom" onclick="confirmPrint()">
+                Imprimer le tableau
+            </button>
+            <button type="button" class="btn btn-info-custom" onclick="confirmExport()">
+                Exporter vers Excel
+            </button>
+        </div>
         <table id="myTable" class="table">
             <thead>
                 <tr class="align-middle custom-header-bg">
@@ -116,13 +107,10 @@
                         <td class="align-middle text-center">{{ client.dateInscription ? client.dateInscription|date('d/m/Y') : '' }}</td>
                         <td class="align-middle text-center">{{ client.statusCompte }}</td>
                         <td class="align-middle text-center">{{ client.addressLivSup }}</td>
-                        <td>
-                            <div class="toggle-container">
-                                <label class="toggle-label">Désactiver</label>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" onclick="confirmDesactivation('{{ client.id }}')">
-                                    <span class="toggle-slider"></span>
-                                </label>
+                        <td class="align-middle text-center">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input{% if client.statusCompte == 'inactif' %} btn-danger{% else %} btn-success{% endif %} btn-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked{{ client.id }}" {% if client.statusCompte == 'active' %}checked{% endif %}>
+                                <label class="form-check-label" for="flexSwitchCheckChecked{{ client.id }}"></label>
                             </div>
                         </td>
                     </tr>
@@ -131,6 +119,7 @@
         </table>
         <br>
         <br>
+        {{ knp_pagination_render(pagination) }}
     </div>
 {% endblock %}
 
@@ -138,147 +127,106 @@
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('assets_dashboard/js/client.js') }}"></script>
+    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+       <script src="//cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-    // Destroy the existing DataTable instance (if it exists)
-    if ($.fn.DataTable.isDataTable('#myTable')) {
-        $('#myTable').DataTable().destroy();
-    }
-
-    // Initialize the DataTable plugin on the table
-    $('#myTable').DataTable({
-        "language": {
-            "emptyTable": "Aucun élément trouvé",
-            "info": "Affichage _START_ à _END_ sur _TOTAL_ éléments",
-            "infoEmpty": "Aucune donnée disponible",
-            "search": "Rechercher:",
-            "paginate": {
-                "first": "Premier",
-                "last": "Dernier",
-                "next": "Suivant",
-                "previous": "Précédent"
+            if ($.fn.DataTable.isDataTable('#myTable')) {
+                $('#myTable').DataTable().destroy();
             }
-        }
-    });
-});
-
-
-    </script>
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-    <script>  
-    document.addEventListener('DOMContentLoaded', function () {
-            var addCameraModal = document.getElementById('addCameraModal');
-            var addCameraForm = document.getElementById('addCameraForm');
-            document.querySelector('[data-bs-target="#addCameraModal"]').addEventListener('click', function () {
-                var modal = new bootstrap.Modal(addCameraModal);
-                modal.show();
-            });
-            addCameraForm.addEventListener('submit', function (event) {
-                event.preventDefault(); // Empêcher le comportement de soumission par défaut
-            });
+            $('#myTable').DataTable();
         });
-    function printTable() {
-        var printWindow = window.open('', '_blank');
-        printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<style>');
-        printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-        printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-        printWindow.document.write('th {font-weight: bold; text-align: center;}');
-        printWindow.document.write('</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write('<table>');
-        printWindow.document.write('<thead>');
-        printWindow.document.write('<tr>');
-        printWindow.document.write('<th>Nom</th>');
-        printWindow.document.write('<th>Description</th>');
-        printWindow.document.write('<th>Prix</th>');
-        printWindow.document.write('<th>Date Ajout</th>');
-        printWindow.document.write('<th>Status</th>');
-        printWindow.document.write('<th>Stock</th>');
-        printWindow.document.write('<th>Catégorie</th>');
-        printWindow.document.write('</tr>');
-        printWindow.document.write('</thead>');
-        printWindow.document.write('<tbody>');
-        
-        var tableRows = document.getElementById('myTable').querySelectorAll('tr');
-        for (var i = 0; i < tableRows.length; i++) {
-            var row = tableRows[i];
-            var rowData = row.querySelectorAll('td');
-            if (rowData.length > 0) {
-                printWindow.document.write('<tr>');
-                for (var j = 0; j < rowData.length; j++) {
-                    if (j !== rowData.length - 1) {
-                        printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+
+        function confirmPrint() {
+            if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
+                printTable();
+            }
+        }
+
+        function confirmExport() {
+            if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
+                exportToExcel();
+            }
+        }
+
+        function printTable() {
+            var printWindow = window.open('', '_blank');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+            printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+            printWindow.document.write('th {font-weight: bold; text-align: center;}');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<table>');
+            printWindow.document.write('<thead>');
+            printWindow.document.write('<tr>');
+            printWindow.document.write('<th>Nom</th>');
+            printWindow.document.write('<th>Prénom</th>');
+            printWindow.document.write('<th>Email</th>');
+            printWindow.document.write('<th>Mot de passe</th>');
+            printWindow.document.write('<th>Adresse</th>');
+            printWindow.document.write('<th>Inscription</th>');
+            printWindow.document.write('<th>Statut</th>');
+            printWindow.document.write('<th>Adresses Sup</th>');
+            printWindow.document.write('<th>Compte</th>');
+            printWindow.document.write('</tr>');
+            printWindow.document.write('</thead>');
+            printWindow.document.write('<tbody>');
+
+            var tableRows = document.getElementById('myTable').querySelectorAll('tr');
+            for (var i = 0; i < tableRows.length; i++) {
+                var row = tableRows[i];
+                var rowData = row.querySelectorAll('td');
+                if (rowData.length > 0) {
+                    printWindow.document.write('<tr>');
+                    for (var j = 0; j < rowData.length; j++) {
+                        if (j !== rowData.length - 1) {
+                            printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+                        }
                     }
+                    printWindow.document.write('</tr>');
                 }
-                printWindow.document.write('</tr>');
-            }
-        }
-        
-        printWindow.document.write('</tbody>');
-        printWindow.document.write('</table>');
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    }
-
-    function exportToExcel() {
-        var table = document.getElementById('myTable');
-        var rows = table.querySelectorAll('tr');
-        var csvData = [];
-
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var rowData = [];
-            var cols = row.querySelectorAll('td');
-
-            for (var j = 0; j < cols.length; j++) {
-                rowData.push(cols[j].innerText);
             }
 
-            csvData.push(rowData.join(';')); 
+            printWindow.document.write('</tbody>');
+            printWindow.document.write('</table>');
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
 
-        var csvContent = 'data:text/csv;charset=utf-8,';
-        csvContent += 'Nom;Description;Prix;Date Ajout;Status;Stock;Catégorie\n';
+        function exportToExcel() {
+            var table = document.getElementById('myTable');
+            var rows = table.querySelectorAll('tr');
+            var csvData = [];
 
-        for (var i = 0; i < csvData.length; i++) {
-            csvContent += csvData[i] + '\n';
-        }
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var rowData = [];
+                var cols = row.querySelectorAll('td');
 
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement('a');
-        link.setAttribute('href', encodedUri);
-        link.setAttribute('download', 'liste_camera.csv'); 
-        document.body.appendChild(link);
-        link.click();
-    }
+                for (var j = 0; j < cols.length; j++) {
+                    rowData.push(cols[j].innerText);
+                }
 
-   function openUploadPhotoModal(cameraId) {
-        var modal = document.getElementById('uploadPhotoModal');
-        var formAction = '/upload_photo/' + cameraId;
-        modal.querySelector('form').action = formAction;
-        $(modal).modal('show');
-    }
-
-     function confirmDelete(deleteUrl) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
-                window.location.href = deleteUrl;
+                csvData.push(rowData.join(';')); 
             }
-        }
 
-     function confirmPrint() {
-    if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
-        printTable();
-    }
-}
+            var csvContent = 'data:text/csv;charset=utf-8,';
+            csvContent += 'Nom;Prénom;Email;Mot de passe;Adresse;Inscription;Statut;Adresses Sup\n';
 
-    function confirmExport() {
-        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-            exportToExcel();
+            for (var i = 0; i < csvData.length; i++) {
+                csvContent += csvData[i] + '\n';
+            }
+
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'liste_clients.csv'); 
+            document.body.appendChild(link);
+            link.click();
         }
-    }
     </script>
 {% endblock %}

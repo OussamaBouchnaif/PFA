@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -16,9 +19,11 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Camera::class)]

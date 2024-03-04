@@ -25,7 +25,7 @@ class ClientController extends AbstractController
         $pagination = $paginator->paginate(
             $query, 
             $page, 
-            10 
+            5 
         );
 
         // Rendre la vue avec la pagination

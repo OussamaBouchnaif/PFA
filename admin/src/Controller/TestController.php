@@ -27,21 +27,23 @@ class TestController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-    
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+        dd($formCamera->getData());
+        if ($formCamera->isSubmitted() ) {
             $camera = $formCamera->getData();
-            $image = $formImage->getData()->getimageFile();
+
+            $image = $formImage->getData();
+
             
-            $imageCamera->setImage($image); 
-            $camera->addImageCamera($imageCamera);
-            $entityManager->persist($imageCamera);
+            $image->setCamera($camera);
+            $entityManager->persist($image);
             $entityManager->persist($camera);
             $entityManager->flush();
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         } 
-        return $this->render('dashboard/camera/camera_form.html.twig', [
-            'form' => $formCamera->createView(),'formI' => $formImage->createView(),
+        return $this->render('admin/addProduct.html.twig', [
+     
+            'form' => $formCamera->createView(),'formImage' => $formImage->createView(),
         ]);
     }
 }
