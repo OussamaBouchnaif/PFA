@@ -26,9 +26,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
             new GetCollection(normalizationContext: ['groups' => 'conference:list'])
         ],
         
-        paginationEnabled: false,
+        paginationEnabled: true,
     )]
-#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
 class Camera
 {

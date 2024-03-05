@@ -282,7 +282,7 @@
     }
  
     
-    $(function() {
+   /* $(function() {
         $("#slider-range").slider({
             range: true,
             min: 0,
@@ -292,8 +292,10 @@
                 $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
             },
             change: function(event, ui) {
-                // Assurez-vous que l'URL est correctement définie dans l'attribut 'action' du formulaire
-                $("#price-filter-form").submit();
+                var priceRange = "$" + ui.values[0] + " - $" + ui.values[1];
+                // Appel direct de fetchData sans soumettre le formulaire
+                fetchData({ 'price_range': priceRange });
+                setupQuickViewButtons();
             }
         });
     
@@ -302,6 +304,24 @@
             " - $" + $("#slider-range").slider("values", 1));
     });
     
+    function fetchData(criteria) {
+        var url = new URL('/camera/search', window.location.origin);
+        Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
+    
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.text()) // ou response.json() selon le type de réponse attendu
+        .then(html => {
+            document.getElementById('results-container').innerHTML = html;
+            
+        })
+        .catch(error => console.error('Error:', error));
+    }
+   */
     
     //Quantity Counter
     $(".pro-qty").append('<a href="#" class="inc qty-btn">+</a>');

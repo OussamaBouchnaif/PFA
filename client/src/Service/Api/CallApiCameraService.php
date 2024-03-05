@@ -22,6 +22,12 @@ class CallApiCameraService
     {
         return $this->getCameraData('api/cameras');
     }
+
+    public function SearchBy($searchCriteria):array
+    {
+        $queryString = $this->searchCameras($searchCriteria);
+        return $this->getCameraData('api/cameras/?' . $queryString);
+    }
     
     public function getCameraData(String $endpoint):array
     {
@@ -35,26 +41,23 @@ class CallApiCameraService
     }
 
     
-    public function searchCameras($searchCriteria): array
+    public function searchCameras($searchCriteria): String
     {
 
         $queryParts = [];
         foreach ($searchCriteria as $key => $value) {
-                if($key === 'prix')
-                {
-                    $queryParts[] = 'prix%5Bbetween%5D='.$value; 
-                }else
-                {
-                    $queryParts[] = $key.'='.$value; 
-                }
-                        
+            if($key === 'prix')
+            {
+                $queryParts[] = 'prix%5Bbetween%5D='.$value; 
+            }else
+            {
+                $queryParts[] = $key.'='.$value; 
             }
+                    
+        }
         
         $queryString = implode('&', $queryParts);
+        return $queryString;
         
-        // Appel de l'API avec la requête construite
-        $endpoint = 'api/cameras/?' . $queryString;
-        return $this->getCameraData($endpoint);
     }
-
 }
