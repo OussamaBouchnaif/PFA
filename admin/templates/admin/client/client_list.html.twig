@@ -227,9 +227,11 @@
     $('.btn-toggle-account').on('click', function() {
         var clientId = $(this).data('client-id');
         var accountStatus = $(this).data('account-status');
+
         
         // Stocker une référence à $(this) dans une variable
         var button = $(this);
+        
         
         // Mettre à jour l'état du compte
         $.ajax({
@@ -237,6 +239,7 @@
             method: 'POST',
             data: { clientId: clientId, accountStatus: accountStatus },
             success: function(response) {
+                console.log(response);
                 // Mettre à jour l'apparence du bouton en utilisant la variable button
                 if (response === 'success') {
                     // Vérifier si le statut du compte est "actif" ou "active"
