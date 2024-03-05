@@ -22,12 +22,12 @@
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
                                             {% for cat in categories %}
-                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" name="categorie" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
                                     <li class="widget_sub_"><a href="javascript:void(0)" data-toggle="collapse" data-target="#women">Reduction</a>
-                                        <ul class="widget_dropdown_categories collapse show" id="women">
+                                        <ul class="widget_dropdown_categories collapse " id="women">
                                             <li><a href=""> All <span>104</span></a></li>
                                             
                                             <li><a href="">10%<span>68</span></a></li>
@@ -48,7 +48,7 @@
                                     <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount" v readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                        <input type="text" name="price_range" id="amount"  readonly style="border:0; color:#f6931f; font-weight:bold;">
                                         
                                     </form>
                                 </div>
@@ -71,51 +71,33 @@
                                        
                                     </ul>
                                 </div>
-                                <div class="filter__list widget_color">
-                                    <h3>color</h3>
-                                     <ul>
-                                       <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color1"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color2"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color3"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color4"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color5"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color6"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color7"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color8"></span>
-                                        </li>
-                                    </ul>
+                                
+                                <div class="filter__list widget_brands">
+                                    <form action="{{path('camera_search')}}" id="res-filter-form" method="get">
+                                        
+                                        <h3 data-toggle="collapse" data-target="#brands">Resolution</h3>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="SD"  name="res[]">
+                                            <label class="form-check-label" >SD</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="HD"  name="res[]" >
+                                            <label class="form-check-label" >HD</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="4K"  name="res[]" >
+                                            <label class="form-check-label" >4K</label>
+                                        </div> 
+                                    </form>   
                                 </div>
-                                  <div class="filter__list widget_brands">
-                                    <h3 data-toggle="collapse" data-target="#brands">brands</h3>
-                                    <ul class="widget_dropdown_categories collapse show" id="brands">
-                                        <li><a href="#"> The North Face <span>104</span></a></li>
-                                        <li><a href="#">Zara Basic <span>68</span></a></li>
-                                        <li><a href="#">Moschino <span>75</span></a></li>
-                                        <li><a href="#">Supreme <span>30</span></a></li>
-                                        <li><a href="#">Ecko Unltd <span>150</span></a></li>
+                                
+                                
+                                <div class="filter__list widget_brands">
+                                    <h3 data-toggle="collapse" data-target="#brands">Connectivite</h3>
+                                    <ul class="widget_dropdown_conn collapse show" id="brands">
+                                        <li><a href="{{path('camera_search',{connectivite:true})}}"> Yes <span>104</span></a></li>
+                                        <li><a href="{{path('camera_search',{connectivite:false})}}">No <span>68</span></a></li>
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -199,7 +181,8 @@
                     </div>
                      <!--shop toolbar end-->
                     
-                    {{include('client/pages/cameras.html.twig')}}
+                     
+                     {{include("client/pages/components/cameras.html.twig")}}
                     
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
@@ -228,7 +211,7 @@
     </div>
     <!--shop  area end-->
 
-     <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -336,6 +319,8 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    
 {% endblock %}
 
 
