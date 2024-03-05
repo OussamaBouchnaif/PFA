@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
     setupQuickViewButtons(); // Initialiser pour la première charge de page
    
+=======
+    setupQuickViewButtons(); // Initialiser pour la première charge de page
+
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     // Initialisation du curseur de sélection de la plage de prix
     $("#slider-range").slider({
         range: true,
@@ -17,23 +22,28 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchData({ 'price_range': priceRange });
         }
     });
+<<<<<<< HEAD
 =======
     // Gestion de la recherche par catégorie avec AJAX
     /*document.querySelectorAll('.widget_sub_categories a').forEach(function (categoryLink) {
         categoryLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            const categoryId = this.getAttribute('data-id'); // Utiliser data-id pour les liens de catégorie
-            
-            fetch(`/cat`)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('results-container').innerHTML = html;
-                    // Une fois les nouveaux éléments chargés, réinitialiser les écouteurs pour la vue rapide
-                    setupQuickViewButtons();
-                })
-                .catch(error => console.error('Error loading the cameras:', error));
-        });
+=======
 
+    // Initialisation du champ de montant
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
+
+    // Gestion des clics sur les filtres de catégorie
+    document.querySelectorAll('.widget_dropdown_categories a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+            e.preventDefault();
+            var categorie = this.getAttribute('href').split('categorie=')[1];
+            fetchData({ 'categorie': categorie });
+        });
+    });
+
+<<<<<<< HEAD
     });*/
 >>>>>>> 289cd85 (search by categories)
 
@@ -93,12 +103,41 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         fetchData({ 'orderby': order });
     });
+=======
+    // Gestion des clics sur les filtres de taille
+    document.querySelectorAll('.widget_size a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var angle = this.getAttribute('href').split('angle=')[1];
+            fetchData({ 'angle': angle });
+        });
+    });
+   
+   
+    document.querySelectorAll('#res-filter-form .form-check-input').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            let formData = {};
+            document.querySelectorAll('#res-filter-form .form-check-input:checked').forEach(function(input) {
+                if (!formData['res']) {
+                    formData['res'] = [];
+                }
+                formData['res'].push(input.nextElementSibling.textContent.trim());
+            });
+            fetchData(formData);
+        });
+    });
+
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
+<<<<<<< HEAD
     document.getElementById('loadingSpinner').style.display = 'flex';
     document.getElementById('results-container').style.filter = 'blur(2px)';
+=======
+
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     fetch(url, {
         method: 'GET',
         headers: {
@@ -109,6 +148,7 @@ function fetchData(criteria) {
     .then(html => {
         document.getElementById('results-container').innerHTML = html;
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
+<<<<<<< HEAD
         document.getElementById('loadingSpinner').style.display = 'none';
         document.getElementById('results-container').style.filter = 'none';
         
@@ -119,11 +159,19 @@ function fetchData(criteria) {
         document.getElementById('loadingSpinner').style.display = 'none';
         document.getElementById('results-container').style.filter = 'none';
     });
+=======
+    })
+    .catch(error => console.error('Error:', error));
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
 }
 });
 
 function setupQuickViewButtons() {
+<<<<<<< HEAD
     document.querySelectorAll('.addcart').forEach(button => {
+=======
+    document.querySelectorAll('.quick_view').forEach(button => {
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
         button.addEventListener('click', function() {
             var name = this.getAttribute('data-name');
             var price = this.getAttribute('data-price');

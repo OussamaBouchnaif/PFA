@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 {% block stylesheets %}
 
@@ -39,17 +40,29 @@
     <div id="loadingSpinner" style="display: none;">
         <div class="spinner"></div>
     </div>
+=======
+<div class="row shop_wrapper" id="results-container">
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     
         {%  for camera in cameras %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                 <div class="single_product card-box">
                     <div class="product_thumb">
+<<<<<<< HEAD
                         <a href="{{path('app_details',{id:camera.id})}}">
                             {% set img = '' %}
                             {% set imageCamera = camera.imageCameras|first %}
                             <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">   
                             {% set img = imageCamera.image %}
                             
+=======
+                        <a href="product-details.html">
+                            {% set img = '' %}
+                            {% for imageCamera in camera.imageCameras %}
+                                <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
+                                {% set img = imageCamera.image %}
+                            {% endfor %}
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                         </a>
                         <div class="product_action">
                             <ul>
@@ -57,10 +70,16 @@
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
 
                                 <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+<<<<<<< HEAD
                                 <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                             </ul>
                             
+=======
+                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
+                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                            </ul>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                         </div>
                         <div class="product_label">
                             <span>-18%</span>
@@ -83,7 +102,11 @@
                             <span class="old_price">$46.00</span>
                         </div>
                         <div class="add_to_cart">
+<<<<<<< HEAD
                             <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
+=======
+                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                         </div>
                     </div>
                     <div class="product_list_content">
@@ -107,12 +130,15 @@
         {% endfor %} 
 </div>
 
+<<<<<<< HEAD
 {% block javascripts %}
 
 
     
 {% endblock  %}
 
+=======
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
 
 
 

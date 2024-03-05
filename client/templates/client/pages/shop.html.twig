@@ -24,10 +24,14 @@
                                         <ul class="widget_dropdown_categories collapse show" id="men">
                                             {% for cat in categories %}
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
 =======
                                             <li><a href="{{path('camera_search',{categorie:cat.nom})}}" name="categorie" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
 >>>>>>> 289cd85 (search by categories)
+=======
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -94,6 +98,19 @@
                                             <label class="form-check-label" >4K</label>
                                         </div> 
                                     </form>   
+<<<<<<< HEAD
+=======
+                                </div>
+                                
+                                
+                                <div class="filter__list widget_brands">
+                                    <h3 data-toggle="collapse" data-target="#brands">Connectivite</h3>
+                                    <ul class="widget_dropdown_conn collapse show" id="brands">
+                                        <li><a href="{{path('camera_search',{connectivite:true})}}"> Yes <span>104</span></a></li>
+                                        <li><a href="{{path('camera_search',{connectivite:false})}}">No <span>68</span></a></li>
+                                       
+                                    </ul>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                                 </div>
                                 
                                 

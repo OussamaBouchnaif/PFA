@@ -30,6 +30,12 @@ class CallApiCameraService
         $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
+
+    public function SearchBy($searchCriteria):array
+    {
+        $queryString = $this->searchCameras($searchCriteria);
+        return $this->getCameraData('api/cameras/?' . $queryString);
+    }
     
     public function getCameraData(String $endpoint):array
     {
@@ -41,7 +47,12 @@ class CallApiCameraService
         return $cameras;
     }
 
+<<<<<<< HEAD
     public function getCameraById(int $id)
+=======
+    
+    public function searchCameras($searchCriteria): String
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     {
         $endpoint = "/api/cameras/" . $id; 
         $response = $this->getData->getDataFromApi($endpoint);
@@ -67,6 +78,7 @@ class CallApiCameraService
             if($key === 'prix')
             {
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
+<<<<<<< HEAD
             }
             else if($key === 'order')
             {
@@ -81,6 +93,15 @@ class CallApiCameraService
         }
         $queryParts[] = 'page=' . $page;
         $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
+=======
+            }else
+            {
+                $queryParts[] = $key.'='.$value; 
+            }
+                    
+        }
+        
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
         $queryString = implode('&', $queryParts);
         return $queryString;
         

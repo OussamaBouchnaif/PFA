@@ -23,12 +23,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 #[ApiResource(
         
+<<<<<<< HEAD
         normalizationContext: ['groups' => ['camera:read']],
         denormalizationContext: ['groups' => ['camera:write']],
         paginationEnabled: true,
         paginationItemsPerPage: 9,
         
         
+=======
+        paginationEnabled: true,
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]

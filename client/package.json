@@ -8,9 +8,13 @@
   },
   "scripts": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "watch": "webpack --watch",
 =======
 >>>>>>> 289cd85 (search by categories)
+=======
+    "watch": "webpack --watch",
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
