@@ -26,10 +26,15 @@ class TestController extends AbstractController
         // Gestion de la requête
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
+<<<<<<< HEAD
 
         // Vérification de la soumission du formulaire de la caméra
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Récupération des données du formulaire de la caméra
+=======
+        // dd($formCamera->getData());
+        if ($formCamera->isSubmitted() ) {
+>>>>>>> 892e2ed (fixer camera final)
             $camera = $formCamera->getData();
 
             // Vérification de la soumission du formulaire de l'image
@@ -51,12 +56,19 @@ class TestController extends AbstractController
             // Redirection avec un message flash
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
+<<<<<<< HEAD
         }
 
         // Affichage du formulaire
         return $this->render('admin/Cameras/addProduct.html.twig', [
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
+=======
+        } 
+        return $this->render('admin/Cameras/addProduct.html.twig', [
+     
+            'form' => $formCamera->createView(),'formI' => $formImage->createView(),
+>>>>>>> 892e2ed (fixer camera final)
         ]);
     }
 }
