@@ -370,11 +370,17 @@
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
-                                            <tr>
-                                                <td class="align-middle text-center">
-                                                    {% for imageCamera in camera.imageCameras %}
-                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
-                                                    {% endfor %}
+                                            <tr>                                
+                                                <td>
+                                                    <div class="avatar-group">
+                                                        {% for imageCamera in camera.imageCameras %}
+                                                        <a href="javascript: void(0);" class="avatar-group-item "  data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                                                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt=""  class="rounded-circle avatar-xxs">
+                                                        </a>
+                                                       {% endfor %}
+                                                    </div>
+                                                    
+
                                                 </td>
                                                 <td class="align-middle text-center">{{ camera.nom }}</td>
                                                 <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
@@ -392,6 +398,11 @@
                                                     <a class="text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
                                                         <i class="ri-eye-fill align-bottom me-2"></i> 
                                                     </a>
+                                                   <a class="text-muted" > <!-- Lien vers la page de statistiques -->
+                                                        <i class="ri-bar-chart-2-fill align-bottom me-2"></i> <!-- Icône pour les statistiques -->
+                                                    </a>
+
+
                                                 </td>
                                              </tr>
                                             {% endfor %}
