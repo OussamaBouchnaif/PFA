@@ -195,14 +195,24 @@ $(document).ready(function() {
 
         
         var button = $(this);
+<<<<<<< HEAD
 
        
+=======
+        
+        
+        // Mettre à jour l'état du compte
+>>>>>>> 87819b0 (data)
         $.ajax({
             url: 'update-account-status', 
             method: 'POST',
             data: { clientId: clientId, accountStatus: accountStatus },
             success: function(response) {
                 console.log(response);
+<<<<<<< HEAD
+=======
+                // Mettre à jour l'apparence du bouton en utilisant la variable button
+>>>>>>> 87819b0 (data)
                 if (response === 'success') {
                     if (accountStatus === 'active' || accountStatus === 'actif') {
                         // Si oui, le changer à "inactive"
