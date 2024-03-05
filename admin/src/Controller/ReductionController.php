@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
 use App\Entity\Reduction;
 use App\Form\ReductionType;
 use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+=======
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+>>>>>>> 7b86827 (fixer supression avec photo)
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReductionController extends AbstractController
 {
+<<<<<<< HEAD
     private $entityManager;
     private $reductionRepository;
 
@@ -78,4 +83,14 @@ class ReductionController extends AbstractController
 
         return $this->redirectToRoute('reduction_show');
     }
+=======
+    #[Route('/reduction', name: 'app_reduction')]
+    public function index(): Response
+    {
+        return $this->render('reduction/index.html.twig', [
+            'controller_name' => 'ReductionController',
+            
+        ]);
+    }
+>>>>>>> 7b86827 (fixer supression avec photo)
 }

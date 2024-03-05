@@ -101,6 +101,7 @@ class CameraController extends AbstractController
         ]);
     }
 
+<<<<<<< HEAD
     #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
     public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
     {
@@ -121,5 +122,68 @@ class CameraController extends AbstractController
         $this->addFlash('success', 'Camera deleted successfully!');
 
         return $this->redirectToRoute('camera');
+=======
+    
+
+        #[Route('/Delete_camera/{id}', name: 'Delete_camera')]
+        public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
+        {
+            $camera = $cameraRepository->find($id);
+        
+            if (!$camera) {
+                throw $this->createNotFoundException('Camera not found');
+            }
+        
+            // Supprimer toutes les images associées à cette caméra
+            foreach ($camera->getImageCameras() as $imageCamera) {
+                $entityManager->remove($imageCamera);
+            }
+        
+            // Supprimer la caméra
+            $entityManager->remove($camera);
+            $entityManager->flush();
+            $this->addFlash('success', 'Camera deleted successfully!');
+        
+            return $this->redirectToRoute('camera');
+        }
+        
+
+    // #[Route('/upload_photo/{id}', name: 'upload_photo')]
+    // public function uploadPhoto(Camera $camera, Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $imageCamera = new ImageCamera();
+    //     $form = $this->createForm(PhotoType::class, $imageCamera);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $uploadedFile = $form->get('photo')->getData();
+
+    //         $newFilename = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+    //         $uploadedFile->move($this->getParameter('kernel.project_dir') . '/public/uploads', $newFilename);
+
+    //         $imageCamera->setImage($newFilename);
+    //         $imageCamera->setCamera($camera);
+
+    //         $entityManager->persist($imageCamera);
+    //         $entityManager->flush();
+
+    //         $this->addFlash('success', 'Photo ajoutée avec succès!');
+
+    //         return $this->redirectToRoute('camera');
+    //     }
+
+    //     return $this->render('dashboard/camera/upload_photo.html.twig', [
+    //         'form' => $form->createView(),
+    //         'camera' => $camera,
+    //     ]);
+    // }
+
+    #[Route('/download_photo/{id}', name: 'download_photo')]
+    public function downloadPhoto(ImageCamera $imageCamera): BinaryFileResponse
+    {
+        $photoPath = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $imageCamera->getImage();
+
+        return $this->file($photoPath, null, ResponseHeaderBag::DISPOSITION_INLINE);
+>>>>>>> 7b86827 (fixer supression avec photo)
     }
 }
