@@ -92,14 +92,7 @@
                                 </div>
                                 
                                 
-                                <div class="filter__list widget_brands">
-                                    <h3 data-toggle="collapse" data-target="#brands">Connectivite</h3>
-                                    <ul class="widget_dropdown_conn collapse show" id="brands">
-                                        <li><a href="{{path('camera_search',{connectivite:true})}}"> Yes <span>104</span></a></li>
-                                        <li><a href="{{path('camera_search',{connectivite:false})}}">No <span>68</span></a></li>
-                                       
-                                    </ul>
-                                </div>
+                               
                             </div>
                             <div class="widget_list">
                                 <h2>Recent Product</h2>
@@ -184,23 +177,25 @@
                      
                      {{include("client/pages/components/cameras.html.twig")}}
                     
-                    <nav aria-label="Page navigation example">
+                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item {{ cameras.currentPageNumber == 1 ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ cameras.currentPageNumber > 1 ? path('camera_search', {'page': cameras.currentPageNumber - 1}) : '#' }}" aria-label="Previous">
-                                    <span aria-hidden="true">Previous</span>
-                                </a>
-                            </li>
-                            {% for page in 1..cameras.pageCount %}
-                                <li class="page-item {{ page == cameras.currentPageNumber ? 'active' : '' }}">
+                            {% if pagination.currentPage > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+                                </li>
+                            {% endif %}
+                    
+                            {% for page in 1..pagination.totalPages %}
+                                <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
                                     <a class="page-link" href="{{ path('camera_search', {'page': page}) }}">{{ page }}</a>
                                 </li>
                             {% endfor %}
-                            <li class="page-item {{ cameras.currentPageNumber == cameras.pageCount ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ cameras.currentPageNumber < cameras.pageCount ? path('camera_search', {'page': cameras.currentPageNumber + 1}) : '#' }}" aria-label="Next">
-                                    <span aria-hidden="true">Next</span>
-                                </a>
-                            </li>
+                    
+                            {% if pagination.currentPage < pagination.totalPages %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                     
