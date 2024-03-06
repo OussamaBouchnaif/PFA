@@ -282,19 +282,26 @@
     }
  
     
-    /*---slider-range here---*/
-    $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 16, 400 ],
-        slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-       }
+    $(function() {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 2000,
+            values: [16, 1000],
+            slide: function(event, ui) {
+                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            },
+            change: function(event, ui) {
+                // Assurez-vous que l'URL est correctement définie dans l'attribut 'action' du formulaire
+                $("#price-filter-form").submit();
+            }
+        });
+    
+        // Initialisation du champ de montant
+        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+            " - $" + $("#slider-range").slider("values", 1));
     });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-       " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-
+    
     
     //Quantity Counter
     $(".pro-qty").append('<a href="#" class="inc qty-btn">+</a>');

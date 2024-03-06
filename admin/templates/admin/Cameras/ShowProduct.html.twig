@@ -1,0 +1,686 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des caméras{% endblock %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+    <style>
+        #myTable{
+            border: 1px white;
+        }
+        tr{
+         border: 1px white;
+
+        }
+        .horizontal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .horizontal-buttons .dropdown-item,
+    .horizontal-buttons .text-muted {
+        margin-right: 10px; /* Adjust spacing between buttons */
+    }
+    .custom-header-bg {
+        background-color: #f8f9fa; /* Custom header background color */
+    }
+
+    .custom-header {
+        color: #495057; /* Custom header text color */
+    }
+
+    .price-cell {
+        color: #28a745; /* Price cell text color */
+    }
+
+    .category-cell {
+        color: #007bff; /* Category cell text color */
+    }
+
+    
+
+    .horizontal-buttons .dropdown-item:hover,
+    .horizontal-buttons .text-muted:hover {
+        color: #0056b3; /* Change color on hover */
+    }
+
+    .dropdown-item i {
+        color: #777; /* Default icon color */
+    }
+
+    /* Hover effect for table rows */
+    tbody tr:hover {
+        background-color: #f0f0f0; /* Change background color on hover */
+    }
+
+    /* Add spacing between table rows */
+    tbody tr:not(:last-child) {
+        margin-bottom: 10px; /* Adjust spacing between rows */
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="layout-wrapper">
+
+
+        <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0">Products</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                            <li class="breadcrumb-item active">Products</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-grow-1">
+                                                <h5 class="fs-16">Filters</h5>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+                                            </div>
+
+                                    </div>                                   
+                                    </div>
+
+                                    <div class="accordion accordion-flush filter-accordion">
+
+                                       <div class="card-body border-bottom">
+                                        <div>
+                                            <label for="categorySelect">Select Category:</label>
+                                        <select class="form-control" id="categorySelect" placeholder="Sélectionnez une catégorie">
+                                            <option disabled selected hidden>Sélectionnez une catégorie</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.getNom() }}">{{ category.getNom() }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                        </select>
+                                        </div>
+                                    </div>
+
+                                       <div class="card-body border-bottom">
+                                            <p class="text-muted text-uppercase fs-13 fw-medium mb-4">Price</p>
+
+                                            <div id="product-price-range"></div>
+                                            <div class="formCost d-flex gap-2 align-items-center mt-3">
+                                                <input class="form-control form-control-sm" type="text" id="minCost"  />
+                                                <span class="fw-semibold text-muted">to</span>
+                                                <input class="form-control form-control-sm" type="text" id="maxCost"  />
+                                            </div>
+                                        </div>
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingBrands">
+                                                <button class="accordion-button bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseBrands" aria-expanded="true" aria-controls="flush-collapseBrands">
+                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Brands</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
+                                                </button>
+                                            </h2>
+
+                                            <div id="flush-collapseBrands" class="accordion-collapse collapse show" aria-labelledby="flush-headingBrands">
+                                                <div class="accordion-body text-body pt-0">
+                                                    <div class="search-box search-box-sm">
+                                                        <input type="text" class="form-control bg-light border-0" id="searchBrandsList" placeholder="Search Brands...">
+                                                        <i class="ri-search-line search-icon"></i>
+                                                    </div>
+                                                    <div class="d-flex flex-column gap-2 mt-3 filter-check">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="Boat" id="productBrandRadio5" checked>
+                                                            <label class="form-check-label" for="productBrandRadio5">Boat</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="OnePlus" id="productBrandRadio4">
+                                                            <label class="form-check-label" for="productBrandRadio4">OnePlus</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="Realme" id="productBrandRadio3">
+                                                            <label class="form-check-label" for="productBrandRadio3">Realme</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="Sony" id="productBrandRadio2">
+                                                            <label class="form-check-label" for="productBrandRadio2">Sony</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="JBL" id="productBrandRadio1" checked>
+                                                            <label class="form-check-label" for="productBrandRadio1">JBL</label>
+                                                        </div>
+
+                                                        <div>
+                                                            <button type="button" class="btn btn-link text-decoration-none text-uppercase fw-medium p-0">1,235
+                                                                More</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end accordion-item -->
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingDiscount">
+                                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDiscount" aria-expanded="true" aria-controls="flush-collapseDiscount">
+                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Discount</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
+                                                </button>
+                                            </h2>
+                                            <div id="flush-collapseDiscount" class="accordion-collapse collapse" aria-labelledby="flush-headingDiscount">
+                                                <div class="accordion-body text-body pt-1">
+                                                    <div class="d-flex flex-column gap-2 filter-check">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="50% or more" id="productdiscountRadio6">
+                                                            <label class="form-check-label" for="productdiscountRadio6">50% or more</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="40% or more" id="productdiscountRadio5">
+                                                            <label class="form-check-label" for="productdiscountRadio5">40% or more</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="30% or more" id="productdiscountRadio4">
+                                                            <label class="form-check-label" for="productdiscountRadio4">
+                                                                30% or more
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="20% or more" id="productdiscountRadio3" checked>
+                                                            <label class="form-check-label" for="productdiscountRadio3">
+                                                                20% or more
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="10% or more" id="productdiscountRadio2">
+                                                            <label class="form-check-label" for="productdiscountRadio2">
+                                                                10% or more
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="Less than 10%" id="productdiscountRadio1">
+                                                            <label class="form-check-label" for="productdiscountRadio1">
+                                                                Less than 10%
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end accordion-item -->
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingRating">
+                                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseRating" aria-expanded="false" aria-controls="flush-collapseRating">
+                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Rating</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
+                                                </button>
+                                            </h2>
+
+                                            <div id="flush-collapseRating" class="accordion-collapse collapse" aria-labelledby="flush-headingRating">
+                                                <div class="accordion-body text-body">
+                                                    <div class="d-flex flex-column gap-2 filter-check">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="4 & Above Star" id="productratingRadio4" checked>
+                                                            <label class="form-check-label" for="productratingRadio4">
+                                                                <span class="text-muted">
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                </span> 4 & Above
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="3 & Above Star" id="productratingRadio3">
+                                                            <label class="form-check-label" for="productratingRadio3">
+                                                                <span class="text-muted">
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                </span> 3 & Above
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="2 & Above Star" id="productratingRadio2">
+                                                            <label class="form-check-label" for="productratingRadio2">
+                                                                <span class="text-muted">
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                </span> 2 & Above
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="1 Star" id="productratingRadio1">
+                                                            <label class="form-check-label" for="productratingRadio1">
+                                                                <span class="text-muted">
+                                                                    <i class="mdi mdi-star text-warning"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                    <i class="mdi mdi-star"></i>
+                                                                </span> 1
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end accordion-item -->
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-xl-9 col-lg-8">
+                                <div>
+                                    <div class="card">
+                                        <div class="card-header border-0">
+                                            <div class="row g-4">
+                                                <div class="col-sm-auto">
+                                                    <div>
+                                                        <a href="{{ path('Add_camera') }}" class="btn btn-success" id="addproduct-btn">
+                                                        <i class="ri-add-line align-bottom me-1"></i> Add Product</a>
+                                                   
+                                            <button type="button" class="btn btn-primary" onclick="confirmPrint()">
+                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
+                                            </button>
+
+                                            <button type="button" class="btn btn-success" onclick="confirmExport()">
+                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
+                                            </button>                                       
+                                            </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <div class="card-header">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#productnav-all" role="tab">
+                                                                All <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-published" role="tab">
+                                                                Published <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft" role="tab">
+                                                                Draft
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div id="selection-element">
+                                                        <div class="my-n1 d-flex align-items-center text-muted">
+                                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end card header -->
+                                        <div class="card-body">
+
+                                     <table id="myTable" class="table">
+                                        <thead>
+                                            <tr class="align-middle custom-header-bg">
+                                                <th class="custom-header text-center">Photo</th>
+                                                <th class="custom-header text-center">Nom</th>
+                                                <th class="custom-header text-center">Prix</th>
+                                                <th class="custom-header text-center">Date Ajout</th>
+                                                <th class="custom-header text-center">Statut</th>
+                                                <th class="custom-header text-center">Stock</th>
+                                                <th class="custom-header text-center">Catégorie</th>
+                                                <th class="custom-header text-center">Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for camera in cameras %}
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    {% for imageCamera in camera.imageCameras %}
+                                                    <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
+                                                    {% endfor %}
+                                                </td>
+                                                <td class="align-middle text-center">{{ camera.nom }}</td>
+                                                <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
+                                                <td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
+                                                <td class="align-middle text-center">{{ camera.status }}</td>
+                                                <td class="align-middle text-center">{{ camera.stock }}</td>
+                                                <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
+                                                <td class="text-center align-middle horizontal-buttons">
+                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> 
+                                                    </button>
+                                                    <a class="text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
+                                                        <i class="ri-pencil-line align-bottom me-2"></i> 
+                                                    </a>
+                                                    <a class="text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
+                                                        <i class="ri-eye-fill align-bottom me-2"></i> 
+                                                    </a>
+                                                </td>
+                                             </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                            <div class="tab-content text-muted">
+                                                <div class="tab-pane active" id="productnav-all" role="tabpanel">
+                                                    <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
+                                                </div>
+                                                <!-- end tab pane -->
+
+                                                <div class="tab-pane" id="productnav-published" role="tabpanel">
+                                                    <div id="table-product-list-published" class="table-card gridjs-border-none"></div>
+                                                </div>
+                                                <!-- end tab pane -->
+
+                                                <div class="noDataMessage" id="productnav-draft" role="tabpanel">
+                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
+                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
+                                                    <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
+                                                </div>
+                                                </div>
+                                                <!-- end tab pane -->
+                                            </div>
+                                            <!-- end tab content -->
+
+                                        </div>
+                                        <!-- end card body -->
+                                    </div>
+                                    <!-- end card -->
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> © Velzon.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Design & Develop by Themesbrand
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+    <script>  
+    document.addEventListener('DOMContentLoaded', function () {
+            var addCameraModal = document.getElementById('addCameraModal');
+            var addCameraForm = document.getElementById('addCameraForm');
+            document.querySelector('[data-bs-target="#addCameraModal"]').addEventListener('click', function () {
+                var modal = new bootstrap.Modal(addCameraModal);
+                modal.show();
+            });
+            addCameraForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Empêcher le comportement de soumission par défaut
+            });
+        });
+    function printTable() {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+        printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+        printWindow.document.write('th {font-weight: bold; text-align: center;}');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<table>');
+        printWindow.document.write('<thead>');
+        printWindow.document.write('<tr>');
+        printWindow.document.write('<th>Nom</th>');
+        printWindow.document.write('<th>Description</th>');
+        printWindow.document.write('<th>Prix</th>');
+        printWindow.document.write('<th>Date Ajout</th>');
+        printWindow.document.write('<th>Status</th>');
+        printWindow.document.write('<th>Stock</th>');
+        printWindow.document.write('<th>Catégorie</th>');
+        printWindow.document.write('</tr>');
+        printWindow.document.write('</thead>');
+        printWindow.document.write('<tbody>');
+        
+        var tableRows = document.getElementById('myTable').querySelectorAll('tr');
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var rowData = row.querySelectorAll('td');
+            if (rowData.length > 0) {
+                printWindow.document.write('<tr>');
+                for (var j = 0; j < rowData.length; j++) {
+                    if (j !== rowData.length - 1) {
+                        printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+                    }
+                }
+                printWindow.document.write('</tr>');
+            }
+        }
+        
+        printWindow.document.write('</tbody>');
+        printWindow.document.write('</table>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+     
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionnez l'élément de liste déroulante des catégories
+    var categorySelect = document.getElementById('categorySelect');
+
+    // Ajoutez un écouteur d'événements de changement à l'élément de liste déroulante
+    categorySelect.addEventListener('change', function() {
+        // Récupérez la valeur sélectionnée dans la liste déroulante
+        var selectedCategory = categorySelect.value;
+
+        // Appelez la fonction pour filtrer la table par catégorie et afficher/masquer le message en conséquence
+        filterTableByCategory(selectedCategory);
+    });
+});
+function filterTableByCategory(categoryName) {
+    // Récupérer la table DataTable
+    var table = $('#myTable').DataTable();
+
+    // Si le nom de la catégorie est "All", réinitialiser le filtre de la colonne et afficher toutes les données
+    if (categoryName === 'All') {
+        table.column(6).search('').draw();
+    } else {
+        // Sinon, appliquer le filtre de la colonne pour la catégorie sélectionnée
+        table.column(6).search(categoryName).draw();
+    }
+}
+
+
+
+
+
+
+
+
+    function exportToExcel() {
+        var table = document.getElementById('myTable');
+        var rows = table.querySelectorAll('tr');
+        var csvData = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var rowData = [];
+            var cols = row.querySelectorAll('td');
+
+            for (var j = 0; j < cols.length; j++) {
+                rowData.push(cols[j].innerText);
+            }
+
+            csvData.push(rowData.join(';')); 
+        }
+
+        var csvContent = 'data:text/csv;charset=utf-8,';
+        csvContent += 'Nom;Description;Prix;Date Ajout;Status;Stock;Catégorie\n';
+
+        for (var i = 0; i < csvData.length; i++) {
+            csvContent += csvData[i] + '\n';
+        }
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'liste_camera.csv'); 
+        document.body.appendChild(link);
+        link.click();
+    }
+
+   function openUploadPhotoModal(cameraId) {
+        var modal = document.getElementById('uploadPhotoModal');
+        var formAction = '/upload_photo/' + cameraId;
+        modal.querySelector('form').action = formAction;
+        $(modal).modal('show');
+    }
+
+     function confirmDelete(deleteUrl) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
+                window.location.href = deleteUrl;
+            }
+        }
+
+     function confirmPrint() {
+    if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
+        printTable();
+    }
+}
+
+    function confirmExport() {
+        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
+            exportToExcel();
+        }
+    }
+
+
+     document.addEventListener('DOMContentLoaded', function() {
+        // Sélectionner les éléments d'entrée pour les valeurs de prix
+        var minCostInput = document.getElementById('minCost');
+        var maxCostInput = document.getElementById('maxCost');
+
+        // Ajouter des écouteurs d'événements pour détecter les changements de valeur
+        minCostInput.addEventListener('input', filterTableByPrice);
+        maxCostInput.addEventListener('input', filterTableByPrice);
+    });
+
+  function filterTableByPrice() {
+    // Récupérer les valeurs de prix minimales et maximales
+    var minPrice = parseFloat(document.getElementById('minCost').value);
+    var maxPrice = parseFloat(document.getElementById('maxCost').value);
+
+    // Sélectionner toutes les lignes du tableau
+    var rows = document.querySelectorAll('#myTable tbody tr');
+
+    // Variable pour indiquer si au moins une ligne est affichée
+    var atLeastOneRowDisplayed = false;
+
+    // Parcourir toutes les lignes du tableau
+    rows.forEach(function(row) {
+        // Récupérer le prix de la caméra dans cette ligne
+        var cameraPrice = parseFloat(row.querySelector('.price-cell').textContent);
+
+        // Vérifier si le prix est compris dans la plage sélectionnée
+        if (cameraPrice >= minPrice && cameraPrice <= maxPrice) {
+            // Afficher la ligne si le prix est dans la plage
+            row.style.display = '';
+            atLeastOneRowDisplayed = true;
+        } else {
+            // Masquer la ligne si le prix n'est pas dans la plage
+            row.style.display = 'none';
+        }
+    });
+
+    // Afficher un message si aucune ligne n'est affichée
+    if (!atLeastOneRowDisplayed) {
+        document.getElementById('noDataMessage').style.display = 'block';
+    } else {
+        document.getElementById('noDataMessage').style.display = 'none';
+    }
+}
+
+
+
+  
+function clearAllFilters() {
+    // Réinitialiser les valeurs des champs de filtre pour la catégorie
+    document.getElementById('categorySelect').value = 'All';
+
+    // Réinitialiser les valeurs des champs de filtre pour le prix
+    document.getElementById('minCost').value = '0';
+    document.getElementById('maxCost').value = '1000';
+
+    // Réinitialiser les filtres de la catégorie
+    filterTableByCategory('All');
+
+    // Réinitialiser les filtres du prix
+    filterTableByPrice();
+}
+
+
+
+
+
+
+
+    </script>
+{% endblock %}
