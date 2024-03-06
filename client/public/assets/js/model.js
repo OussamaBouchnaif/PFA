@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
-
+    document.getElementById('loadingSpinner').style.display = 'flex';
+    document.getElementById('results-container').style.filter = 'blur(4px)';
     fetch(url, {
         method: 'GET',
         headers: {
@@ -68,6 +69,9 @@ function fetchData(criteria) {
     .then(html => {
         document.getElementById('results-container').innerHTML = html;
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
+        
     })
     .catch(error => console.error('Error:', error));
 }
