@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Camera;
+use App\Service\Api\CallApiCameraService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @extends ServiceEntityRepository<Camera>
@@ -19,22 +21,33 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class CameraRepository extends ServiceEntityRepository
 {
    
-    public function __construct(ManagerRegistry $registry)
+   private CallApiCameraService $callapi;
+   
+    public function __construct(ManagerRegistry $registry,CallApiCameraService $callapi)
     {
         parent::__construct($registry, Camera::class);
-    
+        $this->callapi = $callapi;
+        
     }
-
-    public function getPagination($camera,PaginatorInterface $paginatorInterface,Request $request)
+    public function extractPaginationInfo(int $page)
     {
-        $data = $paginatorInterface->paginate(
-            $camera,
-            $request->query->getInt('page',1),
-            9
-        );
-        return $data;
+        
+        $paginationInfo = [
+            'totalPages' => ceil($this->callapi->getItems()/9),
+            'currentPage' => $page,
+        ];
+    
+        return $paginationInfo;
     }
-
+    public function fillInTheSession($newCriteria,$searchCriteria)
+    {
+        foreach ($newCriteria as $key => $value) {
+            if (!empty($value)) {
+                $searchCriteria[$key] = $value; 
+            }
+        }
+    }
+   
 
     
 

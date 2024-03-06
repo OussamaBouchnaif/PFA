@@ -18,14 +18,14 @@ class CallApiCameraService
         $this->serializer = $serializer;
         
     }
-    public function getAllCamera():array
+    public function getAllCamera(int $page):array
     {
-        return $this->getCameraData('api/cameras');
+        return $this->getCameraData('api/cameras?page='.$page);
     }
 
-    public function SearchBy($searchCriteria):array
+    public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
-        $queryString = $this->searchCameras($searchCriteria);
+        $queryString = $this->searchCameras($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -39,11 +39,20 @@ class CallApiCameraService
         $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
         return $cameras;
     }
-
-    
-    public function searchCameras($searchCriteria): String
+    public function getItems():int
     {
-
+        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
+            'Content-Type' => 'application/json',
+        ]]);
+        $jsonData = $response->getContent(); 
+        $data = $this->serializer->decode($jsonData,'json');
+        $items = $data["hydra:totalItems"];
+        return $items;
+    }
+    
+    public function searchCameras($searchCriteria, $page, $itemsPerPage): String
+    {
+        
         $queryParts = [];
         foreach ($searchCriteria as $key => $value) {
             if($key === 'prix')
@@ -55,7 +64,8 @@ class CallApiCameraService
             }
                     
         }
-        
+        $queryParts[] = 'page=' . $page;
+        $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
         $queryString = implode('&', $queryParts);
         return $queryString;
         
