@@ -23,17 +23,20 @@ class CallApiCameraService
     public function getAllCamera(int $page):array
     {
         return $this->getCameraData('api/cameras?page='.$page);
+<<<<<<< HEAD
     }
 
     public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
         $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
     }
 
-    public function SearchBy($searchCriteria):array
+    public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
-        $queryString = $this->searchCameras($searchCriteria);
+        $queryString = $this->searchCameras($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -46,6 +49,7 @@ class CallApiCameraService
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     public function getCameraById(int $id)
@@ -71,6 +75,20 @@ class CallApiCameraService
     }
     
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
+=======
+    public function getItems():int
+    {
+        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
+            'Content-Type' => 'application/json',
+        ]]);
+        $jsonData = $response->getContent(); 
+        $data = $this->serializer->decode($jsonData,'json');
+        $items = $data["hydra:totalItems"];
+        return $items;
+    }
+    
+    public function searchCameras($searchCriteria, $page, $itemsPerPage): String
+>>>>>>> 44d6728 (adapt api's pagination)
     {
         
         $queryParts = [];
@@ -100,8 +118,13 @@ class CallApiCameraService
             }
                     
         }
+<<<<<<< HEAD
         
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        $queryParts[] = 'page=' . $page;
+        $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
+>>>>>>> 44d6728 (adapt api's pagination)
         $queryString = implode('&', $queryParts);
         return $queryString;
         

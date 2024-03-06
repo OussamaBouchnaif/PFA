@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Camera;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Service\Api\CallApiCameraService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -12,11 +13,18 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 =======
+=======
+use App\Service\Api\CallApiCameraService;
+>>>>>>> 44d6728 (adapt api's pagination)
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+<<<<<<< HEAD
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+>>>>>>> 44d6728 (adapt api's pagination)
 
 /**
  * @extends ServiceEntityRepository<Camera>
@@ -30,6 +38,7 @@ class CameraRepository extends ServiceEntityRepository
 {
    
 <<<<<<< HEAD
+<<<<<<< HEAD
    private CallApiCameraService $callapi;
 
     public function __construct(ManagerRegistry $registry,CallApiCameraService $callapi)
@@ -39,13 +48,19 @@ class CameraRepository extends ServiceEntityRepository
         
 =======
     public function __construct(ManagerRegistry $registry)
+=======
+   private CallApiCameraService $callapi;
+   
+    public function __construct(ManagerRegistry $registry,CallApiCameraService $callapi)
+>>>>>>> 44d6728 (adapt api's pagination)
     {
         parent::__construct($registry, Camera::class);
-    
+        $this->callapi = $callapi;
+        
     }
-
-    public function getPagination($camera,PaginatorInterface $paginatorInterface,Request $request)
+    public function extractPaginationInfo(int $page)
     {
+<<<<<<< HEAD
         $data = $paginatorInterface->paginate(
             $camera,
             $request->query->getInt('page',1),
@@ -67,12 +82,27 @@ class CameraRepository extends ServiceEntityRepository
     public function fillInTheSession($newCriteria,SessionInterface $session):array
     {
         $searchCriteria = $session->get('searchCriteria', array());
+=======
+        
+        $paginationInfo = [
+            'totalPages' => ceil($this->callapi->getItems()/9),
+            'currentPage' => $page,
+        ];
+    
+        return $paginationInfo;
+    }
+    public function fillInTheSession($newCriteria,$searchCriteria)
+    {
+>>>>>>> 44d6728 (adapt api's pagination)
         foreach ($newCriteria as $key => $value) {
             if (!empty($value)) {
                 $searchCriteria[$key] = $value; 
             }
         }
+<<<<<<< HEAD
         return $searchCriteria;
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
     }
    
 

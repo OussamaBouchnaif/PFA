@@ -133,11 +133,16 @@ function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
 <<<<<<< HEAD
+<<<<<<< HEAD
     document.getElementById('loadingSpinner').style.display = 'flex';
     document.getElementById('results-container').style.filter = 'blur(2px)';
 =======
 
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+    document.getElementById('loadingSpinner').style.display = 'flex';
+    document.getElementById('results-container').style.filter = 'blur(4px)';
+>>>>>>> 44d6728 (adapt api's pagination)
     fetch(url, {
         method: 'GET',
         headers: {
@@ -148,6 +153,7 @@ function fetchData(criteria) {
     .then(html => {
         document.getElementById('results-container').innerHTML = html;
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
+<<<<<<< HEAD
 <<<<<<< HEAD
         document.getElementById('loadingSpinner').style.display = 'none';
         document.getElementById('results-container').style.filter = 'none';
@@ -160,6 +166,11 @@ function fetchData(criteria) {
         document.getElementById('results-container').style.filter = 'none';
     });
 =======
+=======
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
+        
+>>>>>>> 44d6728 (adapt api's pagination)
     })
     .catch(error => console.error('Error:', error));
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
