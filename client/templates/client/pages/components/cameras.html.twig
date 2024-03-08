@@ -1,16 +1,53 @@
 
-<div class="row shop_wrapper" id="results-container">
+
+{% block stylesheets %}
+<style>
+   
+    #loadingSpinner {
+        position :absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        background-color: #09f;
+    }
     
+    .spinner {
+        position: absolute;
+        left: 50%;
+        border: 4px solid rgba(0,0,0,.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #09f;
+        animation: spin 1s ease infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    #results-container{
+        position :relative;
+        
+    }
+    
+</style>
+{% endblock  %}
+<div class="row shop_wrapper" id="results-container">
+    <div id="loadingSpinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
         {%  for camera in cameras %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                 <div class="single_product card-box">
                     <div class="product_thumb">
                         <a href="product-details.html">
                             {% set img = '' %}
-                            {% for imageCamera in camera.imageCameras %}
-                                <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
-                                {% set img = imageCamera.image %}
-                            {% endfor %}
+                            {% set imageCamera = camera.imageCameras|first %}
+                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">   
+                            {% set img = imageCamera.image %}
+                            
                         </a>
                         <div class="product_action">
                             <ul>
@@ -66,6 +103,12 @@
     
         {% endfor %} 
 </div>
+
+{% block javascripts %}
+
+
+    
+{% endblock  %}
 
 
 

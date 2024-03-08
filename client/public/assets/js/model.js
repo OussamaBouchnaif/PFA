@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     setupQuickViewButtons(); // Initialiser pour la première charge de page
-
+   
     // Initialisation du curseur de sélection de la plage de prix
     $("#slider-range").slider({
         range: true,
@@ -52,12 +52,26 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchData(formData);
         });
     });
+   
 
+    $('#shorts').change(function() {
+        var selectedOption = this.options[this.selectedIndex];
+
+        var valuer =  selectedOption.value;
+        if(valuer === 'date')
+            order = 'dateAjout';
+        else if(valuer === 'prix')
+        {
+            order = 'prix';
+        }
+        fetchData({ 'orderby': order });
+    });
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
-
+    document.getElementById('loadingSpinner').style.display = 'flex';
+    document.getElementById('results-container').style.filter = 'blur(2px)';
     fetch(url, {
         method: 'GET',
         headers: {
@@ -68,8 +82,16 @@ function fetchData(criteria) {
     .then(html => {
         document.getElementById('results-container').innerHTML = html;
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
+        
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error)
+        document.getElementById('results-container').innerHTML = error;
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
+    });
 }
 });
 

@@ -18,14 +18,14 @@ class CallApiCameraService
         $this->serializer = $serializer;
         
     }
-    public function getAllCamera():array
+    public function getAllCamera(int $page):array
     {
-        return $this->getCameraData('api/cameras');
+        return $this->getCameraData('api/cameras?page='.$page);
     }
 
-    public function SearchBy($searchCriteria):array
+    public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
-        $queryString = $this->searchCameras($searchCriteria);
+        $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -39,23 +39,39 @@ class CallApiCameraService
         $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
         return $cameras;
     }
-
-    
-    public function searchCameras($searchCriteria): String
+    public function getItems():int
     {
-
+        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
+            'Content-Type' => 'application/json',
+        ]]);
+        $jsonData = $response->getContent(); 
+        $data = $this->serializer->decode($jsonData,'json');
+        $items = $data["hydra:totalItems"];
+        return $items;
+    }
+    
+    public function generateUrl($searchCriteria, $page, $itemsPerPage): String
+    {
+        
         $queryParts = [];
         foreach ($searchCriteria as $key => $value) {
             if($key === 'prix')
             {
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
-            }else
+            }
+            else if($key === 'order')
+            {
+                
+                $queryParts[] = 'order%5B'.$value.'%5D=asc';
+            }
+            else if($key !== 'order' && $key !== 'prix' )
             {
                 $queryParts[] = $key.'='.$value; 
             }
                     
         }
-        
+        $queryParts[] = 'page=' . $page;
+        $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
         $queryString = implode('&', $queryParts);
         return $queryString;
         

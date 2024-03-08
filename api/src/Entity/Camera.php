@@ -4,16 +4,17 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
-
-
-
 use Doctrine\ORM\Mapping as ORM;
 
+
+
 use ApiPlatform\Metadata\ApiFilter;
+
 use App\Repository\CameraRepository;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
@@ -27,9 +28,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
         
         paginationEnabled: true,
+        paginationItemsPerPage: 9,
+        
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
 class Camera
 {
     #[ORM\Id]

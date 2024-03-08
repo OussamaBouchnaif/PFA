@@ -27,39 +27,42 @@ class CameraController extends AbstractController
     }
 
     #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session,PaginatorInterface $paginatorInterface): Response
+    public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session): Response
     {     
+        $page = $request->query->getInt('page',1);        
         $categorie = $catrepo->findAll();
-        $searchCriteria = $session->get('searchCriteria', array());
         $newCriteria = [
+            'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
             'angleVision' => $request->query->get('angle'),
-            'connectivite' => $request->query->get('connectivite'),
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
         ];
-    
-        foreach ($newCriteria as $key => $value) {
-            if (!empty($value)) {
-                $searchCriteria[$key] = $value; 
-            }
-        }
-        
+
+        $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
-        $cameras = $callApiCameraService->SearchBy($searchCriteria);
-        $data = $cameraRepository->getPagination($cameras,$paginatorInterface,$request);
         
+        $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
+        $pagination = $cameraRepository->extractPaginationInfo($page);
         if ($request->isXmlHttpRequest()) {
+           
             return $this->render('client/pages/components/cameras.html.twig', [
-                'cameras' => $data,
+                'cameras' => $cameras,
                 'categories'=> $categorie,
+                'pagination' => $pagination,
+                'items'=>$callApiCameraService->getItems(),
             ]);
         }
         return $this->render('client/pages/shop.html.twig',[
-            'cameras' => $data,
+            'cameras' => $cameras,
             'categories'=> $categorie,
+            'pagination' => $pagination,
+            'items'=>$callApiCameraService->getItems(),
         ]);
     }
+
+  
+    
     
  
    
