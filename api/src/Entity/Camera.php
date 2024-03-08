@@ -33,7 +33,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
-#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC'])]
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
 class Camera
 {
     #[ORM\Id]

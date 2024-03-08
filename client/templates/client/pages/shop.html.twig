@@ -140,22 +140,22 @@
                             <p>The collections basic items <br> essential for all </p>
                         </div>
                     </div>
+
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper d-flex justify-content-between align-items-center"  >
                         <div class="page_amount">
                             <p><span>{{items}}</span> Products Found</p>
                         </div>
+                        
                         <div class=" sorting_by d-flex align-items-center">
                             <span>SORT BY :</span>
-                            <form class="select_option" action="{{path('camera_search')}}" method="get" id="form_sort">
-                                <select name="orderby" id="short">
-
+                            <form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
+                                <select name="orderby" id="shorts">
                                     <option selected value="prix">Prix</option>
                                     <option  value="date">Date</option>
-                                    <option  value="rate">Rate</option>
-                                    
-                                    
+                                    <option  value="rate">Rate</option>                                    
                                 </select>
+                                
                             </form>
                         </div>
                         <div class="toolbar_btn_wrapper d-flex align-items-center">
