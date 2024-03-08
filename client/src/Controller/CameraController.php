@@ -31,20 +31,15 @@ class CameraController extends AbstractController
     {     
         $page = $request->query->getInt('page',1);        
         $categorie = $catrepo->findAll();
-        $searchCriteria = $session->get('searchCriteria', array());
         $newCriteria = [
+            'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
             'angleVision' => $request->query->get('angle'),
-            'connectivite' => $request->query->get('connectivite'),
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
         ];
-        foreach ($newCriteria as $key => $value) {
-            if (!empty($value)) {
-                $searchCriteria[$key] = $value; 
-            }
-        }
-        
+
+        $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
         $pagination = $cameraRepository->extractPaginationInfo($page);
@@ -54,12 +49,14 @@ class CameraController extends AbstractController
                 'cameras' => $cameras,
                 'categories'=> $categorie,
                 'pagination' => $pagination,
+                'items'=>$callApiCameraService->getItems(),
             ]);
         }
         return $this->render('client/pages/shop.html.twig',[
             'cameras' => $cameras,
             'categories'=> $categorie,
             'pagination' => $pagination,
+            'items'=>$callApiCameraService->getItems(),
         ]);
     }
 
