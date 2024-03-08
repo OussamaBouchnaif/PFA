@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     setupQuickViewButtons(); // Initialiser pour la première charge de page
-
+   
     // Initialisation du curseur de sélection de la plage de prix
     $("#slider-range").slider({
         range: true,
@@ -53,7 +53,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
    
-    
+
+    $('#shorts').change(function() {
+        var selectedOption = this.options[this.selectedIndex];
+
+        var valuer =  selectedOption.value;
+        if(valuer === 'date')
+            order = 'dateAjout';
+        else if(valuer === 'prix')
+        {
+            order = 'prix';
+        }
+        fetchData({ 'orderby': order });
+    });
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
