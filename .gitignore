@@ -1,5 +1,6 @@
 /.idea
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /data
 <<<<<<< HEAD
@@ -8,3 +9,6 @@
 /data/
 =======
 >>>>>>> 7ae1066 (add data to git ignore)
+=======
+/data/
+>>>>>>> 6b36410 (data)
