@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         paginationEnabled: true,
         paginationItemsPerPage: 9,
         
+<<<<<<< HEAD
         
 =======
         paginationEnabled: true,
@@ -37,6 +38,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
 #[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
+=======
+    )]
+#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
+#[ApiFilter(RangeFilter::class, properties: ['prix'])]
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC'])]
+>>>>>>> fa04ec1 (maintain search code)
 class Camera
 {
     #[ORM\Id]

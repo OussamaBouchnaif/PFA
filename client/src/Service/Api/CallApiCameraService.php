@@ -97,6 +97,7 @@ class CallApiCameraService
             {
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
 <<<<<<< HEAD
+<<<<<<< HEAD
             }
             else if($key === 'order')
             {
@@ -104,6 +105,10 @@ class CallApiCameraService
                 $queryParts[] = 'order%5B'.$value.'%5D=asc';
             }
             else if($key !== 'order' && $key !== 'prix' )
+=======
+            }
+            else
+>>>>>>> fa04ec1 (maintain search code)
             {
                 $queryParts[] = $key.'='.$value; 
             }

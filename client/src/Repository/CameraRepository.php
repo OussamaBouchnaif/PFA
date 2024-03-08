@@ -50,12 +50,12 @@ class CameraRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
 =======
    private CallApiCameraService $callapi;
-   
+
     public function __construct(ManagerRegistry $registry,CallApiCameraService $callapi)
 >>>>>>> 44d6728 (adapt api's pagination)
     {
         parent::__construct($registry, Camera::class);
-        $this->callapi = $callapi;
+        $this->callapi = $callapi;   
         
     }
     public function extractPaginationInfo(int $page)
@@ -91,18 +91,26 @@ class CameraRepository extends ServiceEntityRepository
     
         return $paginationInfo;
     }
-    public function fillInTheSession($newCriteria,$searchCriteria)
+    public function fillInTheSession($newCriteria,SessionInterface $session):array
     {
+<<<<<<< HEAD
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+        $searchCriteria = $session->get('searchCriteria', array());
+>>>>>>> fa04ec1 (maintain search code)
         foreach ($newCriteria as $key => $value) {
             if (!empty($value)) {
                 $searchCriteria[$key] = $value; 
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         return $searchCriteria;
 =======
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+        return $searchCriteria;
+>>>>>>> fa04ec1 (maintain search code)
     }
    
 

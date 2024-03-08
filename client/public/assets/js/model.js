@@ -126,8 +126,13 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchData(formData);
         });
     });
+<<<<<<< HEAD
 
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+   
+    
+>>>>>>> fa04ec1 (maintain search code)
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
@@ -141,8 +146,12 @@ function fetchData(criteria) {
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
 =======
     document.getElementById('loadingSpinner').style.display = 'flex';
+<<<<<<< HEAD
     document.getElementById('results-container').style.filter = 'blur(4px)';
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+    document.getElementById('results-container').style.filter = 'blur(2px)';
+>>>>>>> fa04ec1 (maintain search code)
     fetch(url, {
         method: 'GET',
         headers: {
@@ -165,6 +174,7 @@ function fetchData(criteria) {
         document.getElementById('loadingSpinner').style.display = 'none';
         document.getElementById('results-container').style.filter = 'none';
     });
+<<<<<<< HEAD
 =======
 =======
         document.getElementById('loadingSpinner').style.display = 'none';
@@ -174,6 +184,8 @@ function fetchData(criteria) {
     })
     .catch(error => console.error('Error:', error));
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+>>>>>>> fa04ec1 (maintain search code)
 }
 });
 
