@@ -52,13 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchData(formData);
         });
     });
-
+   
+    
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
     document.getElementById('loadingSpinner').style.display = 'flex';
-    document.getElementById('results-container').style.filter = 'blur(4px)';
+    document.getElementById('results-container').style.filter = 'blur(2px)';
     fetch(url, {
         method: 'GET',
         headers: {
@@ -73,7 +74,12 @@ function fetchData(criteria) {
         document.getElementById('results-container').style.filter = 'none';
         
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error)
+        document.getElementById('results-container').innerHTML = error;
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
+    });
 }
 });
 
