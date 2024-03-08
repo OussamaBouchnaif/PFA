@@ -39,7 +39,11 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
                 new RememberMeBadge(),
             ]
+<<<<<<< HEAD
         );  
+=======
+        );
+>>>>>>> d874979 (Login)
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -47,11 +51,19 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+<<<<<<< HEAD
     
         // Redirect to a specific route after successful authentication
         return new RedirectResponse($this->urlGenerator->generate('camera')); // Replace 'app_home' with the name of your desired route
     }
     
+=======
+
+        // For example:
+        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    }
+>>>>>>> d874979 (Login)
 
     protected function getLoginUrl(Request $request): string
     {

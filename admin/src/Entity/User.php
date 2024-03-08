@@ -10,8 +10,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+<<<<<<< HEAD
 #[Vich\Uploadable]
 class User extends Personne
+=======
+
+class User
+>>>>>>> d874979 (Login)
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
