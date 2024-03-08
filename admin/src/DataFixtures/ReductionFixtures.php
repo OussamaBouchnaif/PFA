@@ -1,6 +1,9 @@
 <?php
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5ccd8bf (fixer reduction)
 namespace App\DataFixtures;
 
 use App\Entity\Reduction;
