@@ -58,7 +58,8 @@ class CallApiCameraService
             if($key === 'prix')
             {
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
-            }else
+            }
+            else
             {
                 $queryParts[] = $key.'='.$value; 
             }
