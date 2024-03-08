@@ -41,10 +41,11 @@ class CameraController extends AbstractController
 
         $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
+        
         $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
         $pagination = $cameraRepository->extractPaginationInfo($page);
         if ($request->isXmlHttpRequest()) {
-            
+           
             return $this->render('client/pages/components/cameras.html.twig', [
                 'cameras' => $cameras,
                 'categories'=> $categorie,
