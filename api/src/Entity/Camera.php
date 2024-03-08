@@ -42,8 +42,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
+<<<<<<< HEAD
 #[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC'])]
 >>>>>>> fa04ec1 (maintain search code)
+=======
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
+>>>>>>> ca2bd99 (add sort by price and date)
 class Camera
 {
     #[ORM\Id]

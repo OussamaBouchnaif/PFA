@@ -36,7 +36,7 @@ class CallApiCameraService
 
     public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
-        $queryString = $this->searchCameras($searchCriteria, $page, $itemsPerPage);
+        $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -87,8 +87,12 @@ class CallApiCameraService
         return $items;
     }
     
+<<<<<<< HEAD
     public function searchCameras($searchCriteria, $page, $itemsPerPage): String
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+    public function generateUrl($searchCriteria, $page, $itemsPerPage): String
+>>>>>>> ca2bd99 (add sort by price and date)
     {
         
         $queryParts = [];
@@ -107,8 +111,17 @@ class CallApiCameraService
             else if($key !== 'order' && $key !== 'prix' )
 =======
             }
+<<<<<<< HEAD
             else
 >>>>>>> fa04ec1 (maintain search code)
+=======
+            else if($key === 'order')
+            {
+                
+                $queryParts[] = 'order%5B'.$value.'%5D=asc';
+            }
+            else if($key !== 'order' && $key !== 'prix' )
+>>>>>>> ca2bd99 (add sort by price and date)
             {
                 $queryParts[] = $key.'='.$value; 
             }

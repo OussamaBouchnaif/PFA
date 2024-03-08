@@ -71,6 +71,7 @@ class CameraController extends AbstractController
         $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         
+<<<<<<< HEAD
         $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
         $pagination = $cameraRepository->extractPaginationInfo($page);
         if ($request->isXmlHttpRequest()) {
@@ -99,10 +100,12 @@ class CameraController extends AbstractController
         $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
 >>>>>>> fa04ec1 (maintain search code)
         $session->set('searchCriteria', $searchCriteria);
+=======
+>>>>>>> ca2bd99 (add sort by price and date)
         $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
         $pagination = $cameraRepository->extractPaginationInfo($page);
         if ($request->isXmlHttpRequest()) {
-            
+           
             return $this->render('client/pages/components/cameras.html.twig', [
                 'cameras' => $cameras,
                 'categories'=> $categorie,
