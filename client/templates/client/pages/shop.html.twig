@@ -22,12 +22,12 @@
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
                                             {% for cat in categories %}
-                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" value="" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
                                     <li class="widget_sub_"><a href="javascript:void(0)" data-toggle="collapse" data-target="#women">Reduction</a>
-                                        <ul class="widget_dropdown_categories collapse show" id="women">
+                                        <ul class="widget_dropdown_categories collapse " id="women">
                                             <li><a href=""> All <span>104</span></a></li>
                                             
                                             <li><a href="">10%<span>68</span></a></li>
@@ -48,7 +48,7 @@
                                     <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount" v readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                        <input type="text" name="price_range" id="amount"  readonly style="border:0; color:#f6931f; font-weight:bold;">
                                         
                                     </form>
                                 </div>
@@ -71,53 +71,28 @@
                                        
                                     </ul>
                                 </div>
-                                <div class="filter__list widget_color">
-                                    <h3>color</h3>
-                                     <ul>
-                                       <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color1"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color2"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color3"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color4"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color5"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color6"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color7"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color8"></span>
-                                        </li>
-                                    </ul>
+                                
+                                <div class="filter__list widget_brands">
+                                    <form action="{{path('camera_search')}}" id="res-filter-form" method="get">
+                                        
+                                        <h3 data-toggle="collapse" data-target="#brands">Resolution</h3>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="SD"  name="res[]">
+                                            <label class="form-check-label" >SD</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="HD"  name="res[]" >
+                                            <label class="form-check-label" >HD</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="radio" value="4K"  name="res[]" >
+                                            <label class="form-check-label" >4K</label>
+                                        </div> 
+                                    </form>   
                                 </div>
-                                  <div class="filter__list widget_brands">
-                                    <h3 data-toggle="collapse" data-target="#brands">brands</h3>
-                                    <ul class="widget_dropdown_categories collapse show" id="brands">
-                                        <li><a href="#"> The North Face <span>104</span></a></li>
-                                        <li><a href="#">Zara Basic <span>68</span></a></li>
-                                        <li><a href="#">Moschino <span>75</span></a></li>
-                                        <li><a href="#">Supreme <span>30</span></a></li>
-                                        <li><a href="#">Ecko Unltd <span>150</span></a></li>
-                                    </ul>
-                                </div>
+                                
+                                
+                               
                             </div>
                             <div class="widget_list">
                                 <h2>Recent Product</h2>
@@ -165,23 +140,22 @@
                             <p>The collections basic items <br> essential for all </p>
                         </div>
                     </div>
+
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper d-flex justify-content-between align-items-center"  >
                         <div class="page_amount">
-                            <p><span>1.260</span> Products Found</p>
+                            <p><span>{{items}}</span> Products Found</p>
                         </div>
+                        
                         <div class=" sorting_by d-flex align-items-center">
                             <span>SORT BY :</span>
-                            <form class="select_option" action="#">
-                                <select name="orderby" id="short">
-
-                                    <option selected value="1">NAME       3</option>
-                                    <option  value="2">NAME  4</option>
-                                    <option value="3">NAME  5</option>
-                                    <option value="4">NAME  6</option>
-                                    <option value="5">NAME  7</option>
-                                    <option value="6">NAME  8</option>
+                            <form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
+                                <select name="orderby" id="shorts">
+                                    <option selected value="prix">Prix</option>
+                                    <option  value="date">Date</option>
+                                    <option  value="rate">Rate</option>                                    
                                 </select>
+                                
                             </form>
                         </div>
                         <div class="toolbar_btn_wrapper d-flex align-items-center">
@@ -199,25 +173,28 @@
                     </div>
                      <!--shop toolbar end-->
                     
-                    {{include('client/pages/cameras.html.twig')}}
+                     
+                     {{include("client/pages/components/cameras.html.twig")}}
                     
-                    <nav aria-label="Page navigation example">
+                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item {{ cameras.currentPageNumber == 1 ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ cameras.currentPageNumber > 1 ? path('camera_search', {'page': cameras.currentPageNumber - 1}) : '#' }}" aria-label="Previous">
-                                    <span aria-hidden="true">Previous</span>
-                                </a>
-                            </li>
-                            {% for page in 1..cameras.pageCount %}
-                                <li class="page-item {{ page == cameras.currentPageNumber ? 'active' : '' }}">
+                            {% if pagination.currentPage > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+                                </li>
+                            {% endif %}
+                    
+                            {% for page in 1..pagination.totalPages %}
+                                <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
                                     <a class="page-link" href="{{ path('camera_search', {'page': page}) }}">{{ page }}</a>
                                 </li>
                             {% endfor %}
-                            <li class="page-item {{ cameras.currentPageNumber == cameras.pageCount ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ cameras.currentPageNumber < cameras.pageCount ? path('camera_search', {'page': cameras.currentPageNumber + 1}) : '#' }}" aria-label="Next">
-                                    <span aria-hidden="true">Next</span>
-                                </a>
-                            </li>
+                    
+                            {% if pagination.currentPage < pagination.totalPages %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                     
@@ -228,7 +205,7 @@
     </div>
     <!--shop  area end-->
 
-     <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -323,16 +300,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="modal_social">
-                                        <h2>Share this product</h2>
-                                        <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -345,6 +313,8 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    
 {% endblock %}
 
 
