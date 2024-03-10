@@ -48,7 +48,7 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     #[Assert\Regex(
         "/^[0-9]{10}$/","Please enter a valid phone"
     )]
-    private ?string $phoneNumber = null;
+    protected ?string $phoneNumber = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $genre = null;
