@@ -20,7 +20,7 @@ class ImageCamera
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'imageCameras')]
