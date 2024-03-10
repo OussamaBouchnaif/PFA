@@ -101,28 +101,6 @@ class CameraController extends AbstractController
         ]);
     }
 
-<<<<<<< HEAD
-    #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
-    public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
-    {
-        $camera = $cameraRepository->find($id);
-
-        if (!$camera) {
-            throw $this->createNotFoundException('Camera not found');
-        }
-
-        // Supprimer toutes les images associées à cette caméra
-        foreach ($camera->getImageCameras() as $imageCamera) {
-            $entityManager->remove($imageCamera);
-        }
-
-        // Supprimer la caméra
-        $entityManager->remove($camera);
-        $entityManager->flush();
-        $this->addFlash('success', 'Camera deleted successfully!');
-
-        return $this->redirectToRoute('camera');
-=======
     
 
         #[Route('/Delete_camera/{id}', name: 'Delete_camera')]
@@ -184,6 +162,5 @@ class CameraController extends AbstractController
         $photoPath = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $imageCamera->getImage();
 
         return $this->file($photoPath, null, ResponseHeaderBag::DISPOSITION_INLINE);
->>>>>>> 7b86827 (fixer supression avec photo)
     }
 }

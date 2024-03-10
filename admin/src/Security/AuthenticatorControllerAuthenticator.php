@@ -42,7 +42,7 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
 <<<<<<< HEAD
         );  
 =======
-        );
+        );  
 >>>>>>> d874979 (Login)
     }
 
@@ -51,19 +51,11 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-<<<<<<< HEAD
-    
-        // Redirect to a specific route after successful authentication
-        return new RedirectResponse($this->urlGenerator->generate('camera')); // Replace 'app_home' with the name of your desired route
-    }
-    
-=======
 
         // For example:
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
->>>>>>> d874979 (Login)
 
     protected function getLoginUrl(Request $request): string
     {
