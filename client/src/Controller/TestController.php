@@ -61,6 +61,7 @@ class TestController extends AbstractController
     {
         return $this->render('client/pages/index.html.twig');
     }
+    
     #[Route('/shop', name: 'shop')]
     public function shop(): Response
     {

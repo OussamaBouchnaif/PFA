@@ -9,13 +9,12 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
 
 class CallApiCameraService 
 {
-    private $appDefaultApi;
     private $serializer;
-    
-    public function __construct(HttpClientInterface $appDefaultApi,SerializerInterface $serializer)
+    private $getData;
+    public function __construct(SerializerInterface $serializer,GetDataService $getData)
     {
-        $this->appDefaultApi = $appDefaultApi;
         $this->serializer = $serializer;
+        $this->getData = $getData; 
         
     }
     public function getAllCamera(int $page):array
@@ -31,22 +30,28 @@ class CallApiCameraService
     
     public function getCameraData(String $endpoint):array
     {
-        $response = $this->appDefaultApi->request('GET', $endpoint,['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent(); 
-        $data = $this->serializer->decode($jsonData,'json');
+        $data = $this->getData->getDataFromApi($endpoint);
+        if (!$data) {
+            throw new \Exception("Camera not found");
+        }
         $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
         return $cameras;
     }
-    public function getItems():int
+
+    public function getCameraById(int $id)
     {
-        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent(); 
-        $data = $this->serializer->decode($jsonData,'json');
-        $items = $data["hydra:totalItems"];
+        $endpoint = "/api/cameras/" . $id; // Ajustez selon l'URL de base de l'API
+        $response = $this->getData->getDataFromApi($endpoint);
+    
+        if (!$response) {
+            throw new \Exception("Camera not found");
+        }
+        $camera = $this->serializer->denormalize($response, 'App\Entity\Camera', 'json');
+        return $camera;
+    }
+    public function getItems():int
+    {      
+        $items =$this->getData->getTotalItems("api/cameras/");
         return $items;
     }
     

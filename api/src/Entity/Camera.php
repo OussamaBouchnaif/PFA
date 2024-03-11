@@ -22,11 +22,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 #[ApiResource(
-        operations: [
-            new Get(normalizationContext: ['groups' => 'conference:item']),
-            new GetCollection(normalizationContext: ['groups' => 'conference:list'])
-        ],
         
+        normalizationContext: ['groups' => ['camera:read']],
+        denormalizationContext: ['groups' => ['camera:write']],
         paginationEnabled: true,
         paginationItemsPerPage: 9,
         
@@ -39,30 +37,31 @@ class Camera
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    #[Groups(['camera:read'])]
+    public ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 400)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?float $prix = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?\DateTimeInterface $dateAjout = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
@@ -75,7 +74,7 @@ class Camera
     private Collection $ligneCommandes;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private Collection $imageCameras;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
@@ -83,43 +82,43 @@ class Camera
 
     #[ORM\ManyToOne(inversedBy: 'cameras')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $couleur = null;
 
     #[ORM\Column]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?bool $visionNoctrune = null;
 
     #[ORM\Column]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?float $poids = null;
 
     #[ORM\Column(length: 200)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $materiaux = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $resolution = null;
 
     #[ORM\Column(length: 20)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $angleVision = null;
 
     #[ORM\Column]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?bool $connectivite = null;
 
     #[ORM\Column]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?float $stockage = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['camera:read','camera:write'])]
     private ?string $alimentation = null;
 
     #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
