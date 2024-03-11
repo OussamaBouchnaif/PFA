@@ -8,18 +8,21 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: ImageCameraRepository::class)]
+#[ApiResource(normalizationContext: ['groups' => ['image:read']])]
 #[Vich\Uploadable]
 class ImageCamera
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['image:read', 'camera:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['conference:list', 'conference:item'])]
+    #[Groups(['image:read', 'camera:read'])]
     private ?string $image = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]

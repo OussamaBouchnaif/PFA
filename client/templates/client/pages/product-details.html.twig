@@ -1,6 +1,28 @@
 {% extends 'client/base.html.twig' %}
 {% block title %}Product Details{% endblock %}
 
+{% block stylesheets %}
+
+    <style>
+        .sliders{
+            height: 400px;
+        }
+         .carousel .carousel-inner .carousel-item {
+            height: 500px; /* Hauteur fixe pour tous les items du carrousel */
+           
+        }
+        
+         .carousel .carousel-inner .carousel-item img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: cover;
+            
+        }
+        </style>
+    </style>
+{% endblock %}
 {% block body %}
     
     <!--breadcrumbs area start-->
@@ -10,9 +32,9 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
-                            <li><a href="shop.html">shop</a></li>
-                            <li>Product Example</li>
+                            <li><a href="{path('app_test')}">home</a></li>
+                            <li><a href="{{path('app_camera')}}">shop</a></li>
+                            <li>Product Details</li>
                         </ul>
                     </div>
                 </div>
@@ -25,52 +47,40 @@
     <section class="product_details mb-135">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="product_zoom_gallery">
-                        <div class="zoom_gallery_inner d-flex">
-                            <div class="zoom_tab_img">
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product1.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product2.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product3.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product4.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product1.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product2.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product3.png" alt="tab-thumb"></a>
-                                <a class="zoom_tabimg_list" href="javascript:void(0)"><img src="assets/img/product/small-product/product4.png" alt="tab-thumb"></a>
-                            </div>
-                            <div class="product_zoom_main_img">
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product1.png" src="assets/img/product/big-product/product1.png" alt="">
+                <div class="col-lg-6 col-md-6 sliders ">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
+
+                        <!-- Indicators -->
+                        <ul class="carousel-indicators">
+                          <li data-target="#demo" data-slide-to="0" class="active"></li>
+                          <li data-target="#demo" data-slide-to="1"></li>
+                          <li data-target="#demo" data-slide-to="2"></li>
+                        </ul>
+                      
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">
+                            {% for imageCamera in camera.imageCameras %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Los Angeles">
                                 </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product2.png" src="assets/img/product/big-product/product2.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product3.png" src="assets/img/product/big-product/product3.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product4.png" src="assets/img/product/big-product/product4.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product1.png" src="assets/img/product/big-product/product1.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product1.png" src="assets/img/product/big-product/product1.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product1.png" src="assets/img/product/big-product/product1.png" alt="">
-                                </div>
-                                <div class="product_zoom_thumb">
-                                    <img data-image="assets/img/product/big-product/product1.png" src="assets/img/product/big-product/product1.png" alt="">
-                                </div>
-                            </div>
+                          {% endfor %}
+                         
                         </div>
-                    </div>
+                      
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                          <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                          <span class="carousel-control-next-icon"></span>
+                        </a>
+                      
+                      </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product_d_right">
                         <form action="#">
-                            <h1>Edwin T-Shirt Logo Script Print in Navy</h1>
+                            <h1>{{camera.nom}}</h1>
                             <div class="product_ratting_review d-flex align-items-center">
                                 <div class=" product_ratting">
                                     <ul class="d-flex">
@@ -89,57 +99,44 @@
                                 </div>
                             </div>
                             <div class="price_box">
-                                <span class="current_price">$39.00</span>
+                                <span class="current_price">{{camera.prix}}$</span>
                             </div>
                             <div class="product_availalbe">
                                 <ul class="d-flex">
-                                    <li><i class="icon-layers icons"></i> Only <span>15</span> left </li>
-                                    <li>Availalbe: <span class="stock">In Stock</span></li>
+                                    {% if camera.stock <= 0  %}
+                                        {% if camera.status == 'EN RUPTURE STOCK' %}
+                                            <li>Availalbe: <span class="stock">OUT OF STOCK</span></li>
+                                        {% else %}
+                                            <li>Availalbe: <span class="stock">DISCONTINUED FROM THE MARKET</span></li>
+                                        {% endif %}
+                                    {% else %}
+                                        <li><i class="icon-layers icons"></i> Only <span>{{camera.stock}}</span> left </li>
+                                        <li>Availalbe: <span class="stock">{{camera.status}}</span></li>
+                                    {% endif %}
+                                   
                                 </ul>
                             </div>
                             <div class="product_desc">
-                                <p>A t-shirt that comes in three colors (red, white and blue) and three sizes (small, medium, large) is a configurable product.  </p>
+                                <p>{{camera.description}}</p>
                             </div>
                             <div class="product_variant">
-                                <div class="filter__list widget_color d-flex align-items-center">
-                                    <h3>select color</h3>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color1"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color2"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color3"></span>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox">
-                                            <span class="checkmark color5"></span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                
                                 <div class="filter__list widget_size d-flex align-items-center">
-                                    <h3>select size</h3>
+                                    <h3>select Angle Vision</h3>
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0)">S </a>
+                                            <a href="javascript:void(0)">90</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"> M</a>
+                                            <a href="javascript:void(0)">120</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)">L</a>
+                                            <a href="javascript:void(0)">180</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"> XL</a>
+                                            <a href="javascript:void(0)">360</a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)">XLL</a>
-                                        </li>
+                                       
                                     </ul>
                                 </div>
 
