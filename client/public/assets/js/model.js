@@ -34,7 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.widget_size a').forEach(function(link) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            document.querySelectorAll('.widget_size a').forEach(function(otherLink) {
+                otherLink.classList.remove('active');
+            });
+    
+            // Ajouter la classe 'active' au lien cliqué
+            this.classList.add('active');
             var angle = this.getAttribute('href').split('angle=')[1];
+            
             fetchData({ 'angle': angle });
         });
     });
