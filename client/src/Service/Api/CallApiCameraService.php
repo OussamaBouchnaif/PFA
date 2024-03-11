@@ -13,12 +13,20 @@ class CallApiCameraService
 {
     private $serializer;
     private $getData;
+<<<<<<< HEAD
     private $denormalizer;
     public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
     {
         $this->serializer = $serializer;
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+=======
+    public function __construct(SerializerInterface $serializer,GetDataService $getData)
+    {
+        $this->serializer = $serializer;
+        $this->getData = $getData; 
+        
+>>>>>>> de23d16 (data)
     }
     public function getAllCamera(int $page):array
     {
@@ -46,6 +54,7 @@ class CallApiCameraService
         if (!$data) {
             throw new \Exception("Camera not found");
         }
+<<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
@@ -77,13 +86,26 @@ class CallApiCameraService
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
 =======
     public function getItems():int
+=======
+        $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
+        return $cameras;
+    }
+
+    public function getCameraById(int $id)
+>>>>>>> de23d16 (data)
     {
-        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent(); 
-        $data = $this->serializer->decode($jsonData,'json');
-        $items = $data["hydra:totalItems"];
+        $endpoint = "/api/cameras/" . $id; // Ajustez selon l'URL de base de l'API
+        $response = $this->getData->getDataFromApi($endpoint);
+    
+        if (!$response) {
+            throw new \Exception("Camera not found");
+        }
+        $camera = $this->serializer->denormalize($response, 'App\Entity\Camera', 'json');
+        return $camera;
+    }
+    public function getItems():int
+    {      
+        $items =$this->getData->getTotalItems("api/cameras/");
         return $items;
     }
     

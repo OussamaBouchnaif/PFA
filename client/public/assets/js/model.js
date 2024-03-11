@@ -72,7 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 otherLink.classList.remove('active');
             });
     
+<<<<<<< HEAD
            
+=======
+            // Ajouter la classe 'active' au lien cliqué
+>>>>>>> de23d16 (data)
             this.classList.add('active');
             var angle = this.getAttribute('href').split('angle=')[1];
             

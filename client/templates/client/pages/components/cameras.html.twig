@@ -4,10 +4,13 @@
 
 {% block stylesheets %}
 
+<<<<<<< HEAD
 =======
 
 {% block stylesheets %}
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> de23d16 (data)
 <style>
    
     #loadingSpinner {
@@ -78,6 +81,7 @@
     <div id="loadingSpinner" style="display: none;">
         <div class="spinner"></div>
     </div>
+    
         {%  for camera in cameras %}
             <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                 <div class="single_product card-box">
@@ -112,6 +116,7 @@
 
                                 <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                             </ul>
@@ -121,6 +126,12 @@
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                             </ul>
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+                                <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
+                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                            </ul>
+                            
+>>>>>>> de23d16 (data)
                         </div>
                         <div class="product_label">
                             <span>-18%</span>

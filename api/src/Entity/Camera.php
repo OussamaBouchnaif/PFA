@@ -24,6 +24,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de23d16 (data)
         normalizationContext: ['groups' => ['camera:read']],
         denormalizationContext: ['groups' => ['camera:write']],
         paginationEnabled: true,
