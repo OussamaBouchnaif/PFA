@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Factory\Factory;
 use App\Forms\ClientType;
 use App\Forms\LoginType;
 use App\Repository\ClientRepository;
@@ -16,12 +18,13 @@ class SecurityController extends AbstractController
 {
    
     #[Route('/signup', name: 'app_signup')]
-    public function signup(Request $request, ClientRepository $repository): Response
+    public function signup(Request $request, ClientRepository $repository,Factory $factory): Response
     {
-        $form = $this->createForm(ClientType::class);
+        $client = $factory->create(Client::class);
+        $form = $this->createForm(ClientType::class,$client);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->IsValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $client = $form->getData();
             $repository->addClient($client);
             
