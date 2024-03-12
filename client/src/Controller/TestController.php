@@ -49,7 +49,7 @@ class TestController extends AbstractController
            
         }
 
-        return $this->render('test/index.html.twig', [
+        return $this->render('client/pages/product-details.html.twig', [
             'form' => $form->createView(),
             // Correction: Utilisez `createView()` pour passer le formulaire à Twig.
         ]);

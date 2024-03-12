@@ -1,0 +1,15 @@
+
+<turbo-stream action="append" target="messages">
+    <template>  
+        <div class="comment_thmb">
+            <img src="assets/img/blog/comment2.jpg" alt="">
+        </div>
+        <div class="comment_text">
+            <div class="reviews_meta">
+                <p><strong>{{name}} </strong>- {{ createdAt|date('F j, Y') }}</p>
+                <span>{{content}}</span>
+            </div>
+        </div>
+        
+    </template>
+</turbo-stream>
