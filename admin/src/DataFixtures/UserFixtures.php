@@ -32,13 +32,22 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     {
         $faker = Factory::create();
 
+<<<<<<< HEAD
 
+=======
+        // Load data for User entity
+>>>>>>> 779ae00 (edit and add user)
       
             $user = new User();
             $user->setNom('yassine');
             $user->setPrenom('chidmi');
+<<<<<<< HEAD
             $user->setEmail('yassine@gmail.com'); // Ensure unique email addresses
             $hashedPassword = $this->hasher->hashPassword($user, 'yassine');
+=======
+            $user->setEmail('yass@gmail.com'); // Ensure unique email addresses
+            $hashedPassword = $this->hasher->hashPassword($user, '123');
+>>>>>>> 779ae00 (edit and add user)
             $user->setPassword($hashedPassword); // Replace 'password' with hashed passwords in real scenarios
             $user->setRoles(['ROLE_USER']); // Set user roles as needed
             $user->setPhoneNumber('0640331796');
