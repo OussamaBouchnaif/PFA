@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Camera;
+use App\Entity\Client;
 use App\Entity\AvisCamera;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<AvisCamera>
@@ -25,10 +27,8 @@ class AvisCameraRepository extends ServiceEntityRepository
 
 
 
-    public function addAvisCamera(AvisCamera $avisCamera,$content,$id,$user)
+    public function addAvisCamera(AvisCamera $avisCamera,$content,Camera $camera,Client $user)
     {
-        $manager = $this->getEntityManager();
-        $camera = $this->camrepo->findOneBy(['id'=>$id]);
         $avisCamera->setClient($user);
         $avisCamera->setCamera($camera);
         $avisCamera->setCommentaire($content);
