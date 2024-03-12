@@ -26,11 +26,12 @@ class User extends Personne
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Blog::class)]
     private Collection $blogs;
-
+   
     public function __construct()
     {
         $this->dateCreation = new \DateTimeImmutable();
         $this->blogs = new ArrayCollection();
+        $this->roles[] = 'ROLE_USER';
     }
     public function getId(): ?int
     {
