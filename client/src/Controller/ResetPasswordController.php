@@ -83,7 +83,6 @@ class ResetPasswordController extends AbstractController
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
-            dd($token);
 
             return $this->redirectToRoute('app_reset_password');
         }
@@ -113,7 +112,7 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($user);
+            
             // A password reset token should be used only once, remove it.
             $this->resetPasswordHelper->removeResetRequest($token);
 
