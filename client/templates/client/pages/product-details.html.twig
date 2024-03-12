@@ -20,6 +20,12 @@
             object-fit: cover;
             
         }
+        .reviews {
+            max-height: 400px; /* Ajustez en fonction de la hauteur moyenne de trois commentaires */
+            overflow-y: auto;
+            
+          }
+         
         </style>
     </style>
 {% endblock %}
@@ -120,9 +126,24 @@
                                 <p>{{camera.description}}</p>
                             </div>
                             <div class="product_variant">
-                                
+                                <div class="filter__list d-flex">
+                                    <h3>Connectivite</h3>
+                                    <div class="form-check pr-3">
+                                        <input class="form-check-input" type="radio" name="conn" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                          YES
+                                        </label>
+                                      </div>
+                                      <div class="form-check  pr-3">
+                                        <input class="form-check-input" type="radio" name="conn" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                          NO
+                                        </label>
+                                      </div>
+                                     
+                                </div>
                                 <div class="filter__list widget_size d-flex align-items-center">
-                                    <h3>select Angle Vision</h3>
+                                    <h3>Angle Vision</h3>
                                     <ul>
                                         <li>
                                             <a href="javascript:void(0)">90</a>
@@ -139,7 +160,27 @@
                                        
                                     </ul>
                                 </div>
-
+                                <div class="filter__list d-flex">
+                                    <h3>Resolution</h3>
+                                    <div class="form-check pr-3">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                          SD
+                                        </label>
+                                      </div>
+                                      <div class="form-check  pr-3">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                          HD
+                                        </label>
+                                      </div>
+                                      <div class="form-check  pr-3">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                          4K
+                                        </label>
+                                      </div>
+                                </div>
                                 <div class="variant_quantity_btn d-flex">
                                     <div class="pro-qty border">
                                         <input min="1" max="100" type="tex" value="1">
@@ -223,47 +264,41 @@
                             <div class="tab-pane fade" id="reviews" role="tabpanel" >
                                 <div class="reviews_wrapper">
                                     <h2>1 review for Donec eu furniture</h2>
-                                    <div class="reviews_comment_box">
-                                        <div class="comment_thmb">
-                                            <img src="assets/img/blog/comment2.jpg" alt="">
-                                        </div>
-                                        <div class="comment_text">
-                                            <div class="reviews_meta">
-                                                <div class="star_rating">
-                                                    <ul class="d-flex">
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                    </ul>
+                                    <div class="reviews">
+                                        <div class="reviews_comment_box d-inline mb-5" id="messages">
+                                       
+                                            {% for comment in comments %}
+                                                <div class="comment_thmb">
+                                                    <img src="assets/img/blog/comment2.jpg" alt="">
                                                 </div>
-                                                <p><strong>admin </strong>- September 12, 2018</p>
-                                                <span>roadthemes</span>
-                                            </div>
+                                                <div class="comment_text">
+                                                    <div class="reviews_meta">
+                                                        
+                                                        
+                                                        <p><strong>{{comment.client.nom}}</strong>- {{ comment.createdAt|date('F j, Y') }}</p>
+                                                        <span>{{comment.commentaire}}</span>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
                                         </div>
-
                                     </div>
-                                    <div class="comment_title">
+                                    
+                                    <div class="comment_title mt-5">
                                         <h2>Add a review </h2>
                                         <p>Your email address will not be published.  Required fields are marked </p>
                                     </div>
                                     <div class="product_ratting mb-10">
                                         <h3>Your rating</h3>
-                                        <ul class="d-flex">
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                                <li><a href="#"><i class="icon-star"></i></a></li>
-                                        </ul>
+                                        
+                                       
                                     </div>
                                     <div class="product_review_form">
-                                        <form action="#">
+                                        <turbo-frame id="message_form">
+                                            {{form_start(form)}}
                                             <div class="row">
                                                 <div class="col-12">
                                                     <label for="review_comment">Your review </label>
-                                                    <textarea name="comment" id="review_comment" ></textarea>
+                                                    {{form_widget(form.content)}}
                                                 </div>
                                                 <div class="col-lg-6 col-md-6">
                                                     <label for="author">Name</label>
@@ -276,7 +311,10 @@
                                                 </div>
                                             </div>
                                             <button type="submit">Submit</button>
-                                            </form>
+
+                                            {{form_end(form)}}
+                                        </turbo-frame>
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -644,6 +682,3 @@
      
 
 {% endblock %}
-
-
-

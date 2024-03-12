@@ -16,10 +16,36 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AvisCameraRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private CameraRepository $camrepo;
+    public function __construct(ManagerRegistry $registry,CameraRepository $camrepo)
     {
         parent::__construct($registry, AvisCamera::class);
+        $this->camrepo =$camrepo;
     }
+
+
+
+    public function addAvisCamera(AvisCamera $avisCamera,$content,$id,$user)
+    {
+        $manager = $this->getEntityManager();
+        $camera = $this->camrepo->findOneBy(['id'=>$id]);
+        $avisCamera->setClient($user);
+        $avisCamera->setCamera($camera);
+        $avisCamera->setCommentaire($content);
+        $avisCamera->setNote('5');
+        $this->doSave($avisCamera,true);
+    }
+
+    private function doSave($object,bool $isPersist = false):void
+    {
+        $manager = $this->getEntityManager();
+        if(true === $isPersist)
+        {
+            $manager->persist($object);
+        }
+        $manager->flush();
+    }
+
 
 //    /**
 //     * @return AvisCamera[] Returns an array of AvisCamera objects
