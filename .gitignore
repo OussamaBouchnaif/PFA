@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /data
 <<<<<<< HEAD
@@ -20,3 +21,6 @@
 =======
 /data/minio/
 >>>>>>> 44f2a44 (ignore data)
+=======
+/data/minio/.minio.sys/buckets
+>>>>>>> 7613414 (ignore data)
