@@ -47,18 +47,20 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit/{id}', name: 'user_edit')]
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             // Mettre à jour l'utilisateur dans la base de données
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('user_index');
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'User updated successfully!');
+    
+            return $this->redirectToRoute('users_index');
         }
-
+    
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
@@ -66,13 +68,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'user_delete')]
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         // Supprimer l'utilisateur de la base de données
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
         $entityManager->flush();
-
-        return $this->redirectToRoute('user_index');
+    
+        return $this->redirectToRoute('users_index');
     }
 }
