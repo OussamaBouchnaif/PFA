@@ -7,39 +7,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
+
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'users_index')]
-public function index(UserRepository $userRepository): Response
-{
-    // Récupérer tous les utilisateurs depuis le repository
-    $users = $userRepository->findAll();
+    public function index(UserRepository $userRepository): Response
+    {
+        // Récupérer tous les utilisateurs depuis le repository
+        $users = $userRepository->findAll();
 
-    // Passer les utilisateurs à la vue Twig
-    return $this->render('user/index.html.twig', [
-        'users' => $users,
-    ]);
-}
-
+        // Passer les utilisateurs à la vue Twig
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
 
     #[Route('/user/create', name: 'user_create')]
-    public function create(Request $request): Response
+    public function addtest(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarder l'utilisateur dans la base de données
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+            $this->addFlash('success', 'User added successfully!');
+
+            return $this->redirectToRoute('users_index'); // Redirection vers la liste des utilisateurs
         }
 
-        return $this->render('user/create.html.twig', [
+        return $this->render('user/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
