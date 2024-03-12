@@ -49,6 +49,7 @@ class CallApiCameraService
         $camera = $this->serializer->denormalize($response, 'App\Entity\Camera', 'json');
         return $camera;
     }
+    
     public function getItems():int
     {      
         $items =$this->getData->getTotalItems("api/cameras/");

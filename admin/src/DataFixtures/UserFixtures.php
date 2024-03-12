@@ -29,7 +29,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     {
         $faker = Factory::create();
 
-        // Load data for User entity
+
       
             $user = new User();
             $user->setNom('yassine');
