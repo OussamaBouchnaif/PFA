@@ -41,7 +41,7 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
 
     protected ?string $plainPassword = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     protected array $roles = [];
 
     #[ORM\Column(length: 15, nullable: true)]
