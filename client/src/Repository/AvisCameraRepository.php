@@ -28,6 +28,7 @@ class AvisCameraRepository extends ServiceEntityRepository
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function addAvisCamera(AvisCamera $avisCamera,$content,Camera $camera,Client $user)
     {
         $avisCamera->setClient($user);
@@ -36,9 +37,10 @@ class AvisCameraRepository extends ServiceEntityRepository
         $avisCamera->setNote(5);
 =======
     public function addAvisCamera(AvisCamera $avisCamera,$content,$id,$user)
+=======
+    public function addAvisCamera(AvisCamera $avisCamera,$content,Camera $camera,Client $user)
+>>>>>>> 6fe7d29 (maintain controller avis)
     {
-        $manager = $this->getEntityManager();
-        $camera = $this->camrepo->findOneBy(['id'=>$id]);
         $avisCamera->setClient($user);
         $avisCamera->setCamera($camera);
         $avisCamera->setCommentaire($content);

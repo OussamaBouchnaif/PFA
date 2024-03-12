@@ -14,6 +14,7 @@ use App\Repository\AvisCameraRepository;
 >>>>>>> de23d16 (data)
 =======
 use App\Entity\AvisCamera;
+use App\Entity\Camera;
 use App\Factory\Factory;
 use App\Forms\AvisType;
 use Doctrine\ORM\EntityManager;
@@ -41,6 +42,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DetailsController extends AbstractController
 {
     #[Route('/details/{id}', name: 'app_details')]
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
@@ -71,28 +73,35 @@ class DetailsController extends AbstractController
 =======
     public function index(int $id,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
 >>>>>>> fdc8b02 (add reviews to a specific camera)
+=======
+    public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
+>>>>>>> 6fe7d29 (maintain controller avis)
     {
 
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);
-        $comments = $avisRepo->findBy(['camera' => $id]);
-        
+        $comments = $camera->getAvisCameras();
         if ($form->isSubmitted() && $form->isValid()) {
             
             if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {  
                 $request->setRequestFormat(TurboBundle::STREAM_FORMAT); 
-                $content = $form->getData()['content']; // Extract the 'content' field value
-                $avisRepo->addAvisCamera($avisCamera,$content,$id,$this->getUser());
+                $content = $form->getData()['content']; 
+                $avisRepo->addAvisCamera($avisCamera,$content,$camera,$this->getUser());
                 return $this->render('client/pages/components/avis.stream.html.twig', ['content' => $form->getData()['content'],'name'=>$this->getUser()->getNom(),'createdAt' => new \DateTimeImmutable()]); // Pass just the content string
             }
         }
 
         return $this->render('client/pages/product-details.html.twig', [
-            'camera' => $callapi->getCameraById($id),
+            'camera' => $callapi->getCameraById($camera->getId()),
             'form' => $form->createView(),
             'comments' => $comments
         ]);
     }
+<<<<<<< HEAD
 >>>>>>> de23d16 (data)
+=======
+
+    
+>>>>>>> 6fe7d29 (maintain controller avis)
 }

@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /data
 <<<<<<< HEAD
@@ -24,3 +25,6 @@
 =======
 /data/minio/.minio.sys/buckets
 >>>>>>> 7613414 (ignore data)
+=======
+/data/
+>>>>>>> 6fe7d29 (maintain controller avis)
