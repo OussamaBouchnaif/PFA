@@ -12,9 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
+
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
+<<<<<<< HEAD
     public function __construct(private readonly UserManager $manager)
     {
     }
@@ -28,17 +32,38 @@ class UserController extends AbstractController
             'users' => $users,
         ]);
     }
+=======
+    #[Route('/users', name: 'users_index')]
+    public function index(UserRepository $userRepository): Response
+    {
+        // Récupérer tous les utilisateurs depuis le repository
+        $users = $userRepository->findAll();
+>>>>>>> cb0b655 (add user and detail)
 
+        // Passer les utilisateurs à la vue Twig
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
 
     #[Route('/user/create', name: 'user_create')]
+<<<<<<< HEAD
     public function addtest(Request $request): Response
+=======
+    public function addtest(Request $request, EntityManagerInterface $entityManager): Response
+>>>>>>> cb0b655 (add user and detail)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< HEAD
             $this->manager->saveUser($user, true);
+=======
+            $entityManager->persist($user);
+            $entityManager->flush();
+>>>>>>> cb0b655 (add user and detail)
 
             $this->addFlash('success', 'User added successfully!');
 
