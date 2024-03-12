@@ -50,10 +50,14 @@ class TestController extends AbstractController
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         return $this->render('client/pages/product-details.html.twig', [
 =======
         return $this->render('test/index.html.twig', [
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        return $this->render('client/pages/product-details.html.twig', [
+>>>>>>> fdc8b02 (add reviews to a specific camera)
             'form' => $form->createView(),
             // Correction: Utilisez `createView()` pour passer le formulaire à Twig.
         ]);

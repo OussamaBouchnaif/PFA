@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Entity\Camera;
 use App\Forms\AvisType;
 use App\Factory\Factory;
@@ -11,19 +12,36 @@ use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\AvisCameraRepository;
 =======
 >>>>>>> de23d16 (data)
+=======
+use App\Entity\AvisCamera;
+use App\Factory\Factory;
+use App\Forms\AvisType;
+use Doctrine\ORM\EntityManager;
+use Symfony\UX\Turbo\TurboBundle;
+use App\Repository\CameraRepository;
+use App\Repository\AvisCameraRepository;
+use Doctrine\ORM\EntityManagerInterface;
+>>>>>>> fdc8b02 (add reviews to a specific camera)
 use App\Service\Api\CallApiCameraService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Service\Api\Exception\ObjectNotFoundException;
 =======
 >>>>>>> de23d16 (data)
+=======
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+>>>>>>> fdc8b02 (add reviews to a specific camera)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetailsController extends AbstractController
 {
     #[Route('/details/{id}', name: 'app_details')]
+<<<<<<< HEAD
 <<<<<<< HEAD
     public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
     {
@@ -50,9 +68,30 @@ class DetailsController extends AbstractController
     
 =======
     public function index(int $id,CallApiCameraService $callapi): Response
+=======
+    public function index(int $id,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
+>>>>>>> fdc8b02 (add reviews to a specific camera)
     {
+
+        $avisCamera = $factory->create(AvisCamera::class);
+        $form = $this->createForm(AvisType::class);
+        $form->handleRequest($request);
+        $comments = $avisRepo->findBy(['camera' => $id]);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {  
+                $request->setRequestFormat(TurboBundle::STREAM_FORMAT); 
+                $content = $form->getData()['content']; // Extract the 'content' field value
+                $avisRepo->addAvisCamera($avisCamera,$content,$id,$this->getUser());
+                return $this->render('client/pages/components/avis.stream.html.twig', ['content' => $form->getData()['content'],'name'=>$this->getUser()->getNom(),'createdAt' => new \DateTimeImmutable()]); // Pass just the content string
+            }
+        }
+
         return $this->render('client/pages/product-details.html.twig', [
             'camera' => $callapi->getCameraById($id),
+            'form' => $form->createView(),
+            'comments' => $comments
         ]);
     }
 >>>>>>> de23d16 (data)

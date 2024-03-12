@@ -36,6 +36,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
 =======
         // Load data for User entity
+<<<<<<< HEAD
 >>>>>>> 779ae00 (edit and add user)
       
             $user = new User();
@@ -46,6 +47,15 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             $hashedPassword = $this->hasher->hashPassword($user, 'yassine');
 =======
             $user->setEmail('yass@gmail.com'); // Ensure unique email addresses
+=======
+
+        for ($i = 0; $i < 3; $i++) {
+            $user = new User();
+            $user->setNom('yfv');
+            $user->setPrenom('rvfv');
+            $user->setEmail('oussama@gmail.com'); // Ensure unique email addresses
+
+>>>>>>> fdc8b02 (add reviews to a specific camera)
             $hashedPassword = $this->hasher->hashPassword($user, '123');
 >>>>>>> 779ae00 (edit and add user)
             $user->setPassword($hashedPassword); // Replace 'password' with hashed passwords in real scenarios
@@ -59,4 +69,5 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 
         $manager->flush();
     }
+}
 }
