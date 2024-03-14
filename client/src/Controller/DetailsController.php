@@ -4,15 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Camera;
 use App\Forms\AvisType;
+<<<<<<< HEAD
 use App\Factory\Factory;
 use App\Entity\AvisCamera;
+=======
+>>>>>>> 1a61a15 (maintain code)
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\AvisCameraRepository;
 use App\Service\Api\CallApiCameraService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+<<<<<<< HEAD
 use App\Service\Api\Exception\ObjectNotFoundException;
+=======
+>>>>>>> 1a61a15 (maintain code)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetailsController extends AbstractController
