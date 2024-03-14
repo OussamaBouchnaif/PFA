@@ -7,8 +7,11 @@ namespace App\Controller;
 <<<<<<< HEAD
 use App\Entity\Camera;
 use App\Forms\AvisType;
+<<<<<<< HEAD
 use App\Factory\Factory;
 use App\Entity\AvisCamera;
+=======
+>>>>>>> 1a61a15 (maintain code)
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\AvisCameraRepository;
 =======
@@ -36,6 +39,7 @@ use Symfony\Component\Routing\Attribute\Route;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Service\Api\Exception\ObjectNotFoundException;
 =======
 >>>>>>> de23d16 (data)
@@ -49,6 +53,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 =======
 use App\Service\Api\Exception\ObjectNotFoundException;
 >>>>>>> 8e6fee8 (fix conflit)
+=======
+use App\Service\Api\Exception\ObjectNotFoundException;
+=======
+>>>>>>> 1a61a15 (maintain code)
+>>>>>>> 2302ad2 (maintain code)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetailsController extends AbstractController
