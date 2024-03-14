@@ -40,7 +40,7 @@ class CallApiCameraService
 
     public function getCameraById(int $id)
     {
-        $endpoint = "/api/cameras/" . $id; // Ajustez selon l'URL de base de l'API
+        $endpoint = "/api/cameras/" . $id; 
         $response = $this->getData->getDataFromApi($endpoint);
     
         if (!$response) {
