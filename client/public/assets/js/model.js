@@ -73,10 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     
 <<<<<<< HEAD
+<<<<<<< HEAD
            
 =======
             // Ajouter la classe 'active' au lien cliqué
 >>>>>>> de23d16 (data)
+=======
+           
+>>>>>>> deb3afb (maintain code)
             this.classList.add('active');
             var angle = this.getAttribute('href').split('angle=')[1];
             
@@ -215,10 +219,14 @@ function fetchData(criteria) {
 
 function setupQuickViewButtons() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     document.querySelectorAll('.addcart').forEach(button => {
 =======
     document.querySelectorAll('.quick_view').forEach(button => {
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+    document.querySelectorAll('.addcart').forEach(button => {
+>>>>>>> deb3afb (maintain code)
         button.addEventListener('click', function() {
             var name = this.getAttribute('data-name');
             var price = this.getAttribute('data-price');

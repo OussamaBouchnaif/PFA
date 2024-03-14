@@ -35,6 +35,7 @@ class AvisCameraRepository extends ServiceEntityRepository
         $avisCamera->setCamera($camera);
         $avisCamera->setCommentaire($content);
         $avisCamera->setNote(5);
+<<<<<<< HEAD
 =======
     public function addAvisCamera(AvisCamera $avisCamera,$content,$id,$user)
 =======
@@ -46,6 +47,8 @@ class AvisCameraRepository extends ServiceEntityRepository
         $avisCamera->setCommentaire($content);
         $avisCamera->setNote('5');
 >>>>>>> fdc8b02 (add reviews to a specific camera)
+=======
+>>>>>>> deb3afb (maintain code)
         $this->doSave($avisCamera,true);
     }
 
