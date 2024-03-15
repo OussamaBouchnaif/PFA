@@ -28,6 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         paginationEnabled: true,
         paginationItemsPerPage: 9,
         
+        
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
