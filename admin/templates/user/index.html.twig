@@ -224,6 +224,7 @@
                                                     <th class="custom-header text-center">Photo</th>
                                                     <th class="custom-header text-center">Nom</th>
                                                     <th class="custom-header text-center">Prenom</th>
+<<<<<<< HEAD
                                                     <th class="custom-header text-center">Email</th>
                                                     <th class="custom-header text-center">Ville</th>
                                                     <th class="custom-header text-center">Rôles</th>
@@ -352,6 +353,8 @@
                                                 <tr class="align-middle custom-header-bg">
                                                     <th class="custom-header text-center">Photo</th>
                                                     <th class="custom-header text-center">Nom</th>
+=======
+>>>>>>> be813f9 (login and add)
                                                     <th class="custom-header text-center">Email</th>
                                                     <th class="custom-header text-center">Ville</th>
                                                     <th class="custom-header text-center">Rôles</th>
@@ -363,12 +366,13 @@
                                                 <tr>                                
                                                     <td>
                                                         <div class="avatar-group">
-                                                            {# <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
+                                                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
                                                                 <img src="{{ asset(user.image) }}" alt="" class="rounded-circle avatar-xxs">
-                                                            </a> #}
+                                                            </a>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle text-center">{{ user.nom }}</td>
+                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
                                                     <td class="align-middle text-center">{{ user.email }}</td>
                                                     <td class="align-middle text-center">{{ user.ville }}</td>
                                                     <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>

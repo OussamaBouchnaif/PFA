@@ -10,14 +10,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+<<<<<<< HEAD
 
 class User
+=======
+#[Vich\Uploadable]
+class User extends Personne
+>>>>>>> be813f9 (login and add)
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
+<<<<<<< HEAD
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
@@ -37,6 +43,9 @@ class User
     private ?string $numtele = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+=======
+    #[ORM\Column(type: 'string', length: 512, nullable: true)]
+>>>>>>> be813f9 (login and add)
     private ?string $image = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
@@ -60,6 +69,7 @@ class User
         return $this->id;
     }
 
+<<<<<<< HEAD
     public function getNom(): ?string
     {
         return $this->nom;
@@ -146,6 +156,9 @@ class User
      * Get the value of image
      */ 
     public function getImage()
+=======
+    public function getImage(): ?string
+>>>>>>> be813f9 (login and add)
     {
         return $this->image;
     }
@@ -194,4 +207,29 @@ class User
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+/**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+    public function getUserIdentifier(): string
+    {
+        return '';
+    }
+>>>>>>> be813f9 (login and add)
 }
