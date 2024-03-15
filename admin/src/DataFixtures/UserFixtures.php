@@ -34,8 +34,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             $user = new User();
             $user->setNom('yassine');
             $user->setPrenom('chidmi');
-            $user->setEmail('yass@gmail.com'); // Ensure unique email addresses
-            $hashedPassword = $this->hasher->hashPassword($user, '123');
+            $user->setEmail('yassine@gmail.com'); // Ensure unique email addresses
+            $hashedPassword = $this->hasher->hashPassword($user, 'yassine');
             $user->setPassword($hashedPassword); // Replace 'password' with hashed passwords in real scenarios
             $user->setRoles(['ROLE_USER']); // Set user roles as needed
             $user->setPhoneNumber('0640331796');

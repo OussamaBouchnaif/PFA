@@ -90,7 +90,20 @@
                         </div>
                     </div>
                 </div>
-                
+                 <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Product Gallery</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        <div id="drop-area">
+                                            <h3>Drag & Drop Files Here</h3>
+                                                    {{ form_label(form.imageFile) }}
+                                                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div id="gallery"></div>
+                                    </div>
+                        </div>
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Enregistrer</button>
