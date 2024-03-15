@@ -70,7 +70,13 @@ class DetailsController extends AbstractController
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce65794 (conflit data)
     
+=======
+        
+>>>>>>> 9bb638e (conflit data)
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);

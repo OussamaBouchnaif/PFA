@@ -29,6 +29,9 @@ class CameraDTO
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce65794 (conflit data)
 =======
 
 
@@ -38,9 +41,13 @@ class CameraDTO
     public Collection $ligneCommandes;
 
 
+<<<<<<< HEAD
 >>>>>>> 2cf0464 (conflit data)
 =======
 >>>>>>> f056496 (fix conflit)
+=======
+>>>>>>> 9bb638e (conflit data)
+>>>>>>> ce65794 (conflit data)
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;

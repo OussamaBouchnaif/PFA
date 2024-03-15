@@ -66,6 +66,7 @@ class CallApiCameraService
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
@@ -78,7 +79,13 @@ class CallApiCameraService
     public function searchCameras($searchCriteria): String
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
 =======
+=======
+>>>>>>> ce65794 (conflit data)
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
+=======
+        $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\DTO\CameraDTO[]', 'json');
+        
+>>>>>>> 9bb638e (conflit data)
         return $cameras;
     }
 
