@@ -51,6 +51,7 @@ class DetailsController extends AbstractController
 <<<<<<< HEAD
     public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
     {
+<<<<<<< HEAD
     
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
@@ -82,6 +83,9 @@ class DetailsController extends AbstractController
 >>>>>>> 6fe7d29 (maintain controller avis)
     {
 
+=======
+        
+>>>>>>> 2cf0464 (conflit data)
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);

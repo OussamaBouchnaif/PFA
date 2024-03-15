@@ -33,10 +33,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
         paginationItemsPerPage: 9,
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
         paginationEnabled: true,
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        
+>>>>>>> 2cf0464 (conflit data)
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]

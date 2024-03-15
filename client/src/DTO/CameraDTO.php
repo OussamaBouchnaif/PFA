@@ -27,6 +27,17 @@ class CameraDTO
 
     public ?string $status = null;
 
+<<<<<<< HEAD
+=======
+
+
+    public Collection $favoritCameras;
+
+
+    public Collection $ligneCommandes;
+
+
+>>>>>>> 2cf0464 (conflit data)
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;

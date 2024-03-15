@@ -55,6 +55,7 @@ class CallApiCameraService
             throw new \Exception("Camera not found");
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
@@ -88,6 +89,10 @@ class CallApiCameraService
     public function getItems():int
 =======
         $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
+=======
+        $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\DTO\CameraDTO[]', 'json');
+        
+>>>>>>> 2cf0464 (conflit data)
         return $cameras;
     }
 
