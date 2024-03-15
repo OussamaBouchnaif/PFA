@@ -18,7 +18,7 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript:void(0);">Ecommerce</a></li>
-                                    <li class="breadcrumb-item active">Create Product</li>
+                                    <li class="breadcrumb-item active">EDit Product</li>
                                 </ol>
                             </div>
                         </div>
@@ -90,7 +90,20 @@
                         </div>
                     </div>
                 </div>
-                
+                 <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Product Gallery</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        <div id="drop-area">
+                                            <h3>Drag & Drop Files Here</h3>
+                                                    {{ form_label(form.imageFile) }}
+                                                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div id="gallery"></div>
+                                    </div>
+                        </div>
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Enregistrer</button>
