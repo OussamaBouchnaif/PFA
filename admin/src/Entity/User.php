@@ -1,30 +1,33 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\HttpFoundation\File\File;
 use App\Entity\Personne;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[Vich\Uploadable]
 class User extends Personne
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(type: 'string', length: 512, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Blog::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Blog::class)]
     private Collection $blogs;
    
     public function __construct()
@@ -33,52 +36,30 @@ class User extends Personne
         $this->blogs = new ArrayCollection();
         $this->roles[] = 'ROLE_USER';
     }
+    
     public function getId(): ?int
     {
         return $this->id;
     }
 
-   
-    
-
-    /**
-     * Get the value of image
-     */ 
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    /**
-     * Set the value of image
-     *
-     * @return  self
-     */ 
-    public function setImage($image)
+    public function setImage(?string $image): void
     {
         $this->image = $image;
-
-        return $this;
     }
 
-    /**
-     * Get the value of dateCreation
-     */ 
-    public function getDateCreation()
+    public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->dateCreation;
     }
 
-    /**
-     * Set the value of dateCreation
-     *
-     * @return  self
-     */ 
-    public function setDateCreation($dateCreation)
+    public function setDateCreation(?\DateTimeInterface $dateCreation): void
     {
         $this->dateCreation = $dateCreation;
-
-        return $this;
     }
 
     /**
@@ -89,7 +70,7 @@ class User extends Personne
         return $this->blogs;
     }
 
-    public function addBlog(Blog $blog): static
+    public function addBlog(Blog $blog): self
     {
         if (!$this->blogs->contains($blog)) {
             $this->blogs->add($blog);
@@ -99,7 +80,7 @@ class User extends Personne
         return $this;
     }
 
-    public function removeBlog(Blog $blog): static
+    public function removeBlog(Blog $blog): self
     {
         if ($this->blogs->removeElement($blog)) {
             // set the owning side to null (unless already changed)
@@ -109,6 +90,24 @@ class User extends Personne
         }
 
         return $this;
+    }
+/**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
     public function getUserIdentifier(): string
     {

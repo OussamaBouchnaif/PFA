@@ -10,6 +10,8 @@
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css" />
+
     <style>
         #myTable{
             border: 1px white;
@@ -63,6 +65,9 @@
     tbody tr:not(:last-child) {
         margin-bottom: 10px; /* Adjust spacing between rows */
     }
+    .row{
+       whith:100%;
+    }
     </style>
 {% endblock %}
 
@@ -94,36 +99,7 @@
                         <!-- end page title -->
 
                         <div class="row">
-                            <div class="col-xl-3 col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="d-flex mb-3">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-16">Filters</h5>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
-                                            </div>
-
-                                    </div>                                   
-                                    </div>
-
-                                    <div class="accordion accordion-flush filter-accordion">
-
-                                       <div class="card-body border-bottom">
-                                        <div>
-                                        <label for="usersSelect">Select Category:</label>
-                                        <select class="form-control" id="usersSelect" placeholder="Sélectionnez un nom">
-                                            <option disabled selected hidden>Sélectionnez une nom</option>
-                                                {% for user in users %}
-                                                <option value="{{ user.nom }}">{{user.nom}}</option>
-                                            {% endfor %}
-                                        </select>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <!-- end col -->
 
                             <div class="col-xl-9 col-lg-8">
@@ -136,13 +112,13 @@
                                                         <a href="{{ path('user_create') }}" class="btn btn-success" id="addproduct-btn">
                                                         <i class="ri-add-line align-bottom me-1"></i> Add Users</a>
                                                    
-                                            <button type="button" class="btn btn-primary" onclick="confirmPrint()">
+                                            {# <button type="button" id="print-btn" class="btn btn-primary" onclick="confirmPrint()">
                                                 <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
                                             </button>
 
                                             <button type="button" class="btn btn-success" onclick="confirmExport()">
                                                 <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
-                                            </button>                                       
+                                            </button>                                        #}
                                             </div>
                                                     </div>
                                                     <div class="col-sm">
@@ -150,38 +126,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-<br>
-                                        {# <div class="card-header">
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#productnav-all" role="tab">
-                                                                All <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-published" role="tab">
-                                                                Published <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft" role="tab">
-                                                                Draft
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div id="selection-element">
-                                                        <div class="my-n1 d-flex align-items-center text-muted">
-                                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> #}
-                                        <!-- end card header -->
+                                                    <br>
+                                        
+                                      
                                         <div class="card-body">
 
                                     <table id="myTable" class="table">
@@ -189,6 +136,7 @@
                                                 <tr class="align-middle custom-header-bg">
                                                     <th class="custom-header text-center">Photo</th>
                                                     <th class="custom-header text-center">Nom</th>
+                                                    <th class="custom-header text-center">Prenom</th>
                                                     <th class="custom-header text-center">Email</th>
                                                     <th class="custom-header text-center">Ville</th>
                                                     <th class="custom-header text-center">Rôles</th>
@@ -200,25 +148,24 @@
                                                 <tr>                                
                                                     <td>
                                                         <div class="avatar-group">
-                                                            {# <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
+                                                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
                                                                 <img src="{{ asset(user.image) }}" alt="" class="rounded-circle avatar-xxs">
-                                                            </a> #}
+                                                            </a>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle text-center">{{ user.nom }}</td>
+                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
                                                     <td class="align-middle text-center">{{ user.email }}</td>
                                                     <td class="align-middle text-center">{{ user.ville }}</td>
                                                     <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
                                                     <td class="text-center align-middle horizontal-buttons">
-                                                        <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('user_delete', {id: user.id}) }}')">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i> 
-                                                        </button>
+                                                       <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                            <i class="ri-delete-bin-line align-bottom me-2"></i>
+                                                        </a>
                                                         <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
                                                             <i class="ri-pencil-line align-bottom me-2"></i> 
                                                         </a>
-                                                        <a class="text-muted" href="#"> <!-- Lien vers la page de détails de l'utilisateur -->
-                                                            <i class="ri-eye-fill align-bottom me-2"></i> 
-                                                        </a>
+                                                        
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
@@ -286,181 +233,20 @@
 
 {% block javascripts %}
     {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
     <script>  
   
-        function printUserTable() {
-            var printWindow = window.open('', '_blank');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Print User Table</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-            printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-            printWindow.document.write('th {font-weight: bold; text-align: center;}');
-            printWindow.document.write('</style>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write('<table>');
-            printWindow.document.write('<thead>');
-            printWindow.document.write('<tr>');
-            printWindow.document.write('<th>Nom</th>');
-            printWindow.document.write('<th>Email</th>');
-            printWindow.document.write('<th>Ville</th>');
-            printWindow.document.write('<th>Rôles</th>');
-            printWindow.document.write('</tr>');
-            printWindow.document.write('</thead>');
-            printWindow.document.write('<tbody>');
-            
-            var tableRows = document.getElementById('userTable').querySelectorAll('tr');
-            for (var i = 0; i < tableRows.length; i++) {
-                var row = tableRows[i];
-                var rowData = row.querySelectorAll('td');
-                if (rowData.length > 0) {
-                    printWindow.document.write('<tr>');
-                    for (var j = 0; j < rowData.length; j++) {
-                        printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
-                    }
-                    printWindow.document.write('</tr>');
-                }
-                }
-                
-                printWindow.document.write('</tbody>');
-                printWindow.document.write('</table>');
-                printWindow.document.write('</body></html>');
-                printWindow.document.close();
-                printWindow.print();
-        }
-document.addEventListener('DOMContentLoaded', function() {
-            var categorySelect = document.getElementById('categorySelect');
-            var rows = document.querySelectorAll('#myTable tbody tr');
-
-            // Fonction pour sélectionner la ligne correspondant à la catégorie sélectionnée
-            function selectTableRowByCategory(categoryName) {
-                // Parcourt chaque ligne pour trouver celle correspondant à la catégorie sélectionnée
-                rows.forEach(function(row) {
-                    // Obtient la catégorie dans la colonne correspondante de la ligne
-                    var categoryCell = row.cells[4].innerText;
-
-                    // Si la catégorie de la ligne correspond à celle sélectionnée, sélectionne la ligne
-                    if (categoryCell.trim() === categoryName) {
-                        // Sélectionne la ligne correspondante
-                        row.classList.add('selected');
-                    }
-                });
-            }
-
-            // Obtient la catégorie sélectionnée dans la liste déroulante
-            var selectedCategory = categorySelect.value;
-
-            // Sélectionne la ligne correspondante dès le chargement de la page
-            selectTableRowByCategory(selectedCategory);
-
-            categorySelect.addEventListener('change', function() {
-                var selectedCategory = categorySelect.value;
-                // Désélectionne toutes les lignes avant de sélectionner la nouvelle
-                rows.forEach(function(row) {
-                    row.classList.remove('selected');
-                });
-                selectTableRowByCategory(selectedCategory);
-            });
-        });
-
-
-
-
-function exportUsersToCSV() {
-    var table = document.getElementById('userTable');
-    var rows = table.querySelectorAll('tr');
-    var csvData = [];
-
-    // Parcours de chaque ligne de la table
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var rowData = [];
-        var cols = row.querySelectorAll('td');
-
-        // Parcours de chaque colonne de la ligne
-        for (var j = 0; j < cols.length; j++) {
-            rowData.push(cols[j].innerText);
-        }
-
-        // Ajout des données de la ligne au tableau CSV
-        csvData.push(rowData.join(';'));
+document.getElementById('delete').addEventListener('click', function(event) {
+    if (!confirm('Are you sure you want to delete this user?')) {
+        event.preventDefault();
     }
-
-    // Construction du contenu CSV
-    var csvContent = 'data:text/csv;charset=utf-8,';
-    csvContent += 'Nom;Prénom;Email;Ville;Téléphone;Rôles\n'; // En-tête du CSV
-
-    // Ajout des données de chaque ligne au contenu CSV
-    for (var i = 0; i < csvData.length; i++) {
-        csvContent += csvData[i] + '\n';
-    }
-
-    // Création d'un lien de téléchargement pour le fichier CSV
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'liste_utilisateurs.csv'); // Nom du fichier CSV à télécharger
-    document.body.appendChild(link);
-
-    // Clic sur le lien pour télécharger le fichier CSV
-    link.click();
-}
-
-
+});
    
-
-     function confirmDelete(deleteUrl) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
-                window.location.href = deleteUrl;
-            }
-        }
-
-     function confirmPrint() {
-    if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
-        printTable();
-    }
-}
-
-    function confirmExport() {
-        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-            exportToExcel();
-        }
-    }
-
-
-    
-   
-
-    // Afficher un message si aucune ligne n'est affichée
-    if (!atLeastOneRowDisplayed) {
-        document.getElementById('noDataMessage').style.display = 'block';
-    } else {
-        document.getElementById('noDataMessage').style.display = 'none';
-    }
-}
-
-
-
   
-function clearAllFilters() {
-    // Réinitialiser les valeurs des champs de filtre pour la catégorie
-    document.getElementById('categorySelect').value = 'All';
-
-    
-    // Réinitialiser les filtres de la catégorie
-    filterTableByCategory('All');
-
-}
-
-
-
-
-
-
 
     </script>
 {% endblock %}
