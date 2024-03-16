@@ -14,12 +14,16 @@ class CallApiCameraService
     private $serializer;
     private $getData;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     private $denormalizer;
     public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
     {
         $this->serializer = $serializer;
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+<<<<<<< HEAD
 =======
     public function __construct(SerializerInterface $serializer,GetDataService $getData)
     {
@@ -27,10 +31,13 @@ class CallApiCameraService
         $this->getData = $getData; 
         
 >>>>>>> de23d16 (data)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     }
     public function getAllCamera(int $page):array
     {
         return $this->getCameraData('api/cameras?page='.$page);
+<<<<<<< HEAD
 <<<<<<< HEAD
     }
 
@@ -40,6 +47,8 @@ class CallApiCameraService
         return $this->getCameraData('api/cameras/?' . $queryString);
 =======
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     }
 
     public function SearchBy($searchCriteria, $page, $itemsPerPage):array
@@ -56,6 +65,7 @@ class CallApiCameraService
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
@@ -67,6 +77,13 @@ class CallApiCameraService
     
     public function searchCameras($searchCriteria): String
 >>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
+        return $cameras;
+    }
+
+    public function getCameraById(int $id)
+>>>>>>> 8e6fee8 (fix conflit)
     {
         $endpoint = "/api/cameras/" . $id; 
         $response = $this->getData->getDataFromApi($endpoint);
@@ -85,6 +102,7 @@ class CallApiCameraService
     }
     
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
+<<<<<<< HEAD
 =======
     public function getItems():int
 =======
@@ -121,6 +139,8 @@ class CallApiCameraService
 =======
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
 >>>>>>> ca2bd99 (add sort by price and date)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     {
         
         $queryParts = [];
@@ -130,6 +150,9 @@ class CallApiCameraService
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e6fee8 (fix conflit)
             }
             else if($key === 'order')
             {
@@ -137,6 +160,7 @@ class CallApiCameraService
                 $queryParts[] = 'order%5B'.$value.'%5D=asc';
             }
             else if($key !== 'order' && $key !== 'prix' )
+<<<<<<< HEAD
 =======
             }
 <<<<<<< HEAD
@@ -150,6 +174,8 @@ class CallApiCameraService
             }
             else if($key !== 'order' && $key !== 'prix' )
 >>>>>>> ca2bd99 (add sort by price and date)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
             {
                 $queryParts[] = $key.'='.$value; 
             }
@@ -157,6 +183,7 @@ class CallApiCameraService
         }
         $queryParts[] = 'page=' . $page;
         $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
+<<<<<<< HEAD
 =======
             }else
             {
@@ -171,6 +198,8 @@ class CallApiCameraService
         $queryParts[] = 'page=' . $page;
         $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
 >>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
         $queryString = implode('&', $queryParts);
         return $queryString;
         

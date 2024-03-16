@@ -4,6 +4,7 @@ namespace App\Controller;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Entity\Camera;
 use App\Forms\AvisType;
 use App\Factory\Factory;
@@ -14,9 +15,12 @@ use App\Repository\AvisCameraRepository;
 >>>>>>> de23d16 (data)
 =======
 use App\Entity\AvisCamera;
+=======
+>>>>>>> 8e6fee8 (fix conflit)
 use App\Entity\Camera;
-use App\Factory\Factory;
 use App\Forms\AvisType;
+use App\Factory\Factory;
+use App\Entity\AvisCamera;
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\AvisCameraRepository;
 <<<<<<< HEAD
@@ -31,6 +35,7 @@ use Symfony\Component\Routing\Attribute\Route;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Service\Api\Exception\ObjectNotFoundException;
 =======
 >>>>>>> de23d16 (data)
@@ -41,6 +46,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 >>>>>>> fdc8b02 (add reviews to a specific camera)
 =======
 >>>>>>> deb3afb (maintain code)
+=======
+use App\Service\Api\Exception\ObjectNotFoundException;
+>>>>>>> 8e6fee8 (fix conflit)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetailsController extends AbstractController
@@ -51,6 +59,7 @@ class DetailsController extends AbstractController
 <<<<<<< HEAD
     public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
     
         $avisCamera = $factory->create(AvisCamera::class);
@@ -86,6 +95,9 @@ class DetailsController extends AbstractController
 =======
         
 >>>>>>> 2cf0464 (conflit data)
+=======
+    
+>>>>>>> 8e6fee8 (fix conflit)
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);
@@ -103,11 +115,15 @@ class DetailsController extends AbstractController
             'camera' => $callapi->getCameraById($camera->getId()),
             'form' => $form->createView(),
             'comments' => $comments
+<<<<<<< HEAD
         ]);
     }
 <<<<<<< HEAD
 >>>>>>> de23d16 (data)
 =======
+=======
+        ]);    }
+>>>>>>> 8e6fee8 (fix conflit)
 
     
 >>>>>>> 6fe7d29 (maintain controller avis)
