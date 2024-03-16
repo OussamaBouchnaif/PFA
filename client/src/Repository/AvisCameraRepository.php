@@ -32,7 +32,7 @@ class AvisCameraRepository extends ServiceEntityRepository
         $avisCamera->setClient($user);
         $avisCamera->setCamera($camera);
         $avisCamera->setCommentaire($content);
-        $avisCamera->setNote('5');
+        $avisCamera->setNote(5);
         $this->doSave($avisCamera,true);
     }
 
