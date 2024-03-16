@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserController extends AbstractController
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function __construct(private readonly UserManager $manager)
     {
     }
@@ -34,17 +35,23 @@ class UserController extends AbstractController
     }
 =======
     #[Route('/users', name: 'users_index')]
+=======
+    #[Route('/user/show', name: 'users_index')]
+>>>>>>> 870065d (Add User whith photo and Security)
     public function index(UserRepository $userRepository): Response
     {
-        // Récupérer tous les utilisateurs depuis le repository
         $users = $userRepository->findAll();
+<<<<<<< HEAD
 >>>>>>> cb0b655 (add user and detail)
 
         // Passer les utilisateurs à la vue Twig
+=======
+>>>>>>> 870065d (Add User whith photo and Security)
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
     }
+
 
     #[Route('/user/create', name: 'user_create')]
 <<<<<<< HEAD

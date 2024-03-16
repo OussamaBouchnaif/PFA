@@ -74,6 +74,7 @@ class CameraController extends AbstractController
             'form' => $formCamera->createView(), 'formI' => $formImage->createView()
         ]);
     }
+<<<<<<< HEAD
 
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
@@ -85,6 +86,15 @@ class CameraController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, null, [
             'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
         ]);
+=======
+    
+      #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
+        public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
+        {
+            $formCamera = $this->createForm(CameraType::class, $camera, [
+                'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
+            ]);
+>>>>>>> 870065d (Add User whith photo and Security)
 
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
@@ -95,6 +105,7 @@ class CameraController extends AbstractController
             return $this->redirectToRoute('camera');
         }
 
+<<<<<<< HEAD
         return $this->render('admin/Cameras/editProduct.html.twig', [
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
@@ -104,6 +115,9 @@ class CameraController extends AbstractController
     
 
         #[Route('/Delete_camera/{id}', name: 'Delete_camera')]
+=======
+        #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
+>>>>>>> 870065d (Add User whith photo and Security)
         public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
         {
             $camera = $cameraRepository->find($id);
@@ -125,42 +139,4 @@ class CameraController extends AbstractController
             return $this->redirectToRoute('camera');
         }
         
-
-    // #[Route('/upload_photo/{id}', name: 'upload_photo')]
-    // public function uploadPhoto(Camera $camera, Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $imageCamera = new ImageCamera();
-    //     $form = $this->createForm(PhotoType::class, $imageCamera);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $uploadedFile = $form->get('photo')->getData();
-
-    //         $newFilename = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
-    //         $uploadedFile->move($this->getParameter('kernel.project_dir') . '/public/uploads', $newFilename);
-
-    //         $imageCamera->setImage($newFilename);
-    //         $imageCamera->setCamera($camera);
-
-    //         $entityManager->persist($imageCamera);
-    //         $entityManager->flush();
-
-    //         $this->addFlash('success', 'Photo ajoutée avec succès!');
-
-    //         return $this->redirectToRoute('camera');
-    //     }
-
-    //     return $this->render('dashboard/camera/upload_photo.html.twig', [
-    //         'form' => $form->createView(),
-    //         'camera' => $camera,
-    //     ]);
-    // }
-
-    #[Route('/download_photo/{id}', name: 'download_photo')]
-    public function downloadPhoto(ImageCamera $imageCamera): BinaryFileResponse
-    {
-        $photoPath = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $imageCamera->getImage();
-
-        return $this->file($photoPath, null, ResponseHeaderBag::DISPOSITION_INLINE);
-    }
 }
