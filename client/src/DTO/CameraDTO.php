@@ -28,6 +28,7 @@ class CameraDTO
     public ?string $status = null;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
@@ -38,6 +39,8 @@ class CameraDTO
 
 
 >>>>>>> 9bb638e (conflit data)
+=======
+>>>>>>> 535ed5b (data)
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;
