@@ -30,8 +30,11 @@ class CameraDTO
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ce65794 (conflit data)
+=======
+>>>>>>> ec53c2e (data)
 =======
 
 
@@ -47,7 +50,12 @@ class CameraDTO
 >>>>>>> f056496 (fix conflit)
 =======
 >>>>>>> 9bb638e (conflit data)
+<<<<<<< HEAD
 >>>>>>> ce65794 (conflit data)
+=======
+=======
+>>>>>>> 535ed5b (data)
+>>>>>>> ec53c2e (data)
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;
