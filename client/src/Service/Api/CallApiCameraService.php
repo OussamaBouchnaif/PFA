@@ -67,6 +67,7 @@ class CallApiCameraService
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
@@ -81,11 +82,16 @@ class CallApiCameraService
 =======
 =======
 >>>>>>> ce65794 (conflit data)
+=======
+>>>>>>> ee1b117 (maintain servcie api)
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
 =======
         $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\DTO\CameraDTO[]', 'json');
         
 >>>>>>> 9bb638e (conflit data)
+=======
+        $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
+>>>>>>> 5d2fc98 (maintain servcie api)
         return $cameras;
     }
 
