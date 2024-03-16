@@ -27,14 +27,6 @@ class CameraDTO
 
     public ?string $status = null;
 
-
-
-    public Collection $favoritCameras;
-
-
-    public Collection $ligneCommandes;
-
-
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;
