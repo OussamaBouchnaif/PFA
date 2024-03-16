@@ -13,46 +13,25 @@
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+            margin: 0;
+            padding: 0;
+            background-image: url("/uploads/surveillance-cctv-security-camera-3d-rendering_601748-14542.avif");
+            background-size: cover; /* This property ensures that the background image covers the entire background */
+            background-repeat: no-repeat; /* This property prevents the background image from repeating */
+            background-position: 80% center; /* Adjust the background position */
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    {# <form method="post">
-       {% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
 
-        
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+<div class="auth-page-wrapper pt-5"><div class="shape">
+                <img src="public\uploads\Installation-camera-de-surveillance.jpg" ">
             </div>
-        {% endif %}
-        
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
-        
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-        
-        <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-    </form> #}
-
-
-
-<div class="auth-page-wrapper pt-5">
         <!-- auth page bg -->
-        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
-            <div class="bg-overlay"></div>
-
-            <div class="shape">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
-                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
-                </svg>
-            </div>
-        </div>
-
+      
         <!-- auth page content -->
         <div class="auth-page-content">
             <div class="container">
