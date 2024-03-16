@@ -147,12 +147,15 @@
                                                 {% for user in users %}
                                                 <tr>                                
                                                     <td>
-                                                        <div class="avatar-group">
-                                                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
-                                                                <img src="{{ asset(user.image) }}" alt="" class="rounded-circle avatar-xxs">
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                    <div class="avatar-group">
+                                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
+                                                            {% if user.image %}
+                                                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
+                                            
+                                                            {% endif %}
+                                                        </a>
+                                                    </div>
+                                                </td>
                                                     <td class="align-middle text-center">{{ user.nom }}</td>
                                                     <td class="align-middle text-center">{{ user.prenom }}</td>
                                                     <td class="align-middle text-center">{{ user.email }}</td>

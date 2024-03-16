@@ -13,17 +13,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/users', name: 'users_index')]
+    #[Route('/user/show', name: 'users_index')]
     public function index(UserRepository $userRepository): Response
     {
-        // Récupérer tous les utilisateurs depuis le repository
         $users = $userRepository->findAll();
-
-        // Passer les utilisateurs à la vue Twig
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
     }
+
 
     #[Route('/user/create', name: 'user_create')]
     public function addtest(Request $request, EntityManagerInterface $entityManager): Response

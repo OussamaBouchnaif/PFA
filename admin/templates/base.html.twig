@@ -804,7 +804,7 @@
                     <ul class="navbar-nav" id="navbar-nav">
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link"  href="{{ path('camera') }}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                            <a class="nav-link menu-link"  href="{{ path('camera') }}"  role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                                 <i class="ri-dashboard-2-line"></i>  <span data-key="t-dashboards">Cameras</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarDashboards">
@@ -848,8 +848,8 @@
                         <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Authentication</span>
+                            <a class="nav-link menu-link" href="{{ path('users_index') }}"  role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Users</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarAuth">
                                 <ul class="nav nav-sm flex-column">
