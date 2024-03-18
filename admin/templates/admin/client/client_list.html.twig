@@ -130,7 +130,24 @@
          <!-- container-fluid -->
       </div>
       <!-- End Page-content -->
+<<<<<<< HEAD
      
+=======
+      <footer class="footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-6">
+                  <script>document.write(new Date().getFullYear())</script> © Velzon.
+               </div>
+               <div class="col-sm-6">
+                  <div class="text-sm-end d-none d-sm-block">
+                     Design & Develop by Themesbrand
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+>>>>>>> 0d18d36 (liste des clients modifications)
    </div>
 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -196,6 +213,7 @@ $(document).ready(function() {
         
         var button = $(this);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
        
 =======
@@ -203,6 +221,10 @@ $(document).ready(function() {
         
         // Mettre à jour l'état du compte
 >>>>>>> 87819b0 (data)
+=======
+
+       
+>>>>>>> 0d18d36 (liste des clients modifications)
         $.ajax({
             url: 'update-account-status', 
             method: 'POST',
@@ -210,9 +232,12 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                 // Mettre à jour l'apparence du bouton en utilisant la variable button
 >>>>>>> 87819b0 (data)
+=======
+>>>>>>> 0d18d36 (liste des clients modifications)
                 if (response === 'success') {
                     if (accountStatus === 'active' || accountStatus === 'actif') {
                         // Si oui, le changer à "inactive"
