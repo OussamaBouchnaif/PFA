@@ -3,32 +3,37 @@
 namespace App\Service\Api;
 use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
+use App\Service\Api\Query\QueryStringBuilder;
+
 
 class CallApiCameraService 
 {
-    private $serializer;
     private $getData;
     private $denormalizer;
-    public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
+    private $queryString;
+    public function __construct(GetDataService $getData ,QueryStringBuilder $queryString, Denormalizer $denormalizer)
     {
-        $this->serializer = $serializer;
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+        $this->queryString = $queryString;
+
     }
     public function getAllCamera(int $page):array
     {
         return $this->getCameraData('api/cameras?page='.$page);
     }
 
-    public function SearchBy($searchCriteria, $page, $itemsPerPage):array
+    public function SearchBy(array $searchCriteria,int $page,int $itemsPerPage):array
     {
-        $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
-        return $this->getCameraData('api/cameras/?' . $queryString);
+
+        $url = $this->queryString->addCategorieNameParameter($searchCriteria['categorie.nom'])
+                                 ->addOrder($searchCriteria['order'])
+                                 ->setPage($page)
+                                 ->setLimitPerPage($itemsPerPage)
+                                 ->getQueryString();
+        
+        return $this->getCameraData('api/cameras/?' . $url);
     }
     
     public function getCameraData(String $endpoint):array
@@ -59,30 +64,5 @@ class CallApiCameraService
         return $items;
     }
     
-    public function generateUrl($searchCriteria, $page, $itemsPerPage): String
-    {
-        
-        $queryParts = [];
-        foreach ($searchCriteria as $key => $value) {
-            if($key === 'prix')
-            {
-                $queryParts[] = 'prix%5Bbetween%5D='.$value; 
-            }
-            else if($key === 'order')
-            {
-                
-                $queryParts[] = 'order%5B'.$value.'%5D=asc';
-            }
-            else if($key !== 'order' && $key !== 'prix' )
-            {
-                $queryParts[] = $key.'='.$value; 
-            }
-                    
-        }
-        $queryParts[] = 'page=' . $page;
-        $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
-        $queryString = implode('&', $queryParts);
-        return $queryString;
-        
-    }
+   
 }
