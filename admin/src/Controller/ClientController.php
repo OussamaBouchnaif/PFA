@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller;
+
 use App\Entity\Client;
 use App\Form\ClientStatusType;
 use App\Repository\ClientRepository;
@@ -52,24 +54,24 @@ class ClientController extends AbstractController
     }
 
     #[Route('/update-account-status', name: 'update_account_status')]
-public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $clientId = $request->request->get('clientId');
-    $accountStatus = $request->request->get('accountStatus');
+    public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $clientId = $request->request->get('clientId');
+        $accountStatus = $request->request->get('accountStatus');
 
-    // Récupérer le client à partir de l'ID
-    $client = $entityManager->getRepository(Client::class)->find($clientId);
+        // Récupérer le client à partir de l'ID
+        $client = $entityManager->getRepository(Client::class)->find($clientId);
 
-    // Vérifier si le client existe
-    if (!$client) {
-        return new JsonResponse('error', JsonResponse::HTTP_NOT_FOUND);
+        // Vérifier si le client existe
+        if (!$client) {
+            return new JsonResponse('error', JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        // Basculer l'état du compte entre actif et inactif
+        $newStatus = $accountStatus === 'active' ? 'inactive' : 'active';
+        $client->setStatusCompte($newStatus);
+        $entityManager->flush();
+
+        return new JsonResponse('success', JsonResponse::HTTP_OK);
     }
-
-    // Basculer l'état du compte entre actif et inactif
-    $newStatus = $accountStatus === 'active' ? 'inactive' : 'active';
-    $client->setStatusCompte($newStatus);
-    $entityManager->flush();
-
-    return new JsonResponse('success', JsonResponse::HTTP_OK);
-}
 }

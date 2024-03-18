@@ -59,6 +59,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->saveUser($user, false);
 
+
             $this->addFlash('success', 'User updated successfully!');
 
             return $this->redirectToRoute('users_index');
@@ -73,6 +74,7 @@ class UserController extends AbstractController
     #[Route('/user/delete/{id}', name: 'user_delete')]
     public function delete(User $user): Response
     {
+
         $this->manager->removeUser($user);
 
         return $this->redirectToRoute('users_index');
