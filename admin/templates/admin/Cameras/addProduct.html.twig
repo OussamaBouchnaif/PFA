@@ -31,7 +31,7 @@
                     </div>
                     <!-- end page title -->
 
-                {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
+                {{ form_start(form) }}
                         <div class="row">
                             <div class="col-lg-8">
                                 <div class="card">
@@ -58,8 +58,8 @@
                                         
                                         <div id="drop-area">
                                             <h3>Drag & Drop Files Here</h3>
-                                                    {{ form_label(formI.imageFile) }}
-                                                    {{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_label(formI.imageFile) }}
+                                                {{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
                                         </div>
                                         <div id="gallery"></div>
                                     </div>
