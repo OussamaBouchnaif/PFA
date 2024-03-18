@@ -5,241 +5,218 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
-    <style> 
-        .dataTables_wrapper .dataTables_paginate {
-            text-align: center;
-        }
-        body {
-            background-color: #ffffff;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        .page-title {
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .action-buttons {
-            margin-bottom: 20px;
-        }
-        .action-buttons button {
-            margin-right: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-            border: 1px solid black;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-weight: bold;
-            padding: 10px;
-        }
-        .custom-header {
-            background-color: #ffffff;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            line-height: 2em;
-        }
-        .btn-primary-custom {
-            background-color: #3498db;
-            color: #fff;
-        }
-        .btn-info-custom, .btn-success-custom {
-            background-color: #2ecc71 !important;
-            color: #fff !important;
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="text-center mb-4"> Liste des clients </h1>
-        <br>
-        <div class="action-buttons">
-            <button type="button" class="btn btn-success-custom" onclick="confirmPrint()">
-                Imprimer le tableau
-            </button>
-            <button type="button" class="btn btn-success-custom" onclick="confirmExport()">
-                Exporter vers Excel
-            </button>
-        </div>
-        <table id="myTable" class="table">
-            <thead>
-                <tr class="align-middle custom-header-bg">
-                    <th class="custom-header text-center">Nom</th>
-                    <th class="custom-header text-center">Prénom</th>
-                    <th class="custom-header text-center">Email</th>
-                    <th class="custom-header text-center">Mot de passe</th>
-                    <th class="custom-header text-center">Adresse</th>
-                    <th class="custom-header text-center">Inscription</th>
-                    <th class="custom-header text-center">Statut</th>
-                    <th class="custom-header text-center">Adresses Sup</th>
-                    <th class="custom-header text-center">Compte</th>
-                    <!-- Boutons de suppression et d'édition supprimés -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for client in clients %}
-                    <tr>
-                        <td class="align-middle text-center">{{ client.nom }}</td>
-                        <td class="align-middle text-center">{{ client.prenom }}</td>
-                        <td class="align-middle text-center">{{ client.email }}</td>
-                        <td class="align-middle text-center">{{ client.password }}</td>
-                        <td class="align-middle text-center">{{ client.adresse }}</td>
-                        <td class="align-middle text-center">{{ client.dateInscription ? client.dateInscription|date('d/m/Y') : '' }}</td>
-                        <td class="align-middle text-center">{{ client.statusCompte }}</td>
-                        <td class="align-middle text-center">{{ client.addressLivSup }}</td>
-                        <td class="align-middle text-center">
-                            <div class="form-check form-switch d-flex justify-content-center">
-                                <input class="form-check-input btn-toggle-account {% if client.statusCompte == 'inactif' %}btn-danger{% else %}btn-success{% endif %} btn-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked{{ client.id }}" {% if client.statusCompte == 'active' %}checked{% endif %} data-client-id="{{ client.id }}" data-account-status="{{ client.statusCompte }}">
-                                <label class="form-check-label" for="flexSwitchCheckChecked{{ client.id }}"></label>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-        <br>
-    </div>
-{% endblock %}
+   <div class="main-content">
+      <div class="page-content">
+         <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+               <div class="col-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                     <h4 class="mb-sm-0">Liste des clients</h4>
+                     <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                           <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                           <li class="breadcrumb-item active">Customers</li>
+                        </ol>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- end page title -->
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="card" id="customerList">
+                     <div class="card-header border-bottom-dashed">
+                        <div class="row g-4 align-items-center">
+                           <div class="col-sm">
+                              <div>
+                                 <h5 class="card-title mb-0">Liste des clients</h5>
+                              </div>
+                           </div>
+                           <div class="col-sm-auto">
+                              <div class="d-flex flex-wrap align-items-start gap-2">
+                                 <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                                 <button type="button" class="btn btn-success" id="printTableButton"><i class="ri-file-download-line align-bottom me-1"></i> Print Table</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card-body border-bottom-dashed border-bottom">
+                        <form>
+                           <div class="row g-3">
+                              
+                              <div class="col-xl-6">
+                                 <div class="row g-3">
+                                    <div class="col-sm-4">
+                                       <div>
+                                          <input type="date" class="form-control" id="datepicker" placeholder="Select date">
+                                       </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col-sm-4">
+                                       <div>
+                                          <select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
+                                             <option value="all">All</option>
+                                             <option value="active">Active</option>
+                                             <option value="inactive">Inactive</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!--end col-->
+                                    <div class="col-sm-4">
+                                       <div>
+                                          <button type="button" class="btn btn-info w-100" id="filterButton"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                       </div>
+                                    </div>
+                                    <!--end col-->
+                                 </div>
+                              </div>
+                           </div>
+                           <!--end row-->
+                        </form>
+                     </div>
+                     <div class="row">
+                        <div class="col-lg-12">
+                           <div class="card">
+                              <div class="card-body">
+                                 <table id="myTable" class="table table-bordered dt-responsive nowrap align-middle mdl-data-table" style="width:100%">
+                                    <thead>
+                                       <tr>
+                                          <th>Nom</th>
+                                          <th>Prénom</th>
+                                          <th>Email</th>
+                                          <th style="display: none;">Mot de passe</th> 
+                                          <th>Adresse</th>
+                                          <th>Inscription</th>
+                                          <th style="display: none;">Statut</th> 
+                                          <th>Adresses Sup</th>
+                                          <th>Compte</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for client in clients %}
+                                          <tr>
+                                             <td>{{ client.nom }}</td>
+                                             <td>{{ client.prenom }}</td>
+                                             <td>{{ client.email }}</td>
+                                             <td style="display: none;">{{ client.password }}</td> 
+                                             <td>{{ client.adresse }}</td>
+                                             <td>{{ client.dateInscription ? client.dateInscription|date('d/m/Y') : '' }}</td>
+                                             <td style="display: none;">{{ client.statusCompte }}</td> 
+                                             <td>{{ client.addressLivSup }}</td>
+                                             <td>
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                   <input class="form-check-input btn-toggle-account {% if client.statusCompte == 'inactif' %}btn-danger{% else %}btn-success{% endif %} btn-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked{{ client.id }}" {% if client.statusCompte == 'active' %}checked{% endif %} data-client-id="{{ client.id }}" data-account-status="{{ client.statusCompte }}">
+                                                   <label class="form-check-label" for="flexSwitchCheckChecked{{ client.id }}"></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       {% endfor %}
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!--end col-->
+            </div>
+            <!--end row-->
+         </div>
+         <!-- container-fluid -->
+      </div>
+      <!-- End Page-content -->
+      <footer class="footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-6">
+                  <script>document.write(new Date().getFullYear())</script> © Velzon.
+               </div>
+               <div class="col-sm-6">
+                  <div class="text-sm-end d-none d-sm-block">
+                     Design & Develop by Themesbrand
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+   </div>
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            if ($.fn.DataTable.isDataTable('#myTable')) {
-                $('#myTable').DataTable().destroy();
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+   <script src="{{ asset('public/assets/js/client.js') }}"></script>
+   <script>
+$(document).ready(function() {
+    // Fonction pour initialiser ou recharger la DataTable
+    function initDataTable() {
+        if ($.fn.DataTable.isDataTable('#myTable')) {
+            $('#myTable').DataTable().destroy();
+        }
+        $('#myTable').DataTable();
+    }
+
+    // appliquer les filtres
+    function applyFilters() {
+    var statusFilter = $('#idStatus').val();
+    var dateFilter = $('#datepicker').val();
+    var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
+
+    var table = $('#myTable').DataTable();
+
+    // Réinitialiser les lignes affichées
+    table.rows().every(function () {
+        this.nodes().to$().show();
+    });
+    
+    // Appliquer le filtre par statut
+    if (statusFilter !== 'all') {
+        table.column(6).search('^' + statusFilter + '$', true, false).draw();
+    } else {
+        table.column(6).search('').draw();
+    }
+
+    
+    if (dateFilter) {
+        table.rows().every(function () {
+            var rowData = this.data();
+            var clientDate = moment(rowData[5], 'DD/MM/YYYY'); 
+            if (clientDate.isValid() && clientDate.isBefore(selectedDate)) {
+                // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
+                this.nodes().to$().hide();
             }
-            $('#myTable').DataTable();
         });
+    }
+}
 
-        function confirmPrint() {
-            if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
-                printTable();
-            }
-        }
 
-        function confirmExport() {
-            if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-                exportToExcel();
-            }
-        }
+    
+    $('#filterButton').on('click', function() {
+        applyFilters();
+    });
 
-        function printTable() {
-            var printWindow = window.open('', '_blank');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Print Table</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-            printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-            printWindow.document.write('th {font-weight: bold; text-align: center;}');
-            printWindow.document.write('</style>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write('<table>');
-            printWindow.document.write('<thead>');
-            printWindow.document.write('<tr>');
-            printWindow.document.write('<th>Nom</th>');
-            printWindow.document.write('<th>Prénom</th>');
-            printWindow.document.write('<th>Email</th>');
-            printWindow.document.write('<th>Mot de passe</th>');
-            printWindow.document.write('<th>Adresse</th>');
-            printWindow.document.write('<th>Inscription</th>');
-            printWindow.document.write('<th>Statut</th>');
-            printWindow.document.write('<th>Adresses Sup</th>');
-            printWindow.document.write('<th>Compte</th>');
-            printWindow.document.write('</tr>');
-            printWindow.document.write('</thead>');
-            printWindow.document.write('<tbody>');
-
-            var tableRows = document.getElementById('myTable').querySelectorAll('tr');
-            for (var i = 0; i < tableRows.length; i++) {
-                var row = tableRows[i];
-                var rowData = row.querySelectorAll('td');
-                if (rowData.length > 0) {
-                    printWindow.document.write('<tr>');
-                    for (var j = 0; j < rowData.length; j++) {
-                        if (j !== rowData.length - 1) {
-                            printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
-                        }
-                    }
-                    printWindow.document.write('</tr>');
-                }
-            }
-
-            printWindow.document.write('</tbody>');
-            printWindow.document.write('</table>');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-        }
-
-        function exportToExcel() {
-            var table = document.getElementById('myTable');
-            var rows = table.querySelectorAll('tr');
-            var csvData = [];
-
-            for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
-                var rowData = [];
-                var cols = row.querySelectorAll('td');
-
-                for (var j = 0; j < cols.length; j++) {
-                    rowData.push(cols[j].innerText);
-                }
-
-                csvData.push(rowData.join(';')); 
-            }
-
-            var csvContent = 'data:text/csv;charset=utf-8,';
-            csvContent += 'Nom;Prénom;Email;Mot de passe;Adresse;Inscription;Statut;Adresses Sup\n';
-
-            for (var i = 0; i < csvData.length; i++) {
-                csvContent += csvData[i] + '\n';
-            }
-
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', 'liste_clients.csv'); 
-            document.body.appendChild(link);
-            link.click();
-        }
-
-       $(document).ready(function() {
+    
     $('.btn-toggle-account').on('click', function() {
         var clientId = $(this).data('client-id');
         var accountStatus = $(this).data('account-status');
+
         
-        // Stocker une référence à $(this) dans une variable
         var button = $(this);
-        
-        // Mettre à jour l'état du compte
+
+       
         $.ajax({
-            url: 'update-account-status', // Mettez à jour l'URL avec la route Symfony appropriée
+            url: 'update-account-status', 
             method: 'POST',
             data: { clientId: clientId, accountStatus: accountStatus },
             success: function(response) {
-                // Mettre à jour l'apparence du bouton en utilisant la variable button
+                console.log(response);
                 if (response === 'success') {
-                    // Vérifier si le statut du compte est "actif" ou "active"
                     if (accountStatus === 'active' || accountStatus === 'actif') {
                         // Si oui, le changer à "inactive"
                         button.removeClass('btn-success').addClass('btn-danger');
@@ -249,6 +226,8 @@
                         button.removeClass('btn-danger').addClass('btn-success');
                         button.data('account-status', 'active');
                     }
+                    // Appliquer les filtres après le changement de statut
+                    applyFilters();
                 } else {
                     alert('Erreur lors de la mise à jour de l\'état du compte.');
                 }
@@ -258,7 +237,23 @@
             }
         });
     });
-});
 
-    </script>
+    
+    $('#printTableButton').on('click', function() {
+       
+        printJS({
+            printable: 'myTable',
+            type: 'html',
+            
+            style: '.table { font-size: 12px; }' 
+            
+        });
+    });
+
+    
+    initDataTable();
+});
+</script>
+
+
 {% endblock %}
