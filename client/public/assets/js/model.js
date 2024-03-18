@@ -167,6 +167,7 @@ function fetchData(criteria) {
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     document.getElementById('loadingSpinner').style.display = 'flex';
     document.getElementById('results-container').style.filter = 'blur(2px)';
 =======
@@ -180,6 +181,10 @@ function fetchData(criteria) {
 =======
     document.getElementById('results-container').style.filter = 'blur(2px)';
 >>>>>>> fa04ec1 (maintain search code)
+=======
+    //document.getElementById('loadingSpinner').style.display = 'flex';
+    //document.getElementById('results-container').style.filter = 'blur(2px)';
+>>>>>>> a255480 (fix search)
     fetch(url, {
         method: 'GET',
         headers: {
@@ -192,15 +197,20 @@ function fetchData(criteria) {
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         document.getElementById('loadingSpinner').style.display = 'none';
         document.getElementById('results-container').style.filter = 'none';
+=======
+        //document.getElementById('loadingSpinner').style.display = 'none';
+        //document.getElementById('results-container').style.filter = 'none';
+>>>>>>> a255480 (fix search)
         
     })
     .catch(error => {
         console.error('Error:', error)
         document.getElementById('results-container').innerHTML = error;
-        document.getElementById('loadingSpinner').style.display = 'none';
-        document.getElementById('results-container').style.filter = 'none';
+        //document.getElementById('loadingSpinner').style.display = 'none';
+        //document.getElementById('results-container').style.filter = 'none';
     });
 <<<<<<< HEAD
 =======

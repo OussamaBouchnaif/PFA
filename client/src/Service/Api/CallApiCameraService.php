@@ -3,26 +3,24 @@
 namespace App\Service\Api;
 use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
+use App\Service\Api\Query\QueryStringBuilder;
+
 
 class CallApiCameraService 
 {
-    private $serializer;
     private $getData;
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 8e6fee8 (fix conflit)
     private $denormalizer;
-    public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
+    private $queryString;
+    public function __construct(GetDataService $getData ,QueryStringBuilder $queryString, Denormalizer $denormalizer)
     {
-        $this->serializer = $serializer;
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     public function __construct(SerializerInterface $serializer,GetDataService $getData)
@@ -33,6 +31,10 @@ class CallApiCameraService
 >>>>>>> de23d16 (data)
 =======
 >>>>>>> 8e6fee8 (fix conflit)
+=======
+        $this->queryString = $queryString;
+
+>>>>>>> a255480 (fix search)
     }
     public function getAllCamera(int $page):array
     {
@@ -51,10 +53,16 @@ class CallApiCameraService
 >>>>>>> 8e6fee8 (fix conflit)
     }
 
-    public function SearchBy($searchCriteria, $page, $itemsPerPage):array
+    public function SearchBy(array $searchCriteria,int $page,int $itemsPerPage):array
     {
-        $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
-        return $this->getCameraData('api/cameras/?' . $queryString);
+
+        $url = $this->queryString->addCategorieNameParameter($searchCriteria['categorie.nom'])
+                                 ->addOrder($searchCriteria['order'])
+                                 ->setPage($page)
+                                 ->setLimitPerPage($itemsPerPage)
+                                 ->getQueryString();
+        
+        return $this->getCameraData('api/cameras/?' . $url);
     }
     
     public function getCameraData(String $endpoint):array
@@ -114,6 +122,7 @@ class CallApiCameraService
         return $items;
     }
     
+<<<<<<< HEAD
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
 <<<<<<< HEAD
 =======
@@ -217,4 +226,7 @@ class CallApiCameraService
         return $queryString;
         
     }
+=======
+   
+>>>>>>> a255480 (fix search)
 }

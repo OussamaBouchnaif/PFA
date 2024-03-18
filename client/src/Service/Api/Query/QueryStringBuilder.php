@@ -36,6 +36,12 @@ class QueryStringBuilder
 
         return $this;
     }
+    public function addCategorieNameParameter(string $name):static
+    {
+        $this->appendParameter('categorie.nom',$name);
+        return $this;
+
+    }
 
     public function addOrder(string $orderBy): static
     {
