@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 otherLink.classList.remove('active');
             });
     
-            // Ajouter la classe 'active' au lien cliqué
+           
             this.classList.add('active');
             var angle = this.getAttribute('href').split('angle=')[1];
             
@@ -103,7 +103,7 @@ function fetchData(criteria) {
 });
 
 function setupQuickViewButtons() {
-    document.querySelectorAll('.quick_view').forEach(button => {
+    document.querySelectorAll('.addcart').forEach(button => {
         button.addEventListener('click', function() {
             var name = this.getAttribute('data-name');
             var price = this.getAttribute('data-price');

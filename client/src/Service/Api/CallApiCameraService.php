@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Service\Api;
+use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Service\Api\Exception\ObjectNotFoundException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
@@ -11,11 +13,12 @@ class CallApiCameraService
 {
     private $serializer;
     private $getData;
-    public function __construct(SerializerInterface $serializer,GetDataService $getData)
+    private $denormalizer;
+    public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
     {
         $this->serializer = $serializer;
         $this->getData = $getData; 
-        
+        $this->denormalizer = $denormalizer;
     }
     public function getAllCamera(int $page):array
     {
@@ -34,19 +37,19 @@ class CallApiCameraService
         if (!$data) {
             throw new \Exception("Camera not found");
         }
-        $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
+        $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
 
     public function getCameraById(int $id)
     {
-        $endpoint = "/api/cameras/" . $id; // Ajustez selon l'URL de base de l'API
+        $endpoint = "/api/cameras/" . $id; 
         $response = $this->getData->getDataFromApi($endpoint);
     
         if (!$response) {
-            throw new \Exception("Camera not found");
+            throw new ObjectNotFoundException('Camera Not Found !!' );
         }
-        $camera = $this->serializer->denormalize($response, 'App\Entity\Camera', 'json');
+        $camera = $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
         return $camera;
     }
     
