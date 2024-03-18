@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des caméras{% endblock %}
+
+
+
+{% block stylesheets %}
+    
+    
+{% endblock %}
+
+{% block body %}
+   
+  <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Customers</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                        <li class="breadcrumb-item active">Customers</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card" id="customerList">
+                                <div class="card-header border-bottom-dashed">
+
+                                    <div class="row g-4 align-items-center">
+                                        <div class="col-sm">
+                                            <div>
+                                                <h5 class="card-title mb-0">Customer List</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <div class="d-flex flex-wrap align-items-start gap-2">
+                                                <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                                                <button type="button" class="btn btn-secondary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Customer</button>
+												<button type="button" class="btn btn-success"><i class="ri-file-download-line align-bottom me-1"></i> Import</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body border-bottom-dashed border-bottom">
+                                    <form>
+                                        <div class="row g-3">
+                                            <div class="col-xl-6">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search" placeholder="Search for customer, email, phone, status or something...">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-xl-6">
+                                                <div class="row g-3">
+                                                    <div class="col-sm-4">
+                                                        <div class="">
+                                                            <input type="text" class="form-control" id="datepicker-range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-sm-4">
+                                                        <div>
+                                                            <select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
+                                                                <option value="">Status</option>
+                                                                <option value="all" selected>All</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Block">Block</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+
+                                                    <div class="col-sm-4">
+                                                        <div>
+                                                            <button type="button" class="btn btn-info w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </form>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Scroll - Vertical</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <table id="myTable" class="table table-bordered dt-responsive nowrap align-middle mdl-data-table" class="datatable" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Project</th>
+                                                            <th>Task</th>
+                                                            <th>Client Name</th>
+                                                            <th>Assigned To</th>
+                                                            <th>Due Date</th>
+                                                            <th>Status</th>
+                                                            <th>Priority</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="avatar-group">
+                                                                    <a href="javascript: void(0);" class="avatar-group-item "  data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                                                                        <img src="assets/images/users/avatar-3.jpg" alt=""  class="rounded-circle avatar-xxs">
+                                                                    </a>
+                                                                    <a href="javascript: void(0);" class="avatar-group-item "  data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                                                                        <img src="assets/images/users/avatar-3.jpg" alt=""  class="rounded-circle avatar-xxs">
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td>VLZ-452</td>
+                                                            <td>Symox v1.0.0</td>
+                                                            <td><a href="#!">Add Dynamic Contact List</a></td>
+                                                            <td>RH Nichols</td>
+                                                            
+                                                            <td>03 Oct, 2021</td>
+                                                            <td><span class="badge bg-info-subtle text-info">Re-open</span></td>
+                                                            <td><span class="badge bg-danger">High</span></td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="avatar-group">
+                                                                    <a href="javascript: void(0);" class="avatar-group-item "  data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                                                                        <img src="assets/images/users/avatar-3.jpg" alt=""  class="rounded-circle avatar-xxs">
+                                                                    </a>
+                                                                   
+                                                                </div>
+                                                            </td>
+                                                            <td>VLZ-452</td>
+                                                            <td>Symox v1.0.0</td>
+                                                            <td><a href="#!">Add Dynamic Contact List</a></td>
+                                                            <td>RH Nichols</td>
+                                                            
+                                                            <td>03 Oct, 2021</td>
+                                                            <td><span class="badge bg-info-subtle text-info">Re-open</span></td>
+                                                            <td><span class="badge bg-danger">High</span></td>
+                                                            
+                                                        </tr>
+                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+           
+        </div>
+    
+    
+
+{% endblock %}
+
+{% block javascripts %}
+
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+{% endblock %}
