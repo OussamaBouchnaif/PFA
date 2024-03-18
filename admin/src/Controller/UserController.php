@@ -87,7 +87,7 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
 <<<<<<< HEAD
             $this->manager->saveUser($user, false);
@@ -98,13 +98,17 @@ class UserController extends AbstractController
 =======
             // Mettre à jour l'utilisateur dans la base de données
             $entityManager->flush();
-    
+
             $this->addFlash('success', 'User updated successfully!');
+<<<<<<< HEAD
     
 >>>>>>> 779ae00 (edit and add user)
+=======
+
+>>>>>>> b42b885 (fixer image user)
             return $this->redirectToRoute('users_index');
         }
-    
+
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
@@ -124,8 +128,12 @@ class UserController extends AbstractController
         // Supprimer l'utilisateur de la base de données
         $entityManager->remove($user);
         $entityManager->flush();
+<<<<<<< HEAD
     
 >>>>>>> 779ae00 (edit and add user)
+=======
+
+>>>>>>> b42b885 (fixer image user)
         return $this->redirectToRoute('users_index');
     }
 }

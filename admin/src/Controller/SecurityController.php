@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends AbstractController
 {
-    
+
 
     #[Route('/login', name: 'app_login')]
     public function login(Request $request, \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils): Response
@@ -41,6 +41,7 @@ class SecurityController extends AbstractController
     }
 =======
 
+<<<<<<< HEAD
         #[Route('/logout', name: 'app_logout')]
         public function logout(): RedirectResponse
         {
@@ -49,4 +50,12 @@ class SecurityController extends AbstractController
         }
 
 >>>>>>> cb0b655 (add user and detail)
+=======
+    #[Route('/logout', name: 'app_logout')]
+    public function logout(): RedirectResponse
+    {
+        // Redirecting to the login page
+        return $this->redirectToRoute('app_login');
+    }
+>>>>>>> b42b885 (fixer image user)
 }

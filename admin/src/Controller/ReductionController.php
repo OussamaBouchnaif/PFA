@@ -66,6 +66,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+<<<<<<< HEAD
 
     #[Route('/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, Reduction $reduction): Response
@@ -135,6 +136,8 @@ class ReductionController extends AbstractController
         ]);
     }
     
+=======
+>>>>>>> b42b885 (fixer image user)
 
     #[Route('/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, Reduction $reduction): Response

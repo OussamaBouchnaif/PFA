@@ -75,6 +75,7 @@ class CameraController extends AbstractController
         ]);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
@@ -133,10 +134,54 @@ class CameraController extends AbstractController
         
             // Supprimer la caméra
             $entityManager->remove($camera);
+=======
+
+    #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
+    public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
+    {
+        $formCamera = $this->createForm(CameraType::class, $camera, [
+            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
+        ]);
+
+        $formImage = $this->createForm(PhotoType::class, null, [
+            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
+        ]);
+
+        $formCamera->handleRequest($request);
+        $formImage->handleRequest($request);
+
+        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+>>>>>>> b42b885 (fixer image user)
             $entityManager->flush();
-            $this->addFlash('success', 'Camera deleted successfully!');
-        
+            $this->addFlash('success', 'Camera updated successfully!');
             return $this->redirectToRoute('camera');
         }
-        
+
+        return $this->render('admin/Cameras/editProduct.html.twig', [
+            'form' => $formCamera->createView(),
+            'formI' => $formImage->createView(),
+        ]);
+    }
+
+    #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
+    public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
+    {
+        $camera = $cameraRepository->find($id);
+
+        if (!$camera) {
+            throw $this->createNotFoundException('Camera not found');
+        }
+
+        // Supprimer toutes les images associées à cette caméra
+        foreach ($camera->getImageCameras() as $imageCamera) {
+            $entityManager->remove($imageCamera);
+        }
+
+        // Supprimer la caméra
+        $entityManager->remove($camera);
+        $entityManager->flush();
+        $this->addFlash('success', 'Camera deleted successfully!');
+
+        return $this->redirectToRoute('camera');
+    }
 }

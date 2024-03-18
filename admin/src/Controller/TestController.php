@@ -41,10 +41,17 @@ class TestController extends AbstractController
 =======
 >>>>>>> fdc8b02 (add reviews to a specific camera)
 
+<<<<<<< HEAD
 
 
         if ($formCamera->isSubmitted() ) {
+<<<<<<< HEAD
 >>>>>>> 892e2ed (fixer camera final)
+=======
+=======
+        if ($formCamera->isSubmitted()) {
+>>>>>>> 6f3f703 (fixer image user)
+>>>>>>> b42b885 (fixer image user)
             $camera = $formCamera->getData();
 
             // Vérification de la soumission du formulaire de l'image
@@ -72,6 +79,7 @@ class TestController extends AbstractController
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
 <<<<<<< HEAD
+<<<<<<< HEAD
         }
 
         // Affichage du formulaire
@@ -84,6 +92,12 @@ class TestController extends AbstractController
      
             'form' => $formCamera->createView(),'formI' => $formImage->createView(),
 >>>>>>> 892e2ed (fixer camera final)
+=======
+        }
+        return $this->render('admin/Cameras/addProduct.html.twig', [
+
+            'form' => $formCamera->createView(), 'formI' => $formImage->createView(),
+>>>>>>> b42b885 (fixer image user)
         ]);
     }
 }
