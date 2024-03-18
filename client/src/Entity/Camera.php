@@ -7,8 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
-use Symfony\Component\Serializer\Annotation\SerializedName;
+
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 
@@ -17,7 +16,7 @@ class Camera
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $nom = null;

@@ -29,15 +29,10 @@ class CameraType extends AbstractType
             ->add('prix', MoneyType::class, ['label' => 'Prix', 'attr' => ['class' => 'form-control']])
             ->add('stock', IntegerType::class, ['label' => 'Stock', 'attr' => ['class' => 'form-control']])
             ->add('dateAjout', DateType::class, [
-                'label' => 'Date Ajout',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Sélectionner une date', 
-                ],
-                'widget' => 'single_text', 
-                'html5' => false, 
-                'format' => 'yyyy-MM-dd', 
-            ])
+                'widget' => 'single_text', // Utiliser un champ de texte avec icône de calendrier
+                'attr' => ['class' => 'mt-2']
+                // Autres options 
+                ])
             ->add('status', TextType::class, ['label' => 'Statut', 'required' => false, 'attr' => ['class' => 'form-control']])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class, 

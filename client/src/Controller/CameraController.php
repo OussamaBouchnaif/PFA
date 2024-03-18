@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Camera;
+use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\CameraRepository;
 use App\Repository\CategorieRepository;
 use App\Service\Api\CallApiCameraService;
@@ -26,87 +27,44 @@ class CameraController extends AbstractController
     }
 
     #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session,PaginatorInterface $paginatorInterface): Response
-    {
-        // Récupère les critères de recherche existants de la session ou initialise un tableau vide
-        
-        $searchCriteria = $session->get('searchCriteria', array());
-
+    public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session): Response
+    {     
+        $page = $request->query->getInt('page',1);        
+        $categorie = $catrepo->findAll();
         $newCriteria = [
+            'order' => $request->query->get('orderby'),
+            'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
             'angleVision' => $request->query->get('angle'),
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
         ];
-    
-        foreach ($newCriteria as $key => $value) {
-            if (!empty($value)) {
-                $searchCriteria[$key] = $value; 
-            }
-        }
-    
+
+        $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
-        $cameras = $callApiCameraService->searchCameras($searchCriteria);
-        $data = $paginatorInterface->paginate(
-            $cameras,
-            $request->query->getInt('page',1),
-            9
-        );
-        $categorie = $catrepo->findAll();
-    
-        return $this->render('client/pages/shop.html.twig', [
-            'cameras' => $data,
+        
+        $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
+        $pagination = $cameraRepository->extractPaginationInfo($page);
+        if ($request->isXmlHttpRequest()) {
+           
+            return $this->render('client/pages/components/cameras.html.twig', [
+                'cameras' => $cameras,
+                'categories'=> $categorie,
+                'pagination' => $pagination,
+                'items'=>$callApiCameraService->getItems(),
+            ]);
+        }
+        return $this->render('client/pages/shop.html.twig',[
+            'cameras' => $cameras,
             'categories'=> $categorie,
+            'pagination' => $pagination,
+            'items'=>$callApiCameraService->getItems(),
         ]);
     }
 
-
+  
+    
+    
+ 
    
 
-/*    #[Route('/filter_cat/{id}',name:'filter_cat')]
-    public function filterByCategorie(int $id,CategorieRepository $catrepo,CallApiCameraService $callapi,PaginatorInterface $paginatorInterface , Request $request):Response
-    {
-        $categorie = $catrepo->findOneBy(['id'=>$id]);
-        $camerasByCategorie = $callapi->getCameraByCategorie($categorie->getNom());
-        $data = $paginatorInterface->paginate(
-            $camerasByCategorie,
-            $request->query->getInt('page',1),
-            9
-        );
-      
-        return $this->render('client/pages/cameras.html.twig',[
-            'cameras' =>$data ,
-            'categories' => $catrepo->findAll(),
-        ]);
-    }
-
-    #[Route('/filter_price' ,name:'filter_price')]
-    public function filterByPrice(Request $request,CallApiCameraService $callapi,CategorieRepository $catrepo,PaginatorInterface $paginatorInterface):Response
-    {
-        
-        $priceRange = $request->query->get('price_range'); // '144 - 271'
-        [$minPrice, $maxPrice] = explode(' - ', str_replace('$', '', $priceRange));
-        $minPrice = floatval($minPrice);
-        $maxPrice = floatval($maxPrice);
-        $camerasByPrice = $callapi->getCameraByPrix($minPrice,$maxPrice);
-        $data = $paginatorInterface->paginate(
-            $camerasByPrice,
-            $request->query->getInt('page',1),
-            9
-        );
-      
-       
-        return $this->render('client/pages/shop.html.twig',[
-            'cameras' => $data,
-            'categories' => $catrepo->findAll(),
-        ]);
-    }
-
-    #[Route('/filter_angle/{angle}',name:'filterAngle')]
-    public function filterByAngle(string $angle,CallApiCameraService $callapi):Response
-    {
-        dd($callapi->getCameraByAngle($angle));
-        return $this->render('client/pages/shop.hmtl.twig',[
-            'angels' => $callapi->getCameraByAngle($angle),
-        ]);
-    }*/
 }
