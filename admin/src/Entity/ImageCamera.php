@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 #[ORM\Entity(repositoryClass: ImageCameraRepository::class)]
 #[Vich\Uploadable]
@@ -20,7 +21,7 @@ class ImageCamera
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageFile')]
     private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'imageCameras')]

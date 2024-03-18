@@ -62,3 +62,15 @@
 .pagination .page-link:hover {
     color: #576856; /* Couleur du texte des liens au survol, légèrement plus foncée */
 }
+
+.widget_size a:hover {
+    background-color: #f0f0f0; /* Changez la couleur de fond au survol */
+    color: #fff; /* Changez la couleur du texte au survol */
+    cursor: pointer;
+}
+
+/* Style pour l'élément actuellement sélectionné */
+.widget_size a.active {
+    background-color: #6a7964; /* Couleur de fond pour l'élément actif */
+    color: #ffffff; /* Couleur du texte pour l'élément actif */
+}

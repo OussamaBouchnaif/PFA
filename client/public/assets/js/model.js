@@ -34,7 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.widget_size a').forEach(function(link) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            document.querySelectorAll('.widget_size a').forEach(function(otherLink) {
+                otherLink.classList.remove('active');
+            });
+    
+           
+            this.classList.add('active');
             var angle = this.getAttribute('href').split('angle=')[1];
+            
             fetchData({ 'angle': angle });
         });
     });
@@ -96,7 +103,7 @@ function fetchData(criteria) {
 });
 
 function setupQuickViewButtons() {
-    document.querySelectorAll('.quick_view').forEach(button => {
+    document.querySelectorAll('.addcart').forEach(button => {
         button.addEventListener('click', function() {
             var name = this.getAttribute('data-name');
             var price = this.getAttribute('data-price');

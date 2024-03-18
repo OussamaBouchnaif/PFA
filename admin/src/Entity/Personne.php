@@ -41,14 +41,14 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
 
     protected ?string $plainPassword = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     protected array $roles = [];
 
     #[ORM\Column(length: 15, nullable: true)]
     #[Assert\Regex(
         "/^[0-9]{10}$/","Please enter a valid phone"
     )]
-    private ?string $phoneNumber = null;
+    protected ?string $phoneNumber = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $genre = null;

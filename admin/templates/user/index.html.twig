@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des caméras{% endblock %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css" />
+
+    <style>
+        #myTable{
+            border: 1px white;
+        }
+        tr{
+         border: 1px white;
+
+        }
+        .horizontal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .horizontal-buttons .dropdown-item,
+    .horizontal-buttons .text-muted {
+        margin-right: 10px; /* Adjust spacing between buttons */
+    }
+    .custom-header-bg {
+        background-color: #f8f9fa; /* Custom header background color */
+    }
+
+    .custom-header {
+        color: #495057; /* Custom header text color */
+    }
+
+    .price-cell {
+        color: #28a745; /* Price cell text color */
+    }
+
+    .category-cell {
+        color: #007bff; /* Category cell text color */
+    }
+
+    
+
+    .horizontal-buttons .dropdown-item:hover,
+    .horizontal-buttons .text-muted:hover {
+        color: #0056b3; /* Change color on hover */
+    }
+
+    .dropdown-item i {
+        color: #777; /* Default icon color */
+    }
+
+    /* Hover effect for table rows */
+    tbody tr:hover {
+        background-color: #f0f0f0; /* Change background color on hover */
+    }
+
+    /* Add spacing between table rows */
+    tbody tr:not(:last-child) {
+        margin-bottom: 10px; /* Adjust spacing between rows */
+    }
+    .row{
+       whith:100%;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="layout-wrapper">
+
+
+        <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0">Products</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                            <li class="breadcrumb-item active">Products</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            
+                            <!-- end col -->
+
+                            <div class="col-xl-9 col-lg-8">
+                                <div>
+                                    <div class="card">
+                                        <div class="card-header border-0">
+                                            <div class="row g-4">
+                                                <div class="col-sm-auto">
+                                                    <div>
+                                                        <a href="{{ path('user_create') }}" class="btn btn-success" id="addproduct-btn">
+                                                        <i class="ri-add-line align-bottom me-1"></i> Add Users</a>
+                                                   
+                                            {# <button type="button" id="print-btn" class="btn btn-primary" onclick="confirmPrint()">
+                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
+                                            </button>
+
+                                            <button type="button" class="btn btn-success" onclick="confirmExport()">
+                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
+                                            </button>                                        #}
+                                            </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                    <br>
+                                        
+                                      
+                                        <div class="card-body">
+
+                                    <table id="myTable" class="table">
+                                            <thead>
+                                                <tr class="align-middle custom-header-bg">
+                                                    <th class="custom-header text-center">Photo</th>
+                                                    <th class="custom-header text-center">Nom</th>
+                                                    <th class="custom-header text-center">Prenom</th>
+                                                    <th class="custom-header text-center">Email</th>
+                                                    <th class="custom-header text-center">Ville</th>
+                                                    <th class="custom-header text-center">Rôles</th>
+                                                    <th class="custom-header text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for user in users %}
+                                                <tr>                                
+                                                    <td>
+                                                    <div class="avatar-group">
+                                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
+                                                            {% if user.image %}
+                                                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
+                                            
+                                                            {% endif %}
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                    <td class="align-middle text-center">{{ user.nom }}</td>
+                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
+                                                    <td class="align-middle text-center">{{ user.email }}</td>
+                                                    <td class="align-middle text-center">{{ user.ville }}</td>
+                                                    <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
+                                                    <td class="text-center align-middle horizontal-buttons">
+                                                       <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                            <i class="ri-delete-bin-line align-bottom me-2"></i>
+                                                        </a>
+                                                        <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
+                                                            <i class="ri-pencil-line align-bottom me-2"></i> 
+                                                        </a>
+                                                        
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+
+                                            <div class="tab-content text-muted">
+                                                <div class="tab-pane active" id="productnav-all" role="tabpanel">
+                                                    <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
+                                                </div>
+                                                <!-- end tab pane -->
+
+                                                <div class="tab-pane" id="productnav-published" role="tabpanel">
+                                                    <div id="table-product-list-published" class="table-card gridjs-border-none"></div>
+                                                </div>
+                                                <!-- end tab pane -->
+
+                                                <div class="noDataMessage" id="productnav-draft" role="tabpanel">
+                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
+                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
+                                                    <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
+                                                </div>
+                                                </div>
+                                                <!-- end tab pane -->
+                                            </div>
+                                            <!-- end tab content -->
+
+                                        </div>
+                                        <!-- end card body -->
+                                    </div>
+                                    <!-- end card -->
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Design & Develop by Themesbrand
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+    <script>  
+  
+document.getElementById('delete').addEventListener('click', function(event) {
+    if (!confirm('Are you sure you want to delete this user?')) {
+        event.preventDefault();
+    }
+});
+   
+  
+
+    </script>
+{% endblock %}

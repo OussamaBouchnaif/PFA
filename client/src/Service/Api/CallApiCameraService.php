@@ -1,22 +1,24 @@
 <?php
 
 namespace App\Service\Api;
+use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Service\Api\Exception\ObjectNotFoundException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
 
 class CallApiCameraService 
 {
-    private $appDefaultApi;
     private $serializer;
-    
-    public function __construct(HttpClientInterface $appDefaultApi,SerializerInterface $serializer)
+    private $getData;
+    private $denormalizer;
+    public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
     {
-        $this->appDefaultApi = $appDefaultApi;
         $this->serializer = $serializer;
-        
+        $this->getData = $getData; 
+        $this->denormalizer = $denormalizer;
     }
     public function getAllCamera(int $page):array
     {
@@ -31,22 +33,29 @@ class CallApiCameraService
     
     public function getCameraData(String $endpoint):array
     {
-        $response = $this->appDefaultApi->request('GET', $endpoint,['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent(); 
-        $data = $this->serializer->decode($jsonData,'json');
-        $cameras = $this->serializer->denormalize($data['hydra:member'], 'App\Entity\Camera[]', 'json');
+        $data = $this->getData->getDataFromApi($endpoint);
+        if (!$data) {
+            throw new \Exception("Camera not found");
+        }
+        $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
     }
-    public function getItems():int
+
+    public function getCameraById(int $id)
     {
-        $response = $this->appDefaultApi->request('GET', 'api/cameras',['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent(); 
-        $data = $this->serializer->decode($jsonData,'json');
-        $items = $data["hydra:totalItems"];
+        $endpoint = "/api/cameras/" . $id; 
+        $response = $this->getData->getDataFromApi($endpoint);
+    
+        if (!$response) {
+            throw new ObjectNotFoundException('Camera Not Found !!' );
+        }
+        $camera = $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
+        return $camera;
+    }
+    
+    public function getItems():int
+    {      
+        $items =$this->getData->getTotalItems("api/cameras/");
         return $items;
     }
     
