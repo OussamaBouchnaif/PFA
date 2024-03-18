@@ -23,6 +23,7 @@ class ClientController extends AbstractController
         ]);
     }
 
+    
     #[Route('/clients/{id}/activate', name: 'client_activate')]
     public function activateClient(Client $client, EntityManagerInterface $entityManager): Response
     {
@@ -37,6 +38,7 @@ class ClientController extends AbstractController
         return $this->redirectToRoute('client_list');
     }
 
+
     #[Route('/clients/{id}/deactivate', name: 'client_deactivate')]
     public function deactivateClient(Client $client, EntityManagerInterface $entityManager): Response
     {
@@ -50,6 +52,8 @@ class ClientController extends AbstractController
         // Rediriger vers la liste des clients
         return $this->redirectToRoute('client_list');
     }
+
+    
 
     #[Route('/update-account-status', name: 'update_account_status')]
 public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
