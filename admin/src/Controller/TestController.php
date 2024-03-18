@@ -23,26 +23,45 @@ class TestController extends AbstractController
     {
         $camera = new Camera();
         $imageCamera = new ImageCamera();
+
+        // Création des formulaires
         $formCamera = $this->createForm(CameraType::class, $camera);
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
+
+        // Gestion de la requête
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
 
-        if ($formCamera->isSubmitted()) {
+        // Vérification de la soumission du formulaire de la caméra
+        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+            // Récupération des données du formulaire de la caméra
             $camera = $formCamera->getData();
 
-            $image = $formImage->getData();
+            // Vérification de la soumission du formulaire de l'image
+            if ($formImage->isSubmitted() && $formImage->isValid()) {
+                // Récupération des données du formulaire de l'image
+                $image = $formImage->getData();
 
-            $image->setCamera($camera);
-            $entityManager->persist($image);
+                // Association de l'image à la caméra
+                $image->setCamera($camera);
+
+                // Persist et flush de l'image
+                $entityManager->persist($image);
+            }
+
+            // Persist et flush de la caméra
             $entityManager->persist($camera);
             $entityManager->flush();
+
+            // Redirection avec un message flash
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
-        return $this->render('admin/Cameras/addProduct.html.twig', [
 
-            'form' => $formCamera->createView(), 'formI' => $formImage->createView(),
+        // Affichage du formulaire
+        return $this->render('admin/Cameras/addProduct.html.twig', [
+            'form' => $formCamera->createView(),
+            'formI' => $formImage->createView(),
         ]);
     }
 }
