@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\User; 
+
+use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,16 +50,16 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             // Mettre à jour l'utilisateur dans la base de données
             $entityManager->flush();
-    
+
             $this->addFlash('success', 'User updated successfully!');
-    
+
             return $this->redirectToRoute('users_index');
         }
-    
+
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
@@ -71,7 +72,7 @@ class UserController extends AbstractController
         // Supprimer l'utilisateur de la base de données
         $entityManager->remove($user);
         $entityManager->flush();
-    
+
         return $this->redirectToRoute('users_index');
     }
 }

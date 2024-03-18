@@ -28,9 +28,13 @@ class TestController extends AbstractController
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
 
+<<<<<<< HEAD
 
 
         if ($formCamera->isSubmitted() ) {
+=======
+        if ($formCamera->isSubmitted()) {
+>>>>>>> 6f3f703 (fixer image user)
             $camera = $formCamera->getData();
 
             $image = $formImage->getData();
@@ -41,11 +45,10 @@ class TestController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
-        } 
+        }
         return $this->render('admin/Cameras/addProduct.html.twig', [
-     
-            'form' => $formCamera->createView(),'formI' => $formImage->createView(),
+
+            'form' => $formCamera->createView(), 'formI' => $formImage->createView(),
         ]);
     }
 }
-

@@ -50,7 +50,7 @@ class ReductionController extends AbstractController
             'reductions' => $reductions,
         ]);
     }
-    
+
 
     #[Route('/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, Reduction $reduction): Response
