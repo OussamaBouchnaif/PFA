@@ -6,10 +6,17 @@ use App\Form\PhotoType;
 use App\Form\CameraType;
 use App\Entity\ImageCamera;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Form\PhotoType;
 =======
 use App\Repository\CameraRepository;
 >>>>>>> 85dd608 (maintain catalogue)
+=======
+use App\Repository\CameraRepository;
+=======
+use App\Form\PhotoType;
+>>>>>>> 3884888 (test image)
+>>>>>>> f190fa3 (test image)
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,11 +84,20 @@ class TestController extends AbstractController
                 $entityManager->persist($image);
             }
 
+<<<<<<< HEAD
             // Persist de la caméra
 =======
             $image->setCamera($camera);
             $entityManager->persist($image);
 >>>>>>> 75e5fef (merge conflit)
+=======
+<<<<<<< HEAD
+            // Persist et flush de la caméra
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+=======
+            // Persist de la caméra
+>>>>>>> 3884888 (test image)
+>>>>>>> f190fa3 (test image)
             $entityManager->persist($camera);
             $entityManager->flush();
 
