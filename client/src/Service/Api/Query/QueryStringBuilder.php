@@ -30,10 +30,29 @@ class QueryStringBuilder
         return $this;
     }
 
-    public function addPriceRangeParameter(float $min, float $max): static
+    public function addPriceRangeParameter(string $price): static
     {
-        $this->appendParameter('prix[between]', $min . '..' . $max);
+        $this->appendParameter('prix[between]', $price);
 
+        return $this;
+    }
+
+    public function addCategorieNameParameter(string $name):static
+    {
+        $this->appendParameter('categorie.nom',$name);
+        return $this;
+
+    }
+
+    public function addResolution(string $resolution):static
+    {
+        $this->appendParameter('resolution',$resolution);
+        return $this;
+    }
+
+    public function addAngleVision(string $angleVision):static
+    {
+        $this->appendParameter('angleVision',$angleVision);
         return $this;
     }
 

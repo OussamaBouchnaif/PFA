@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Camera;
+use App\Form\PhotoType;
 use App\Form\CameraType;
 use App\Entity\ImageCamera;
-use App\Form\PhotoType;
 use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ImageCameraRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
