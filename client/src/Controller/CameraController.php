@@ -31,17 +31,10 @@ class CameraController extends AbstractController
     }
 
 
-    #[Route('/camera',name:'app_camera')]
-    public function delete(SessionInterface $session):Response
-    {
-        $session->remove('searchCriteria');
-        return $this->redirectToRoute('fetch');
-    }
-
     #[Route('/camera/search', name: 'camera_search')]
     public function search(Request $request,SessionInterface $session): Response
     {     
-        $page = $request->query->getInt('page',1);        
+        $page = $request->query->getInt('page',1);    
         $newCriteria = [
             'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
@@ -50,6 +43,7 @@ class CameraController extends AbstractController
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
             
         ];
+        
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         
@@ -66,8 +60,9 @@ class CameraController extends AbstractController
     }
 
     #[Route('/fetchCamera',name:'fetch')]
-    public function fetch(CallApiCameraService $callCamera,Request $request):Response
+    public function fetch(CallApiCameraService $callCamera,Request $request,SessionInterface $session):Response
     {
+        $session->remove('searchCriteria');
         $page = $request->query->getInt('page',1);   
 
         return $this->render('client/pages/shop.html.twig',[
