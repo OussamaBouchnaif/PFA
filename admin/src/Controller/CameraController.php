@@ -61,7 +61,7 @@ class CameraController extends AbstractController
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             $camera = $formCamera->getData();
             $image = $formImage->getData();
-
+            
             $image->setCamera($camera);
             $entityManager->persist($image);
             $entityManager->persist($camera);

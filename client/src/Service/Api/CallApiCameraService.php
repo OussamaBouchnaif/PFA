@@ -4,6 +4,7 @@ namespace App\Service\Api;
 use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
+use App\Service\Api\Query\PrepareQueryCamera;
 use App\Service\Api\Query\QueryStringBuilder;
 
 
@@ -15,11 +16,12 @@ class CallApiCameraService
 =======
 >>>>>>> 8e6fee8 (fix conflit)
     private $denormalizer;
-    private $queryString;
-    public function __construct(GetDataService $getData ,QueryStringBuilder $queryString, Denormalizer $denormalizer)
+    private PrepareQueryCamera $prepareQueryCamera;
+    public function __construct(GetDataService $getData ,PrepareQueryCamera $prepareQueryCamera, Denormalizer $denormalizer)
     {
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -33,6 +35,9 @@ class CallApiCameraService
 >>>>>>> 8e6fee8 (fix conflit)
 =======
         $this->queryString = $queryString;
+=======
+        $this->prepareQueryCamera = $prepareQueryCamera;
+>>>>>>> 85dd608 (maintain catalogue)
 
 >>>>>>> a255480 (fix search)
     }
@@ -55,22 +60,17 @@ class CallApiCameraService
 
     public function SearchBy(array $searchCriteria,int $page,int $itemsPerPage):array
     {
-
-        $url = $this->queryString->addCategorieNameParameter($searchCriteria['categorie.nom'])
-                                 ->addOrder($searchCriteria['order'])
-                                 ->setPage($page)
-                                 ->setLimitPerPage($itemsPerPage)
-                                 ->getQueryString();
-        
-        return $this->getCameraData('api/cameras/?' . $url);
+        $queryString = $this->prepareQueryCamera->prepareQueryString($searchCriteria, $page, $itemsPerPage); 
+        return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
     public function getCameraData(String $endpoint):array
     {
         $data = $this->getData->getDataFromApi($endpoint);
         if (!$data) {
-            throw new \Exception("Camera not found");
+            throw new ObjectNotFoundException("Camera not found");
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -78,6 +78,9 @@ class CallApiCameraService
 <<<<<<< HEAD
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
         return $cameras;
+=======
+        return $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
+>>>>>>> 85dd608 (maintain catalogue)
     }
 <<<<<<< HEAD
 
@@ -112,8 +115,7 @@ class CallApiCameraService
         if (!$response) {
             throw new ObjectNotFoundException('Camera Not Found !!' );
         }
-        $camera = $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
-        return $camera;
+        return $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
     }
     
     public function getItems():int

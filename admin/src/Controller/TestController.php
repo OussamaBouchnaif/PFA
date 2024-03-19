@@ -2,12 +2,18 @@
 namespace App\Controller;
 
 use App\Entity\Camera;
+use App\Form\PhotoType;
 use App\Form\CameraType;
 use App\Entity\ImageCamera;
+<<<<<<< HEAD
 use App\Form\PhotoType;
+=======
+use App\Repository\CameraRepository;
+>>>>>>> 85dd608 (maintain catalogue)
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

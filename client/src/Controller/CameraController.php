@@ -31,13 +31,6 @@ class CameraController extends AbstractController
     }
 
 
-    #[Route('/camera',name:'app_camera')]
-    public function delete(SessionInterface $session):Response
-    {
-        $session->remove('searchCriteria');
-        return $this->redirectToRoute('fetch');
-    }
-
     #[Route('/camera/search', name: 'camera_search')]
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -58,8 +51,12 @@ class CameraController extends AbstractController
 =======
     public function search(Request $request,SessionInterface $session): Response
     {     
+<<<<<<< HEAD
         $page = $request->query->getInt('page',1);        
 >>>>>>> a255480 (fix search)
+=======
+        $page = $request->query->getInt('page',1);    
+>>>>>>> 85dd608 (maintain catalogue)
         $newCriteria = [
             'order' => $request->query->get('orderby'),
 =======
@@ -83,6 +80,7 @@ class CameraController extends AbstractController
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
             
         ];
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -141,6 +139,9 @@ class CameraController extends AbstractController
             'pagination' => $pagination,
             'items'=>$callApiCameraService->getItems(),
 =======
+=======
+        
+>>>>>>> 85dd608 (maintain catalogue)
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         
@@ -157,8 +158,9 @@ class CameraController extends AbstractController
     }
 
     #[Route('/fetchCamera',name:'fetch')]
-    public function fetch(CallApiCameraService $callCamera,Request $request):Response
+    public function fetch(CallApiCameraService $callCamera,Request $request,SessionInterface $session):Response
     {
+        $session->remove('searchCriteria');
         $page = $request->query->getInt('page',1);   
 
         return $this->render('client/pages/shop.html.twig',[
