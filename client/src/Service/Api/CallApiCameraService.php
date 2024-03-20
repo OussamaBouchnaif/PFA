@@ -3,6 +3,7 @@
 namespace App\Service\Api;
 use App\Service\Api\Denormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+<<<<<<< HEAD
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -19,15 +20,39 @@ class CallApiCameraService
         $this->serializer = $serializer;
         $this->getData = $getData; 
         $this->denormalizer = $denormalizer;
+=======
+use App\Service\Api\Exception\ObjectNotFoundException;
+use App\Service\Api\Query\PrepareQueryCamera;
+use App\Service\Api\Query\QueryStringBuilder;
+
+
+class CallApiCameraService 
+{
+    private $getData;
+    private $denormalizer;
+    private PrepareQueryCamera $prepareQueryCamera;
+    public function __construct(GetDataService $getData ,PrepareQueryCamera $prepareQueryCamera, Denormalizer $denormalizer)
+    {
+        $this->getData = $getData; 
+        $this->denormalizer = $denormalizer;
+        $this->prepareQueryCamera = $prepareQueryCamera;
+
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
     }
     public function getAllCamera(int $page):array
     {
         return $this->getCameraData('api/cameras?page='.$page);
     }
 
+<<<<<<< HEAD
     public function SearchBy($searchCriteria, $page, $itemsPerPage):array
     {
         $queryString = $this->generateUrl($searchCriteria, $page, $itemsPerPage);
+=======
+    public function SearchBy(array $searchCriteria,int $page,int $itemsPerPage):array
+    {
+        $queryString = $this->prepareQueryCamera->prepareQueryString($searchCriteria, $page, $itemsPerPage); 
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -35,6 +60,7 @@ class CallApiCameraService
     {
         $data = $this->getData->getDataFromApi($endpoint);
         if (!$data) {
+<<<<<<< HEAD
             throw new \Exception("Camera not found");
         }
 <<<<<<< HEAD
@@ -48,6 +74,11 @@ class CallApiCameraService
         $cameras = $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
 >>>>>>> 5d2fc98 (maintain servcie api)
         return $cameras;
+=======
+            throw new ObjectNotFoundException("Camera not found");
+        }
+        return $this->denormalizer->DataDenormalizer($data['hydra:member'],'App\DTO\CameraDTO[]','json');
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
     }
 
     public function getCameraById(int $id)
@@ -58,6 +89,7 @@ class CallApiCameraService
         if (!$response) {
             throw new ObjectNotFoundException('Camera Not Found !!' );
         }
+<<<<<<< HEAD
         $camera = $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
         return $camera;
     }
@@ -94,4 +126,16 @@ class CallApiCameraService
         return $queryString;
         
     }
+=======
+        return $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
+    }
+    
+    public function getItems():int
+    {      
+        $items =$this->getData->getTotalItems("api/cameras/");
+        return $items;
+    }
+    
+   
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
 }

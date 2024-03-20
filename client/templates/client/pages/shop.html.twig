@@ -22,7 +22,12 @@
                                     
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">
+                                           
                                             {% for cat in categories %}
+<<<<<<< HEAD
+=======
+                                            
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                             <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
                                         </ul>
@@ -129,7 +134,7 @@
                     <div class="breadcrumb_content">
                         <ul>
                             <li><a href="index.html">home</a></li>
-                            <li><a href="{{path('app_camera')}}">shop</a></li>
+                            <li><a href="{{path('fetch')}}">shop</a></li>
                         </ul>
                     </div>
                     <!--breadcrumbs area end-->
@@ -181,23 +186,36 @@
                         <ul class="pagination justify-content-center">
                             {% if pagination.currentPage > 1 %}
                                 <li class="page-item">
+<<<<<<< HEAD
                                     <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+=======
+                                    <a class="page-link" href="{{ path(currentRoute, {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endif %}
                     
                             {% for page in 1..pagination.totalPages %}
                                 <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
+<<<<<<< HEAD
                                     <a class="page-link" href="{{ path('camera_search', {'page': page}) }}">{{ page }}</a>
+=======
+                                    <a class="page-link" href="{{ path(currentRoute, {'page': page}) }}">{{ page }}</a>
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endfor %}
                     
                             {% if pagination.currentPage < pagination.totalPages %}
                                 <li class="page-item">
+<<<<<<< HEAD
                                     <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+=======
+                                    <a class="page-link" href="{{ path(currentRoute, {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endif %}
                         </ul>
                     </nav>
+                    
                     
                     
                 </div>

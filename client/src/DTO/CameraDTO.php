@@ -29,6 +29,7 @@ class CameraDTO
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
@@ -41,6 +42,8 @@ class CameraDTO
 >>>>>>> 9bb638e (conflit data)
 =======
 >>>>>>> 535ed5b (data)
+=======
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
     public array  $imageCameras= [];
 
     public Collection $ligneReductions;
