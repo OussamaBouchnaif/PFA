@@ -30,11 +30,19 @@ class CameraController extends AbstractController
         $this->cameraRepo = $cameraRepo;
     }
 
+<<<<<<< HEAD
+    #[Route('/camera/search', name: 'camera_search')]
+    public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session): Response
+    {     
+        $page = $request->query->getInt('page',1);        
+        $categorie = $catrepo->findAll();
+=======
 
     #[Route('/camera/search', name: 'camera_search')]
     public function search(Request $request,SessionInterface $session): Response
     {     
         $page = $request->query->getInt('page',1);    
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         $newCriteria = [
             'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
@@ -43,6 +51,28 @@ class CameraController extends AbstractController
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
             
         ];
+<<<<<<< HEAD
+
+        $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
+        $session->set('searchCriteria', $searchCriteria);
+        
+        $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
+        $pagination = $cameraRepository->extractPaginationInfo($page);
+        if ($request->isXmlHttpRequest()) {
+           
+            return $this->render('client/pages/components/cameras.html.twig', [
+                'cameras' => $cameras,
+                'categories'=> $categorie,
+                'pagination' => $pagination,
+                'items'=>$callApiCameraService->getItems(),
+            ]);
+        }
+        return $this->render('client/pages/shop.html.twig',[
+            'cameras' => $cameras,
+            'categories'=> $categorie,
+            'pagination' => $pagination,
+            'items'=>$callApiCameraService->getItems(),
+=======
         
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
@@ -71,6 +101,7 @@ class CameraController extends AbstractController
             'pagination' => $this->cameraRepo->extractPaginationInfo($page),
             'items'=>$this->callCamera->getItems(),
             'currentRoute' => 'fetch',
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         ]);
     }
 

@@ -33,9 +33,13 @@ class TestController extends AbstractController
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
 
+<<<<<<< HEAD
+        if ($formCamera->isSubmitted()) {
+=======
         // Vérification de la soumission du formulaire de la caméra
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Récupération des données du formulaire de la caméra
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
             $camera = $formCamera->getData();
 
             // Vérification de la soumission du formulaire de l'image
@@ -43,6 +47,10 @@ class TestController extends AbstractController
                 // Récupération des données du formulaire de l'image
                 $image = $formImage->getData();
 
+<<<<<<< HEAD
+            $image->setCamera($camera);
+            $entityManager->persist($image);
+=======
                 // Association de l'image à la caméra
                 $image->setCamera($camera);
 
@@ -51,6 +59,7 @@ class TestController extends AbstractController
             }
 
             // Persist et flush de la caméra
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
             $entityManager->persist($camera);
             $entityManager->flush();
 
@@ -58,11 +67,17 @@ class TestController extends AbstractController
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
+<<<<<<< HEAD
+        return $this->render('admin/Cameras/addProduct.html.twig', [
+
+            'form' => $formCamera->createView(), 'formI' => $formImage->createView(),
+=======
 
         // Affichage du formulaire
         return $this->render('admin/Cameras/addProduct.html.twig', [
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         ]);
     }
 }

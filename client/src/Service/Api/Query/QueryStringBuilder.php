@@ -30,13 +30,21 @@ class QueryStringBuilder
         return $this;
     }
 
+<<<<<<< HEAD
+    public function addPriceRangeParameter(float $min, float $max): static
+    {
+        $this->appendParameter('prix[between]', $min . '..' . $max);
+=======
     public function addPriceRangeParameter(string $price): static
     {
         $this->appendParameter('prix[between]', $price);
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
 
         return $this;
     }
 
+<<<<<<< HEAD
+=======
     public function addCategorieNameParameter(string $name):static
     {
         $this->appendParameter('categorie.nom',$name);
@@ -56,6 +64,7 @@ class QueryStringBuilder
         return $this;
     }
 
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
     public function addOrder(string $orderBy): static
     {
         $this->appendParameter('order[' . $orderBy . ']', 'asc');
