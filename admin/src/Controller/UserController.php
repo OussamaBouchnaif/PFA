@@ -102,6 +102,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             $this->manager->saveUser($user, false);
 
 
@@ -113,8 +114,9 @@ class UserController extends AbstractController
             // Mettre à jour l'utilisateur dans la base de données
             $entityManager->flush();
 =======
+=======
+>>>>>>> c0bc74d (client list probleme fixing)
             $this->manager->saveUser($user, false);
->>>>>>> 8a2524e (manage users using a dedicated service UserManager)
 
             $this->addFlash('success', 'User updated successfully!');
 <<<<<<< HEAD
@@ -137,6 +139,7 @@ class UserController extends AbstractController
 <<<<<<< HEAD
     public function delete(User $user): Response
     {
+<<<<<<< HEAD
 
         $this->manager->removeUser($user);
 
@@ -160,6 +163,9 @@ class UserController extends AbstractController
         $this->manager->removeUser($user);
 >>>>>>> 8a2524e (manage users using a dedicated service UserManager)
 >>>>>>> d75b8ee (manage users using a dedicated service UserManager)
+=======
+        $this->manager->removeUser($user);
+>>>>>>> c0bc74d (client list probleme fixing)
 
 >>>>>>> b42b885 (fixer image user)
         return $this->redirectToRoute('users_index');

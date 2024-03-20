@@ -42,6 +42,7 @@ class TestController extends AbstractController
 >>>>>>> fdc8b02 (add reviews to a specific camera)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
         if ($formCamera->isSubmitted() ) {
@@ -52,6 +53,9 @@ class TestController extends AbstractController
         if ($formCamera->isSubmitted()) {
 >>>>>>> 6f3f703 (fixer image user)
 >>>>>>> b42b885 (fixer image user)
+=======
+        if ($formCamera->isSubmitted()) {
+>>>>>>> c0bc74d (client list probleme fixing)
             $camera = $formCamera->getData();
 
             // Vérification de la soumission du formulaire de l'image
