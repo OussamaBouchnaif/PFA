@@ -57,12 +57,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-<<<<<<< HEAD
-            // Mettre à jour l'utilisateur dans la base de données
-            $entityManager->flush();
-=======
             $this->manager->saveUser($user, false);
->>>>>>> 8a2524e (manage users using a dedicated service UserManager)
 
             $this->addFlash('success', 'User updated successfully!');
 
@@ -78,13 +73,7 @@ class UserController extends AbstractController
     #[Route('/user/delete/{id}', name: 'user_delete')]
     public function delete(User $user): Response
     {
-<<<<<<< HEAD
-        // Supprimer l'utilisateur de la base de données
-        $entityManager->remove($user);
-        $entityManager->flush();
-=======
         $this->manager->removeUser($user);
->>>>>>> 8a2524e (manage users using a dedicated service UserManager)
 
         return $this->redirectToRoute('users_index');
     }

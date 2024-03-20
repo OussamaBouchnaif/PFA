@@ -28,13 +28,7 @@ class TestController extends AbstractController
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
 
-<<<<<<< HEAD
-
-
-        if ($formCamera->isSubmitted() ) {
-=======
         if ($formCamera->isSubmitted()) {
->>>>>>> 6f3f703 (fixer image user)
             $camera = $formCamera->getData();
 
             $image = $formImage->getData();
