@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class CameraController extends AbstractController
 {
@@ -49,7 +51,7 @@ class CameraController extends AbstractController
     }
 
     #[Route('/camera/Add_camera', name: 'Add_camera')]
-    public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
+    public function addCamera(Request $request, EntityManagerInterface $entityManager, UploaderHelper $uploaderHelper): Response
     {
         $camera = new Camera();
         $imageCamera = new ImageCamera();
@@ -57,23 +59,46 @@ class CameraController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+    
+        if ($formCamera->isSubmitted() && $formCamera->isValid() && $formImage->isValid()) {
             $camera = $formCamera->getData();
+<<<<<<< HEAD
             $image = $formImage->getData();
             
             $image->setCamera($camera);
             $entityManager->persist($image);
+=======
+            $imageCamera = $formImage->getData();
+    
+            // Set the camera for the image
+            $imageCamera->setCamera($camera);
+    
+            // Persist the camera entity first
+>>>>>>> b926118 (data)
             $entityManager->persist($camera);
             $entityManager->flush();
+    
+            // Handle file upload for imageCamera using VichUploaderBundle
+            $imageFile = $imageCamera->getImageFile();
+            if ($imageFile) {
+                $imageName = $uploaderHelper->asset($imageCamera, 'imageFile');
+                $imageCamera->setImage($imageName);
+            }
+    
+            // Persist the imageCamera entity
+            $entityManager->persist($imageCamera);
+            $entityManager->flush();
+    
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
+    
         return $this->render('admin/Cameras/addProduct.html.twig', [
-
-            'form' => $formCamera->createView(), 'formI' => $formImage->createView()
+            'form' => $formCamera->createView(),
+            'formI' => $formImage->createView()
         ]);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -136,6 +161,8 @@ class CameraController extends AbstractController
             $entityManager->remove($camera);
 =======
 
+=======
+>>>>>>> b926118 (data)
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
     {
