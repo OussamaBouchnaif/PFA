@@ -105,7 +105,10 @@ class UserController extends AbstractController
 <<<<<<< HEAD
             $this->manager->saveUser($user, false);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 215af6d (User)
             $this->addFlash('success', 'User updated successfully!');
 
 =======
@@ -140,7 +143,10 @@ class UserController extends AbstractController
     public function delete(User $user): Response
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 215af6d (User)
         $this->manager->removeUser($user);
 
 =======

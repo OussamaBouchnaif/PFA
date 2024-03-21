@@ -33,8 +33,11 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $faker = Factory::create();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> 215af6d (User)
         // Load data for User entity
 <<<<<<< HEAD
 >>>>>>> 779ae00 (edit and add user)
@@ -53,6 +56,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             $user = new User();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fdc8b02 (add reviews to a specific camera)
             $hashedPassword = $this->hasher->hashPassword($user, '123');
 <<<<<<< HEAD
@@ -61,16 +65,21 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
 =======
 =======
 >>>>>>> c0bc74d (client list probleme fixing)
+=======
+>>>>>>> 215af6d (User)
             $user->setNom('yassine');
             $user->setPrenom('chidmi');
             $user->setEmail('yassine@gmail.com'); // Ensure unique email addresses
             $hashedPassword = $this->hasher->hashPassword($user, 'yassine');
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> d674604 (login)
 >>>>>>> d9550c0 (login)
 =======
 
 >>>>>>> c0bc74d (client list probleme fixing)
+=======
+>>>>>>> 215af6d (User)
             $user->setPassword($hashedPassword); // Replace 'password' with hashed passwords in real scenarios
             $user->setRoles(['ROLE_USER']); // Set user roles as needed
             $user->setPhoneNumber('0640331796');
@@ -83,4 +92,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $manager->flush();
     }
 }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 215af6d (User)
