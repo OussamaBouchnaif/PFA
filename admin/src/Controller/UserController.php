@@ -29,9 +29,8 @@ class UserController extends AbstractController
         ]);
     }
 
-
     #[Route('/user/create', name: 'user_create')]
-    public function addtest(Request $request): Response
+    public function createUser(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -39,10 +38,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->saveUser($user, true);
-
             $this->addFlash('success', 'User added successfully!');
-
-            return $this->redirectToRoute('users_index'); // Redirection vers la liste des utilisateurs
+            return $this->redirectToRoute('users_index');
         }
 
         return $this->render('user/add.html.twig', [
@@ -51,20 +48,22 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit/{id}', name: 'user_edit')]
-    public function edit(Request $request, User $user): Response
+    public function editUser(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->saveUser($user, false);
+<<<<<<< HEAD
+=======
 
 <<<<<<< HEAD
 =======
 
 >>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+>>>>>>> main
             $this->addFlash('success', 'User updated successfully!');
-
             return $this->redirectToRoute('users_index');
         }
 
@@ -75,14 +74,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'user_delete')]
-    public function delete(User $user): Response
+    public function deleteUser(User $user): Response
     {
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 =======
 
 >>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+>>>>>>> main
         $this->manager->removeUser($user);
-
+        $this->addFlash('success', 'User deleted successfully!');
         return $this->redirectToRoute('users_index');
     }
 }

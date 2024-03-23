@@ -23,16 +23,38 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 #[ApiResource(
         
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de23d16 (data)
         normalizationContext: ['groups' => ['camera:read']],
         denormalizationContext: ['groups' => ['camera:write']],
         paginationEnabled: true,
         paginationItemsPerPage: 9,
         
+<<<<<<< HEAD
+<<<<<<< HEAD
         
+=======
+        paginationEnabled: true,
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        
+>>>>>>> 2cf0464 (conflit data)
     )]
 #[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
 #[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
+=======
+    )]
+#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
+#[ApiFilter(RangeFilter::class, properties: ['prix'])]
+<<<<<<< HEAD
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC'])]
+>>>>>>> fa04ec1 (maintain search code)
+=======
+#[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
+>>>>>>> ca2bd99 (add sort by price and date)
 class Camera
 {
     #[ORM\Id]

@@ -25,10 +25,18 @@
                                            
                                             {% for cat in categories %}
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                             
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+>>>>>>> 85dd608 (maintain catalogue)
                                             <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+=======
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}" name="categorie" data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+>>>>>>> 289cd85 (search by categories)
+=======
+                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -95,9 +103,25 @@
                                             <label class="form-check-label" >4K</label>
                                         </div> 
                                     </form>   
+<<<<<<< HEAD
+=======
                                 </div>
                                 
                                 
+<<<<<<< HEAD
+                                <div class="filter__list widget_brands">
+                                    <h3 data-toggle="collapse" data-target="#brands">Connectivite</h3>
+                                    <ul class="widget_dropdown_conn collapse show" id="brands">
+                                        <li><a href="{{path('camera_search',{connectivite:true})}}"> Yes <span>104</span></a></li>
+                                        <li><a href="{{path('camera_search',{connectivite:false})}}">No <span>68</span></a></li>
+                                       
+                                    </ul>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+                                </div>
+                                
+                                
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
                                
                             </div>
                             <div class="widget_list">
@@ -155,11 +179,30 @@
                         
                         <div class=" sorting_by d-flex align-items-center">
                             <span>SORT BY :</span>
+<<<<<<< HEAD
+<<<<<<< HEAD
                             <form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
                                 <select name="orderby" id="shorts">
                                     <option selected value="prix">Prix</option>
                                     <option  value="date">Date</option>
                                     <option  value="rate">Rate</option>                                    
+=======
+                            <form class="select_option" action="{{path('camera_search')}}" method="get" id="form_sort">
+                                <select name="orderby" id="short">
+
+                                    <option selected value="prix">Prix</option>
+                                    <option  value="date">Date</option>
+                                    <option  value="rate">Rate</option>
+                                    
+                                    
+>>>>>>> fa04ec1 (maintain search code)
+=======
+                            <form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
+                                <select name="orderby" id="shorts">
+                                    <option selected value="prix">Prix</option>
+                                    <option  value="date">Date</option>
+                                    <option  value="rate">Rate</option>                                    
+>>>>>>> ca2bd99 (add sort by price and date)
                                 </select>
                                 
                             </form>
@@ -186,31 +229,19 @@
                         <ul class="pagination justify-content-center">
                             {% if pagination.currentPage > 1 %}
                                 <li class="page-item">
-<<<<<<< HEAD
-                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
-=======
                                     <a class="page-link" href="{{ path(currentRoute, {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endif %}
                     
                             {% for page in 1..pagination.totalPages %}
                                 <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
-<<<<<<< HEAD
-                                    <a class="page-link" href="{{ path('camera_search', {'page': page}) }}">{{ page }}</a>
-=======
                                     <a class="page-link" href="{{ path(currentRoute, {'page': page}) }}">{{ page }}</a>
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endfor %}
                     
                             {% if pagination.currentPage < pagination.totalPages %}
                                 <li class="page-item">
-<<<<<<< HEAD
-                                    <a class="page-link" href="{{ path('camera_search', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
-=======
                                     <a class="page-link" href="{{ path(currentRoute, {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                 </li>
                             {% endif %}
                         </ul>

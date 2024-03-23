@@ -30,32 +30,32 @@ class CameraController extends AbstractController
         $this->cameraRepo = $cameraRepo;
     }
 
+
+
 <<<<<<< HEAD
     #[Route('/camera/search', name: 'camera_search')]
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     public function search(Request $request,CameraRepository $cameraRepository, CallApiCameraService $callApiCameraService, CategorieRepository $catrepo, SessionInterface $session): Response
     {     
         $page = $request->query->getInt('page',1);        
         $categorie = $catrepo->findAll();
-=======
-
-    #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request,SessionInterface $session): Response
-    {     
-        $page = $request->query->getInt('page',1);    
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         $newCriteria = [
             'order' => $request->query->get('orderby'),
+>>>>>>> fa04ec1 (maintain search code)
             'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
             'angleVision' => $request->query->get('angle'),
             'prix' => $request->query->get('price_range') ? implode('..', array_map(function($price) { return floatval(str_replace('$', '', $price)); }, explode(' - ', $request->query->get('price_range')))) : null,
             
         ];
-<<<<<<< HEAD
 
         $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         
+<<<<<<< HEAD
         $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
         $pagination = $cameraRepository->extractPaginationInfo($page);
         if ($request->isXmlHttpRequest()) {
@@ -69,39 +69,41 @@ class CameraController extends AbstractController
         }
         return $this->render('client/pages/shop.html.twig',[
             'cameras' => $cameras,
+=======
+    
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
+        foreach ($newCriteria as $key => $value) {
+            if (!empty($value)) {
+                $searchCriteria[$key] = $value; 
+            }
+        }
+        
+=======
+
+        $searchCriteria = $cameraRepository->fillInTheSession($newCriteria,$session);
+>>>>>>> fa04ec1 (maintain search code)
+        $session->set('searchCriteria', $searchCriteria);
+=======
+>>>>>>> ca2bd99 (add sort by price and date)
+        $cameras = $callApiCameraService->SearchBy($searchCriteria,$page,9);
+        $pagination = $cameraRepository->extractPaginationInfo($page);
+        if ($request->isXmlHttpRequest()) {
+           
+            return $this->render('client/pages/components/cameras.html.twig', [
+                'cameras' => $cameras,
+                'categories'=> $categorie,
+                'pagination' => $pagination,
+                'items'=>$callApiCameraService->getItems(),
+            ]);
+        }
+        return $this->render('client/pages/shop.html.twig',[
+<<<<<<< HEAD
+            'cameras' => $data,
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
             'categories'=> $categorie,
             'pagination' => $pagination,
             'items'=>$callApiCameraService->getItems(),
-=======
-        
-        $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
-        $session->set('searchCriteria', $searchCriteria);
-        
-        return $this->render('client/pages/components/cameras.html.twig', [
-            'cameras' => $this->callCamera->SearchBy($searchCriteria,$page,9),
-            'categories'=> $this->categorie->findAll(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo($page),
-            'items'=>$this->callCamera->getItems(),
-            'currentRoute' => 'camera_search',
-            
-        ]);
-      
-       
-    }
-
-    #[Route('/fetchCamera',name:'fetch')]
-    public function fetch(CallApiCameraService $callCamera,Request $request,SessionInterface $session):Response
-    {
-        $session->remove('searchCriteria');
-        $page = $request->query->getInt('page',1);   
-
-        return $this->render('client/pages/shop.html.twig',[
-            'cameras' =>$callCamera->getAllCamera($page),
-            'categories'=> $this->categorie->findAll(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo($page),
-            'items'=>$this->callCamera->getItems(),
-            'currentRoute' => 'fetch',
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         ]);
     }
 

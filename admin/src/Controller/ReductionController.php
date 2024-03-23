@@ -8,15 +8,18 @@ use App\Repository\ReductionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReductionController extends AbstractController
 {
+
     private $entityManager;
     private $reductionRepository;
 
     public function __construct(EntityManagerInterface $entityManager, ReductionRepository $reductionRepository)
+
     {
         $this->entityManager = $entityManager;
         $this->reductionRepository = $reductionRepository;
@@ -78,4 +81,8 @@ class ReductionController extends AbstractController
 
         return $this->redirectToRoute('reduction_show');
     }
+
+
+
+
 }

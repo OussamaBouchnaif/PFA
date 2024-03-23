@@ -1,7 +1,16 @@
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 {% block stylesheets %}
 
+<<<<<<< HEAD
+=======
+
+{% block stylesheets %}
+>>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> de23d16 (data)
 <style>
    
     #loadingSpinner {
@@ -12,6 +21,39 @@
         z-index: 100;
         background-color: #09f;
     }
+<<<<<<< HEAD
+    
+    .spinner {
+        position: absolute;
+        left: 50%;
+        border: 4px solid rgba(0,0,0,.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #09f;
+        animation: spin 1s ease infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    #results-container{
+        position :relative;
+        
+    }
+    
+</style>
+{% endblock  %}
+<div class="row shop_wrapper" id="results-container">
+    <div id="loadingSpinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+=======
+<div class="row shop_wrapper" id="results-container">
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
     
     .spinner {
         position: absolute;
@@ -44,12 +86,31 @@
             <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                 <div class="single_product card-box">
                     <div class="product_thumb">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> deb3afb (maintain code)
                         <a href="{{path('app_details',{id:camera.id})}}">
                             {% set img = '' %}
                             {% set imageCamera = camera.imageCameras|first %}
                             <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">   
                             {% set img = imageCamera.image %}
                             
+=======
+                        <a href="product-details.html">
+                            {% set img = '' %}
+<<<<<<< HEAD
+                            {% for imageCamera in camera.imageCameras %}
+                                <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">
+                                {% set img = imageCamera.image %}
+                            {% endfor %}
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+                            {% set imageCamera = camera.imageCameras|first %}
+                            <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Camera Image">   
+                            {% set img = imageCamera.image %}
+                            
+>>>>>>> 44d6728 (adapt api's pagination)
                         </a>
                         <div class="product_action">
                             <ul>
@@ -57,10 +118,23 @@
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
 
                                 <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+<<<<<<< HEAD
+<<<<<<< HEAD
                                 <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                             </ul>
                             
+=======
+                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
+                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                            </ul>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+                                <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
+                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                            </ul>
+                            
+>>>>>>> de23d16 (data)
                         </div>
                         <div class="product_label">
                             <span>-18%</span>
@@ -83,7 +157,15 @@
                             <span class="old_price">$46.00</span>
                         </div>
                         <div class="add_to_cart">
+<<<<<<< HEAD
+<<<<<<< HEAD
                             <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
+=======
+                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+                            <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
+>>>>>>> deb3afb (maintain code)
                         </div>
                     </div>
                     <div class="product_list_content">
@@ -107,12 +189,21 @@
         {% endfor %} 
 </div>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
 {% block javascripts %}
 
 
     
 {% endblock  %}
 
+<<<<<<< HEAD
+=======
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
 
 
 

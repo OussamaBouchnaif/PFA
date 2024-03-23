@@ -6,16 +6,28 @@ use Symfony\Component\Serializer\SerializerInterface;
 <<<<<<< HEAD
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\Loader\Configurator\serializer;
+use App\Service\Api\Query\PrepareQueryCamera;
+use App\Service\Api\Query\QueryStringBuilder;
+
 
 class CallApiCameraService 
 {
-    private $serializer;
     private $getData;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     private $denormalizer;
-    public function __construct(SerializerInterface $serializer,GetDataService $getData , Denormalizer $denormalizer)
+    private PrepareQueryCamera $prepareQueryCamera;
+    public function __construct(GetDataService $getData ,PrepareQueryCamera $prepareQueryCamera, Denormalizer $denormalizer)
+    {
+        $this->getData = $getData; 
+        $this->denormalizer = $denormalizer;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    public function __construct(SerializerInterface $serializer,GetDataService $getData)
     {
         $this->serializer = $serializer;
         $this->getData = $getData; 
@@ -42,6 +54,8 @@ class CallApiCameraService
     public function getAllCamera(int $page):array
     {
         return $this->getCameraData('api/cameras?page='.$page);
+<<<<<<< HEAD
+<<<<<<< HEAD
     }
 
 <<<<<<< HEAD
@@ -53,6 +67,16 @@ class CallApiCameraService
     {
         $queryString = $this->prepareQueryCamera->prepareQueryString($searchCriteria, $page, $itemsPerPage); 
 >>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+        return $this->getCameraData('api/cameras/?' . $queryString);
+=======
+>>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
+    }
+
+    public function SearchBy(array $searchCriteria,int $page,int $itemsPerPage):array
+    {
+        $queryString = $this->prepareQueryCamera->prepareQueryString($searchCriteria, $page, $itemsPerPage); 
         return $this->getCameraData('api/cameras/?' . $queryString);
     }
     
@@ -82,6 +106,7 @@ class CallApiCameraService
     }
 
     public function getCameraById(int $id)
+>>>>>>> 8e6fee8 (fix conflit)
     {
         $endpoint = "/api/cameras/" . $id; 
         $response = $this->getData->getDataFromApi($endpoint);
@@ -100,7 +125,14 @@ class CallApiCameraService
         return $items;
     }
     
+<<<<<<< HEAD
+    public function searchCameras($searchCriteria, $page, $itemsPerPage): String
+>>>>>>> 44d6728 (adapt api's pagination)
+=======
     public function generateUrl($searchCriteria, $page, $itemsPerPage): String
+>>>>>>> ca2bd99 (add sort by price and date)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
     {
         
         $queryParts = [];
@@ -108,6 +140,11 @@ class CallApiCameraService
             if($key === 'prix')
             {
                 $queryParts[] = 'prix%5Bbetween%5D='.$value; 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8e6fee8 (fix conflit)
             }
             else if($key === 'order')
             {
@@ -115,6 +152,22 @@ class CallApiCameraService
                 $queryParts[] = 'order%5B'.$value.'%5D=asc';
             }
             else if($key !== 'order' && $key !== 'prix' )
+<<<<<<< HEAD
+=======
+            }
+<<<<<<< HEAD
+            else
+>>>>>>> fa04ec1 (maintain search code)
+=======
+            else if($key === 'order')
+            {
+                
+                $queryParts[] = 'order%5B'.$value.'%5D=asc';
+            }
+            else if($key !== 'order' && $key !== 'prix' )
+>>>>>>> ca2bd99 (add sort by price and date)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
             {
                 $queryParts[] = $key.'='.$value; 
             }
@@ -122,20 +175,25 @@ class CallApiCameraService
         }
         $queryParts[] = 'page=' . $page;
         $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
+<<<<<<< HEAD
+=======
+            }else
+            {
+                $queryParts[] = $key.'='.$value; 
+            }
+                    
+        }
+<<<<<<< HEAD
+        
+>>>>>>> 1dee0b6 (add filter by resolution and angle Vision)
+=======
+        $queryParts[] = 'page=' . $page;
+        $queryParts[] = 'itemsPerPage=' . $itemsPerPage;
+>>>>>>> 44d6728 (adapt api's pagination)
+=======
+>>>>>>> 8e6fee8 (fix conflit)
         $queryString = implode('&', $queryParts);
         return $queryString;
         
     }
-=======
-        return $this->denormalizer->DataDenormalizer($response,'App\DTO\CameraDTO','json');
-    }
-    
-    public function getItems():int
-    {      
-        $items =$this->getData->getTotalItems("api/cameras/");
-        return $items;
-    }
-    
-   
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
 }

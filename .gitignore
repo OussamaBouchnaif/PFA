@@ -1,2 +1,30 @@
 /.idea
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/data
+<<<<<<< HEAD
+
+>>>>>>> 289cd85 (search by categories)
 /data/
+=======
+>>>>>>> 7ae1066 (add data to git ignore)
+=======
+/data/
+>>>>>>> 6b36410 (data)
+=======
+/data
+>>>>>>> 80f7ad3 (data)
+=======
+/data/minio/
+>>>>>>> 44f2a44 (ignore data)
+=======
+/data/minio/.minio.sys/buckets
+>>>>>>> 7613414 (ignore data)
+=======
+/data/
+>>>>>>> 6fe7d29 (maintain controller avis)
