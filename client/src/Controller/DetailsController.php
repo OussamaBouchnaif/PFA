@@ -38,7 +38,8 @@ class DetailsController extends AbstractController
             'camera' => $callapi->getCameraById($camera->getId()),
             'form' => $form->createView(),
             'comments' => $comments
-        ]);    }
+        ]);    
+    }
 
     
 }

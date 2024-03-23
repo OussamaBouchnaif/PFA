@@ -6,5 +6,5 @@ namespace App\Service\Api\Query;
 
 interface PrepareQueryInterface
 {
-    public function prepareQueryString(array $searchCriteria, int $page, int $itemsPerPage):String;
+    public function prepareQueryString(array $searchCriteria):String;
 }

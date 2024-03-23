@@ -27,10 +27,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
         denormalizationContext: ['groups' => ['camera:write']],
         paginationEnabled: true,
         paginationItemsPerPage: 9,
-        
-        
     )]
-#[ApiFilter(SearchFilter::class, properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'] )]
+#[ApiFilter(SearchFilter::class, 
+        properties: ['categorie.nom' => 'exact','angleVision'=>'exact','resolution' => 'exact','connectivite'=> 'exact'],
+        
+         )]
 #[ApiFilter(RangeFilter::class, properties: ['prix'])]
 #[ApiFilter(OrderFilter::class, properties: ['prix' => 'ASC','dateAjout'=>'ASC'])]
 class Camera

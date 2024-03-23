@@ -20,7 +20,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ClientRepository extends ServiceEntityRepository
 {
     
-    
 
     public function __construct(ManagerRegistry $registry)
     {

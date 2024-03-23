@@ -67,7 +67,7 @@
                         <div class="carousel-inner">
                             {% for imageCamera in camera.imageCameras %}
                                 <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img src="http://127.0.0.1:9000/fichier/{{imageCamera.image}}" alt="Los Angeles">
+                                    <img src="{{ endpoint_minio ~ imageCamera.image }}" alt="Los Angeles">
                                 </div>
                           {% endfor %}
                          

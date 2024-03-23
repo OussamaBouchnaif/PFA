@@ -30,11 +30,11 @@ class CameraRepository extends ServiceEntityRepository
         $this->callapi = $callapi;   
         
     }
-    public function extractPaginationInfo(int $page)
+    public function extractPaginationInfo(int $totalPages,int $page)
     {
         
         $paginationInfo = [
-            'totalPages' => ceil($this->callapi->getItems()/9),
+            'totalPages' => $totalPages,
             'currentPage' => $page,
         ];
     

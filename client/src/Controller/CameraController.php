@@ -32,9 +32,10 @@ class CameraController extends AbstractController
 
 
     #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request,SessionInterface $session): Response
+    public function search(Request $request,PaginatorInterface $paginator, SessionInterface $session): Response
     {     
-        $page = $request->query->getInt('page',1);    
+        $page = $request->query->getInt('page',1);   
+        
         $newCriteria = [
             'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
@@ -46,32 +47,40 @@ class CameraController extends AbstractController
         
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
-        
-        return $this->render('client/pages/components/cameras.html.twig', [
-            'cameras' => $this->callCamera->SearchBy($searchCriteria,$page,9),
+        $cameras = $this->callCamera->SearchBy($searchCriteria);
+        $data = $paginator->paginate(
+            $cameras,
+            $page,
+            9,
+
+        );
+
+        return $this->render('client/pages/shop.html.twig', [
+            'cameras' => $data,
             'categories'=> $this->categorie->findAll(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo($page),
             'items'=>$this->callCamera->getItems(),
-            'currentRoute' => 'camera_search',
-            
+            'pagination'=>$this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9),$page),
+            'route' => 'camera_search'
         ]);
       
        
     }
 
     #[Route('/fetchCamera',name:'fetch')]
-    public function fetch(CallApiCameraService $callCamera,Request $request,SessionInterface $session):Response
+    public function fetch(Request $request,SessionInterface $session):Response
     {
         $session->remove('searchCriteria');
         $page = $request->query->getInt('page',1);   
 
         return $this->render('client/pages/shop.html.twig',[
-            'cameras' =>$callCamera->getAllCamera($page),
+            'cameras' => $this->callCamera->getAllCamera($page),
             'categories'=> $this->categorie->findAll(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo($page),
             'items'=>$this->callCamera->getItems(),
-            'currentRoute' => 'fetch',
+            'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($this->callCamera->getItems()/9),$page),
+            'route' => 'fetch'
+
         ]);
+       
     }
 
   

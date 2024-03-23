@@ -11,18 +11,24 @@ document.addEventListener('DOMContentLoaded', function () {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         },
         change: function(event, ui) {
-            var priceRange = "$" + ui.values[0] + " - $" + ui.values[1];
-            // Appel direct de fetchData sans soumettre le formulaire
-            fetchData({ 'price_range': priceRange });
+            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            $('#price-filter-form').submit(); // Soumet le formulaire automatiquement
         }
     });
 
     // Initialisation du champ de montant
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-        " - $" + $("#slider-range").slider("values", 1));
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
 
+    // Correction du sélecteur pour la soumission automatique du formulaire de résolution
+    $('input[type="radio"][name="res"]').change(function() {
+        $('#res-filter-form').submit(); // Soumet le formulaire de filtre de résolution
+    });
+    $('#shorts').change(function() {
+        $(this).closest('form').submit(); // Soumet le formulaire de tri
+    });
+});
     // Gestion des clics sur les filtres de catégorie
-    document.querySelectorAll('.widget_dropdown_categories a').forEach(function(link) {
+    /*document.querySelectorAll('.widget_dropdown_categories a').forEach(function(link) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             var categorie = this.getAttribute('href').split('categorie=')[1];
@@ -72,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             order = 'prix';
         }
         fetchData({ 'orderby': order });
-    });
+    });*/
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
@@ -100,7 +106,7 @@ function fetchData(criteria) {
         //document.getElementById('results-container').style.filter = 'none';
     });
 }
-});
+
 
 function setupQuickViewButtons() {
     document.querySelectorAll('.addcart').forEach(button => {

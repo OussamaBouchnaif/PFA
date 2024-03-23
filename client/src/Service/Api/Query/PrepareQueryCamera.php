@@ -10,11 +10,9 @@ class PrepareQueryCamera implements PrepareQueryInterface
     {
         $this->queryString = $queryString;
     }
-    public function prepareQueryString(array $searchCriteria, int $page, int $itemsPerPage):String
+    public function prepareQueryString(array $searchCriteria):String
     {
-        $queryStringBuilder = $this->queryString
-        ->setPage($page)
-        ->setLimitPerPage($itemsPerPage);
+        $queryStringBuilder = $this->queryString;
 
         foreach ($searchCriteria as $key => $value) {
             if (!is_null($value)) {
