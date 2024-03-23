@@ -95,7 +95,6 @@
 					</div>
 					<!-- end page title -->
 
-<<<<<<< HEAD
 					<div class="row">
 						<div class="col-xl-3 col-lg-4">
 							<div class="card">
@@ -105,7 +104,6 @@
 											<h5 class="fs-16">Filters</h5>
 										</div>
 										<div class="flex-shrink-0">
-=======
                         <div class="row">
                             <div class="col-xl-3 col-lg-4">
                                 <div class="card">
@@ -115,23 +113,9 @@
                                                 <h5 class="fs-16">Filters</h5>
                                             </div>
                                             <div class="flex-shrink-0">
-<<<<<<< HEAD
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
-=======
-                                                <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
-=======
-                                                <a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
-=======
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
->>>>>>> 0215209 (fixer ahthentification partie admin)
-                                            </div>
->>>>>>> main
 
-											<a href="#" class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+                                               
 
 										</div>
 
@@ -267,7 +251,6 @@
 										</button>
 									</h2>
 
-<<<<<<< HEAD
 									<div id="flush-collapseRating" class="accordion-collapse collapse" aria-labelledby="flush-headingRating">
 										<div class="accordion-body text-body">
 											<div class="d-flex flex-column gap-2 filter-check">
@@ -333,25 +316,21 @@
 						<!-- end card -->
 					</div>
 					<!-- end col -->
-=======
                                             <button type="button" class="btn btn-success" onclick="confirmExport()">
                                                 <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
                                             </button>                                       
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                             </div>
                                                     </div>
                                                     <div class="col-sm">
                                                     
                                                     </div>
-=======
+
                                         </div>
                                                 </div>
                                                 <div class="col-sm">
                                                   
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                                 </div>
                                             </div>
->>>>>>> main
 
 					<div class="col-xl-9 col-lg-8">
 						<div>
@@ -364,7 +343,6 @@
 													<i class="ri-add-line align-bottom me-1"></i>
 													Add Product</a>
 
-<<<<<<< HEAD
 												<button type="button" class="btn btn-primary" onclick="confirmPrint()">
 													<i class="ri-printer-line align-middle me-1"></i>
 													Imprimer tableau
@@ -468,7 +446,6 @@
 											{% endfor %}
 										</tbody>
 									</table>
-=======
                                      <table id="myTable" class="table">
                                         <thead>
                                             <tr class="align-middle custom-header-bg">
@@ -484,11 +461,7 @@
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
-<<<<<<< HEAD
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
-=======
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
-                                            <tr>                                
+                                            <tr>
                                                 <td>
                                                     <div class="avatar-group">
                                                         {% for imageCamera in camera.imageCameras %}
@@ -499,16 +472,12 @@
                                                     </div>
                                                     
 
-<<<<<<< HEAD
-=======
                                             <tr>
                                                 <td class="align-middle text-center">
                                                     {% for imageCamera in camera.imageCameras %}
                                                     <img src="{{ vich_uploader_asset(imageCamera, 'imageFile') }}" alt="Camera Image">
                                                     {% endfor %}
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
-=======
->>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+
                                                 </td>
                                                 <td class="align-middle text-center">{{ camera.nom }}</td>
                                                 <td class="align-middle text-center price-cell">{{ camera.prix }}</td>
@@ -516,7 +485,6 @@
                                                 <td class="align-middle text-center">{{ camera.status }}</td>
                                                 <td class="align-middle text-center">{{ camera.stock }}</td>
                                                 <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                                 <td class="text-center align-middle horizontal-buttons">
                                                     <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
                                                         <i class="ri-delete-bin-line align-bottom me-2"></i> 
@@ -534,7 +502,7 @@
 
                                                 </td>
                                              </tr>
-=======
+
                                                 <td class="text-center align-middle">
                                                     <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
                                                         <i class="ri-delete-bin-line align-bottom me-2"></i> Delete
@@ -547,12 +515,9 @@
                                                     </a>
                                                 </td>
                                             </tr>
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                             {% endfor %}
                                         </tbody>
                                     </table>
->>>>>>> main
-
 
 									<div class="tab-content text-muted">
 										<div class="tab-pane active" id="productnav-all" role="tabpanel">
@@ -565,7 +530,7 @@
 										</div>
 										<!-- end tab pane -->
 
-<<<<<<< HEAD
+
 										<div class="noDataMessage" id="productnav-draft" role="tabpanel">
 											<div class="py-4 text-center" id="noDataMessage" style="display: none;">
 												<lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
@@ -575,25 +540,22 @@
 										<!-- end tab pane -->
 									</div>
 									<!-- end tab content -->
-=======
+
                                                 <div class="noDataMessage" id="productnav-draft" role="tabpanel">
-<<<<<<< HEAD:admin/templates/admin/Cameras/ShowProduct.html.twig
                                                    <div class="py-4 text-center" id="noDataMessage" style="display: none;">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
                                                     <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
                                                 </div>
-=======
+
                                                     <div class="py-4 text-center">
                                                         <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px">
                                                         </lord-icon>
                                                         <h5 class="mt-4">Sorry! No Result Found</h5>
                                                     </div>
->>>>>>> d0de8c2 (filtrage par prix et Category):admin/templates/admin/test.html.twig
                                                 </div>
                                                 <!-- end tab pane -->
                                             </div>
                                             <!-- end tab content -->
->>>>>>> main
 
 								</div>
 								<!-- end card body -->
