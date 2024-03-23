@@ -47,6 +47,19 @@
 									<div class="mb-3">
 										{{ form_label(form.description) }}
 										{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            {{ form_label(form.nom) }}
+                                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="mb-3">
+                                              {{ form_label(form.description) }}
+                                              {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
 
 
 									</div>
@@ -69,6 +82,21 @@
 								</div>
 							</div>
 							<!-- end card -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Product Gallery</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        <div id="drop-area">
+                                            <h3>Drag & Drop Files Here</h3>
+                                                {{ form_label(formI.imageFile) }}
+                                                {{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div id="gallery"></div>
+                                    </div>
+                                </div>
+                                <!-- end card -->
 
 							<div class="card">
 								<div class="card-header">

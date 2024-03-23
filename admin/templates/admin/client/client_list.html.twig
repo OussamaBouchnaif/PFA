@@ -93,7 +93,11 @@
                                           <th>Inscription</th>
                                           <th style="display: none;">Statut</th> 
                                           <th>Adresses Sup</th>
+<<<<<<< HEAD
                                           <th>Activer / Desactiver</th>
+=======
+                                          <th>Compte</th>
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -216,32 +220,15 @@ $(document).ready(function() {
 
         
         var button = $(this);
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-       
-=======
-        
-        
-        // Mettre à jour l'état du compte
->>>>>>> 87819b0 (data)
-=======
 
-       
->>>>>>> 0d18d36 (liste des clients modifications)
         $.ajax({
             url: 'update-account-status', 
             method: 'POST',
             data: { clientId: clientId, accountStatus: accountStatus },
             success: function(response) {
                 console.log(response);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                // Mettre à jour l'apparence du bouton en utilisant la variable button
->>>>>>> 87819b0 (data)
-=======
->>>>>>> 0d18d36 (liste des clients modifications)
+<
                 if (response === 'success') {
                     if (accountStatus === 'active' || accountStatus === 'actif') {
                         // Si oui, le changer à "inactive"

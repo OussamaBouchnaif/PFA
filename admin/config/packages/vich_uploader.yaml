@@ -7,5 +7,16 @@ vich_uploader:
             uri_prefix: '/fichier'
             upload_destination: minio.storage
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+<<<<<<< HEAD
        
+=======
+<<<<<<< HEAD
+        Users:
+           uri_prefix: /images/Users
+           upload_destination: '%kernel.project_dir%/public/images/Users'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+=======
+       
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
+>>>>>>> main
         

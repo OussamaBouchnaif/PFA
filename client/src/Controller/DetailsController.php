@@ -27,8 +27,21 @@ use App\Entity\AvisCamera;
 >>>>>>> 8e6fee8 (fix conflit)
 use App\Entity\Camera;
 use App\Forms\AvisType;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 use App\Factory\Factory;
 use App\Entity\AvisCamera;
+=======
+>>>>>>> 1a61a15 (maintain code)
+=======
+use App\Factory\Factory;
+use App\Entity\AvisCamera;
+>>>>>>> 5d2fc98 (maintain servcie api)
+=======
+use App\Factory\Factory;
+use App\Entity\AvisCamera;
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\AvisCameraRepository;
 <<<<<<< HEAD
@@ -43,35 +56,15 @@ use Symfony\Component\Routing\Attribute\Route;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-use App\Service\Api\Exception\ObjectNotFoundException;
-=======
->>>>>>> de23d16 (data)
-=======
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
->>>>>>> fdc8b02 (add reviews to a specific camera)
-=======
->>>>>>> deb3afb (maintain code)
-=======
-use App\Service\Api\Exception\ObjectNotFoundException;
->>>>>>> 8e6fee8 (fix conflit)
-=======
-use App\Service\Api\Exception\ObjectNotFoundException;
-=======
->>>>>>> 1a61a15 (maintain code)
->>>>>>> 2302ad2 (maintain code)
-=======
 use App\Service\Api\Exception\ObjectNotFoundException;
 =======
 >>>>>>> 1a61a15 (maintain code)
 =======
 use App\Service\Api\Exception\ObjectNotFoundException;
 >>>>>>> 5d2fc98 (maintain servcie api)
->>>>>>> ee1b117 (maintain servcie api)
+=======
+use App\Service\Api\Exception\ObjectNotFoundException;
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetailsController extends AbstractController
@@ -85,11 +78,6 @@ class DetailsController extends AbstractController
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> ce65794 (conflit data)
-=======
->>>>>>> ee1b117 (maintain servcie api)
     
 =======
         
@@ -97,6 +85,9 @@ class DetailsController extends AbstractController
 =======
     
 >>>>>>> 5d2fc98 (maintain servcie api)
+=======
+    
+>>>>>>> 1fd586260a7ea8d9dec1a406ae3ebede689e1033
         $avisCamera = $factory->create(AvisCamera::class);
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);
