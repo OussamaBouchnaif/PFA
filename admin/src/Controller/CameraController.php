@@ -59,110 +59,37 @@ class CameraController extends AbstractController
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
         $formImage->handleRequest($request);
-    
+
         if ($formCamera->isSubmitted() && $formCamera->isValid() && $formImage->isValid()) {
             $camera = $formCamera->getData();
-<<<<<<< HEAD
             $image = $formImage->getData();
-            
+
             $image->setCamera($camera);
             $entityManager->persist($image);
-=======
-            $imageCamera = $formImage->getData();
-    
-            // Set the camera for the image
-            $imageCamera->setCamera($camera);
-    
-            // Persist the camera entity first
->>>>>>> b926118 (data)
             $entityManager->persist($camera);
             $entityManager->flush();
-    
+
             // Handle file upload for imageCamera using VichUploaderBundle
             $imageFile = $imageCamera->getImageFile();
             if ($imageFile) {
                 $imageName = $uploaderHelper->asset($imageCamera, 'imageFile');
                 $imageCamera->setImage($imageName);
             }
-    
+
             // Persist the imageCamera entity
             $entityManager->persist($imageCamera);
             $entityManager->flush();
-    
+
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
-    
+
         return $this->render('admin/Cameras/addProduct.html.twig', [
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView()
         ]);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-    #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
-    public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
-    {
-        $formCamera = $this->createForm(CameraType::class, $camera, [
-            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-
-        $formImage = $this->createForm(PhotoType::class, null, [
-            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-=======
-    
-      #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
-        public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
-        {
-            $formCamera = $this->createForm(CameraType::class, $camera, [
-                'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-            ]);
->>>>>>> 870065d (Add User whith photo and Security)
-
-        $formCamera->handleRequest($request);
-        $formImage->handleRequest($request);
-
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
-            $entityManager->flush();
-            $this->addFlash('success', 'Camera updated successfully!');
-            return $this->redirectToRoute('camera');
-        }
-
-<<<<<<< HEAD
-        return $this->render('admin/Cameras/editProduct.html.twig', [
-            'form' => $formCamera->createView(),
-            'formI' => $formImage->createView(),
-        ]);
-    }
-
-    
-
-        #[Route('/Delete_camera/{id}', name: 'Delete_camera')]
-=======
-        #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
->>>>>>> 870065d (Add User whith photo and Security)
-        public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
-        {
-            $camera = $cameraRepository->find($id);
-        
-            if (!$camera) {
-                throw $this->createNotFoundException('Camera not found');
-            }
-        
-            // Supprimer toutes les images associées à cette caméra
-            foreach ($camera->getImageCameras() as $imageCamera) {
-                $entityManager->remove($imageCamera);
-            }
-        
-            // Supprimer la caméra
-            $entityManager->remove($camera);
-=======
-
-=======
->>>>>>> b926118 (data)
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
     {
@@ -178,7 +105,6 @@ class CameraController extends AbstractController
         $formImage->handleRequest($request);
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
->>>>>>> b42b885 (fixer image user)
             $entityManager->flush();
             $this->addFlash('success', 'Camera updated successfully!');
             return $this->redirectToRoute('camera');
@@ -190,7 +116,9 @@ class CameraController extends AbstractController
         ]);
     }
 
-    #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
+
+
+    #[Route('/Delete_camera/{id}', name: 'Delete_camera')]
     public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response
     {
         $camera = $cameraRepository->find($id);
@@ -201,14 +129,20 @@ class CameraController extends AbstractController
 
         // Supprimer toutes les images associées à cette caméra
         foreach ($camera->getImageCameras() as $imageCamera) {
+            // Supprimer le fichier physique
+            $imagePath = $this->getParameter('images_directory') . '/' . $imageCamera->getImage();
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+
             $entityManager->remove($imageCamera);
         }
 
         // Supprimer la caméra
         $entityManager->remove($camera);
         $entityManager->flush();
-        $this->addFlash('success', 'Camera deleted successfully!');
 
+        $this->addFlash('success', 'Camera deleted successfully!');
         return $this->redirectToRoute('camera');
     }
 }

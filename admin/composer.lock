@@ -4,15 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
     "content-hash": "adca1ea5feba4481f4d78b75c5b8df79",
-=======
-    "content-hash": "845c7ce1a38f2645fb71134f7a4f1164",
->>>>>>> d874979 (Login)
-=======
-    "content-hash": "adca1ea5feba4481f4d78b75c5b8df79",
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
     "packages": [
         {
             "name": "api-platform/core",

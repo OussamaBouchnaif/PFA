@@ -1,87 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une réduction{% endblock %}
+{% block title %}Ajouter une réduction
+{% endblock %}
 
 {% block body %}
-   <div id="layout-wrapper">
-        <div class="main-content">
+	<div id="layout-wrapper">
+		<div class="main-content">
 
-            <div class="page-content">
-                <div class="container-fluid">
+			<div class="page-content">
+				<div
+					class="container-fluid">
 
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0">Create Product</h4>
 
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
-                                    </ol>
-                                </div>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item">
+											<a href="javascript: void(0);">Ecommerce</a>
+										</li>
+										<li class="breadcrumb-item active">Create Product</li>
+									</ol>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end page title -->
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
 
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
-                                    {{ form_label(form.description) }}
-                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.poucentage) }}
-                                    {{ form_widget(form.poucentage, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.dateDebut) }}
-                                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.dateFin) }}
-                                    {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <button type="submit" class="btn btn-success">Enregistrer</button>
-                                {{ form_end(form) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
+										{{ form_label(form.description) }}
+										{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.poucentage) }}
+										{{ form_widget(form.poucentage, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.dateDebut) }}
+										{{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.dateFin) }}
+										{{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<button type="submit" class="btn btn-success">Enregistrer</button>
+									{{ form_end(form) }}
+								</div>
+							</div>
+						</div>
+					</div>
 
-                </div>
-                <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-           
-=======
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by Themesbrand
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
->>>>>>> 5ccd8bf (fixer reduction)
-=======
-           
->>>>>>> e869c8e (Fixe Probleme de Date)
-        </div>
-    </div>
+		</div>
+	</div>
 {% endblock %}

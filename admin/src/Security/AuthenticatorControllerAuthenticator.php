@@ -39,11 +39,11 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
                 new RememberMeBadge(),
             ]
-<<<<<<< HEAD
+
         );  
-=======
-        );  
->>>>>>> d874979 (Login)
+
+
+
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

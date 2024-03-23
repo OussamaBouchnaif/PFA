@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af26218f-4f5f-4efb-a0c8-aef27b4081ac" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Camera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Camera.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CameraController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CameraController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReductionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReductionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/AuthenticatorControllerAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AuthenticatorControllerAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.bloomcycle.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.bloomcycle.bin/xl.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.usage-cache.bin.bkp/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.usage-cache.bin.bkp/xl.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.usage-cache.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../data/minio/.minio.sys/buckets/.usage-cache.bin/xl.meta" afterDir="false" />
@@ -44,7 +55,7 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="6b2aea87-e0b4-4643-b44d-ae587b045ce6" />
+        <option name="accountId" value="4edeaa90-78ba-47e4-94c9-308ef6dc63ba" />
         <option name="url" value="https://github.com/OussamaBouchnaif/PFA.git" />
       </UrlAndAccount>
     </option>
@@ -220,6 +231,8 @@
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-aws-s3-v3" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -240,15 +253,15 @@
     &quot;PHPUnit.Main.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;yassine__chidmi&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/PFA/admin&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yassi/Desktop/PFA_projet/PFA/admin&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor.code.editing&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -261,6 +274,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PFA_Project\public" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yassi\Desktop\PFA_projet\PFA\admin\src\DataFixtures" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -271,7 +287,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14475.35" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14808.18" />
       </set>
     </attachedChunks>
   </component>
@@ -298,11 +314,24 @@
       <workItem from="1708029342824" duration="2266000" />
       <workItem from="1708095631329" duration="3743000" />
       <workItem from="1708707443507" duration="266000" />
+      <workItem from="1711029800108" duration="755000" />
+      <workItem from="1711030574529" duration="1902000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

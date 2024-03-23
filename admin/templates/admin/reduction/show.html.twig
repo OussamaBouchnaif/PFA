@@ -1,486 +1,438 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des caméras{% endblock %}
-
+{% block title %}Liste des caméras
+{% endblock %}
 
 
 {% block stylesheets %}
-    {{ parent() }}
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
-    <style>
-        #myTable{
-            border: 1px white;
-        }
-        tr{
-         border: 1px white;
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+	<style>
+		#myTable {
+			border: 1px white;
+		}
+		tr {
+			border: 1px white;
 
-        }
-        .horizontal-buttons {
-        display: flex;
-        align-items: center;
-    }
+		}
+		.horizontal-buttons {
+			display: flex;
+			align-items: center;
+		}
 
-    .horizontal-buttons .dropdown-item,
-    .horizontal-buttons .text-muted {
-        margin-right: 10px; /* Adjust spacing between buttons */
-    }
-    .custom-header-bg {
-        background-color: #f8f9fa; /* Custom header background color */
-    }
+		.horizontal-buttons .dropdown-item,
+		.horizontal-buttons .text-muted {
+			margin-right: 10px; /* Adjust spacing between buttons */
+		}
+		.custom-header-bg {
+			background-color: #f8f9fa; /* Custom header background color */
+		}
 
-    .custom-header {
-        color: #495057; /* Custom header text color */
-    }
+		.custom-header {
+			color: #495057; /* Custom header text color */
+		}
 
-    .price-cell {
-        color: #28a745; /* Price cell text color */
-    }
+		.price-cell {
+			color: #28a745; /* Price cell text color */
+		}
 
-    .category-cell {
-        color: #007bff; /* Category cell text color */
-    }
+		.category-cell {
+			color: #007bff; /* Category cell text color */
+		}
 
-    
 
-    .horizontal-buttons .dropdown-item:hover,
-    .horizontal-buttons .text-muted:hover {
-        color: #0056b3; /* Change color on hover */
-    }
+		.horizontal-buttons .dropdown-item:hover,
+		.horizontal-buttons .text-muted:hover {
+			color: #0056b3; /* Change color on hover */
+		}
 
-    .dropdown-item i {
-        color: #777; /* Default icon color */
-    }
+		.dropdown-item i {
+			color: #777; /* Default icon color */
+		}
 
-    /* Hover effect for table rows */
-    tbody tr:hover {
-        background-color: #f0f0f0; /* Change background color on hover */
-    }
+		/* Hover effect for table rows */
+		tbody tr:hover {
+			background-color: #f0f0f0; /* Change background color on hover */
+		}
 
-    /* Add spacing between table rows */
-    tbody tr:not(:last-child) {
-        margin-bottom: 10px; /* Adjust spacing between rows */
-    }
+		/* Add spacing between table rows */
+		tbody tr:not(:last-child) {
+			margin-bottom: 10px; /* Adjust spacing between rows */
+		}
 
-    .formCost input {
-    width: 250px; /* Réglez la largeur des champs de date selon vos préférences */
-}
-
-    </style>
+		.formCost input {
+			width: 250px; /* Réglez la largeur des champs de date selon vos préférences */
+		}
+	</style>
 {% endblock %}
 
 {% block body %}
-    <div id="layout-wrapper">
+	<div id="layout-wrapper">
 
 
-        <div class="main-content">
+		<div class="main-content">
 
-                <div class="page-content">
-                    <div class="container-fluid">
+			<div class="page-content">
+				<div
+					class="container-fluid">
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Products</h4>
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0">Products</h4>
 
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Products</li>
-                                        </ol>
-                                    </div>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item">
+											<a href="javascript: void(0);">Ecommerce</a>
+										</li>
+										<li class="breadcrumb-item active">Products</li>
+									</ol>
+								</div>
 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
 
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="d-flex mb-3">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-16">Filters</h5>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
-                                            </div>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4">
+							<div class="card">
+								<div class="card-header">
+									<div class="d-flex mb-3">
+										<div class="flex-grow-1">
+											<h5 class="fs-16">Filters</h5>
+										</div>
+										<div class="flex-shrink-0">
+											<a class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+										</div>
 
-                                    </div>                                   
-                                    </div>
+									</div>
+								</div>
 
-                                    <div class="accordion accordion-flush filter-accordion">
+								<div class="accordion accordion-flush filter-accordion">
 
-                                       <div class="card-body border-bottom">
-                                        <div>
-                                            <label for="PourcentageSelect">Pourcentage Select:</label>
-                                        <select class="form-control" id="PourcentageSelect" placeholder="Sélectionnez un pourcentage">
-                                            <option disabled selected hidden>Sélectionnez un poucentage</option>
-                                             {% for reduction in reductions %}
-                                                <option value="{{ reduction.poucentage}}">{{ reduction.poucentage }}</option>
-                                            {% endfor %} 
-                                        </select>
+									<div class="card-body border-bottom">
+										<div>
+											<label for="PourcentageSelect">Pourcentage Select:</label>
+											<select class="form-control" id="PourcentageSelect" placeholder="Sélectionnez un pourcentage">
+												<option disabled selected hidden>Sélectionnez un poucentage</option>
+												{% for reduction in reductions %}
+													<option value="{{ reduction.poucentage}}">{{ reduction.poucentage }}</option>
+												{% endfor %}
+											</select>
 
-                                        </select>
-                                        </div>
-                                    </div>
+										</select>
+									</div>
+								</div>
 
-                                       <div class="card-body border-bottom">
-                                            <p class="text-muted text-uppercase fs-13 fw-medium mb-4">last</p>
+								<div class="card-body border-bottom">
+									<p class="text-muted text-uppercase fs-13 fw-medium mb-4">last</p>
 
-                                            <div id="product-price-range"></div>
-                                           <div class="formCost mt-3">
-                                            <div class="d-flex flex-column gap-2 align-items-start">
-                                                <p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date de début</p>
-                                                <input class="form-control form-control-sm" type="date" id="minLast" />
-                                            </div>
+									<div id="product-price-range"></div>
+									<div class="formCost mt-3">
+										<div class="d-flex flex-column gap-2 align-items-start">
+											<p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date de début</p>
+											<input class="form-control form-control-sm" type="date" id="minLast"/>
+										</div>
 
-                                            <div class="d-flex flex-column gap-2 align-items-start">
-                                                <p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date fin</p>
-                                                <input class="form-control form-control-sm" type="date" id="maxLast" />
-                                            </div>
-                                        </div>
+										<div class="d-flex flex-column gap-2 align-items-start">
+											<p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date fin</p>
+											<input class="form-control form-control-sm" type="date" id="maxLast"/>
+										</div>
+									</div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-9 col-lg-8">
-                                <div>
-                                    <div class="card">
-                                        <div class="card-header border-0">
-                                            <div class="row g-4">
-                                                <div class="col-sm-auto">
-                                                    <div>
-                                                        <a href="{{ path('reduction_add') }}" class="btn btn-success" id="addproduct-btn">
-                                                        <i class="ri-add-line align-bottom me-1"></i> Add reduction</a>
-                                                   
-                                            <button type="button" class="btn btn-primary" onclick="confirmPrint()">
-                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
-                                            </button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-9 col-lg-8">
+						<div>
+							<div class="card">
+								<div class="card-header border-0">
+									<div class="row g-4">
+										<div class="col-sm-auto">
+											<div>
+												<a href="{{ path('reduction_add') }}" class="btn btn-success" id="addproduct-btn">
+													<i class="ri-add-line align-bottom me-1"></i>
+													Add reduction</a>
 
-                                            <button type="button" class="btn btn-success" onclick="exportToCSV()">
-                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
-                                            </button>                                       
-                                            </div>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                    
-                                                    </div>
-                                                </div>
-                                            </div>
+												<button type="button" class="btn btn-primary" onclick="confirmPrint()">
+													<i class="ri-printer-line align-middle me-1"></i>
+													Imprimer tableau
+												</button>
 
-                                        
-                                        <!-- end card header -->
-                                        <div class="card-body">
-
-                                    <table id="myTable" class="table">
-                                            <thead>
-                                                <tr class="align-middle custom-header-bg">
-                                                    <th class="custom-header text-center">Description</th>
-                                                    <th class="custom-header text-center">Pourcentage</th>
-                                                    <th class="custom-header text-center">Date de début</th>
-                                                    <th class="custom-header text-center">Date de fin</th>
-                                                   <th class="custom-header text-center">Action</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for reduction in reductions %}
-                                                <tr>
-                                                    <td class="align-middle text-center">{{ reduction.description }}</td>
-                                                    <td class="align-middle text-center price-cell">{{ reduction.poucentage }}</td>
-                                                    <td class="align-middle text-center">{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
-                                                    <td class="align-middle text-center">{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
-                                                    <td class="text-center align-middle horizontal-buttons">
-                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('reduction_delete',{id:reduction.id}) }}')">
-                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> 
-                                                    </button>
-                                                    <a class="text-muted" href="{{ path('reduction_edit',{id:reduction.id}) }}">
-                                                        <i class="ri-pencil-line align-bottom me-2"></i> 
-                                                    </a>
-                                                  
-                                                   </td>
-                                               </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
+												<button type="button" class="btn btn-success" onclick="exportToCSV()">
+													<i class="ri-file-excel-line align-middle me-1"></i>
+													Exporter Excel
+												</button>
+											</div>
+										</div>
+										<div class="col-sm"></div>
+									</div>
+								</div>
 
 
+								<!-- end card header -->
+								<div class="card-body">
 
-                                            <div class="tab-content text-muted">
-                                                <div class="tab-pane active" id="productnav-all" role="tabpanel">
-                                                    <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
-                                                </div>
-                                                <!-- end tab pane -->
+									<table id="myTable" class="table">
+										<thead>
+											<tr class="align-middle custom-header-bg">
+												<th class="custom-header text-center">Description</th>
+												<th class="custom-header text-center">Pourcentage</th>
+												<th class="custom-header text-center">Date de début</th>
+												<th class="custom-header text-center">Date de fin</th>
+												<th class="custom-header text-center">Action</th>
 
-                                                <div class="tab-pane" id="productnav-published" role="tabpanel">
-                                                    <div id="table-product-list-published" class="table-card gridjs-border-none"></div>
-                                                </div>
-                                                <!-- end tab pane -->
+											</tr>
+										</thead>
+										<tbody>
+											{% for reduction in reductions %}
+												<tr>
+													<td class="align-middle text-center">{{ reduction.description }}</td>
+													<td class="align-middle text-center price-cell">{{ reduction.poucentage }}</td>
+													<td class="align-middle text-center">{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
+													<td class="align-middle text-center">{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
+													<td class="text-center align-middle horizontal-buttons">
+														<button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('reduction_delete',{id:reduction.id}) }}')">
+															<i class="ri-delete-bin-line align-bottom me-2"></i>
+														</button>
+														<a class="text-muted" href="{{ path('reduction_edit',{id:reduction.id}) }}">
+															<i class="ri-pencil-line align-bottom me-2"></i>
+														</a>
 
-                                                <div class="noDataMessage" id="productnav-draft" role="tabpanel">
-                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
-                                                    <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
-                                                </div>
-                                                </div>
-                                                <!-- end tab pane -->
-                                            </div>
-                                            <!-- end tab content -->
-
-                                        </div>
-                                        <!-- end card body -->
-                                    </div>
-                                    <!-- end card -->
-                                </div>
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
-
-                    </div>
-                    <!-- container-fluid -->
-                </div>
-                <!-- End Page-content -->
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-                
-=======
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © Velzon.
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-                                    Design & Develop by Themesbrand
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
->>>>>>> 5ccd8bf (fixer reduction)
-=======
-                
->>>>>>> e869c8e (Fixe Probleme de Date)
-            </div>
-        </div>
-        
-    </div>
-
-{% endblock %}
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
 
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+									<div class="tab-content text-muted">
+										<div class="tab-pane active" id="productnav-all" role="tabpanel">
+											<div id="table-product-list-all" class="table-card gridjs-border-none"></div>
+										</div>
+										<!-- end tab pane -->
+
+										<div class="tab-pane" id="productnav-published" role="tabpanel">
+											<div id="table-product-list-published" class="table-card gridjs-border-none"></div>
+										</div>
+										<!-- end tab pane -->
+
+										<div class="noDataMessage" id="productnav-draft" role="tabpanel">
+											<div class="py-4 text-center" id="noDataMessage" style="display: none;">
+												<lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
+												<h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
+											</div>
+										</div>
+										<!-- end tab pane -->
+									</div>
+									<!-- end tab content -->
+
+								</div>
+								<!-- end card body -->
+							</div>
+							<!-- end card -->
+						</div>
+					</div>
+					<!-- end col -->
+				</div>
+				<!-- end row -->
+
+			</div>
+			<!-- container-fluid -->
+		</div>
+		<!-- End Page-content -->
+
+				                
+				
+	</div>
+</div></div>{% endblock %}{% block javascripts %}{{ parent() }}<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script><script>
+let table = null;
+$(document).ready(function () {
+// Vérifier si DataTables a déjà été initialisé sur la table
 
 
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-    
-     <script>
-     let table = null;
-     $(document).ready(function() {
-    // Vérifier si DataTables a déjà été initialisé sur la table
-  
-
-    // Autres fonctionnalités de votre script...
+// Autres fonctionnalités de votre script...
 });
 
-       function printTable() {
-        var printWindow = window.open('', '_blank');
-        printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<style>');
-        printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-        printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-        printWindow.document.write('th {font-weight: bold; text-align: center;}');
-        printWindow.document.write('</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write('<table>');
-        printWindow.document.write('<thead>');
-        printWindow.document.write('<tr>');
-        printWindow.document.write('<th>Description</th>');
-        printWindow.document.write('<th>Pourcentage</th>');
-        printWindow.document.write('<th>Date de début</th>');
-        printWindow.document.write('<th>Date de fin</th>');
-        printWindow.document.write('</tr>');
-        printWindow.document.write('</thead>');
-        printWindow.document.write('<tbody>');
-        
-        var tableRows = document.getElementById('myTable').querySelectorAll('tr');
-        for (var i = 0; i < tableRows.length; i++) {
-            var row = tableRows[i];
-            var rowData = row.querySelectorAll('td');
-            if (rowData.length > 0) {
-                printWindow.document.write('<tr>');
-                for (var j = 0; j < rowData.length; j++) {
-                    if (j !== rowData.length - 1) {
-                        printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
-                    }
-                }
-                printWindow.document.write('</tr>');
-            }
-        }
-        
-        printWindow.document.write('</tbody>');
-        printWindow.document.write('</table>');
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    }
-     
+function printTable() {
+var printWindow = window.open('', '_blank');
+printWindow.document.open();
+printWindow.document.write('<html><head><title>Print Table</title>');
+printWindow.document.write('<style>');
+printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+printWindow.document.write('th {font-weight: bold; text-align: center;}');
+printWindow.document.write('</style>');
+printWindow.document.write('</head><body>');
+printWindow.document.write('<table>');
+printWindow.document.write('<thead>');
+printWindow.document.write('<tr>');
+printWindow.document.write('<th>Description</th>');
+printWindow.document.write('<th>Pourcentage</th>');
+printWindow.document.write('<th>Date de début</th>');
+printWindow.document.write('<th>Date de fin</th>');
+printWindow.document.write('</tr>');
+printWindow.document.write('</thead>');
+printWindow.document.write('<tbody>');
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionnez l'élément de liste déroulante des pourcentages
-    var pourcentageSelect = document.getElementById('PourcentageSelect');
+var tableRows = document.getElementById('myTable').querySelectorAll('tr');
+for (var i = 0; i < tableRows.length; i++) {
+var row = tableRows[i];
+var rowData = row.querySelectorAll('td');
+if (rowData.length > 0) {
+printWindow.document.write('<tr>');
+for (var j = 0; j < rowData.length; j++) {
+if (j !== rowData.length - 1) {
+printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+}
+}
+printWindow.document.write('</tr>');
+}
+}
 
-    // Ajoutez un écouteur d'événements de changement à l'élément de liste déroulante
-    pourcentageSelect.addEventListener('change', function() {
-        // Récupérez la valeur sélectionnée dans la liste déroulante
-        var selectedPourcentage = pourcentageSelect.value;
+printWindow.document.write('</tbody>');
+printWindow.document.write('</table>');
+printWindow.document.write('</body></html>');
+printWindow.document.close();
+printWindow.print();
+}
 
-        // Appelez la fonction pour filtrer la table par pourcentage
-        filterTableByPourcentage(selectedPourcentage);
-    });
+
+document.addEventListener('DOMContentLoaded', function () { // Sélectionnez l'élément de liste déroulante des pourcentages
+var pourcentageSelect = document.getElementById('PourcentageSelect');
+
+// Ajoutez un écouteur d'événements de changement à l'élément de liste déroulante
+pourcentageSelect.addEventListener('change', function () { // Récupérez la valeur sélectionnée dans la liste déroulante
+var selectedPourcentage = pourcentageSelect.value;
+
+// Appelez la fonction pour filtrer la table par pourcentage
+filterTableByPourcentage(selectedPourcentage);
+});
 });
 
 function filterTableByPourcentage(pourcentage) {
-    // Récupérer la table DataTable
-   // var table = $('#myTable').DataTable({
-   //retrieve: true
-//});
+// Récupérer la table DataTable
+// var table = $('#myTable').DataTable({
+// retrieve: true
+// });
 
-    // Si le pourcentage sélectionné est vide, réinitialisez le filtre et affichez toutes les données
-    if (pourcentage === '') {
-        table.column(1).search('').draw();
-    } else {
-        // Appliquer le filtre pour le pourcentage sélectionné
-        table.column(1).search(pourcentage).draw();
-    }
+// Si le pourcentage sélectionné est vide, réinitialisez le filtre et affichez toutes les données
+if (pourcentage === '') {
+table.column(1).search('').draw();
+} else { // Appliquer le filtre pour le pourcentage sélectionné
+table.column(1).search(pourcentage).draw();
+}
 }
 
 
+function exportToCSV() { // Demander la confirmation de l'utilisateur
+var confirmation = confirm("Voulez-vous exporter les données au format CSV ?");
 
+// Vérifier si l'utilisateur a confirmé
+if (confirmation) {
+var table = document.getElementById('myTable');
+var rows = table.querySelectorAll('tbody tr'); // Sélectionnez uniquement les lignes dans le corps du tableau
+var csvData = [];
 
+// Ajoutez l'en-tête CSV
+var headerRow = ['Description', 'Pourcentage', 'Date de début', 'Date de fin'];
+csvData.push(headerRow.join(';'));
 
+// Parcourez chaque ligne du tableau
+for (var i = 0; i < rows.length; i++) {
+var row = rows[i];
+var rowData = [];
+var cols = row.querySelectorAll('td');
 
-function exportToCSV() {
-    // Demander la confirmation de l'utilisateur
-    var confirmation = confirm("Voulez-vous exporter les données au format CSV ?");
-    
-    // Vérifier si l'utilisateur a confirmé
-    if (confirmation) {
-        var table = document.getElementById('myTable');
-        var rows = table.querySelectorAll('tbody tr'); // Sélectionnez uniquement les lignes dans le corps du tableau
-        var csvData = [];
+// Parcourez chaque colonne de la ligne actuelle
+for (var j = 0; j < cols.length; j++) {
+rowData.push(cols[j].innerText);
+}
 
-        // Ajoutez l'en-tête CSV
-        var headerRow = ['Description', 'Pourcentage', 'Date de début', 'Date de fin'];
-        csvData.push(headerRow.join(';'));
+// Ajoutez les données de la ligne au tableau CSV
+csvData.push(rowData.join(';'));
+}
 
-        // Parcourez chaque ligne du tableau
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var rowData = [];
-            var cols = row.querySelectorAll('td');
+// Générez le contenu CSV
+var csvContent = csvData.join('\n');
 
-            // Parcourez chaque colonne de la ligne actuelle
-            for (var j = 0; j < cols.length; j++) {
-                rowData.push(cols[j].innerText);
-            }
+// Créez un objet Blob contenant le CSV
+var blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
 
-            // Ajoutez les données de la ligne au tableau CSV
-            csvData.push(rowData.join(';'));
-        }
+// Créez un URL object pour le Blob
+var url = URL.createObjectURL(blob);
 
-        // Générez le contenu CSV
-        var csvContent = csvData.join('\n');
+// Créez un lien d'ancre pour le téléchargement
+var downloadLink = document.createElement('a');
+downloadLink.href = url;
+downloadLink.setAttribute('download', 'reductions.csv');
 
-        // Créez un objet Blob contenant le CSV
-        var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+// Ajoutez le lien au document
+document.body.appendChild(downloadLink);
 
-        // Créez un URL object pour le Blob
-        var url = URL.createObjectURL(blob);
+// Cliquez sur le lien pour démarrer le téléchargement
+downloadLink.click();
 
-        // Créez un lien d'ancre pour le téléchargement
-        var downloadLink = document.createElement('a');
-        downloadLink.href = url;
-        downloadLink.setAttribute('download', 'reductions.csv');
-
-        // Ajoutez le lien au document
-        document.body.appendChild(downloadLink);
-
-        // Cliquez sur le lien pour démarrer le téléchargement
-        downloadLink.click();
-
-        // Supprimez le lien du document
-        document.body.removeChild(downloadLink);
-    }
+// Supprimez le lien du document
+document.body.removeChild(downloadLink);
+}
 }
 
 
+function confirmDelete(deleteUrl) {
+if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
+window.location.href = deleteUrl;
+}
+}
 
-   
-
-     function confirmDelete(deleteUrl) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
-                window.location.href = deleteUrl;
-            }
-        }
-
-     function confirmPrint() {
-    if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
-        printTable();
-    }
+function confirmPrint() {
+if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
+printTable();
+}
 
 
+}
+document.addEventListener('DOMContentLoaded', function () { // Initialisation de la table DataTable
 
-     }
-document.addEventListener('DOMContentLoaded', function() {
-            // Initialisation de la table DataTable
-           
-            initDataTable();
-            // Fonction pour filtrer par date de début et de fin
-            function filterByDates() {
-                var minDate = document.getElementById('minLast').value;
-                var maxDate = document.getElementById('maxLast').value;
-                var tableRows = document.querySelectorAll('#myTable tbody tr');
+initDataTable();
+// Fonction pour filtrer par date de début et de fin
+function filterByDates() {
+var minDate = document.getElementById('minLast').value;
+var maxDate = document.getElementById('maxLast').value;
+var tableRows = document.querySelectorAll('#myTable tbody tr');
 
-                tableRows.forEach(function(row) {
-                    var rowDateDebut = row.cells[2].innerText; // Cellule contenant la date de début
-                    var rowDateFin = row.cells[3].innerText; // Cellule contenant la date de fin
+tableRows.forEach(function (row) {
+var rowDateDebut = row.cells[2].innerText; // Cellule contenant la date de début
+var rowDateFin = row.cells[3].innerText;
+// Cellule contenant la date de fin
 
-                    // Afficher ou masquer la ligne en fonction des critères de filtrage
-                    if ((minDate === '' || rowDateDebut >= minDate) && (maxDate === '' || rowDateFin <= maxDate)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            }
+// Afficher ou masquer la ligne en fonction des critères de filtrage
+if ((minDate === '' || rowDateDebut >= minDate) && (maxDate === '' || rowDateFin <= maxDate)) {
+row.style.display = '';
+} else {
+row.style.display = 'none';
+}
+});
+}
 
-            // Ajouter des écouteurs d'événements aux champs de saisie de date pour déclencher le filtrage
-            document.getElementById('minLast').addEventListener('input', filterByDates);
-            document.getElementById('maxLast').addEventListener('input', filterByDates);
+// Ajouter des écouteurs d'événements aux champs de saisie de date pour déclencher le filtrage
+document.getElementById('minLast').addEventListener('input', filterByDates);
+document.getElementById('maxLast').addEventListener('input', filterByDates);
 
-            // Appeler la fonction de filtrage une fois au chargement de la page pour afficher initialement toutes les lignes
-            filterByDates();
-        });
-    function initDataTable() {
-        if ($.fn.DataTable.isDataTable('#myTable')) {
-            $('#myTable').DataTable().destroy();
-        }
-        $('#myTable').DataTable();
-    }
-
-    </script> 
-{% endblock %}
+// Appeler la fonction de filtrage une fois au chargement de la page pour afficher initialement toutes les lignes
+filterByDates();
+});
+function initDataTable() {
+if ($.fn.DataTable.isDataTable('#myTable')) {
+$('#myTable').DataTable().destroy();
+}
+$('#myTable').DataTable();
+}</script>{% endblock %}

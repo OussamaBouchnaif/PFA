@@ -31,31 +31,10 @@ class SecurityController extends AbstractController
         ]);
     }
 
-<<<<<<< HEAD
-    #[Route('/logout', name: 'app_logout')]
-    public function logout(): void
-    {
-        // Cette méthode peut rester vide car elle sera interceptée par le pare-feu de sécurité pour la déconnexion de l'utilisateur
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-
-    }
-=======
-
-<<<<<<< HEAD
-        #[Route('/logout', name: 'app_logout')]
-        public function logout(): RedirectResponse
-        {
-            // Redirecting to the login page
-            return $this->redirectToRoute('app_login');
-        }
-
->>>>>>> cb0b655 (add user and detail)
-=======
     #[Route('/logout', name: 'app_logout')]
     public function logout(): RedirectResponse
     {
         // Redirecting to the login page
         return $this->redirectToRoute('app_login');
     }
->>>>>>> b42b885 (fixer image user)
 }

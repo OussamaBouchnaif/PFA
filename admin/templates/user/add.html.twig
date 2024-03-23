@@ -1,162 +1,130 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add camera{% endblock %}
+{% block title %}Add camera
+{% endblock %}
 
 {% block stylesheets %}
-    {# Ajoutez vos liens vers les feuilles de style ici s'il y en a #}
+	{# Ajoutez vos liens vers les feuilles de style ici s'il y en a #}
 {% endblock %}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> cb0b655 (add user and detail)
-=======
->>>>>>> b42b885 (fixer image user)
 {% block body %}
-<div id="layout-wrapper">
-    <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0">Create Product</h4>
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Ecommerce</a></li>
-                                    <li class="breadcrumb-item active">Create Product</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_label(form.nom) }}
-                                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.email) }}
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_label(form.password.first) }}
-                                    {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.password.second) }}
-                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}                              
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_label(form.phoneNumber) }}
-                                    {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.prenom) }}
-                                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_label(form.ville) }}
-                                    {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.genre) }}
-                                    {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> be813f9 (login and add)
-                 <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Product Gallery</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        
-                                        <div id="drop-area">
-                                            <h3>Drag & Drop Files Here</h3>
-                                                    {{ form_label(form.imageFile) }}
-                                                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div id="gallery"></div>
-                                    </div>
-                        </div>
-<<<<<<< HEAD
-=======
-                
->>>>>>> cb0b655 (add user and detail)
-=======
->>>>>>> be813f9 (login and add)
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-success">Enregistrer</button>
-                        <a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
-                    </div>
-                </div>
-                
-                {{ form_end(form) }}
-                
-            </div> <!-- container-fluid -->
-        </div> <!-- End Page-content -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-       
-=======
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <script>document.write(new Date().getFullYear())</script> © Velzon.
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-sm-end d-none d-sm-block">
-                            Design & Develop by Themesbrand
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
->>>>>>> cb0b655 (add user and detail)
-=======
-       
->>>>>>> e869c8e (Fixe Probleme de Date)
-    </div>
-</div>
+	<div id="layout-wrapper">
+		<div class="main-content">
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0">Create Product</h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item">
+											<a href="javascript:void(0);">Ecommerce</a>
+										</li>
+										<li class="breadcrumb-item active">Create Product</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_label(form.nom) }}
+										{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.email) }}
+										{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_label(form.password.first) }}
+										{{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.password.second) }}
+										{{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_label(form.phoneNumber) }}
+										{{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.prenom) }}
+										{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_label(form.ville) }}
+										{{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.genre) }}
+										{{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Product Gallery</h5>
+						</div>
+						<div class="card-body">
+
+							<div id="drop-area">
+								<h3>Drag & Drop Files Here</h3>
+								{{ form_label(form.imageFile) }}
+								{{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div id="gallery"></div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-12">
+							<button type="submit" class="btn btn-success">Enregistrer</button>
+							<a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
+						</div>
+					</div>
+
+					{{ form_end(form) }}
+
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
+		
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
-    {# Ajoutez vos liens vers les scripts JavaScript ici s'il y en a #}
+	{# Ajoutez vos liens vers les scripts JavaScript ici s'il y en a #}
 {% endblock %}

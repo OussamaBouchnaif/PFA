@@ -37,20 +37,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-<<<<<<< HEAD
-<<<<<<< HEAD
        - { path: ^/camera, roles: ROLE_USER }
        - { path: ^/user, roles: ROLE_USER }
 
-=======
-    #    - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    #    - { path: ^/, roles: 'IS_AUTHENTICATED_FULLY' }
->>>>>>> d9550c0 (login)
-=======
-       - { path: ^/camera, roles: ROLE_USER }
-       - { path: ^/user, roles: ROLE_USER }
-
->>>>>>> 870065d (Add User whith photo and Security)
 when@test:
     security:
         password_hashers:

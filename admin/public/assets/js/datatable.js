@@ -1,4 +1,4 @@
-$(document).ready(function() {alert("TEst");
+$(document).ready(function() {
     $('#myTable').DataTable({
             "language": {
             "emptyTable": "Aucun élément trouvé",

@@ -1,526 +1,189 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des caméras{% endblock %}
-
+{% block title %}Liste des caméras
+{% endblock %}
 
 
 {% block stylesheets %}
-    {{ parent() }}
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
-<<<<<<< HEAD
-<<<<<<< HEAD
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css" />
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
+	<linkrel="stylesheet"href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css"/>
+							
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css"/>
 
-=======
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.css" />
+	
+	<style>
+		#myTable {
+			border: 1px white;
+		}
+		tr {
+			border: 1px white;
 
->>>>>>> 779ae00 (edit and add user)
-    <style>
-        #myTable{
-            border: 1px white;
-        }
-        tr{
-         border: 1px white;
+		}
+		.horizontal-buttons {
+			display: flex;
+			align-items: center;
+		}
+		 .card {
+			width: 1150px;
+		}
+		.horizontal-buttons .text-muted {
+			margin-right: 10px; /* Adjust spacing between buttons */
+		}
+		.custom-header-bg {
+			background-color: #f8f9fa; /* Custom header background color */
+		}
 
-        }
-        .horizontal-buttons {
-        display: flex;
-        align-items: center;
-    }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f190fa3 (test image)
-.card {
-    width: 1150px
-    ;
-}   
-<<<<<<< HEAD
-=======
+		.custom-header {
+			color: #495057; /* Custom header text color */
+		}
 
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
->>>>>>> f190fa3 (test image)
-    .horizontal-buttons .dropdown-item,
-    .horizontal-buttons .text-muted {
-        margin-right: 10px; /* Adjust spacing between buttons */
-    }
-    .custom-header-bg {
-        background-color: #f8f9fa; /* Custom header background color */
-    }
+		.price-cell {
+			color: #28a745; /* Price cell text color */
+		}
 
-    .custom-header {
-        color: #495057; /* Custom header text color */
-    }
+		.category-cell {
+			color: #007bff; /* Category cell text color */
+		}
 
-    .price-cell {
-        color: #28a745; /* Price cell text color */
-    }
 
-    .category-cell {
-        color: #007bff; /* Category cell text color */
-    }
+		.horizontal-buttons .dropdown-item:hover,
+		.horizontal-buttons .text-muted:hover {
+			color: #0056b3; /* Change color on hover */
+		}
 
-    
+		.dropdown-item i {
+			color: #777; /* Default icon color */
+		}
 
-    .horizontal-buttons .dropdown-item:hover,
-    .horizontal-buttons .text-muted:hover {
-        color: #0056b3; /* Change color on hover */
-    }
+		/* Hover effect for table rows */
+		tbody tr:hover {
+			background-color: #f0f0f0; /* Change background color on hover */
+		}
 
-    .dropdown-item i {
-        color: #777; /* Default icon color */
-    }
-
-    /* Hover effect for table rows */
-    tbody tr:hover {
-        background-color: #f0f0f0; /* Change background color on hover */
-    }
-
-    /* Add spacing between table rows */
-    tbody tr:not(:last-child) {
-        margin-bottom: 10px; /* Adjust spacing between rows */
-    }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    .row{
-       whith:100%;
-    }
-=======
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-    .row{
-       whith:100%;
-    }
->>>>>>> 779ae00 (edit and add user)
-    </style>
+		/* Add spacing between table rows */
+		tbody tr:not(:last-child) {
+			margin-bottom: 10px; /* Adjust spacing between rows */
+		}
+		<<<<<<< HEAD <<<<<<< HEAD .row {
+			whith: 100%;
+		}
+		======= >  >  >  >  >  >  > a57e2d2(fixer ahthentification partie admin) ======= .row {
+			whith: 100%;
+		}
+		>>>>>>> 779ae00(edit and add user)
+	</style>
 {% endblock %}
 
 {% block body %}
     <div id="layout-wrapper">
-
-
         <div class="main-content">
-
-                <div class="page-content">
-                    <div class="container-fluid">
-
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Products</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Products</li>
-                                        </ol>
-                                    </div>
-
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Products</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item">
+                                            <a href="javascript: void(0);">Ecommerce</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">Products</li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
-                        <!-- end page title -->
+                    </div>
+                    <!-- end page title -->
 
-                        <div class="row">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            
-=======
-                            <div class="col-xl-3 col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="d-flex mb-3">
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-16">Filters</h5>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
-                                            </div>
-
-                                    </div>                                   
-                                    </div>
-
-                                    <div class="accordion accordion-flush filter-accordion">
-
-                                       <div class="card-body border-bottom">
-                                        <div>
-                                        <label for="usersSelect">Select Category:</label>
-                                        <select class="form-control" id="usersSelect" placeholder="Sélectionnez un nom">
-                                            <option disabled selected hidden>Sélectionnez une nom</option>
-                                                {% for user in users %}
-                                                <option value="{{ user.nom }}">{{user.nom}}</option>
-                                            {% endfor %}
-                                        </select>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="card">
+                                <!-- Filter content -->
                             </div>
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-                            
->>>>>>> 779ae00 (edit and add user)
-                            <!-- end col -->
-
-                            <div class="col-xl-9 col-lg-8">
-                                <div>
-                                    <div class="card">
-                                        <div class="card-header border-0">
-                                            <div class="row g-4">
-                                                <div class="col-sm-auto">
-                                                    <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                        <a href="{{ path('user_create') }}" class="btn btn-success" id="addproduct-btn">
-                                                        <i class="ri-add-line align-bottom me-1"></i> Add Users</a>
-                                                   
-                                            {# <button type="button" id="print-btn" class="btn btn-primary" onclick="confirmPrint()">
-<<<<<<< HEAD
-=======
-                                                        <a href="{{ path('addtest') }}" class="btn btn-success" id="addproduct-btn">
-                                                        <i class="ri-add-line align-bottom me-1"></i> Add Product</a>
-=======
-                                                        <a href="{{ path('user_create') }}" class="btn btn-success" id="addproduct-btn">
-                                                        <i class="ri-add-line align-bottom me-1"></i> Add Users</a>
->>>>>>> cb0b655 (add user and detail)
-                                                   
-                                            <button type="button" class="btn btn-primary" onclick="confirmPrint()">
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
->>>>>>> 779ae00 (edit and add user)
-                                                <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
-                                            </button>
-
-                                            <button type="button" class="btn btn-success" onclick="confirmExport()">
-                                                <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                            </button>                                        #}
-=======
-                                            </button>                                       
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-                                            </button>                                        #}
->>>>>>> 779ae00 (edit and add user)
-                                            </div>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                    
-                                                    </div>
-                                                </div>
-                                            </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                    <br>
-                                        
-                                      
-                                        <div class="card-body">
-
+                        </div>
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <!-- Add user button -->
+                                </div>
+                                <div class="card-body">
                                     <table id="myTable" class="table">
-                                            <thead>
-                                                <tr class="align-middle custom-header-bg">
-                                                    <th class="custom-header text-center">Photo</th>
-                                                    <th class="custom-header text-center">Nom</th>
-                                                    <th class="custom-header text-center">Prenom</th>
-<<<<<<< HEAD
-                                                    <th class="custom-header text-center">Email</th>
-                                                    <th class="custom-header text-center">Ville</th>
-                                                    <th class="custom-header text-center">Rôles</th>
-                                                    <th class="custom-header text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for user in users %}
-                                                <tr>                                
+                                        <thead>
+                                            <tr class="align-middle custom-header-bg">
+                                                <th class="custom-header text-center">Photo</th>
+                                                <th class="custom-header text-center">Nom</th>
+                                                <th class="custom-header text-center">Email</th>
+                                                <th class="custom-header text-center">Ville</th>
+                                                <th class="custom-header text-center">Rôles</th>
+                                                <th class="custom-header text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for user in users %}
+                                                <tr>
                                                     <td>
-                                                    <div class="avatar-group">
-                                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
-                                                            {% if user.image %}
-                                                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
-                                            
-                                                            {% endif %}
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                                    <td class="align-middle text-center">{{ user.nom }}</td>
-                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
-                                                    <td class="align-middle text-center">{{ user.email }}</td>
-                                                    <td class="align-middle text-center">{{ user.ville }}</td>
-                                                    <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
-                                                    <td class="text-center align-middle horizontal-buttons">
-                                                       <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i>
-                                                        </a>
-                                                        <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i> 
-                                                        </a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-=======
-
-                                        <div class="card-header">
-=======
-<br>
-                                        {# <div class="card-header">
->>>>>>> cb0b655 (add user and detail)
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#productnav-all" role="tab">
-                                                                All <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
+                                                        <div class="avatar-group">
+                                                            <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
+                                                                {% if user.image %}
+                                                                    <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
+                                                                {% endif %}
                                                             </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-published" role="tab">
-                                                                Published <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft" role="tab">
-                                                                Draft
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div id="selection-element">
-                                                        <div class="my-n1 d-flex align-items-center text-muted">
-                                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> #}
-                                        <!-- end card header -->
-=======
-                                                    <br>
-                                        
-                                      
->>>>>>> 779ae00 (edit and add user)
-                                        <div class="card-body">
-
-                                    <table id="myTable" class="table">
-<<<<<<< HEAD
-    <thead>
-        <tr class="align-middle custom-header-bg">
-            <th class="custom-header text-center">Photo</th>
-            <th class="custom-header text-center">Nom</th>
-            <th class="custom-header text-center">Email</th>
-            <th class="custom-header text-center">Ville</th>
-            <th class="custom-header text-center">Rôles</th>
-            <th class="custom-header text-center">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>                                
-            <td>
-                <div class="avatar-group">
-                    <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
-                        <img src="{{ asset(user.image) }}" alt="" class="rounded-circle avatar-xxs">
-                    </a>
-                </div>
-            </td>
-            <td class="align-middle text-center">{{ user.nom }}</td>
-            <td class="align-middle text-center">{{ user.email }}</td>
-            <td class="align-middle text-center">{{ user.ville }}</td>
-            <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
-            <td class="text-center align-middle horizontal-buttons">
-                <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('user_delete', {id: user.id}) }}')">
-                    <i class="ri-delete-bin-line align-bottom me-2"></i> 
-                </button>
-                <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
-                    <i class="ri-pencil-line align-bottom me-2"></i> 
-                </a>
-                <a class="text-muted" href="#"> <!-- Lien vers la page de détails de l'utilisateur -->
-                    <i class="ri-eye-fill align-bottom me-2"></i> 
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-                                            <thead>
-                                                <tr class="align-middle custom-header-bg">
-                                                    <th class="custom-header text-center">Photo</th>
-                                                    <th class="custom-header text-center">Nom</th>
-=======
->>>>>>> be813f9 (login and add)
-                                                    <th class="custom-header text-center">Email</th>
-                                                    <th class="custom-header text-center">Ville</th>
-                                                    <th class="custom-header text-center">Rôles</th>
-                                                    <th class="custom-header text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for user in users %}
-                                                <tr>                                
-                                                    <td>
-                                                    <div class="avatar-group">
-                                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
-                                                            {% if user.image %}
-                                                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
-                                            
-                                                            {% endif %}
-                                                        </a>
-                                                    </div>
-                                                </td>
+                                                    </td>
                                                     <td class="align-middle text-center">{{ user.nom }}</td>
-                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
                                                     <td class="align-middle text-center">{{ user.email }}</td>
                                                     <td class="align-middle text-center">{{ user.ville }}</td>
                                                     <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
                                                     <td class="text-center align-middle horizontal-buttons">
-                                                       <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                        <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
                                                             <i class="ri-delete-bin-line align-bottom me-2"></i>
                                                         </a>
                                                         <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i> 
+                                                            <i class="ri-pencil-line align-bottom me-2"></i>
                                                         </a>
-                                                        
                                                     </td>
                                                 </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
->>>>>>> cb0b655 (add user and detail)
-
-
-                                            <div class="tab-content text-muted">
-                                                <div class="tab-pane active" id="productnav-all" role="tabpanel">
-                                                    <div id="table-product-list-all" class="table-card gridjs-border-none"></div>
-                                                </div>
-                                                <!-- end tab pane -->
-
-                                                <div class="tab-pane" id="productnav-published" role="tabpanel">
-                                                    <div id="table-product-list-published" class="table-card gridjs-border-none"></div>
-                                                </div>
-                                                <!-- end tab pane -->
-
-                                                <div class="noDataMessage" id="productnav-draft" role="tabpanel">
-                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
-                                                    <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
-                                                </div>
-                                                </div>
-                                                <!-- end tab pane -->
-                                            </div>
-                                            <!-- end tab content -->
-
-                                        </div>
-                                        <!-- end card body -->
-                                    </div>
-                                    <!-- end card -->
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <!-- end card body -->
                             </div>
-                            <!-- end col -->
+                            <!-- end card -->
                         </div>
-                        <!-- end row -->
-
+                        <!-- end col -->
                     </div>
-                    <!-- container-fluid -->
+                    <!-- end row -->
                 </div>
-                <!-- End Page-content -->
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-              
-=======
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="text-sm-end d-none d-sm-block">
-                                    Design & Develop by Themesbrand
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
-              
->>>>>>> e869c8e (Fixe Probleme de Date)
+                <!-- container-fluid -->
             </div>
+            <!-- End Page-content -->
         </div>
-        
     </div>
-
 {% endblock %}
 
-
-{% block javascripts %}
-    {{ parent() }}
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <script src="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-    <script>  
-  
-document.getElementById('delete').addEventListener('click', function(event) {
-    if (!confirm('Are you sure you want to delete this user?')) {
-        event.preventDefault();
-    }
-});
-   
-  
-=======
-=======
-        <script src="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js"></script>
-
->>>>>>> 779ae00 (edit and add user)
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-    <script>  
-  
-document.getElementById('delete').addEventListener('click', function(event) {
-    if (!confirm('Are you sure you want to delete this user?')) {
-        event.preventDefault();
-    }
-});
-   
-  
-<<<<<<< HEAD
-function clearAllFilters() {
-    // Réinitialiser les valeurs des champs de filtre pour la catégorie
-    document.getElementById('categorySelect').value = 'All';
-
-    
-    // Réinitialiser les filtres de la catégorie
-    filterTableByCategory('All');
-
-}
-
-
-
-
-
-
->>>>>>> a57e2d2 (fixer ahthentification partie admin)
-=======
->>>>>>> 779ae00 (edit and add user)
-
-    </script>
-{% endblock %}
+	{% block javascripts %}{{ parent() }}<script src="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js">
+	</script><scriptsrc="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+	<scriptsrc="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js">
+	</script><script>document.getElementById('delete').addEventListener('click',function(event){if(!confirm('Areyousureyouwanttodeletethisuser?')){event.preventDefault();}});
+	<scriptsrc="https://cdn.jsdelivr.net/sweetalert2/6.1.0/sweetalert2.min.js">
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+	<script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
+	<script>
+		document.getElementById('delete').addEventListener('click', function (event) {
+										if (!confirm('Are you sure you want to delete this user?')) {
+										event.preventDefault();
+										}
+										});
+											
+										}
+										{% endblock %}
