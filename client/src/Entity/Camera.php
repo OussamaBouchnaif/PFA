@@ -85,6 +85,9 @@ class Camera
     #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
     private Collection $blogs;
 
+    #[ORM\OneToMany(mappedBy: 'Camera', targetEntity: CartItem::class)]
+    private Collection $cartItems;
+
     public function __construct()
     {
         $this->avisCameras = new ArrayCollection();
@@ -93,6 +96,7 @@ class Camera
         $this->imageCameras = new ArrayCollection();
         $this->ligneReductions = new ArrayCollection();
         $this->blogs = new ArrayCollection();
+        $this->cartItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -475,6 +479,36 @@ class Camera
     {
         if ($this->blogs->removeElement($blog)) {
             $blog->removeCamera($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartItem>
+     */
+    public function getCartItems(): Collection
+    {
+        return $this->cartItems;
+    }
+
+    public function addCartItem(CartItem $cartItem): static
+    {
+        if (!$this->cartItems->contains($cartItem)) {
+            $this->cartItems->add($cartItem);
+            $cartItem->setCamera($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartItem(CartItem $cartItem): static
+    {
+        if ($this->cartItems->removeElement($cartItem)) {
+            // set the owning side to null (unless already changed)
+            if ($cartItem->getCamera() === $this) {
+                $cartItem->setCamera(null);
+            }
         }
 
         return $this;

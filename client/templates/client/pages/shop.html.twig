@@ -220,11 +220,14 @@
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                                     <div class="single_product card-box">
                                         <div class="product_thumb">
-                                            <a href="{{path('app_details',{id:camera.id})}}">
+                                            <a href="{{ path('app_details', {id: camera.id}) }}">
                                                 {% set imageCamera = camera.imageCameras|first %}
-                                                <img src="{{ endpoint_minio ~ imageCamera.image }}" alt="Camera Image">   
-                                                {% set img = imageCamera.image %}
-                                                
+                                                {% if imageCamera %}
+                                                    <img src="{{ endpoint_minio ~ imageCamera.image }}" alt="Camera Image">   
+                                                    {% set img = imageCamera.image %}
+                                                {% else %}
+                                                    <!-- Handle the case where there is no image, e.g., display a placeholder image or nothing at all -->
+                                                {% endif %}
                                             </a>
                                             <div class="product_action">
                                                 <ul>
