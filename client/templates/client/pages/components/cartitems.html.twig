@@ -1,0 +1,45 @@
+<div class="cart_gallery">
+    <div class="cart_close">
+        <div class="cart_text">
+            <h3>cart</h3>
+        </div>
+        <div class="mini_cart_close">
+            <a href="javascript:void(0)"><i class="icon-close icons"></i></a>
+        </div>
+    </div>
+    {% if cart is not empty %}
+        {% for item in cart.items %}
+            <div class="cart_item">
+                <div class="cart_img">
+                    {% set imageCamera = item.camera.imageCameras|first %}
+                    {% if imageCamera %}
+                        <a href="#"><img src="{{ endpoint_minio ~ imageCamera.image }}" alt=""></a>
+                    {% else %}
+                        <img src="" alt="oussama">
+                    {% endif %}
+                </div>
+                <div class="cart_info">
+                    <a href="#">Primis In Faucibus</a>
+                    <p>{{item.quantity}} x <span> ${{item.price}} </span></p>
+                </div>
+                <div class="cart_remove">
+                    <a href="#"><i class="icon-close icons"></i></a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+</div>
+<div class="mini_cart_table">
+    <div class="cart_table_border">
+        <div class="cart_total">
+            <span>Sub total:</span>
+            <span class="price">${{totalItems}}</span>
+        </div>
+        <div class="cart_total mt-10">
+            <span>total:</span>
+            <span class="price">${{totalItems}}</span>
+        </div>
+    </div>
+</div>
+

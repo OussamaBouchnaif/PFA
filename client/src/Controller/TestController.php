@@ -2,26 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Client;
-use App\Entity\Commande;
-use App\Entity\CodePromo;
 use Symfony\UX\Turbo\TurboBundle;
-use App\Service\CallApiCameraService;
 use Symfony\Component\Mercure\Update;
-use App\Repository\CommandeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class TestController extends AbstractController
 {
@@ -56,11 +44,7 @@ class TestController extends AbstractController
     
     }
 
-    #[Route('/', name: 'app_test')]
-    public function index(): Response
-    {
-        return $this->render('client/pages/index.html.twig');
-    }
+   
     
     #[Route('/shop', name: 'shop')]
     public function shop(): Response

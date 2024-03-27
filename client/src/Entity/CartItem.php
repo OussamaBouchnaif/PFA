@@ -11,14 +11,14 @@ class CartItem
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    public ?int $id = null;
+    private ?int $id = null;
 
     #[ORM\Column]
     private ?float $quantity = null;
 
     #[ORM\Column]
     private ?float $price = null;
-
+    
     #[ORM\ManyToOne(inversedBy: 'cartItems')]
     private ?Camera $Camera = null;
 
@@ -33,6 +33,11 @@ class CartItem
         $this->Camera = $Camera;
         $this->quantity = $quantity;
         $this->stockage = $stockage;
+    }
+    public function TotalPriceItem():float
+    {
+       return $this->getQuantity() * $this->getPrice();
+
     }
     public function getId(): ?int
     {

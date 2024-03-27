@@ -22,12 +22,10 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class CameraRepository extends ServiceEntityRepository
 {
    
-   private CallApiCameraService $callapi;
 
-    public function __construct(ManagerRegistry $registry,CallApiCameraService $callapi)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Camera::class);
-        $this->callapi = $callapi;   
         
     }
     public function extractPaginationInfo(int $totalPages,int $page)
@@ -59,6 +57,17 @@ class CameraRepository extends ServiceEntityRepository
 
         );
         return $data;
+    }
+    public function findCameraWithImages($idcamera)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c, i FROM App\Entity\Camera c
+                 JOIN c.imageCameras i
+                 WHERE c.id = :id'
+            )
+            ->setParameter('id', $idcamera)
+            ->getOneOrNullResult();
     }
    
 

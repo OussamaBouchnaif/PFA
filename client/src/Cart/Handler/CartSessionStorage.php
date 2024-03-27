@@ -11,19 +11,15 @@ use \Symfony\Bundle\SecurityBundle\Security;
 
 class CartSessionStorage implements CartStorageInterface
 {
-    private $session;
     private $cartSessionKey = 'cart';
     private CartSessionRepository $cartSessionRepo;
     private Security $security;
    
-    public function __construct(RequestStack $requestStack,CartSessionRepository $cartSessionRepo,Security $security)
+    public function __construct(private readonly RequestStack $request,CartSessionRepository $cartSessionRepo,Security $security)
     {
-        // Récupérer la session actuelle à partir de la pile de requêtes
-        $this->session = $requestStack->getCurrentRequest()->getSession();
         $this->cartSessionRepo = $cartSessionRepo;
         $this->security = $security;
 
-        
     }
     
     public function addToCart($item)
@@ -34,15 +30,30 @@ class CartSessionStorage implements CartStorageInterface
    
     public function getCart()
     {
-        $cart = $this->session->get($this->cartSessionKey);
+        $session = $this->request->getSession();
+        $cart = $session->get($this->cartSessionKey);
 
         if (!$cart) {
             $cart = new Cart();
             $cart->setClient($this->security->getUser());
-            $this->session->set($this->cartSessionKey, $cart);
+            $session->set($this->cartSessionKey, $cart);
         }
 
         return $cart;
+    }
+    
+    public function TotalPriceItems():float
+    {
+        $total = 0;
+        foreach($this->getCart() as $item)
+        {
+            $total += $item->TotalPriceItem();
+        }
+        return $total;
+    }
+    public function removeItem()
+    {
+        
     }
     public function updateCart(){
 
@@ -50,8 +61,5 @@ class CartSessionStorage implements CartStorageInterface
     public function clearCart(){
 
     }
-    private function saveCart(Cart $cart): void
-    {
-        $this->session->set($this->cartSessionKey, $cart);
-    }
+
 }

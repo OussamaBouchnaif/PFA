@@ -18,7 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DetailsController extends AbstractController
 {
     #[Route('/details/{id}', name: 'app_details')]
-    public function index(Camera $camera,AvisCameraRepository $avisRepo,CallApiCameraService $callapi,Factory $factory,Request $request): Response
+    public function index(Camera $camera,AvisCameraRepository $avisRepo,
+    CallApiCameraService $callapi,Factory $factory,Request $request): Response
     {
     
         $avisCamera = $factory->create(AvisCamera::class);

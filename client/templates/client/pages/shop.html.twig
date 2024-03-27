@@ -36,7 +36,66 @@
         position :relative;
         
     }
-    
+    .toast {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        border-radius: 12px;
+        background: #fff;
+        padding: 20px 35px 20px 25px;
+        box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transform: translateX(calc(100% + 30px));
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+      }
+      
+      .toast.active {
+        transform: translateX(0%);
+      }
+      
+      .toast .toast-content {
+        display: flex;
+        align-items: center;
+      }
+      
+      .toast-content .check {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+        min-width: 35px;
+        background-color: #4070f4;
+        color: #fff;
+        font-size: 20px;
+        border-radius: 50%;
+      }
+      
+      .toast-content .message {
+        display: flex;
+        flex-direction: column;
+        margin: 0 20px;
+      }
+      
+      .message .text {
+        font-size: 16px;
+        font-weight: 400;
+        color: #666666;
+      }
+      
+      .message .text.text-1 {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .toast {
+        display: none; /* Cache le toast par défaut */
+        /* Autres styles */
+      }
+      
+      .toast.active {
+        display: flex; /* Affiche le toast */
+      }
+      
 </style>
 {% endblock  %}
 
@@ -322,7 +381,6 @@
             </div>
         </div>
     </div>
-    <!--shop  area end-->
 
     <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -354,7 +412,7 @@
                                     </div>
                                     <div class="variants_selects ">
                                         <div class="modal_add_to_cart">
-                                            <form action="{{path('addtocart')}}">
+                                            <form action="{{path('addtocart')}}" id="addToCartForm" method="post">
                                                 <div class="variants_size">
                                                     <div class="" >
                                                         <h2>Stockage</h2>
@@ -368,9 +426,11 @@
                                                     
                                                 </div>
                                                 <input type="hidden" name="idcamera" id="idcamera">
-                                                <input min="1" max="100" step="2" value="1" type="number" name="quantity">
-                                                <button type="submit">add to cart</button>
-
+                                            
+                                                
+                                                  <input min="1" max="100" step="2" value="1" type="number" name="quantity">
+                                                  <button type="submit" id="addtc">add to cart</button>
+                                                  
                                             </form>
     
                                         </div>  
@@ -398,7 +458,45 @@
 {% endblock %}
 
 {% block javascripts %}
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var addToCartForm = document.getElementById('addToCartForm');
+            if (addToCartForm) {
+                addToCartForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Empêche la soumission classique du formulaire
+                    
+                    let formData = new FormData(this);
+            
+                    fetch('/addToCart', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest', // Assure une identification AJAX côté serveur
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        var cartContainer = document.getElementById('cartitems');
+                        if (cartContainer && data.html) {
+                            cartContainer.innerHTML = data.html;
+                            // Ferme le modal ici
+                            $('#modal_box').modal('hide');
+                            
+                        } else {
+                            alert(data.message || "Une erreur inattendue est survenue.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("Erreur lors de la communication avec le serveur.");
+                    });
+                });
+            }
+        });
+        
+    </script>
+    
+    
 {% endblock %}
 
 
