@@ -50,6 +50,16 @@ class CameraRepository extends ServiceEntityRepository
         }
         return $searchCriteria;
     }
+    public function pagination($cameras,$page,PaginatorInterface $paginator)
+    {
+        $data = $paginator->paginate(
+            $cameras,
+            $page,
+            9,
+
+        );
+        return $data;
+    }
    
 
     

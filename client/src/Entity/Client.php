@@ -49,6 +49,9 @@ class Client extends Personne
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
 
+    #[ORM\OneToMany(mappedBy: 'Client', targetEntity: Cart::class)]
+    private Collection $carts;
+
    
 
     public function __construct()
@@ -60,6 +63,7 @@ class Client extends Personne
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->roles[] = 'client';
+        $this->carts = new ArrayCollection();
 
     }
 
@@ -319,6 +323,36 @@ class Client extends Personne
     public function getRoles(): array
     {
         return [''];
+    }
+
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): static
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts->add($cart);
+            $cart->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): static
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getClient() === $this) {
+                $cart->setClient(null);
+            }
+        }
+
+        return $this;
     }
 
    
