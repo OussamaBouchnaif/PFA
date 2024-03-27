@@ -2,8 +2,6 @@
 
 namespace App\Cart\Factory;
 
-use App\Entity\Cart;
-use App\Enum\CartStatus;
 use App\Cart\Handler\CartStorageInterface;
 
 class CartFactory 

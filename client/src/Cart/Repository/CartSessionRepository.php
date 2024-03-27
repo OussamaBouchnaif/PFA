@@ -15,10 +15,7 @@ class CartSessionRepository
    
     public function __construct(RequestStack $requestStack)
     {
-        // Récupérer la session actuelle à partir de la pile de requêtes
         $this->session = $requestStack->getCurrentRequest()->getSession();
-
-        
     }
     
     public function addItem(Cart $cart,CartItem $cartItem)
