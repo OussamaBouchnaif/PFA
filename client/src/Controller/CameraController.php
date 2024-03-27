@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Camera;
-use Symfony\UX\Turbo\TurboBundle;
+use App\Entity\CartItem;
+use App\Forms\CartItemType;
 use App\Repository\CameraRepository;
+use App\Repository\CartItemRepository;
 use App\Repository\CategorieRepository;
 use App\Service\Api\CallApiCameraService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -23,7 +21,9 @@ class CameraController extends AbstractController
     private CallApiCameraService $callCamera;
     private CameraRepository $cameraRepo;
 
-    public function __construct(CategorieRepository $categorie,CallApiCameraService $callCamera,CameraRepository $cameraRepo)
+    public function __construct(CategorieRepository $categorie,
+    CallApiCameraService $callCamera,CameraRepository $cameraRepo,
+    )
     {
         $this->categorie = $categorie;
         $this->callCamera = $callCamera;
@@ -48,19 +48,13 @@ class CameraController extends AbstractController
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria,$session);
         $session->set('searchCriteria', $searchCriteria);
         $cameras = $this->callCamera->SearchBy($searchCriteria);
-        $data = $paginator->paginate(
-            $cameras,
-            $page,
-            9,
-
-        );
-
+        $data = $this->cameraRepo->pagination($cameras,$page,$paginator);
         return $this->render('client/pages/shop.html.twig', [
             'cameras' => $data,
             'categories'=> $this->categorie->findAll(),
             'items'=>$this->callCamera->getItems(),
             'pagination'=>$this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9),$page),
-            'route' => 'camera_search'
+            'route' => 'camera_search',
         ]);
       
        
@@ -77,16 +71,12 @@ class CameraController extends AbstractController
             'categories'=> $this->categorie->findAll(),
             'items'=>$this->callCamera->getItems(),
             'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($this->callCamera->getItems()/9),$page),
-            'route' => 'fetch'
+            'route' => 'fetch',
 
         ]);
        
     }
-
-  
-    
-    
- 
    
+  
 
 }

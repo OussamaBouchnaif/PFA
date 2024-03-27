@@ -115,12 +115,15 @@ function setupQuickViewButtons() {
             var price = this.getAttribute('data-price');
             var description = this.getAttribute('data-description');
             var image = this.getAttribute('data-image');
+            var id = this.getAttribute('data-camera');
 
             // Mise à jour du contenu du modal
             document.querySelector('#modal_box .modal_title h2').textContent = name;
+            document.querySelector('#idcamera').value = id;
             document.querySelector('#modal_box .modal_price .new_price').textContent = "$" + price;
             document.querySelector('#modal_box .modal_description p').textContent = description;
             document.querySelector('#modal_box .modal_zoom_gallery .product_zoom_thumb img').src = image;
+            
         });
     });
 }

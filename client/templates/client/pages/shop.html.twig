@@ -85,7 +85,7 @@
                                     <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount"  readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                        <input type="text" name="price_range" id="amount"  readonly >
                                         
                                     </form>
                                 </div>
@@ -215,7 +215,7 @@
                         <div id="loadingSpinner" style="display: none;">
                             <div class="spinner"></div>
                         </div>
-                        
+                        {% if cameras is not empty %}
                             {%  for camera in cameras %}
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                                     <div class="single_product card-box">
@@ -234,12 +234,13 @@
                                                     <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
                                                     data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
                     
-                                                    <li ><a class="quick_view" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="{{ endpoint_minio ~ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+                                                    <li ><a class="quick_view"    data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
                                                     <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
                                                     data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                                                 </ul>
                                                 
                                             </div>
+                                           
                                             <div class="product_label">
                                                 <span>-18%</span>
                                             </div>
@@ -261,7 +262,7 @@
                                                 <span class="old_price">$46.00</span>
                                             </div>
                                             <div class="add_to_cart">
-                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}"  data-image="http://127.0.0.1:9000/fichier/{{ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
+                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{ endpoint_minio ~ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
                                             </div>
                                         </div>
                                         <div class="product_list_content">
@@ -275,44 +276,47 @@
                                                 <p>{{camera.description}}</p>
                                             </div>
                                             <div class="add_to_cart">
-                                                <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+                                                <button type="button" class="btn btn-primary" href="" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</button>
                     
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                        
+                              
                             {% endfor %} 
-                    </div>
-                    
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            {% if pagination.currentPage > 1 %}
+                        {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-warning" role="alert">
+                                No cameras available.
+                            </div>
+                        </div>
+                        {% endif %}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+
                                 <li class="page-item">
                                     <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
                                 </li>
-                            {% endif %}
-                    
-                            {% for page in 1..pagination.totalPages %}
-                                <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
 
-                                </li>
-                            {% endfor %}
-                    
-                            {% if pagination.currentPage < pagination.totalPages %}
+                        
+                                {% for page in 1..pagination.totalPages %}
+                                    <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
+    
+                                    </li>
+                                {% endfor %}
+                        
+                                
                                 <li class="page-item">
                                     <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
                                 </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-            
+                                
+                            </ul>
+                        </nav>
+                    </div>
                     
                     
-                    
-                    
-                    
+
 
                 </div>
             </div>
@@ -349,54 +353,37 @@
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,  </p>
                                     </div>
                                     <div class="variants_selects ">
-                                        <div class="variants_size" >
-                                           
-                                            <div class="w-100">
-                                                <h2>Resolution</h2>
-                                                <select class="select_option w-100">   
-                                                    <option selected value="1">SD (Standard Definition)</option>
-                                                    <option value="1">HD (High Definition) </option>
-                                                    <option value="1">4K (Ultra High Definition)</option>
-                                                    
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="variants_size">
-                                            <div class="w-100" >
-                                                <h2>Stockage</h2>
-                                                <select class="select_option w-100">
-                                                    <option selected value="1">2000 G</option>
-                                                    <option value="1">100 G</option>
-                                                    <option value="1">500 G</option>
-                                                    <option value="1">1000 G</option>
-                                                    
-                                                </select>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="panel-default">
-                                            <div class="variants_size">
-                                                <h2>Conectivite</h2>
-                                            </div>
-                                            
-                                            <div class="panel_radio">
-                                                <input id="" name="r" type="radio" data-target="createp_account" />
-                                                <span class="checkmark"></span>
-                                            </div>
-                                            <label for="payment1" data-toggle="collapse" data-target="#panel1" >Yes</label>
-                                            <div class="panel_radio">
-                                                <input id="" name="r" type="radio" data-target="createp_account" />
-                                                <span class="checkmark"></span>
-                                            </div>
-                                            <label for="payment1" data-toggle="collapse" data-target="#panel1" >Now</label>
-                                            
-                                        </div>
                                         <div class="modal_add_to_cart">
-                                            <form action="#">
-                                                <input min="1" max="100" step="2" value="1" type="number">
+                                            <form action="{{path('addtocart')}}">
+                                                <div class="variants_size">
+                                                    <div class="" >
+                                                        <h2>Stockage</h2>
+                                                        <select class="select_option" name="stockage">
+                                                            <option selected value="1000">1000G</option>
+                                                            <option value="1200">1200G</option>
+                                                            <option value="1500">1500G</option>
+                                                            <option value="2000">2000G</option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <input type="hidden" name="idcamera" id="idcamera">
+                                                <input min="1" max="100" step="2" value="1" type="number" name="quantity">
                                                 <button type="submit">add to cart</button>
+
                                             </form>
-                                        </div>
+    
+                                        </div>  
+                                    </div>
+                                    <div class="modal_social">
+                                        <h2>Share this product</h2>
+                                        <ul>
+                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
                                     </div>
                                     
                                 </div>
@@ -412,7 +399,6 @@
 
 {% block javascripts %}
 
-    
 {% endblock %}
 
 

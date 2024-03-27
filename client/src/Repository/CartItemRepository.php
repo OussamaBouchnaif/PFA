@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\CartItem;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Forms\CartItemType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<CartItem>
@@ -21,6 +23,16 @@ class CartItemRepository extends ServiceEntityRepository
         parent::__construct($registry, CartItem::class);
     }
 
+
+
+    public function handleCartItemForm(Request $request)
+    {
+        $cartItem = new CartItem();
+        $form = $this->createForm(CartItemType::class, $cartItem);
+        $form->handleRequest($request);
+
+        return $form;
+    }
 //    /**
 //     * @return CartItem[] Returns an array of CartItem objects
 //     */
