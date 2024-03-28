@@ -58,6 +58,8 @@ class CameraController extends AbstractController
             'items'=>$this->callCamera->getItems(),
             'pagination'=>$this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9),$page),
             'route' => 'camera_search',
+            'cart'=> $this->cartStorage->getCart(),
+            'totalItems'=>$this->cartStorage->TotalPriceItems(),
         ]);
       
        
@@ -66,6 +68,7 @@ class CameraController extends AbstractController
     #[Route('/fetchCamera',name:'fetch')]
     public function fetch(Request $request,SessionInterface $session):Response
     {
+        
         $session->remove('searchCriteria');
         $page = $request->query->getInt('page',1);   
 

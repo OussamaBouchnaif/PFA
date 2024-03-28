@@ -38,7 +38,6 @@ class CartController extends AbstractController
             $quantity = $request->request->get('quantity');
             $idcamera = $request->request->get('idcamera');
             $stockage = $request->request->get('stockage');
-            
             if (!empty($quantity) && !empty($idcamera) && !empty($stockage)) {
                 
                 $camera = $this->camRepo->findCameraWithImages($idcamera);
@@ -49,11 +48,8 @@ class CartController extends AbstractController
                     'totalItems' => $this->cartStorage->TotalPriceItems(),
                 ]);
                 return new JsonResponse(['html' => $htmlContent]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => 'Des informations sont manquantes']);
-            }
+            } 
         } else {
-            // Gérer la requête non-AJAX
             return $this->redirectToRoute('fetch');
         }
     }
@@ -61,6 +57,12 @@ class CartController extends AbstractController
     public function clear(Request $request){
         $request->getSession()->remove('cart');
         return $this->redirectToRoute('fetch');
+    }
+
+    #[Route('/deleteCamera/{id}',name:'deletecamera')]
+    public function deleteCamera(CartItem $cartItem)
+    {
+        dd($cartItem);
     }
 
 }
