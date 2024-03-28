@@ -41,6 +41,7 @@
                                     </thead>
                                     <tbody>
                                         {% if cart is not empty %}
+                                        
                                             {% for item in cart.items %}
                                                 
                                                 <tr class="border-top">
@@ -89,6 +90,13 @@
                                         {% endif %}
                                     </tbody>
                                 </table>
+                                {% if cart is empty or cart.items is empty %}
+                                    <div class="col-12">
+                                        <div class="alert alert-warning" role="alert">
+                                            No items in your cart.
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="cart_page_button border-top d-flex justify-content-between">
                                 <div class="shopping_cart_btn">

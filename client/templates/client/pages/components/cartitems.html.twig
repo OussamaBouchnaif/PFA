@@ -23,11 +23,18 @@
                     <p>{{item.quantity}} x <span> ${{item.price}} </span></p>
                 </div>
                 <div class="cart_remove">
-                    <a href="#"><i class="icon-close icons"></i></a>
+                    <a href="{{path('deletecamera')}}"><i class="icon-close icons"></i></a>
                 </div>
             </div>
         {% endfor %}
     {% endif %}
+    {% if cart is empty or cart.items is empty %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                No items in your cart.
+            </div>
+        </div>
+    {% endif %}    
     
 </div>
 <div class="mini_cart_table">
