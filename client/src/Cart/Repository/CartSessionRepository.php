@@ -10,20 +10,20 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CartSessionRepository
 {
-    private $session;
+
     private $cartSessionKey = 'cart';
    
-    public function __construct(RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $request)
     {
-        $this->session = $requestStack->getCurrentRequest()->getSession();
+
     }
     
     public function addItem(Cart $cart,CartItem $cartItem)
     {
-        
+        $session = $this->request->getSession();
         $found = false;
         foreach ($cart->getItems() as $item) {
-            if ($item->getCamera() === $cartItem->getCamera()) {
+            if ($item->getCamera()->getId() === $cartItem->getCamera()->getId()) {
                 $item->setQuantity($item->getQuantity() + $cartItem->getQuantity());
                 $item->setStockage($cartItem->getStockage());
                 $item->setPrice($cartItem->getCamera()->getPrix());
@@ -32,19 +32,20 @@ class CartSessionRepository
             }
         }
 
-        $cartItemId = $this->session->get('id', 0);
+        $cartItemId = $session->get('id', 0);
         if (!$found) {
             $item = new CartItem($cartItem->getCamera(),$cartItem->getQuantity(),$cartItem->getStockage());
             $item->setId(++$cartItemId);
             $item->setPrice($cartItem->getCamera()->getPrix());
             $cart->addItem($item);
-            $this->session->set('id', $cartItemId);
+            $session->set('id', $cartItemId);
         }
     
         $this->saveCart($cart); 
     }
     private function saveCart(Cart $cart): void
     {
-        $this->session->set($this->cartSessionKey, $cart);
+        $session = $this->request->getSession();
+        $session->set($this->cartSessionKey, $cart);
     }
 }

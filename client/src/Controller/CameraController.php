@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Cart\Handler\CartStorageInterface;
 use App\Entity\CartItem;
 use App\Forms\CartItemType;
 use App\Repository\CameraRepository;
@@ -20,14 +21,16 @@ class CameraController extends AbstractController
     private CategorieRepository $categorie;
     private CallApiCameraService $callCamera;
     private CameraRepository $cameraRepo;
-
+    private CartStorageInterface $cartStorage;
     public function __construct(CategorieRepository $categorie,
     CallApiCameraService $callCamera,CameraRepository $cameraRepo,
+    CartStorageInterface $cartStorage
     )
     {
         $this->categorie = $categorie;
         $this->callCamera = $callCamera;
         $this->cameraRepo = $cameraRepo;
+        $this->cartStorage = $cartStorage;
     }
 
 
@@ -72,6 +75,8 @@ class CameraController extends AbstractController
             'items'=>$this->callCamera->getItems(),
             'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($this->callCamera->getItems()/9),$page),
             'route' => 'fetch',
+            'cart'=> $this->cartStorage->getCart(),
+            'totalItems'=>$this->cartStorage->TotalPriceItems(),
 
         ]);
        

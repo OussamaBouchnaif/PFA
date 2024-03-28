@@ -2,7 +2,6 @@
 
 namespace App\Cart\Handler;
 
-use App\Entity\Camera;
 use App\Entity\CartItem;
 
 class CartDataBaseStorage implements CartStorageInterface
@@ -13,10 +12,18 @@ class CartDataBaseStorage implements CartStorageInterface
     public function updateCart(){
 
     }
+    public function removeItem()
+    {
+        
+    }
     public function clearCart(){
 
     }
     public function getCart(){
         
+    }
+    public function TotalPriceItems():float
+    {
+        return 0.0;
     }
 }
