@@ -33,10 +33,12 @@
                                 <div class="mb-3">
                                     {{ form_label(form.nom) }}
                                     {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.nom) }}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.email) }}
                                     {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.email) }}
                                 </div>
                             </div>
                         </div>
@@ -48,10 +50,12 @@
                                 <div class="mb-3">
                                     {{ form_label(form.password.first) }}
                                     {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.password.first) }}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.password.second) }}
-                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}                              
+                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.password.second) }}
                                 </div>
                             </div>
                         </div>
@@ -65,10 +69,12 @@
                                 <div class="mb-3">
                                     {{ form_label(form.phoneNumber) }}
                                     {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.phoneNumber) }}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.prenom) }}
                                     {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.prenom) }}
                                 </div>
                             </div>
                         </div>
@@ -80,10 +86,12 @@
                                 <div class="mb-3">
                                     {{ form_label(form.ville) }}
                                     {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.ville) }}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.genre) }}
                                     {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.genre) }}
                                 </div>
                             </div>
                         </div>
@@ -99,6 +107,7 @@
                                             <h3>Drag & Drop Files Here</h3>
                                                     {{ form_label(form.imageFile) }}
                                                     {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                                    {{ form_errors(form.imageFile) }}
                                         </div>
                                         <div id="gallery"></div>
                                     </div>

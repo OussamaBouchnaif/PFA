@@ -51,27 +51,33 @@ class CameraController extends AbstractController
     #[Route('/camera/Add_camera', name: 'Add_camera')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
         $camera = new Camera();
         $imageCamera = new ImageCamera();
+
         $formCamera = $this->createForm(CameraType::class, $camera);
-        $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
+
+        $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formImage->handleRequest($request);
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+
             $camera = $formCamera->getData();
-            $image = $formImage->getData();
-            
-            $image->setCamera($camera);
-            $entityManager->persist($image);
+
+            $imageCamera->setCamera($camera);
+            $entityManager->persist($imageCamera);
+
             $entityManager->persist($camera);
             $entityManager->flush();
+
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
-        return $this->render('admin/Cameras/addProduct.html.twig', [
 
-            'form' => $formCamera->createView(), 'formI' => $formImage->createView()
+        return $this->render('admin/Cameras/addProduct.html.twig', [
+            'form' => $formCamera->createView(),
+            'formI' => $formImage->createView(),
         ]);
     }
 
