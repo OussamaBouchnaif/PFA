@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
             $client = $form->getData();
             $repository->addClient($client);
             
-            return $this->redirectToRoute('app_test');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('client/pages/signup.html.twig', ['form' => $form]);
@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
          if ($this->getUser()) {
-             return $this->redirectToRoute('app_test');
+             return $this->redirectToRoute('app_home');
          }
 
         $error = $authenticationUtils->getLastAuthenticationError();

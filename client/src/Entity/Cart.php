@@ -90,7 +90,17 @@ class Cart
     {
         return $this->items;
     }
+     /**
+     * @param Collection<int, CartItem>|CartItem[] $items
+     */
+    public function setItems($items): void
+    {
+        if (is_array($items)) {
+            $items = new ArrayCollection($items);
+        }
 
+        $this->items = $items;
+    }
     public function addItem(CartItem $item): static
     {
         if (!$this->items->contains($item)) {

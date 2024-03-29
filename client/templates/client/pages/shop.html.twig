@@ -36,12 +36,10 @@
         position :relative;
         
     }
-    .swal2-popup {
-        font-size: 8px !important; /* Ajustez la taille de la police à l'intérieur de l'alerte */
-        width: auto !important; /* Ajustez la largeur de l'alerte */
-        /* Maximum width */
+    .my-custom-popup-class {
+        font-size: 8px; /* Taille de police personnalisée */
+        width: auto  !important;
     }
-      
 </style>
 {% endblock  %}
 
@@ -404,53 +402,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var addToCartForm = document.getElementById('addToCartForm');
-            if (addToCartForm) {
-                addToCartForm.addEventListener('submit', function(e) {
-                    e.preventDefault(); // Empêche la soumission classique du formulaire
-        
-                    let formData = new FormData(this);
-        
-                    fetch('/addToCart', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest', // Assure une identification AJAX côté serveur
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        var cartContainer = document.getElementById('cartitems');
-                        if (cartContainer && data.html) {
-                            cartContainer.innerHTML = data.html;
-        
-                            // Ferme le modal si ouvert. Remplacez 'modal_box' par l'ID de votre modal si différent.
-                            $('#modal_box').modal('hide');
-        
-                            // Affiche une notification SweetAlert pour informer l'utilisateur de la réussite de l'ajout au panier.
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Product added to cart successfully',
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                        } else {
-                            alert(data.message || "Une erreur inattendue est survenue.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert("Erreur lors de la communication avec le serveur.");
-                    });
-                });
-            }
-        });
-        
-    </script>
-    
     
 {% endblock %}
 

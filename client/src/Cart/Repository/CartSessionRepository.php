@@ -40,12 +40,24 @@ class CartSessionRepository
             $cart->addItem($item);
             $session->set('id', $cartItemId);
         }
-    
-        $this->saveCart($cart); 
+
     }
     private function saveCart(Cart $cart): void
     {
         $session = $this->request->getSession();
         $session->set($this->cartSessionKey, $cart);
+    }
+
+    public function removeItem(Cart $cart,int $iditem)
+    {
+        $items = $cart->getItems();
+
+        foreach ($items as $index => $item) {
+            if ($item->getId() == $iditem) { 
+                unset($items[$index]);
+                break; 
+            }
+        }
+        $cart->setItems($items);
     }
 }

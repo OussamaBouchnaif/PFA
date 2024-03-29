@@ -27,6 +27,7 @@ class CartSessionStorage implements CartStorageInterface
     {
         $cart = $this->getCart(); 
         $this->cartSessionRepo->addItem($cart,$item);
+        $this->saveCart($cart);
     }
    
     public function getCart()
@@ -57,13 +58,17 @@ class CartSessionStorage implements CartStorageInterface
         
         return $total;
     }
-    public function removeItem()
+    public function removeFromCart(Cart $cart,int $idItem)
     {
-        
+        $this->cartSessionRepo->removeItem($cart,$idItem);
+        $this->saveCart($cart);
     }
-    public function updateCart(){
+    private function saveCart(Cart $cart): void
+    {
+        $session = $this->request->getSession();
+        $session->set($this->cartSessionKey, $cart);
+    }
 
-    }
     public function clearCart(){
 
     }
