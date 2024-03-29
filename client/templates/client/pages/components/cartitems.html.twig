@@ -23,7 +23,7 @@
                     <p>{{item.quantity}} x <span> ${{item.price}} </span></p>
                 </div>
                 <div class="cart_remove">
-                    <a href="{{path('deletecamera')}}"><i class="icon-close icons"></i></a>
+                    <a href="{{path('deletecamera',{id:item.id})}}"><i class="icon-close icons"></i></a>
                 </div>
             </div>
         {% endfor %}

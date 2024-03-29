@@ -25,11 +25,25 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'app_cart')]
     public function index(): Response
     {
+        
         $cartData = $this->cartStorage->getCart();
+        
         return $this->render('client/pages/cart/cart.html.twig', [
             'cart' => $cartData,
             'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
+    }
+    #[Route('/fetchCart',name:'fatch_cart')]
+    public function fetchCart()
+    {
+
+        $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
+            'cart' => $this->cartStorage->getCart(),
+            'totalItems' => $this->cartStorage->TotalPriceItems(),
+        ]);
+        return new JsonResponse(['html' => $htmlContent]);
+             
+       
     }
     #[Route('/addToCart',name:'addtocart')]
     public function addToCart(Request $request)
@@ -43,11 +57,7 @@ class CartController extends AbstractController
                 $camera = $this->camRepo->findCameraWithImages($idcamera);
                 $cartItem = new CartItem($camera, $quantity, $stockage);
                 $this->cartStorage->addToCart($cartItem);
-                $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
-                    'cart' => $this->cartStorage->getCart(),
-                    'totalItems' => $this->cartStorage->TotalPriceItems(),
-                ]);
-                return new JsonResponse(['html' => $htmlContent]);
+                return $this->redirectToRoute('fatch_cart');
             } 
         } else {
             return $this->redirectToRoute('fetch');
@@ -60,9 +70,23 @@ class CartController extends AbstractController
     }
 
     #[Route('/deleteCamera/{id}',name:'deletecamera')]
-    public function deleteCamera(CartItem $cartItem)
+    public function deleteCamera(int $id,Request $request)
     {
-        dd($cartItem);
+        if ($request->isXmlHttpRequest()) {
+            $cart = $this->cartStorage->getCart();
+            $this->cartStorage->removeFromCart($cart, $id);
+
+            $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
+                'cart' => $this->cartStorage->getCart(),
+                'totalItems' => $this->cartStorage->TotalPriceItems(),
+            ]);
+            
+            return new JsonResponse(['success' => true, 'html' => $htmlContent]);
+        }
+    
+        return new JsonResponse(['success' => false, 'message' => 'Invalid request.'], 400);
+       
+        
     }
 
 }
