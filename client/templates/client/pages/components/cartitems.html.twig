@@ -13,7 +13,7 @@
                 <div class="cart_img">
                     {% set imageCamera = item.camera.imageCameras|first %}
                     {% if imageCamera %}
-                        <a href="#"><img src="{{ endpoint_minio ~ imageCamera.image }}" alt=""></a>
+                        <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
                     {% else %}
                         <img src="" alt="oussama">
                     {% endif %}

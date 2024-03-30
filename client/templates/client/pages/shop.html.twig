@@ -226,7 +226,7 @@
                                             <a href="{{ path('app_details', {id: camera.id}) }}">
                                                 {% set imageCamera = camera.imageCameras|first %}
                                                 {% if imageCamera %}
-                                                    <img src="{{ endpoint_minio ~ imageCamera.image }}" alt="Camera Image">   
+                                                    <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
                                                     {% set img = imageCamera.image %}
                                                 {% else %}
                                                     <!-- Handle the case where there is no image, e.g., display a placeholder image or nothing at all -->
@@ -265,7 +265,7 @@
                                                 <span class="old_price">$46.00</span>
                                             </div>
                                             <div class="add_to_cart">
-                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{ endpoint_minio ~ img }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
+                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{ minio_url(img) }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a> 
                                             </div>
                                         </div>
                                         <div class="product_list_content">

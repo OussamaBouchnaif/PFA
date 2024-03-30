@@ -19,10 +19,9 @@ class DetailsController extends AbstractController
 {
     #[Route('/details/{id}', name: 'app_details')]
     public function index(Camera $camera,AvisCameraRepository $avisRepo,
-    CallApiCameraService $callapi,Factory $factory,Request $request): Response
+    CallApiCameraService $callapi,Request $request): Response
     {
-    
-        $avisCamera = $factory->create(AvisCamera::class);
+        $avisCamera = new AvisCamera();
         $form = $this->createForm(AvisType::class);
         $form->handleRequest($request);
         $comments = $camera->getAvisCameras();
