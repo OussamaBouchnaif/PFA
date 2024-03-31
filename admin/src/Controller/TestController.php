@@ -29,15 +29,11 @@ class TestController extends AbstractController
         $formImage->handleRequest($request);
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+
             $camera = $formCamera->getData();
 
-            if ($formImage->isSubmitted() && $formImage->isValid()) {
-                $imageCamera->setCamera($camera);
-                $entityManager->persist($imageCamera);
-                $entityManager->flush();
-
-                $this->addFlash('success', 'Image uploaded successfully!');
-            }
+            $imageCamera->setCamera($camera);
+            $entityManager->persist($imageCamera);
 
             $entityManager->persist($camera);
             $entityManager->flush();

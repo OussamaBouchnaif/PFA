@@ -51,55 +51,79 @@ class CameraController extends AbstractController
     #[Route('/camera/Add_camera', name: 'Add_camera')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $camera = new Camera();
         $imageCamera = new ImageCamera();
+
         $formCamera = $this->createForm(CameraType::class, $camera);
-        $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formCamera->handleRequest($request);
+
+        $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formImage->handleRequest($request);
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+
             $camera = $formCamera->getData();
-            $image = $formImage->getData();
-            
-            $image->setCamera($camera);
-            $entityManager->persist($image);
+
+            $imageCamera->setCamera($camera);
+            $entityManager->persist($imageCamera);
+
             $entityManager->persist($camera);
             $entityManager->flush();
+
             $this->addFlash('success', 'Camera added successfully!');
             return $this->redirectToRoute('camera');
         }
+
         return $this->render('admin/Cameras/addProduct.html.twig', [
-
-            'form' => $formCamera->createView(), 'formI' => $formImage->createView()
-        ]);
-    }
-
-    #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
-    public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera): Response
-    {
-        $formCamera = $this->createForm(CameraType::class, $camera, [
-            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-
-        $formImage = $this->createForm(PhotoType::class, null, [
-            'attr' => ['class' => 'form', 'enctype' => 'multipart/form-data'],
-        ]);
-
-        $formCamera->handleRequest($request);
-        $formImage->handleRequest($request);
-
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
-            $entityManager->flush();
-            $this->addFlash('success', 'Camera updated successfully!');
-            return $this->redirectToRoute('camera');
-        }
-
-        return $this->render('admin/Cameras/editProduct.html.twig', [
             'form' => $formCamera->createView(),
             'formI' => $formImage->createView(),
         ]);
     }
+   
+#[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
+public function editCamera(Request $request, EntityManagerInterface $entityManager, int $id): Response
+{
+    // Fetch the camera entity to edit
+    $camera = $entityManager->getRepository(Camera::class)->find($id);
+    
+    if (!$camera) {
+        throw $this->createNotFoundException('Camera not found');
+    }
+
+    // Create form for camera details
+    $formCamera = $this->createForm(CameraType::class, $camera);
+    $formCamera->handleRequest($request);
+
+    // Create form for photo
+    $imageCamera = new ImageCamera();
+    $formImage = $this->createForm(PhotoType::class, $imageCamera);
+    $formImage->handleRequest($request);
+
+    if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+        // Handle camera form submission
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Camera details updated successfully!');
+        return $this->redirectToRoute('camera');
+    }
+
+    if ($formImage->isSubmitted() && $formImage->isValid()) {
+        
+        $entityManager->persist($imageCamera);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Camera photo updated successfully!');
+        return $this->redirectToRoute('camera');
+    }
+
+    return $this->render('admin/Cameras/editProduct.html.twig', [
+        'form' => $formCamera->createView(),
+        'camera' => $camera,
+        'formI' => $formImage->createView(),
+    ]);
+}
+
 
     #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
     public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): Response

@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CameraRepository::class)]
 
@@ -20,21 +21,32 @@ class Camera
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "Please provide a name.")]
+    #[Assert\Length(max: 100, maxMessage: "Name should not exceed {{ limit }} characters.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 400)]
+    #[Assert\NotBlank(message: "Please provide a description.")]
+    #[Assert\Length(max: 400, maxMessage: "Description should not exceed {{ limit }} characters.")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Please provide a price.")]
+    #[Assert\Type(type: "float", message: "Price must be a valid number.")]
     private ?float $prix = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotNull(message: "Please provide a stock.")]
+    #[Assert\Type(type: "int", message: "Stock must be a valid number.")]
     private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: "Please provide a date.")]
+    #[Assert\Type(type: "\DateTimeInterface", message: "Date must be a valid DateTime object.")]
     private ?\DateTimeInterface $dateAjout = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "Status should not exceed {{ limit }} characters.")]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
@@ -57,30 +69,47 @@ class Camera
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 40)]
+    #[Assert\NotBlank(message: "Please provide a color.")]
+    #[Assert\Length(max: 40, maxMessage: "Color should not exceed {{ limit }} characters.")]
     private ?string $couleur = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Please specify if the camera has night vision.")]
     private ?bool $visionNoctrune = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Please provide a weight.")]
+    #[Assert\Type(type: "float", message: "Weight must be a valid number.")]
+
     private ?float $poids = null;
 
     #[ORM\Column(length: 200)]
+    #[Assert\NotBlank(message: "Please provide the material.")]
+    #[Assert\Length(max: 200, maxMessage: "Material should not exceed {{ limit }} characters.")]
     private ?string $materiaux = null;
 
     #[ORM\Column(length: 40)]
+    #[Assert\NotBlank(message: "Please provide the resolution.")]
+    #[Assert\Length(max: 40, maxMessage: "Resolution should not exceed {{ limit }} characters.")]
     private ?string $resolution = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Please provide the angle of vision.")]
+    #[Assert\Length(max: 20, maxMessage: "Angle of vision should not exceed {{ limit }} characters.")]
     private ?string $angleVision = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Please specify if the camera has connectivity.")]
     private ?bool $connectivite = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Please provide a storage capacity.")]
+    #[Assert\Type(type: "float", message: "Storage must be a valid number.")]
     private ?float $stockage = null;
 
     #[ORM\Column(length: 40)]
+    #[Assert\NotBlank(message: "Please provide the power source.")]
+    #[Assert\Length(max: 40, maxMessage: "Power source should not exceed {{ limit }} characters.")]
     private ?string $alimentation = null;
 
     #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]

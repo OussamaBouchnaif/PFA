@@ -65,8 +65,13 @@
     tbody tr:not(:last-child) {
         margin-bottom: 10px; /* Adjust spacing between rows */
     }
+    
+        .col-xl-9 {
+    
+        width: 110%;
+    }
     .row{
-       whith:100%;
+        width: 135%;
     }
     </style>
 {% endblock %}
@@ -84,12 +89,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Products</h4>
+                                    <h4 class="mb-sm-0">USERS</h4>
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Products</li>
+                                            <li class="breadcrumb-item active">USERS</li>
                                         </ol>
                                     </div>
 
@@ -132,48 +137,47 @@
                                         <div class="card-body">
 
                                     <table id="myTable" class="table">
-                                            <thead>
-                                                <tr class="align-middle custom-header-bg">
-                                                    <th class="custom-header text-center">Photo</th>
-                                                    <th class="custom-header text-center">Nom</th>
-                                                    <th class="custom-header text-center">Prenom</th>
-                                                    <th class="custom-header text-center">Email</th>
-                                                    <th class="custom-header text-center">Ville</th>
-                                                    <th class="custom-header text-center">Rôles</th>
-                                                    <th class="custom-header text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for user in users %}
-                                                <tr>                                
-                                                    <td>
+                                        <thead>
+                                            <tr class="align-middle custom-header-bg">
+                                                <th class="custom-header text-center">Photo</th>
+                                                <th class="custom-header text-center">Nom</th>
+                                                <th class="custom-header text-center">Prenom</th>
+                                                <th class="custom-header text-center">Email</th>
+                                                <th class="custom-header text-center">Ville</th>
+                                                <th class="custom-header text-center">Rôles</th>
+                                                <th class="custom-header text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for user in users %}
+                                            <tr>                                
+                                                <td>
                                                     <div class="avatar-group">
                                                         <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="{{ user.nom }}">
-                                                            {% if user.image %}
-                                                                <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="" class="rounded-circle avatar-xxs">
-                                            
+                                                            {% if user.getImage() %}
+                                                                <img src="http://127.0.0.1:9000/fichier/{{user.image}}" alt="" class="rounded-circle avatar-xxs">
                                                             {% endif %}
                                                         </a>
                                                     </div>
                                                 </td>
-                                                    <td class="align-middle text-center">{{ user.nom }}</td>
-                                                    <td class="align-middle text-center">{{ user.prenom }}</td>
-                                                    <td class="align-middle text-center">{{ user.email }}</td>
-                                                    <td class="align-middle text-center">{{ user.ville }}</td>
-                                                    <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
-                                                    <td class="text-center align-middle horizontal-buttons">
-                                                       <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
-                                                            <i class="ri-delete-bin-line align-bottom me-2"></i>
-                                                        </a>
-                                                        <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
-                                                            <i class="ri-pencil-line align-bottom me-2"></i> 
-                                                        </a>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
+                                                <td class="align-middle text-center">{{ user.nom }}</td>
+                                                <td class="align-middle text-center">{{ user.prenom }}</td>
+                                                <td class="align-middle text-center">{{ user.email }}</td>
+                                                <td class="align-middle text-center">{{ user.ville }}</td>
+                                                <td class="align-middle text-center">{{ user.roles | join(', ') }}</td>
+                                                <td class="text-center align-middle horizontal-buttons">
+                                                    <a class="dropdown-item text-muted" id="delete" href="{{ path('user_delete', {id: user.id}) }}" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i>
+                                                    </a>
+                                                    <a class="text-muted" href="{{ path('user_edit', {id: user.id}) }}">
+                                                        <i class="ri-pencil-line align-bottom me-2"></i> 
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+
 
 
                                             <div class="tab-content text-muted">

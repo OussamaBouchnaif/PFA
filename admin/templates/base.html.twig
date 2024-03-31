@@ -116,16 +116,19 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <!-- item -->
+                                        {# {% for user in users %}
                                         <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                             <div class="d-flex">
-                                                <img src="assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                               {% if user.getImage() %}
+                                               <img src="http://127.0.0.1:9000/fichier/{{app.user.image}}" alt="" class="rounded-circle avatar-xxs">
+                                                {% endif %}
                                                 <div class="flex-grow-1">
-                                                    <h6 class="m-0">David Grasso</h6>
-                                                    <span class="fs-11 mb-0 text-muted">Web Designer</span>
+                                                    <h6 class="m-0">{{app.user.prenom}}</h6>
                                                 </div>
                                             </div>
                                         </a>
+                                          {% endfor %} #}
+
                                         <!-- item -->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                             <div class="d-flex">

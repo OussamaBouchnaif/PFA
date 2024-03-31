@@ -22,7 +22,7 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
     {
        
         $faker = Factory::create();
-        for ($i = 0; $i < 10; $i++) 
+        for ($i = 0; $i < 5; $i++) 
         {
             $client = new Client();
             $client->setNom($faker->lastName);
