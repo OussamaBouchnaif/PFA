@@ -108,12 +108,17 @@ public function editCamera(Request $request, EntityManagerInterface $entityManag
         return $this->redirectToRoute('camera');
     }
 
-    if ($formImage->isSubmitted() && $formImage->isValid()) {
-        
+    if ($formCamera->isSubmitted() && $formCamera->isValid()) {
+
+        $camera = $formCamera->getData();
+
+        $imageCamera->setCamera($camera);
         $entityManager->persist($imageCamera);
+
+        $entityManager->persist($camera);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Camera photo updated successfully!');
+        $this->addFlash('success', 'Camera added successfully!');
         return $this->redirectToRoute('camera');
     }
 
