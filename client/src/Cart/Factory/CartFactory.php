@@ -3,29 +3,29 @@
 namespace App\Cart\Factory;
 
 use App\Entity\Cart;
-use App\Enum\CartStatus;
-use App\Cart\Handler\CartStorageInterface;
+use App\Cart\Denormalizer\AbstractCartNormalizer;
+
 
 class CartFactory 
 {
-
-    public function build(CartStorageInterface $cartStorage)
+    private AbstractCartNormalizer $normaliser;
+    
+    public function __construct(AbstractCartNormalizer $normaliser)
     {
-        $cart = $cartStorage->getCart();
-        $newCart = new Cart();
-        $newCart->setStatus(CartStatus::placed)
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdateAt(new \DateTimeImmutable())
-            ->setClient($this->getUser());
-            
-        $this->addItemsToCart($cart,$newCart);
+        $this->normaliser = $normaliser;
+    }
+
+    public function build()
+    { 
+        $cart = new Cart();
+        $cartInfo = $this->normaliser->getCartInfo();
+        $cart->setStatus($cartInfo['Status'])
+            ->setCreatedAt($cartInfo['CreatedAt'])
+            ->setUpdateAt($cartInfo['UpdatedAt'])
+            ->setClient($cartInfo['Client'])
+            ->setItems($this->normaliser->getCartLines());
+        
         return $cart;
     }
-    public function addItemsToCart(Cart $cart, Cart $newCart)
-    {
-        $items = $cart->getItems();
-        foreach ($items as $item) {
-            $newCart->addItem($item);
-        }
-    }
+    
 }

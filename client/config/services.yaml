@@ -32,8 +32,7 @@ services:
     App\Twig\MinioExtension:
         arguments:
             $endpointMinio: '%env(ENDPOINT_MINIO)%'
-        tags:
-            - { name: twig.extension }
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
