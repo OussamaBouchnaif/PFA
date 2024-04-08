@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
     }
     
     #[Route('/signup', name: 'app_signup')]
-    public function signup(Request $request, ClientRepository $repository,Factory $factory): Response
+    public function signup(Request $request, ClientRepository $repository): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class,$client);

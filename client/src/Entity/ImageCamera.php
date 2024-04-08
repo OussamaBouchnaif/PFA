@@ -73,5 +73,10 @@ class ImageCamera
     {
         return $this->imageFile;
     }
+    public function __toString(): string
+    {
+        // Return a string that uniquely identifies the object, typically using an ID or a name
+        return sprintf('ImageCamera (ID: %s)', $this->id);
+    }
 
 }

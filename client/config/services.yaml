@@ -28,6 +28,9 @@ services:
     
     App\Cart\Handler\CartStorageInterface:
         alias: App\Cart\Handler\CartSessionStorage
+
+    App\Cart\Denormalizer\AbstractCartNormalizer:
+        alias: App\Cart\Denormalizer\CartSessionNormalizer
     
     App\Twig\MinioExtension:
         arguments:

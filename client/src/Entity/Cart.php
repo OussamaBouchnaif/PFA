@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
+
 class Cart
 {
     #[ORM\Id]
@@ -31,12 +32,23 @@ class Cart
     #[ORM\Column(length: 255,enumType:CartStatus::class)]
     private ?CartStatus $status = null;
 
+    #[ORM\Column]
+    private ?float $total = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Cart')]
+    private ?CodePromo $codePromo = null;
+
+
     public function __construct()
     {
-        $this->status = CartStatus::new;
         $this->items = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updateAt = new \DateTimeImmutable();
+        $this->status = CartStatus::new;
+    }
+    public function clear()
+    {
+        $this->setItems([]);
     }
     public function setId(int $id)
     {
@@ -128,10 +140,36 @@ class Cart
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(CartStatus $status): static
     {
         $this->status = $status;
 
         return $this;
     }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): static
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getCodePromo(): ?CodePromo
+    {
+        return $this->codePromo;
+    }
+
+    public function setCodePromo(?CodePromo $codePromo): static
+    {
+        $this->codePromo = $codePromo;
+
+        return $this;
+    }
+
+   
 }

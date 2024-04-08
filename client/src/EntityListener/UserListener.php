@@ -27,7 +27,9 @@ class UserListener {
 
     public function encodePassword(Personne $object,string $plainPassword)
     {
-        
+        if ($plainPassword === null) {
+            return;
+        }
         if ($plainPassword !== null) {
             $hashedPassword = $this->hasher->hashPassword($object, $plainPassword);
             $object->setPassword($hashedPassword);

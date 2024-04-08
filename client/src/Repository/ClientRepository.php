@@ -30,6 +30,7 @@ class ClientRepository extends ServiceEntityRepository
     public function addClient(Client $client)
     {
         $client->setPlainPassword($client->getPassword());
+        $client->setRoles(['ROLE_USER']);
         $this->doSave($client,true);
     }
 

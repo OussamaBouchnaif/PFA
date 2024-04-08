@@ -6,11 +6,12 @@ namespace App\Service\Api\Query;
 class PrepareQueryCamera implements PrepareQueryInterface
 {
     private $queryString;
+
     public function __construct(QueryStringBuilder $queryString)
     {
         $this->queryString = $queryString;
     }
-    public function prepareQueryString(array $searchCriteria):String
+    public function prepareQueryString(array $searchCriteria): String
     {
         $queryStringBuilder = $this->queryString;
 
@@ -32,7 +33,6 @@ class PrepareQueryCamera implements PrepareQueryInterface
                     case 'prix':
                         $queryStringBuilder = $queryStringBuilder->addPriceRangeParameter($value);
                         break;
-
                 }
             }
         }

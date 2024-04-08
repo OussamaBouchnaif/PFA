@@ -5,32 +5,22 @@ namespace App\Cart\Denormalizer;
 
 
 use App\Enum\CartStatus;
+use App\Cart\Handler\CartStorageInterface;
 use \Symfony\Bundle\SecurityBundle\Security;
 use App\Cart\Denormalizer\AbstractCartNormalizer;
+use App\ValueObject\CartValueObject;
 
 class CartSessionNormalizer extends AbstractCartNormalizer
 {
-    private Security $security;
-    public function __construct(Security $security)
+
+    public function __construct(CartStorageInterface $cartStorage)
     {
-        $this->security = $security;
+        parent::__construct($cartStorage);
     } 
-    public function getCartInfo()
+    public function getCart():CartValueObject
     {
-        $cart = $this->cartStorage->getCart();
-        return [
-            'CreatedAt' => new \DateTimeImmutable(),
-            'UpdateAt' => new \DateTimeImmutable(),
-            'status' => CartStatus::placed,
-            'client' => $this->security->getUser(),
-        ];
-        return $cart;
+        return $this->cartStorage->getCart();
     }
 
-    public function getCartLines()
-    {
-        $cart = $this->cartStorage->getCart();
-        $items = $cart->getItems();
-        return $items;
-    }
+    
 }

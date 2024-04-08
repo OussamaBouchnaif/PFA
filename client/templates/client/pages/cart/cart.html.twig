@@ -24,7 +24,7 @@
      <!--shopping cart area start -->
     <div class="shopping_cart_area">
         <div class="container">
-            <form action="#">
+
                 <div class="cart_page_inner mb-60">
                     <div class="row">
                         <div class="col-12">
@@ -42,14 +42,14 @@
                                     <tbody>
                                         {% if cart is not empty %}
                                         
-                                            {% for item in cart.items %}
+                                            {% for item in cart.getLines %}
                                                 
                                                 <tr class="border-top">
                                                     <td>
                                                         <div class="cart_product_thumb">
-                                                            {% set imageCamera = item.camera.imageCameras|first %}
+                                                            {% set imageCamera = item.image|first %}
                                                             {% if imageCamera %}
-                                                                <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
+                                                                <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
                                                             {% else %}
                                                                 <img src="" alt="oussama">
                                                             {% endif %}
@@ -90,7 +90,7 @@
                                         {% endif %}
                                     </tbody>
                                 </table>
-                                {% if cart is empty or cart.items is empty %}
+                                {% if cart is empty or cart.getLines is empty %}
                                     <div class="col-12">
                                         <div class="alert alert-warning" role="alert">
                                             No items in your cart.
@@ -100,7 +100,7 @@
                             </div>
                             <div class="cart_page_button border-top d-flex justify-content-between">
                                 <div class="shopping_cart_btn">
-                                    <a href="#" class="btn btn-primary border">CLEAR SHOPPING CART</a>
+                                    <a href="{{path('clear')}}" class="btn btn-primary border">CLEAR SHOPPING CART</a>
                                     <button class="btn btn-primary border" type="submit">UPDATE YOUR CART</button>
                                 </div>
                                 <div class="shopping_continue_btn">
@@ -112,7 +112,7 @@
                  </div>
                  <!--coupon code area start-->
                 <div class="cart_page_bottom">
-                    <div class="row">
+                    <div class="row d-flex justify-content-between">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="shopping_coupon_calculate top">
                                 <h3 class="border-bottom">Calculate Shipping </h3>
@@ -128,24 +128,17 @@
                                 <button class="btn btn-primary" type="submit">get a quote</button>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="shopping_coupon_calculate">
-                                <h3 class="border-bottom">Coupon Discount   </h3>
-                                <p>Enter your coupon code if you have one.</p>
-                                <input class="border" placeholder="Enter your code" type="text">
-                                <button class="btn btn-primary" type="submit">apply coupon</button>
-                            </div>
-                        </div>
+                       
                         <div class="col-lg-4 col-md-6 col-sm-8">
                             <div class="grand_totall_area">
                                <div class="grand_totall_inner border-bottom">
                                    <div class="cart_subtotal d-flex justify-content-between">
                                        <p>sub total </p>
-                                       <span>$126.00</span>
+                                       <span>${{totalItems}}</span>
                                    </div>
                                    <div class="cart_grandtotal d-flex justify-content-between">
                                        <p>grand total</p>
-                                       <span>$126.00</span>
+                                       <span>${{totalItems}}</span>
                                    </div>
                                </div>
                                <div class="proceed_checkout_btn">
@@ -157,7 +150,7 @@
                     </div>
                 </div>
                 <!--coupon code area end-->
-            </form>
+           
         </div>
     </div>
      <!--shopping cart area end -->
