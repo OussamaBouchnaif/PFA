@@ -29,9 +29,10 @@ class Livraison
     #[ORM\Column(length: 100)]
     private ?string $modeLivraison = null;
 
+   
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Commande $commande = null;
+    private ?Cart $Cart = null;
 
     public function getId(): ?int
     {
@@ -98,14 +99,16 @@ class Livraison
         return $this;
     }
 
-    public function getCommande(): ?Commande
+    
+
+    public function getCart(): ?Cart
     {
-        return $this->commande;
+        return $this->Cart;
     }
 
-    public function setCommande(Commande $commande): static
+    public function setCart(?Cart $Cart): static
     {
-        $this->commande = $commande;
+        $this->Cart = $Cart;
 
         return $this;
     }

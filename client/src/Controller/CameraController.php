@@ -71,7 +71,7 @@ class CameraController extends AbstractController
         
         $session->remove('searchCriteria');
         $page = $request->query->getInt('page',1);   
-
+        //dd($this->cartStorage->getCart());
         return $this->render('client/pages/shop.html.twig',[
             'cameras' => $this->callCamera->getAllCamera($page),
             'categories'=> $this->categorie->findAll(),

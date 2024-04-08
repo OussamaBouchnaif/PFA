@@ -17,34 +17,32 @@ class CartController extends AbstractController
 {
     private CartStorageInterface $cartStorage;
     private CameraRepository $camRepo;
+
     public function __construct(CartStorageInterface $cartStorage,CameraRepository $camRepo)
     {
         $this->cartStorage = $cartStorage;
         $this->camRepo = $camRepo;
     }
+
     #[Route('/cart', name: 'app_cart')]
     public function index(): Response
     {
-        
-        $cartData = $this->cartStorage->getCart();
-        
         return $this->render('client/pages/cart/cart.html.twig', [
-            'cart' => $cartData,
+            'cart' =>  $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
     }
+
     #[Route('/fetchCart',name:'fatch_cart')]
     public function fetchCart()
     {
-
         $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
         return new JsonResponse(['html' => $htmlContent]);
-             
-       
     }
+
     #[Route('/addToCart',name:'addtocart')]
     public function addToCart(Request $request)
     {
@@ -55,8 +53,7 @@ class CartController extends AbstractController
             if (!empty($quantity) && !empty($idcamera) && !empty($stockage)) {
                 
                 $camera = $this->camRepo->findCameraWithImages($idcamera);
-                $cartItem = new CartItem($camera, $quantity, $stockage);
-                $this->cartStorage->addToCart($cartItem);
+                $this->cartStorage->addToCart($camera,$quantity,$stockage);
                 return $this->redirectToRoute('fatch_cart');
             } 
         } else {
@@ -64,18 +61,16 @@ class CartController extends AbstractController
         }
     }
     #[Route('/clear',name:'clear')]
-    public function clear(Request $request){
-        $request->getSession()->remove('cart');
-        return $this->redirectToRoute('fetch');
+    public function clear(){
+        $this->cartStorage->clearCart($this->cartStorage->getCart());
+        return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/deleteCamera/{id}',name:'deletecamera')]
     public function deleteCamera(int $id,Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $cart = $this->cartStorage->getCart();
-            $this->cartStorage->removeFromCart($cart, $id);
-
+            $this->cartStorage->removeFromCart($id);
             $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
                 'cart' => $this->cartStorage->getCart(),
                 'totalItems' => $this->cartStorage->TotalPriceItems(),
@@ -85,8 +80,6 @@ class CartController extends AbstractController
         }
     
         return new JsonResponse(['success' => false, 'message' => 'Invalid request.'], 400);
-       
-        
     }
 
 }

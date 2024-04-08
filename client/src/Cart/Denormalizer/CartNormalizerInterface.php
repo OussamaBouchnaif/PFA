@@ -2,7 +2,10 @@
 
 namespace App\Cart\Denormalizer;
 
+use App\ValueObject\CartValueObject;
+
 interface CartNormalizerInterface
 {
-    public function Denormalizer();
+    public function getCart():CartValueObject;
+
 }

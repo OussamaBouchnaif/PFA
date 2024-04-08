@@ -86,10 +86,10 @@
         {% include "client/pages/components/cartitems.html.twig" %}
     </div>
     <div class="cart_button">
-        <a href="cart.html"><i class="fa fa-shopping-cart"></i> View cart</a>
+        <a href="{{path('app_cart')}}"><i class="fa fa-shopping-cart"></i> View cart</a>
     </div>
     <div class="cart_button">
-        <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
+        <a href="{{path('order')}}"><i class="fa fa-sign-in"></i> Checkout</a>
     </div>
 </div>
 <!--mini cart end-->

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FactureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,8 +26,8 @@ class Facture
     private ?string $status = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Commande $commande = null;
+    private ?Cart $Cart = null;
+
 
     public function getId(): ?int
     {
@@ -68,15 +70,17 @@ class Facture
         return $this;
     }
 
-    public function getCommande(): ?Commande
+    public function getCart(): ?Cart
     {
-        return $this->commande;
+        return $this->Cart;
     }
 
-    public function setCommande(Commande $commande): static
+    public function setCart(?Cart $Cart): static
     {
-        $this->commande = $commande;
+        $this->Cart = $Cart;
 
         return $this;
     }
+
+    
 }

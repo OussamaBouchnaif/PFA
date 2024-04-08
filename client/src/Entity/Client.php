@@ -46,8 +46,7 @@ class Client extends Personne
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: FavoritCamera::class)]
     private Collection $favoritCameras;
 
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
-    private Collection $commandes;
+
 
     #[ORM\OneToMany(mappedBy: 'Client', targetEntity: Cart::class)]
     private Collection $carts;
@@ -61,12 +60,15 @@ class Client extends Personne
         $this->addressLivSup = "Adress sup";
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
-        $this->roles[] = 'client';
         $this->carts = new ArrayCollection();
 
     }
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
+        return $this;
+    }
     public function getRole()
     {
         return $this->roles;
@@ -235,35 +237,7 @@ class Client extends Personne
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getClient() === $this) {
-                $commande->setClient(null);
-            }
-        }
-
-        return $this;
-    }
+    
     public function __toString()
     {
         return $this->getId();

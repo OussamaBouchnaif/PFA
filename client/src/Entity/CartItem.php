@@ -19,21 +19,15 @@ class CartItem
     #[ORM\Column]
     private ?float $price = null;
     
-    #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    #[ORM\ManyToOne(inversedBy: 'cartItems', cascade: ['persist'])]
     private ?Camera $Camera = null;
 
-    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\ManyToOne(inversedBy: 'items', cascade: ['persist'])]
     private ?Cart $cart = null;
 
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $stockage = null;
 
-    public function __construct(Camera $Camera,float $quantity,string $stockage )
-    {
-        $this->Camera = $Camera;
-        $this->quantity = $quantity;
-        $this->stockage = $stockage;
-    }
     public function TotalPriceItem():float
     {
        return $this->getQuantity() * $this->getPrice();

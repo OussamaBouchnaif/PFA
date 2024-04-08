@@ -42,8 +42,6 @@ class Camera
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class)]
     private Collection $favoritCameras;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneCommande::class)]
-    private Collection $ligneCommandes;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
     private Collection $imageCameras;
@@ -92,7 +90,6 @@ class Camera
     {
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
-        $this->ligneCommandes = new ArrayCollection();
         $this->imageCameras = new ArrayCollection();
         $this->ligneReductions = new ArrayCollection();
         $this->blogs = new ArrayCollection();
@@ -236,35 +233,7 @@ class Camera
         return $this;
     }
 
-    /**
-     * @return Collection<int, LigneCommande>
-     */
-    public function getLigneCommandes(): Collection
-    {
-        return $this->ligneCommandes;
-    }
-
-    public function addLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if (!$this->ligneCommandes->contains($ligneCommande)) {
-            $this->ligneCommandes->add($ligneCommande);
-            $ligneCommande->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if ($this->ligneCommandes->removeElement($ligneCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneCommande->getCamera() === $this) {
-                $ligneCommande->setCamera(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, ImageCamera>

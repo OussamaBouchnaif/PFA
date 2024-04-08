@@ -3,41 +3,41 @@
 
 namespace App\Cart\Handler;
 
-use App\Cart\Repository\CartSessionRepository;
+use App\Calculator\CalculatorContext;
 use App\Entity\Cart;
 use App\Entity\Camera;
-use App\Entity\CartItem;
+use App\ValueObject\CartValueObject;
+use App\ValueObject\CartItemValueObject;
 use Symfony\Component\HttpFoundation\RequestStack;
-use \Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bundle\SecurityBundle\Security;
+
 
 class CartSessionStorage implements CartStorageInterface
 {
     private $cartSessionKey = 'cart';
-    private CartSessionRepository $cartSessionRepo;
-    private Security $security;
-   
-    public function __construct(private readonly RequestStack $request,CartSessionRepository $cartSessionRepo,Security $security)
+
+    public function __construct(private readonly RequestStack $request,
+    private CalculatorContext $calculator,
+    private Security $security)
     {
-        $this->cartSessionRepo = $cartSessionRepo;
-        $this->security = $security;
 
     }
     
-    public function addToCart($item)
+    public function addToCart(Camera $camera,int $qte,float $stockage)
     {
         $cart = $this->getCart(); 
-        $this->cartSessionRepo->addItem($cart,$item);
+        $cart->addToCart(new CartItemValueObject($camera->getId(),$camera->getImageCameras(),$camera->getPrix(),$qte,$stockage));
         $this->saveCart($cart);
     }
    
-    public function getCart()
+    public function getCart():CartValueObject
     {
         $session = $this->request->getSession();
         $cart = $session->get($this->cartSessionKey);
 
         if (!$cart) {
-            $cart = new Cart();
-            $cart->setClient($this->security->getUser());
+            $cart = new CartValueObject();
+            $cart->setUser($this->security->getUser());
             $session->set($this->cartSessionKey, $cart);
         }
 
@@ -46,31 +46,28 @@ class CartSessionStorage implements CartStorageInterface
     
     public function TotalPriceItems():float
     {
-        $total = 0;
-        $items = $this->getCart()->getItems();
-        
-        foreach($items as $item)
-        {
-            
-            $total += $item->TotalPriceItem();
-            
-        }
-        
-        return $total;
+        return $this->calculator->priceCalculator($this->getCart());
     }
-    public function removeFromCart(Cart $cart,int $idItem)
+    public function removeFromCart(int $idItem)
     {
-        $this->cartSessionRepo->removeItem($cart,$idItem);
-        $this->saveCart($cart);
+        $cart = $this->getCart(); 
+        $items = $cart->getItems();
+        if (array_key_exists($idItem, $items)) {
+            $cartItem = $items[$idItem];
+            $cart->removeFromCart($cartItem);
+            $this->saveCart($cart);
+        }
     }
-    private function saveCart(Cart $cart): void
+   
+
+    public function clearCart(CartValueObject $cart){
+        $cart->clear();
+    }
+
+    private function saveCart(CartValueObject $cart): void
     {
         $session = $this->request->getSession();
         $session->set($this->cartSessionKey, $cart);
-    }
-
-    public function clearCart(){
-
     }
 
 }
