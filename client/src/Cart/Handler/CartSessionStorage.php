@@ -50,14 +50,12 @@ class CartSessionStorage implements CartStorageInterface
     }
     public function removeFromCart(int $idItem)
     {
-        $cart = $this->getCart(); // Récupère le panier actuel
-    // Récupère les lignes du panier
+        $cart = $this->getCart(); 
         $items = $cart->getItems();
-        // Vérifie si l'article existe dans le panier et le supprime
         if (array_key_exists($idItem, $items)) {
             $cartItem = $items[$idItem];
             $cart->removeFromCart($cartItem);
-            $this->saveCart($cart); // Sauvegarde les modifications dans la session
+            $this->saveCart($cart);
         }
     }
    
