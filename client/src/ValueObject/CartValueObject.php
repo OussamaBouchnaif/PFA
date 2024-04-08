@@ -27,7 +27,9 @@ final class CartValueObject
     }
     public function removeFromCart(CartItemValueObject $object)
     {
-        unset($this->items[$object->getId()]);
+        if(($index=$this->findItem($object)) !== null) {
+            unset($this->items[$index]);
+        }
     }
 
     public function getLines()

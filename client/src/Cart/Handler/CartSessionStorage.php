@@ -48,18 +48,17 @@ class CartSessionStorage implements CartStorageInterface
     {
         return $this->calculator->priceCalculator($this->getCart());
     }
-    public function removeFromCart(CartValueObject $cart,int $idItem)
+    public function removeFromCart(int $idItem)
     {
-        $cart = $this->getCart();
-        foreach ($cart as $item)
-        {
-            if($item->getId() === $idItem)
-            {
-                $cart->removeFromCart($item->getId());
-                break;
-            }
+        $cart = $this->getCart(); // Récupère le panier actuel
+    // Récupère les lignes du panier
+        $items = $cart->getItems();
+        // Vérifie si l'article existe dans le panier et le supprime
+        if (array_key_exists($idItem, $items)) {
+            $cartItem = $items[$idItem];
+            $cart->removeFromCart($cartItem);
+            $this->saveCart($cart); // Sauvegarde les modifications dans la session
         }
-        $this->saveCart($cart);
     }
    
 

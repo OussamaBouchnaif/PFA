@@ -70,8 +70,7 @@ class CartController extends AbstractController
     public function deleteCamera(int $id,Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $cart = $this->cartStorage->getCart();
-            $this->cartStorage->removeFromCart($cart, $id);
+            $this->cartStorage->removeFromCart($id);
             $htmlContent = $this->renderView('client/pages/components/cartitems.html.twig', [
                 'cart' => $this->cartStorage->getCart(),
                 'totalItems' => $this->cartStorage->TotalPriceItems(),
