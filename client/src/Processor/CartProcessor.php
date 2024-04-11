@@ -20,16 +20,10 @@ final class CartProcessor
         private readonly CartStorageInterface $cartStorage,
         private readonly CartPersisterInterface $cartPersister,
     ) {
-
     }
 
     /**
      * Processes the cart.
-     *
-     * @param Cart $instance
-     * @param string|null $voucherIdentifier
-     *
-     * @return void
      */
     public function process(Cart $instance, ?string $voucherIdentifier): void
     {
@@ -46,11 +40,6 @@ final class CartProcessor
 
     /**
      * Recomputes the totals based on the strategy used.
-     *
-     * @param Cart $cart
-     * @param string $voucherIdentifier
-     *
-     * @return Cart
      */
     private function doUpdateTotal(Cart $cart, string $voucherIdentifier): Cart
     {
@@ -65,10 +54,6 @@ final class CartProcessor
 
     /**
      * Internally clears the cart from the storage and invalidates the voucher.
-     *
-     * @param string $voucherIdentifier
-     *
-     * @return void
      */
     private function doCleaning(string $voucherIdentifier): void
     {

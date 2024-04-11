@@ -19,12 +19,11 @@ class DefaultVoucher implements VoucherInterface
         private readonly RequestStack $stack,
         private readonly VoucherStrategyInterface $strategy,
     ) {
-
     }
 
     public function applyVoucher(string $voucherCode, Cart $object): DiscountedCartInterface
     {
-        if (!$this->isAlreadyApplied($voucherCode, $object) === true) {
+        if (false === $this->isAlreadyApplied($voucherCode, $object)) {
             // if the voucher is already applied to the current cart, no need to re-apply it again.
             $this->placeNewVoucher($voucherCode);
         }

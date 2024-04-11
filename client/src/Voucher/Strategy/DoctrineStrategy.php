@@ -30,7 +30,7 @@ class DoctrineStrategy implements VoucherStrategyInterface
             return null;
         }
 
-        return new class ($adaptedVoucher) implements VoucherModelInterface {
+        return new class($adaptedVoucher) implements VoucherModelInterface {
             private CodePromo $adaptedObject;
 
             public function __construct(CodePromo $adaptedObject)
