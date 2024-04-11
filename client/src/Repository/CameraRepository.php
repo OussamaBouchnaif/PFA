@@ -63,7 +63,7 @@ class CameraRepository extends ServiceEntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT c, i FROM App\Entity\Camera c
-                 JOIN c.imageCameras i
+                 LEFT JOIN c.imageCameras i
                  WHERE c.id = :id'
             )
             ->setParameter('id', $idcamera)

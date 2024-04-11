@@ -2,7 +2,7 @@
 
 {% block title  %}Checkout{% endblock %}
 {% block body %}
-    
+
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area breadcrumbs_other">
         <div class="container">
@@ -24,6 +24,7 @@
     <!--Checkout page section-->
     <div class="checkout_section" id="accordion">
         <div class="container">
+            {{ form_start(formOrder) }}
             <div class="returning_coupon_area">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
@@ -37,7 +38,7 @@
                                 <div id="checkout_login" class="collapse" data-parent="#accordion">
                                 <div class="checkout_info">
                                     <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>
-                                    <form action="#">
+                                    {#<form action="#">#}
                                         <div class="form_group">
                                             <label>Username or email <span>*</span></label>
                                             <input type="text">
@@ -54,7 +55,7 @@
                                             </label>
                                         </div>
                                         <a href="#">Lost your password?</a>
-                                    </form>
+                                    {#</form>#}
                                 </div>
                             </div>
                         </div>
@@ -69,12 +70,9 @@
                             </h3>
                                 <div id="checkout_coupon2" class="collapse" data-parent="#accordion">
                                 <div class="checkout_info coupon_info">
-                                    {{form_start(formCoupon)}}
-                                        {{form_widget(formCoupon.code)}}
-                                        <button class="btn btn-primary" type="submit">Apply coupon</button>
-                                        
-                                    {{form_end(formCoupon)}}
-                                   
+                                    {{ form_row(formOrder.voucher, {attr: {class: 'form-control'}}) }}
+                                    {{ form_widget(formOrder.applyVoucher, {attr: {class: 'btn btn-primary'}})}}
+
                                 </div>
                             </div>
                         </div>
@@ -85,14 +83,14 @@
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
                         <h3>Billing Details</h3>
-                            
+
                         <div class="cart_page_tabel">
-                            <table> 
+                            <table>
                                 <tbody>
                                     {% if cart is not empty %}
-                                    
+
                                         {% for item in cart.getLines %}
-                                            
+
                                             <tr class="border-top">
                                                 <td>
                                                     {% set imageCamera = item.image|first %}
@@ -111,7 +109,7 @@
                                                         </ul>
                                                     </div>
                                                 </td>
-                                               
+
                                                 <td>
                                                     <div class="cart_product_price">
                                                         <span>${{ item.TotalPriceItem }}</span>
@@ -137,7 +135,7 @@
                                 <h3>Your order</h3>
                                 <div class="order_table table-responsive">
                                     <table>
-                                    
+
                                         <tfoot>
                                             <tr>
                                                 <td>Cart Subtotal  </td>
@@ -145,15 +143,25 @@
                                             </tr>
                                             <tr class="order_total">
                                                 <th>Order Total</th>
-                                                <td class="text-right">${{totalItems}}</td>
+                                                <td class="text-right">
+                                                    {% if is_voucher_applied is same as(true) %}
+                                                        <span class="text-decoration-line-through">${{totalItems}}</span>
+                                                         <br />
+                                                        <span style="font-size: 150%">${{ discount | number_format(2, ',', ' ') }}</span>
+                                                        {% if is_voucher_applied is same as(true) %}
+                                                            <p style="font-size: 50%"><small>you applied <strong>{{ voucher }}</strong> (- {{ rate }} %)</small></p>
+                                                            {% endif %}
+                                                    {% else %}
+                                                        ${{totalItems}}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    {{form_start(formOrder)}}
                                         <div class="panel-default">
                                             {{form_widget(formOrder.paiment)}}
                                             <div class="panel_radio">
-                                                
+
                                                 <span class="checkmark"></span>
                                             </div>
 
@@ -189,20 +197,19 @@
                                             </div>
                                         </div>
                                         <div class="place_order_btn">
-                                            <button class="btn btn-primary" type="submit" href="#">place order</button>
+                                            {{ form_widget(formOrder.placeOrder, {attr: {class: 'btn btn-primary'}})}}
                                         </div>
-                                    {{form_end(formOrder)}}
+
                                 </div>
-                                
-
-
                         </div>
                     </div>
                 </div>
             </div>
+            {{ form_rest(formOrder) }}
+            {{ form_end(formOrder) }}
         </div>
     </div>
     <!--Checkout page section end-->
-    
+
 
  {% endblock %}

@@ -171,5 +171,17 @@ class Cart
         return $this;
     }
 
-   
+    /**
+     * Computes the total amount of the cart.
+     *
+     * @return float
+     */
+   public function computeTotal(): float
+   {
+       return \array_reduce(
+           $this->getItems()->toArray(),
+           fn (float $total, CartItem $item) => $total += $item->getItemTotal(),
+           0
+       );
+   }
 }
