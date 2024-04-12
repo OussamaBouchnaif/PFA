@@ -1,5 +1,6 @@
 <?php
 
+// src/DataFixtures/ReductionFixtures.php
 
 namespace App\DataFixtures;
 
@@ -12,23 +13,22 @@ class ReductionFixtures extends Fixture
 {
     public static function getGroups(): array
     {
-        return ['Reduction'];
+        return ['reduc'];
     }
     public function load(ObjectManager $manager)
     {
-        // $faker = Factory::create();
+        $faker = Factory::create();
 
-        // // Création de 10 réductions factices
-        // for ($i = 0; $i < 10; $i++) {
-        //     $reduction = new Reduction();
-        //     $reduction->setDescription($faker->sentence());
-        //     $reduction->setPoucentage($faker->numberBetween(5, 50)); // Poucentage aléatoire entre 5 et 50
-        //     $reduction->setDateDebut($faker->dateTimeBetween('-1 year', 'now'));
-        //     $reduction->setDateFin($faker->dateTimeBetween('now', '+1 year'));
+        for ($i = 0; $i < 10; $i++) { // Vous pouvez ajuster le nombre de fausses données que vous souhaitez générer
+            $reduction = new Reduction();
+            $reduction->setDescription($faker->sentence());
+            $reduction->setPoucentage($faker->numberBetween(5, 50)); // Vous pouvez ajuster les valeurs minimales et maximales
+            $reduction->setDateDebut($faker->dateTimeBetween('-1 month', 'now'));
+            $reduction->setDateFin($faker->dateTimeBetween('now', '+1 month'));
 
-        //     $manager->persist($reduction);
-        // }
+            $manager->persist($reduction);
+        }
 
-        // $manager->flush();
+        $manager->flush();
     }
 }
