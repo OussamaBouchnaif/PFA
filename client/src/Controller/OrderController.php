@@ -2,28 +2,17 @@
 
 namespace App\Controller;
 
-use App\Calculator\CalculatorContext;
-use App\Calculator\TotalCalculatorInterface;
-use App\Calculator\TotalCalculatorWithCoupon;
-use App\Calculator\TotalCalculatorWithoutCoupon;
+
 use App\Cart\Factory\CartFactory;
-use App\Discount\DiscountLoader;
-use App\Forms\CouponType;
 use App\Cart\Handler\CartStorageInterface;
-use App\Cart\Persister\CartPersisterInterface;
-use App\Entity\CodePromo;
 use App\Forms\CheckoutType;
 use App\Processor\CartProcessor;
-use App\Repository\CodePromoRepository;
-use App\Voucher\Strategy\DoctrineStrategy;
 use App\Voucher\VoucherInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Process\Pipes\PipesInterface;
+
 
 class OrderController extends AbstractController
 {
@@ -47,9 +36,9 @@ class OrderController extends AbstractController
         $voucherCode = $discountedCart = null;
 
         if ($formOrder->isSubmitted() && $formOrder->isValid()) {
+
             if ($formOrder->getClickedButton() && 'applyVoucher' === $formOrder->getClickedButton()->getName()) {
                 $voucherCode = $formOrder->get('voucher')->getData();
-
                 $discountedCart = $voucherManager->applyVoucher($voucherCode, $cart);
             }
 
@@ -60,6 +49,7 @@ class OrderController extends AbstractController
 
                 return $this->redirectToRoute('app_home');
             }
+
         }
 
         return $this->render('client/pages/checkout.html.twig', [

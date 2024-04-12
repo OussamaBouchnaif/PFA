@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Calculator;
-
-use App\Entity\Cart;
-use App\Entity\CodePromo;
 use App\ValueObject\CartValueObject;
 
 class CalculatorContext 
