@@ -64,6 +64,11 @@
     tbody tr:not(:last-child) {
         margin-bottom: 10px; /* Adjust spacing between rows */
     }
+
+    .formCost input {
+    width: 250px; /* Réglez la largeur des champs de date selon vos préférences */
+}
+
     </style>
 {% endblock %}
 
@@ -129,174 +134,22 @@
                                             <p class="text-muted text-uppercase fs-13 fw-medium mb-4">last</p>
 
                                             <div id="product-price-range"></div>
-                                            <div class="formCost d-flex gap-2 align-items-center mt-3">
-                                                <input class="form-control form-control-sm" type="date" id="minLast"  />
-                                                <span class="fw-semibold text-muted">to</span>
-                                                <input class="form-control form-control-sm" type="date" id="maxLast"  />
+                                           <div class="formCost mt-3">
+                                            <div class="d-flex flex-column gap-2 align-items-start">
+                                                <p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date de début</p>
+                                                <input class="form-control form-control-sm" type="date" id="minLast" />
+                                            </div>
+
+                                            <div class="d-flex flex-column gap-2 align-items-start">
+                                                <p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date fin</p>
+                                                <input class="form-control form-control-sm" type="date" id="maxLast" />
                                             </div>
                                         </div>
 
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-headingBrands">
-                                                <button class="accordion-button bg-transparent shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseBrands" aria-expanded="true" aria-controls="flush-collapseBrands">
-                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Brands</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                                </button>
-                                            </h2>
-
-                                            <div id="flush-collapseBrands" class="accordion-collapse collapse show" aria-labelledby="flush-headingBrands">
-                                                <div class="accordion-body text-body pt-0">
-                                                    <div class="search-box search-box-sm">
-                                                        <input type="text" class="form-control bg-light border-0" id="searchBrandsList" placeholder="Search Brands...">
-                                                        <i class="ri-search-line search-icon"></i>
-                                                    </div>
-                                                    <div class="d-flex flex-column gap-2 mt-3 filter-check">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="Boat" id="productBrandRadio5" checked>
-                                                            <label class="form-check-label" for="productBrandRadio5">Boat</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="OnePlus" id="productBrandRadio4">
-                                                            <label class="form-check-label" for="productBrandRadio4">OnePlus</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="Realme" id="productBrandRadio3">
-                                                            <label class="form-check-label" for="productBrandRadio3">Realme</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="Sony" id="productBrandRadio2">
-                                                            <label class="form-check-label" for="productBrandRadio2">Sony</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="JBL" id="productBrandRadio1" checked>
-                                                            <label class="form-check-label" for="productBrandRadio1">JBL</label>
-                                                        </div>
-
-                                                        <div>
-                                                            <button type="button" class="btn btn-link text-decoration-none text-uppercase fw-medium p-0">1,235
-                                                                More</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <!-- end accordion-item -->
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-headingDiscount">
-                                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDiscount" aria-expanded="true" aria-controls="flush-collapseDiscount">
-                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Discount</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                                </button>
-                                            </h2>
-                                            <div id="flush-collapseDiscount" class="accordion-collapse collapse" aria-labelledby="flush-headingDiscount">
-                                                <div class="accordion-body text-body pt-1">
-                                                    <div class="d-flex flex-column gap-2 filter-check">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="50% or more" id="productdiscountRadio6">
-                                                            <label class="form-check-label" for="productdiscountRadio6">50% or more</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="40% or more" id="productdiscountRadio5">
-                                                            <label class="form-check-label" for="productdiscountRadio5">40% or more</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="30% or more" id="productdiscountRadio4">
-                                                            <label class="form-check-label" for="productdiscountRadio4">
-                                                                30% or more
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="20% or more" id="productdiscountRadio3" checked>
-                                                            <label class="form-check-label" for="productdiscountRadio3">
-                                                                20% or more
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="10% or more" id="productdiscountRadio2">
-                                                            <label class="form-check-label" for="productdiscountRadio2">
-                                                                10% or more
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="Less than 10%" id="productdiscountRadio1">
-                                                            <label class="form-check-label" for="productdiscountRadio1">
-                                                                Less than 10%
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end accordion-item -->
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-headingRating">
-                                                <button class="accordion-button bg-transparent shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseRating" aria-expanded="false" aria-controls="flush-collapseRating">
-                                                    <span class="text-muted text-uppercase fs-13 fw-medium">Rating</span> <span class="badge bg-success rounded-pill align-middle ms-1 filter-badge"></span>
-                                                </button>
-                                            </h2>
-
-                                            <div id="flush-collapseRating" class="accordion-collapse collapse" aria-labelledby="flush-headingRating">
-                                                <div class="accordion-body text-body">
-                                                    <div class="d-flex flex-column gap-2 filter-check">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="4 & Above Star" id="productratingRadio4" checked>
-                                                            <label class="form-check-label" for="productratingRadio4">
-                                                                <span class="text-muted">
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                </span> 4 & Above
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="3 & Above Star" id="productratingRadio3">
-                                                            <label class="form-check-label" for="productratingRadio3">
-                                                                <span class="text-muted">
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                </span> 3 & Above
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="2 & Above Star" id="productratingRadio2">
-                                                            <label class="form-check-label" for="productratingRadio2">
-                                                                <span class="text-muted">
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                </span> 2 & Above
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="1 Star" id="productratingRadio1">
-                                                            <label class="form-check-label" for="productratingRadio1">
-                                                                <span class="text-muted">
-                                                                    <i class="mdi mdi-star text-warning"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                    <i class="mdi mdi-star"></i>
-                                                                </span> 1
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end accordion-item -->
                                     </div>
                                 </div>
-                                <!-- end card -->
                             </div>
-                            <!-- end col -->
-
                             <div class="col-xl-9 col-lg-8">
                                 <div>
                                     <div class="card">
@@ -311,7 +164,7 @@
                                                 <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
                                             </button>
 
-                                            <button type="button" class="btn btn-success" onclick="confirmExport()">
+                                            <button type="button" class="btn btn-success" onclick="exportToCSV()">
                                                 <i class="ri-file-excel-line align-middle me-1"></i> Exporter Excel
                                             </button>                                       
                                             </div>
@@ -322,36 +175,7 @@
                                                 </div>
                                             </div>
 
-                                        <div class="card-header">
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#productnav-all" role="tab">
-                                                                All <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-published" role="tab">
-                                                                Published <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft" role="tab">
-                                                                Draft
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div id="selection-element">
-                                                        <div class="my-n1 d-flex align-items-center text-muted">
-                                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <!-- end card header -->
                                         <div class="card-body">
 
@@ -425,7 +249,7 @@
                 </div>
                 <!-- End Page-content -->
 
-                
+               
             </div>
         </div>
         
@@ -441,7 +265,16 @@
 
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
     
-     <script>  function printTable() {
+     <script>
+     let table = null;
+     $(document).ready(function() {
+    // Vérifier si DataTables a déjà été initialisé sur la table
+  
+
+    // Autres fonctionnalités de votre script...
+});
+
+       function printTable() {
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html><head><title>Print Table</title>');
@@ -499,16 +332,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function filterTableByPourcentage(pourcentage) {
-    // Récupérer la table DataTable
-    var table = $('#myTable').DataTable();
+    // Récupérer toutes les lignes de la table
+    var tableRows = document.querySelectorAll('#myTable tbody tr');
 
-    // Si le pourcentage sélectionné est vide, réinitialisez le filtre et affichez toutes les données
-    if (pourcentage === '') {
-        table.column(1).search('').draw();
-    } else {
-        // Appliquer le filtre pour le pourcentage sélectionné
-        table.column(1).search(pourcentage).draw();
-    }
+    // Parcourir toutes les lignes
+    tableRows.forEach(function(row) {
+        // Récupérer la cellule de pourcentage dans la ligne
+        var pourcentageCell = row.cells[1].textContent.trim();
+
+        // Vérifier si le pourcentage correspond à celui sélectionné ou si le pourcentage sélectionné est vide
+        if (pourcentage === '' || pourcentageCell === pourcentage) {
+            // Afficher la ligne
+            row.style.display = '';
+        } else {
+            // Masquer la ligne
+            row.style.display = 'none';
+        }
+    });
 }
 
 
@@ -516,39 +356,60 @@ function filterTableByPourcentage(pourcentage) {
 
 
 
+function exportToCSV() {
+    // Demander la confirmation de l'utilisateur
+    var confirmation = confirm("Voulez-vous exporter les données au format CSV ?");
+    
+    // Vérifier si l'utilisateur a confirmé
+    if (confirmation) {
+        var table = document.getElementById('myTable');
+        var rows = table.querySelectorAll('tbody tr'); // Sélectionnez uniquement les lignes dans le corps du tableau
+        var csvData = [];
 
+        // Ajoutez l'en-tête CSV
+        var headerRow = ['Description', 'Pourcentage', 'Date de début', 'Date de fin'];
+        csvData.push(headerRow.join(';'));
 
-    function exportToExcel() {
-    var table = document.getElementById('myTable'); // Change 'myTable' to the ID of your 'reduction' table
-    var rows = table.querySelectorAll('tr');
-    var csvData = [];
+        // Parcourez chaque ligne du tableau
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var rowData = [];
+            var cols = row.querySelectorAll('td');
 
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var rowData = [];
-        var cols = row.querySelectorAll('td');
+            // Parcourez chaque colonne de la ligne actuelle
+            for (var j = 0; j < cols.length; j++) {
+                rowData.push(cols[j].innerText);
+            }
 
-        for (var j = 0; j < cols.length; j++) {
-            rowData.push(cols[j].innerText);
+            // Ajoutez les données de la ligne au tableau CSV
+            csvData.push(rowData.join(';'));
         }
 
-        csvData.push(rowData.join(';')); 
+        // Générez le contenu CSV
+        var csvContent = csvData.join('\n');
+
+        // Créez un objet Blob contenant le CSV
+        var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+        // Créez un URL object pour le Blob
+        var url = URL.createObjectURL(blob);
+
+        // Créez un lien d'ancre pour le téléchargement
+        var downloadLink = document.createElement('a');
+        downloadLink.href = url;
+        downloadLink.setAttribute('download', 'reductions.csv');
+
+        // Ajoutez le lien au document
+        document.body.appendChild(downloadLink);
+
+        // Cliquez sur le lien pour démarrer le téléchargement
+        downloadLink.click();
+
+        // Supprimez le lien du document
+        document.body.removeChild(downloadLink);
     }
-
-    var csvContent = 'data:text/csv;charset=utf-8,';
-    csvContent += 'Nom;Description;Prix;Date Ajout;Status;Stock;Catégorie\n';
-
-    for (var i = 0; i < csvData.length; i++) {
-        csvContent += csvData[i] + '\n';
-    }
-
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'liste_Reduction.csv'); 
-    document.body.appendChild(link);
-    link.click();
 }
+
 
 
    
@@ -565,18 +426,50 @@ function filterTableByPourcentage(pourcentage) {
     }
 
 
-    function confirmExport() {
-        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-            exportToExcel();
-        }
+
     }
 
+    
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour filtrer par date de début et de fin
+    function filterByDates() {
+        var minDate = new Date(document.getElementById('minLast').value);
+        var maxDate = new Date(document.getElementById('maxLast').value);
+        var tableRows = document.querySelectorAll('#myTable tbody tr');
 
-     }
+        tableRows.forEach(function(row) {
+            var rowDateDebut = new Date(row.cells[2].innerText); // Cellule contenant la date de début
+            var rowDateFin = new Date(row.cells[3].innerText); // Cellule contenant la date de fin
 
+            // Afficher ou masquer la ligne en fonction des critères de filtrage
+            if ((isNaN(minDate.getTime()) || rowDateDebut >= minDate) && (isNaN(maxDate.getTime()) || rowDateFin <= maxDate)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 
+    // Ajouter des écouteurs d'événements aux champs de saisie de date pour déclencher le filtrage
+    document.getElementById('minLast').addEventListener('input', filterByDates);
+    document.getElementById('maxLast').addEventListener('input', filterByDates);
 
+    // Appeler la fonction de filtrage une fois au chargement de la page pour afficher initialement toutes les lignes
+    filterByDates();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour effacer tous les filtres et afficher toutes les lignes
+    function clearAllFilters() {
+        // Afficher toutes les lignes du tableau
+        var tableRows = document.querySelectorAll('#myTable tbody tr');
+        tableRows.forEach(function(row) {
+            row.style.display = '';
+        });
+    }
 
+    // Ajouter un écouteur d'événements au bouton "Clear All"
+    document.getElementById('clearall').addEventListener('click', clearAllFilters);
+});
 
     </script> 
 {% endblock %}
