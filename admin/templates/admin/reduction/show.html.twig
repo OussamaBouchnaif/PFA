@@ -330,7 +330,6 @@
         printWindow.print();
     }
      
-
 document.addEventListener('DOMContentLoaded', function() {
     // Sélectionnez l'élément de liste déroulante des pourcentages
     var pourcentageSelect = document.getElementById('PourcentageSelect');
@@ -346,18 +345,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function filterTableByPourcentage(pourcentage) {
-    // Récupérer la table DataTable
-   // var table = $('#myTable').DataTable({
-   //retrieve: true
-//});
+    // Récupérer toutes les lignes de la table
+    var tableRows = document.querySelectorAll('#myTable tbody tr');
 
-    // Si le pourcentage sélectionné est vide, réinitialisez le filtre et affichez toutes les données
-    if (pourcentage === '') {
-        table.column(1).search('').draw();
-    } else {
-        // Appliquer le filtre pour le pourcentage sélectionné
-        table.column(1).search(pourcentage).draw();
-    }
+    // Parcourir toutes les lignes
+    tableRows.forEach(function(row) {
+        // Récupérer la cellule de pourcentage dans la ligne
+        var pourcentageCell = row.cells[1].textContent.trim();
+
+        // Vérifier si le pourcentage correspond à celui sélectionné ou si le pourcentage sélectionné est vide
+        if (pourcentage === '' || pourcentageCell === pourcentage) {
+            // Afficher la ligne
+            row.style.display = '';
+        } else {
+            // Masquer la ligne
+            row.style.display = 'none';
+        }
+    });
 }
 
 
@@ -436,43 +440,49 @@ function exportToCSV() {
 
 
 
-     }
-document.addEventListener('DOMContentLoaded', function() {
-            // Initialisation de la table DataTable
-           
-            initDataTable();
-            // Fonction pour filtrer par date de début et de fin
-            function filterByDates() {
-                var minDate = document.getElementById('minLast').value;
-                var maxDate = document.getElementById('maxLast').value;
-                var tableRows = document.querySelectorAll('#myTable tbody tr');
-
-                tableRows.forEach(function(row) {
-                    var rowDateDebut = row.cells[2].innerText; // Cellule contenant la date de début
-                    var rowDateFin = row.cells[3].innerText; // Cellule contenant la date de fin
-
-                    // Afficher ou masquer la ligne en fonction des critères de filtrage
-                    if ((minDate === '' || rowDateDebut >= minDate) && (maxDate === '' || rowDateFin <= maxDate)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            }
-
-            // Ajouter des écouteurs d'événements aux champs de saisie de date pour déclencher le filtrage
-            document.getElementById('minLast').addEventListener('input', filterByDates);
-            document.getElementById('maxLast').addEventListener('input', filterByDates);
-
-            // Appeler la fonction de filtrage une fois au chargement de la page pour afficher initialement toutes les lignes
-            filterByDates();
-        });
-    function initDataTable() {
-        if ($.fn.DataTable.isDataTable('#myTable')) {
-            $('#myTable').DataTable().destroy();
-        }
-        $('#myTable').DataTable();
     }
+
+    
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour filtrer par date de début et de fin
+    function filterByDates() {
+        var minDate = new Date(document.getElementById('minLast').value);
+        var maxDate = new Date(document.getElementById('maxLast').value);
+        var tableRows = document.querySelectorAll('#myTable tbody tr');
+
+        tableRows.forEach(function(row) {
+            var rowDateDebut = new Date(row.cells[2].innerText); // Cellule contenant la date de début
+            var rowDateFin = new Date(row.cells[3].innerText); // Cellule contenant la date de fin
+
+            // Afficher ou masquer la ligne en fonction des critères de filtrage
+            if ((isNaN(minDate.getTime()) || rowDateDebut >= minDate) && (isNaN(maxDate.getTime()) || rowDateFin <= maxDate)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // Ajouter des écouteurs d'événements aux champs de saisie de date pour déclencher le filtrage
+    document.getElementById('minLast').addEventListener('input', filterByDates);
+    document.getElementById('maxLast').addEventListener('input', filterByDates);
+
+    // Appeler la fonction de filtrage une fois au chargement de la page pour afficher initialement toutes les lignes
+    filterByDates();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour effacer tous les filtres et afficher toutes les lignes
+    function clearAllFilters() {
+        // Afficher toutes les lignes du tableau
+        var tableRows = document.querySelectorAll('#myTable tbody tr');
+        tableRows.forEach(function(row) {
+            row.style.display = '';
+        });
+    }
+
+    // Ajouter un écouteur d'événements au bouton "Clear All"
+    document.getElementById('clearall').addEventListener('click', clearAllFilters);
+});
 
     </script> 
 {% endblock %}
