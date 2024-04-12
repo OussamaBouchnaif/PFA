@@ -58,16 +58,14 @@
                                 <ul>
                                     
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
-                                        <ul class="widget_dropdown_categories collapse show" id="men">
-                                           
+                                        <ul class="widget_dropdown_categories collapse show" id="men">  
                                             {% for cat in categories %}
-                                            
-                                            <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
                                     <li class="widget_sub_"><a href="javascript:void(0)" data-toggle="collapse" data-target="#women">Reduction</a>
-                                        <ul class="widget_dropdown_categories collapse " id="women">
+                                        <ul class="widget_dropdown_categories " id="women">
                                             <li><a href=""> All <span>104</span></a></li>
                                             
                                             <li><a href="">10%<span>68</span></a></li>
@@ -229,7 +227,7 @@
                                                     <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
                                                     {% set img = imageCamera.image %}
                                                 {% else %}
-                                                    <img src="" alt="Camera Image"> 
+                                                    {% set img = '' %}
                                                 {% endif %}
                                             </a>
                                             <div class="product_action">
@@ -265,7 +263,7 @@
                                                 <span class="old_price">$46.00</span>
                                             </div>
                                             <div class="add_to_cart">
-                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image=""   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{minio_url(img) }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
                                             </div>
                                         </div>
                                         <div class="product_list_content">
@@ -287,40 +285,31 @@
                                 </div>
                               
                             {% endfor %} 
-                        {% else %}
-                        <div class="col-12">
-                            <div class="alert alert-warning" role="alert">
-                                No cameras available.
-                            </div>
-                        </div>
-                        {% endif %}
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
-                                </li>
-
-                        
-                                {% for page in 1..pagination.totalPages %}
-                                    <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
-                                        <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
-    
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
                                     </li>
-                                {% endfor %}
-                        
-                                
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
-                                </li>
-                                
-                            </ul>
-                        </nav>
+                                    {% for page in 1..pagination.totalPages %}
+                                        <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
+        
+                                        </li>
+                                    {% endfor %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        {% else %}
+                            <div class="col-12">
+                                <div class="alert alert-warning" role="alert">
+                                    No cameras available.
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                    
-                    
-
-
                 </div>
             </div>
         </div>

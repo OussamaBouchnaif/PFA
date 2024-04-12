@@ -22,9 +22,16 @@ class CameraRepository extends ServiceEntityRepository
     }
 
 
-    public function getcamerabycatergorie()
+    public function findLastTenProducts(string $categoryName)
     {
-        
+        return $this->createQueryBuilder('p')
+        ->join('p.categorie', 'c') // Assurez-vous que 'categorie' correspond à la propriété dans votre entité Camera.
+        ->where('c.nom = :categoryName')
+        ->setParameter('categoryName', $categoryName)
+        ->orderBy('p.dateAjout', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
     }
 
 //    /**

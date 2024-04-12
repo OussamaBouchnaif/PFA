@@ -20,4 +20,14 @@ class CameraController extends AbstractController
         return new JsonResponse($data, Response::HTTP_OK, [], true);
       
     }
+    #[Route("/api/lastTen/{categorie}", name: "lastTen", methods: ['GET'])]
+    public function lastTen(string $categorie,CameraRepository $cameraRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $cameras = $cameraRepository->findLastTenProducts($categorie);
+        $data = $serializer->serialize($cameras, 'json', ['groups' => 'camera:read']);
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
+      
+    }
+    
 }

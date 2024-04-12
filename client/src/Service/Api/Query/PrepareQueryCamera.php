@@ -11,6 +11,7 @@ class PrepareQueryCamera implements PrepareQueryInterface
     {
         $this->queryString = $queryString;
     }
+    
     public function prepareQueryString(array $searchCriteria): String
     {
         $queryStringBuilder = $this->queryString;

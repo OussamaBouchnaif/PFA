@@ -2,17 +2,18 @@
 
 namespace App\Tests\App\ValueObject;
 
-use App\ValueObject\CartItemsValueObject;
-use App\ValueObject\CartValueObject;
+
 use COM;
 use PHPUnit\Framework\TestCase;
+use App\ValueObject\CartValueObject;
+use App\ValueObject\CartItemValueObject;
 
 class AddToCartTest extends TestCase
 {
 
     public function testAddNewItem()
     {
-        $cartItemsValueObject = new CartItemsValueObject(1,10);
+        $cartItemsValueObject = new CartItemValueObject(1,10);
         $cartValueObject = new CartValueObject();
         $cartValueObject->addToCart($cartItemsValueObject);
         $lines = $cartValueObject->getLines();
@@ -21,10 +22,10 @@ class AddToCartTest extends TestCase
     }
     public function testAddExistingItem()
     {
-        $cartItemsValueObject = new CartItemsValueObject(1,10);
+        $cartItemsValueObject = new CartItemValueObject(1,10);
         $cartValueObject = new CartValueObject();
         $cartValueObject->addToCart($cartItemsValueObject);
-        $cartItemsValueObject2 = new CartItemsValueObject(1,15);
+        $cartItemsValueObject2 = new CartItemValueObject(1,15);
         $cartValueObject->addToCart($cartItemsValueObject2);
         $lines = $cartValueObject->getLines();
         $this->assertNotEmpty($lines);
