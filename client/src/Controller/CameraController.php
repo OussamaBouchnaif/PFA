@@ -7,6 +7,7 @@ use App\Repository\CameraRepository;
 
 use App\Repository\CategorieRepository;
 use App\Cart\Handler\CartStorageInterface;
+use App\Service\Api\Cameras\CameraFetcher;
 use App\Service\Api\Cameras\getAllCameras;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +21,9 @@ class CameraController extends AbstractController
 {
     public function __construct(
         private CategorieRepository $categorie,
-        private getAllCameras $callCamera,
+        private CameraFetcher $callCamera,
         private CameraRepository $cameraRepo,
         private CartStorageInterface $cartStorage,
-        private CameraSearchFilter $filter
     ) {
         
     }
@@ -45,7 +45,7 @@ class CameraController extends AbstractController
         ];
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria, $session);
         $session->set('searchCriteria', $searchCriteria);
-        $cameras = $this->filter->searchBy($searchCriteria);
+        $cameras = $this->callCamera->searchBy($searchCriteria);
         $data = $this->cameraRepo->pagination($cameras, $page, $paginator);
         return $this->render('client/pages/shop.html.twig', [
             'cameras' => $data,

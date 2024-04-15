@@ -4,45 +4,6 @@
 {% block title %}Shop{% endblock %}
 
 
-{% block stylesheets %}
-
-<style>
-   
-    #loadingSpinner {
-        position :absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 100;
-        background-color: #09f;
-    }
-    
-    .spinner {
-        position: absolute;
-        left: 50%;
-        border: 4px solid rgba(0,0,0,.1);
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border-left-color: #09f;
-        animation: spin 1s ease infinite;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    #results-container{
-        position :relative;
-        
-    }
-    .my-custom-popup-class {
-        font-size: 8px; /* Taille de police personnalisée */
-        width: auto  !important;
-    }
-</style>
-{% endblock  %}
-
 {% block body %}
     
     <!--shop  area start -->
@@ -56,28 +17,13 @@
                             <div class="widget_list widget_categories">
                                 <h2>Categories</h2>
                                 <ul>
-                                    
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">  
                                             {% for cat in categories %}
-                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>68</span></a></li>
+                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>69</span></a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
-                                    <li class="widget_sub_"><a href="javascript:void(0)" data-toggle="collapse" data-target="#women">Reduction</a>
-                                        <ul class="widget_dropdown_categories " id="women">
-                                            <li><a href=""> All <span>104</span></a></li>
-                                            
-                                            <li><a href="">10%<span>68</span></a></li>
-                                            <li><a href="">20%<span>68</span></a></li>
-                                            <li><a href="">30%<span>68</span></a></li>
-                                            <li><a href="">40%<span>68</span></a></li>
-                                            <li><a href="">50%<span>68</span></a></li>
-                                            
-                                        </ul>
-                                    </li>
-                                    
-                                    
                                 </ul>
                             </div>
                             <div class="widget_list widget_filter">
@@ -389,11 +335,6 @@
     </div>
     
 {% endblock %}
-
-{% block javascripts %}
-    
-{% endblock %}
-
 
 
 

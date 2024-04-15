@@ -15,7 +15,6 @@ class DiscountLoader
     public function loadDiscount(Cart $instance, string $voucherIdentifier, VoucherStrategyInterface $strategy): Cart
     {
         $discount = $strategy->loadVoucher($voucherIdentifier);
-
         return $instance->setCodePromo($discount);
     }
 }

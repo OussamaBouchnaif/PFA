@@ -29,7 +29,7 @@ class DefaultVoucher implements VoucherInterface
         }
 
         $voucherInstance = $this->strategy->findVoucherModel($voucherCode);
-
+        
         return $this->getDiscountedCart($object, $voucherInstance);
     }
 
@@ -85,12 +85,18 @@ class DefaultVoucher implements VoucherInterface
 
             public function getDiscountValue(): float
             {
+                if (null === $this->voucherInstance) {
+                    return 0.0; 
+                }
                 return $this->object->computeTotal() * $this->voucherInstance->getDiscount();
             }
 
             public function getDiscountRate(): float
             {
-                return $this->voucherInstance->getRate();
+                if (null === $this->voucherInstance) {
+                    return 0.0; 
+                }
+                return $this->voucherInstance->getRate() ;
             }
         };
     }

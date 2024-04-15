@@ -25,16 +25,17 @@ final class CartProcessor
     /**
      * Processes the cart.
      */
-    public function process(Cart $instance, ?string $voucherIdentifier): void
+    public function process(Cart $instance, ?string $voucherIdentifier)
     {
         if (null !== $voucherIdentifier) {
             $this->discountLoader->loadDiscount($instance, $voucherIdentifier, $this->strategy);
             $instance = $this->doUpdateTotal($instance, $voucherIdentifier);
+            
             $this->doCleaning($voucherIdentifier);
         } else {
+            
             $instance->setTotal($instance->computeTotal());
         }
-
         $this->cartPersister->persist($instance);
     }
 
