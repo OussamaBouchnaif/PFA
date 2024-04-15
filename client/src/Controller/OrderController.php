@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderController extends AbstractController
 {
@@ -20,7 +20,6 @@ class OrderController extends AbstractController
         private CartStorageInterface $cartStorage,
         private  CartFactory $cartFactory,
     ) {
-    
     }
 
     #[Route('/order', name: 'order')]
@@ -28,40 +27,47 @@ class OrderController extends AbstractController
         Request $request,
         VoucherInterface $voucherManager,
         CartProcessor $cartProcessor,
+        Security $security
     ): Response {
+
+        if (!$security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cart = $this->cartFactory->build();
         $formOrder = $this->createForm(CheckoutType::class);
         $formOrder->handleRequest($request);
 
-        $voucherCode = $discountedCart = null;
-
+        $session = $request->getSession();
         if ($formOrder->isSubmitted() && $formOrder->isValid()) {
 
             if ($formOrder->getClickedButton() && 'applyVoucher' === $formOrder->getClickedButton()->getName()) {
                 $voucherCode = $formOrder->get('voucher')->getData();
-                $discountedCart = $voucherManager->applyVoucher($voucherCode, $cart);
+                $voucherManager->applyVoucher($voucherCode, $cart);
+                $voucherData = [
+                    'voucher' => $voucherCode,
+                    'discount' => $voucherManager->applyVoucher($voucherCode, $cart)->getTotal(),
+                    'rate' => $voucherManager->applyVoucher($voucherCode, $cart)->getDiscountRate(),
+                ];
+                
+                $session->set('voucher',$voucherData);
             }
-
             if ($formOrder->getClickedButton() && 'placeOrder' === $formOrder->getClickedButton()->getName()) {
                 $voucherIdentifier = $voucherManager->getVoucherIdentifier();
-
                 $cartProcessor->process($cart, $voucherIdentifier);
-
+                $session->remove('voucher');
                 return $this->redirectToRoute('app_home');
             }
-
         }
 
         return $this->render('client/pages/checkout.html.twig', [
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
-            'totalPromo' => '',
             'formOrder' => $formOrder->createView(),
-            'is_voucher_applied' => $voucherManager->isAlreadyApplied($voucherCode, $cart),
-            'voucher' => $voucherCode,
+            'voucher' => $session->get('voucher')['voucher'] ?? null,
             'amount' => $cart->computeTotal(),
-            'discount' => null !== $discountedCart ? $discountedCart?->getTotal() : $cart->computeTotal(),
-            'rate' => null !== $discountedCart ? $discountedCart?->getDiscountRate() : 0,
+            'discount' => $session->get('voucher')['discount'] ?? null,
+            'rate' => $session->get('voucher')['rate'] ?? null,
         ]);
     }
 }

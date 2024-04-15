@@ -12,51 +12,33 @@ class QueryStringBuilder
     {
     }
 
-    public function addLessThanPriceParameter(float $max, bool $strict = false): static
-    {
-        $operation = true === $strict ? 'lt' : 'lte';
-
-        $this->appendParameter('prix[' . $operation . ']', $max);
-
-        return $this;
-    }
-
-    public function addGreatherThanPriceParameter(float $min, bool $strict = false): static
-    {
-        $operation = true === $strict ? 'gt' : 'gte';
-
-        $this->appendParameter('prix[' . $operation . ']', $min);
-
-        return $this;
-    }
-
-    public function addPriceRangeParameter(string $price): static
+    public function addPriceRangeParameter(?string $price=null): static
     {
         $this->appendParameter('prix[between]', $price);
 
         return $this;
     }
 
-    public function addCategorieNameParameter(string $name):static
+    public function addCategorieNameParameter(?string $name = null):static
     {
         $this->appendParameter('categorie.nom',$name);
         return $this;
 
     }
 
-    public function addResolution(string $resolution):static
+    public function addResolution(?string $resolution=null):static
     {
         $this->appendParameter('resolution',$resolution);
         return $this;
     }
 
-    public function addAngleVision(string $angleVision):static
+    public function addAngleVision(?string $angleVision = null):static
     {
         $this->appendParameter('angleVision',$angleVision);
         return $this;
     }
 
-    public function addOrder(string $orderBy): static
+    public function addOrder(?string $orderBy=null): static
     {
         $this->appendParameter('order[' . $orderBy . ']', 'asc');
 

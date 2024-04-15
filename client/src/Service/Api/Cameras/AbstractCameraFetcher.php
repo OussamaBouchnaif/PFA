@@ -7,15 +7,17 @@ use App\Service\Api\GetDataService;
 use Symfony\Contracts\Cache\ItemInterface;
 use App\Service\Api\Query\PrepareQueryCamera;
 use App\Service\Api\Denormalizer\Denormalizer;
+use App\Service\Api\Cameras\CameraFatcherInterface;
 use App\Service\Api\Exception\ObjectNotFoundException;
+use App\Service\Api\Query\QueryStringBuilder;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 
-abstract class CameraDataService
+abstract class AbstractCameraFetcher implements CameraFatcherInterface
 {
     public function __construct(
         protected GetDataService $getData,
-        protected PrepareQueryCamera $prepareQueryCamera,
+        protected QueryStringBuilder $queryStringBuilder,
         protected Denormalizer $denormalizer,
 
     ) {}

@@ -144,13 +144,12 @@
                                             <tr class="order_total">
                                                 <th>Order Total</th>
                                                 <td class="text-right">
-                                                    {% if is_voucher_applied is same as(true) %}
+                                                    
+                                                    {% if totalItems is not same as(discount)  %}
                                                         <span class="text-decoration-line-through">${{totalItems}}</span>
                                                          <br />
                                                         <span style="font-size: 150%">${{ discount | number_format(2, ',', ' ') }}</span>
-                                                        {% if is_voucher_applied is same as(true) %}
                                                             <p style="font-size: 50%"><small>you applied <strong>{{ voucher }}</strong> (- {{ rate }} %)</small></p>
-                                                            {% endif %}
                                                     {% else %}
                                                         ${{totalItems}}
                                                     {% endif %}

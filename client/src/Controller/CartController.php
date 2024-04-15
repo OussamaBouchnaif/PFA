@@ -61,8 +61,9 @@ class CartController extends AbstractController
         }
     }
     #[Route('/clear',name:'clear')]
-    public function clear(){
+    public function clear(Request $request){
         $this->cartStorage->clearCart($this->cartStorage->getCart());
+        $request->getSession()->remove('voucher');
         return $this->redirectToRoute('app_cart');
     }
 

@@ -13,7 +13,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final class CartFactory
 {
-    public function __construct(private Security $security, private AbstractCartNormalizer $normaliser, private EntityManagerInterface $manager)
+    public function __construct(private Security $security,
+     private AbstractCartNormalizer $normaliser,
+      private EntityManagerInterface $manager)
     {
     }
 

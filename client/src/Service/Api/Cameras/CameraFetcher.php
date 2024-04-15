@@ -1,20 +1,45 @@
 <?php
 
+namespace App\Service\Api\Cameras;
 
-namespace App\Service\Api\Query;
+use App\Service\Api\Cameras\AbstractCameraFetcher;
+use App\Service\Api\Exception\ObjectNotFoundException;
 
-class PrepareQueryCamera implements PrepareQueryInterface
+class CameraFetcher extends AbstractCameraFetcher
 {
-    private $queryString;
-
-    public function __construct(QueryStringBuilder $queryString)
+    public function getAllCamera(int $page): array
     {
-        $this->queryString = $queryString;
+        return $this->getCameraData('api/cameras?page=' . $page);
     }
-    
+
+    public function getCameraById(int $id)
+    {
+        $endpoint = "/api/cameras/" . $id;
+        $response = $this->getData->getDataFromApi($endpoint);
+
+        if (!$response) {
+            throw new ObjectNotFoundException('Camera Not Found !!');
+        }
+        return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO', 'json');
+    }
+
+    public function getItems(): int
+    {
+        $items = $this->getData->getTotalItems("api/cameras/");
+        return $items;
+    }
+
+    public function searchBy(array $searchCriteria): array
+    {
+        
+        $queryString = $this->prepareQueryString($searchCriteria);
+        return $this->getCameraData('api/cameras/?' . $queryString);
+    }
+
+
     public function prepareQueryString(array $searchCriteria): String
     {
-        $queryStringBuilder = $this->queryString;
+        $queryStringBuilder = $this->queryStringBuilder;
 
         foreach ($searchCriteria as $key => $value) {
             if (!is_null($value)) {
@@ -37,7 +62,6 @@ class PrepareQueryCamera implements PrepareQueryInterface
                 }
             }
         }
-
         return $queryStringBuilder->getQueryString();
     }
 }
