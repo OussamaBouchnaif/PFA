@@ -102,7 +102,8 @@
                                                 <h5 class="fs-16">Filters</h5>
                                             </div>
                                             <div class="flex-shrink-0">
-                                                <a  class="text-decoration-underline" id="clearall" onclick="clearAllFilters()">Clear All</a>
+                                               <a href="javascript:void(0);" onclick="clearAllFilters()">Clear All</a>
+
                                             </div>
 
                                     </div>                                   
@@ -497,23 +498,18 @@ function filterTableByCategory(categoryName) {
         document.getElementById('noDataMessage').style.display = 'none';
     }
 }
-
-
-
-  
 function clearAllFilters() {
-    // Réinitialiser les valeurs des champs de filtre pour la catégorie
-    document.getElementById('categorySelect').value = 'All';
+    // Réinitialiser le filtre de catégorie
+    var categorySelect = document.getElementById('categorySelect');
+    categorySelect.selectedIndex = 0; // Sélectionnez la première option (catégorie par défaut)
 
-    // Réinitialiser les valeurs des champs de filtre pour le prix
-    document.getElementById('minCost').value = '0';
-    document.getElementById('maxCost').value = '1000';
+    // Réinitialiser le filtre de prix
+    document.getElementById('minCost').value = ''; // Réinitialiser la valeur minimale
+    document.getElementById('maxCost').value = ''; // Réinitialiser la valeur maximale
 
-    // Réinitialiser les filtres de la catégorie
+    // Réappliquer le filtre pour afficher toutes les lignes
     filterTableByCategory('All');
-
-    // Réinitialiser les filtres du prix
-    filterTableByPrice();
+    document.getElementById('noDataMessage').style.display = 'none'; // Masquer le message "Aucun résultat trouvé"
 }
 
 

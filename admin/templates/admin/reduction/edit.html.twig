@@ -27,7 +27,7 @@
                     </div>
                     <!-- end page title -->
 
-                <div class="row">
+                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-body">
@@ -35,18 +35,30 @@
                                     {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
                                     {{ form_label(form.description) }}
                                     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                    {% if form_errors(form.description) %}
+                                        <div class="text-danger">{{ form_errors(form.description) }}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.poucentage) }}
                                     {{ form_widget(form.poucentage, {'attr': {'class': 'form-control'}}) }}
+                                    {% if form_errors(form.poucentage) %}
+                                        <div class="text-danger">{{ form_errors(form.poucentage) }}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.dateDebut) }}
                                     {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+                                    {% if form_errors(form.dateDebut) %}
+                                        <div class="text-danger">{{ form_errors(form.dateDebut) }}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="mb-3">
                                     {{ form_label(form.dateFin) }}
                                     {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+                                    {% if form_errors(form.dateFin) %}
+                                        <div class="text-danger">{{ form_errors(form.dateFin) }}</div>
+                                    {% endif %}
                                 </div>
                                 <button type="submit" class="btn btn-success">Enregistrer</button>
                                 {{ form_end(form) }}
