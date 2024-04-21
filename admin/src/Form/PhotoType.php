@@ -1,5 +1,6 @@
 <?php
 // src/Form/PhotoType.php
+// src/Form/PhotoType.php
 
 namespace App\Form;
 
@@ -25,5 +26,3 @@ class PhotoType extends AbstractType
         ]);
     }
 }
-    
-

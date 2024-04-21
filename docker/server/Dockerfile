@@ -38,6 +38,6 @@ RUN pecl install amqp
 RUN docker-php-ext-enable amqp
 
 # Install Nodejs
-RUN apt install -y nodejs npm
+# RUN apt install -y nodejs npm
 
 EXPOSE 8585

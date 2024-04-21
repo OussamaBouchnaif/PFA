@@ -167,37 +167,8 @@
                                                 </div>
                                             </div>
                                             <br/>
-                                        {# <div class="card-header">
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                                        <li class="nav-item">
-                                                            <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#productnav-all" role="tab">
-                                                                All <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">12</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-published" role="tab">
-                                                                Published <span class="badge bg-danger-subtle text-danger align-middle rounded-pill ms-1">5</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#productnav-draft" role="tab">
-                                                                Draft
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div id="selection-element">
-                                                        <div class="my-n1 d-flex align-items-center text-muted">
-                                                            Select <div id="select-content" class="text-body fw-semibold px-1"></div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeItemModal">Remove</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> #}
-                                        <!-- end card header -->
+                                       
+                                        
                                         <div class="card-body">
 
                                      <table id="myTable" class="table">
@@ -215,7 +186,7 @@
                                         </thead>
                                         <tbody>
                                             {% for camera in cameras %}
-                                            <tr>                                
+                                            <tr data-camera-id="{{ camera.id }}" >                                
                                                 <td>
                                                     <div class="avatar-group">
                                                         {% for imageCamera in camera.imageCameras %}
@@ -234,16 +205,19 @@
                                                 <td class="align-middle text-center">{{ camera.stock }}</td>
                                                 <td class="align-middle text-center category-cell">{{ camera.categorie.nom }}</td>
                                                 <td class="text-center align-middle horizontal-buttons">
-                                                    <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('Delete_camera',{id:camera.id}) }}')">
-                                                        <i class="ri-delete-bin-line align-bottom me-2"></i> 
-                                                    </button>
+                                                  <a class="dropdown-item text-muted delete-camera-link" href="{{ path('Delete_camera',{id:camera.id}) }}">
+                                                        <i class="ri-delete-bin-line align-bottom me-2"></i>
+                                                    </a>
                                                     <a class="text-muted" href="{{ path('Edit_camera',{id:camera.id}) }}">
                                                         <i class="ri-pencil-line align-bottom me-2"></i> 
                                                     </a>
                                                     <a class="text-muted" href="{{ path('camera_details', {'id': camera.id}) }}">
                                                         <i class="ri-eye-fill align-bottom me-2"></i> 
                                                     </a>
-                                                   
+                                                   <a class="text-muted" href="#" id="uploadLink" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                                    <i class="ri-upload-line align-bottom me-2"></i>                                                   
+                                                </a>
+
 
 
                                                 </td>
@@ -295,12 +269,35 @@
         
     </div>
 
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Téléchargement de fichier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm" method="post" action="{{ path('add_photo') }}" enctype="multipart/form-data">
+                    <input type="hidden" name="cameraId" id="cameraId" value="">
+                    <div class="mb-3">
+                        <label for="fileInput" class="form-label">Sélectionner un fichier</label>
+                        <input type="file" class="form-control" id="fileInput" name="photo">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Télécharger</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 
 {% block javascripts %}
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
@@ -391,11 +388,6 @@ function filterTableByCategory(categoryName) {
 
 
 
-
-
-
-
-
     function exportToExcel() {
         var table = document.getElementById('myTable');
         var rows = table.querySelectorAll('tr');
@@ -435,23 +427,9 @@ function filterTableByCategory(categoryName) {
         $(modal).modal('show');
     }
 
-     function confirmDelete(deleteUrl) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer cette caméra ?")) {
-                window.location.href = deleteUrl;
-            }
-        }
+     
 
-     function confirmPrint() {
-    if (confirm("Êtes-vous sûr de vouloir imprimer le tableau ?")) {
-        printTable();
-    }
-}
-
-    function confirmExport() {
-        if (confirm("Êtes-vous sûr de vouloir exporter vers Excel ?")) {
-            exportToExcel();
-        }
-    }
+  
 
 
      document.addEventListener('DOMContentLoaded', function() {
@@ -514,9 +492,214 @@ function clearAllFilters() {
 
 
 
+ 
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-camera-link').forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Empêcher le comportement par défaut du lien
 
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Envoyer la requête de suppression via AJAX
+                            fetch(this.getAttribute('href'), {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
+                                },
+                                body: JSON.stringify({
+                                    _method: 'DELETE' // Utiliser la méthode DELETE pour Symfony
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your camera has been deleted.',
+                                        'success'
+                                    );
+                                    // Rediriger vers la page des caméras après la suppression
+                                    window.location.href = "{{ path('camera') }}";
+                                } else {
+                                    Swal.fire(
+                                        'Error!',
+                                        'An error occurred while deleting the camera.',
+                                        'error'
+                                    );
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    
 
 
 
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.delete-camera-link').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Empêcher le comportement par défaut du lien
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Envoyer la requête de suppression via AJAX
+                    fetch(this.getAttribute('href'), {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your camera has been deleted.',
+                                'success'
+                            );
+                            // Rediriger vers la page des caméras après la suppression
+                            window.location.href = "{{ path('camera') }}";
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the camera: ' + data.message,
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred while deleting the camera.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        });
+    });
+});
+function confirmPrint() {
+    Swal.fire({
+        title: 'Print Table',
+        text: "Are you sure you want to print the table?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, print it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            printTable();
+        }
+    });
+}
+
+function confirmExport() {
+    Swal.fire({
+        title: 'Export to Excel',
+        text: "Are you sure you want to export the table to Excel?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, export it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            exportToExcel();
+        }
+    });
+}
+</script>
+<script>
+
+    var selectedCameraId; // Définition de la variable selectedCameraId
+
+// Lorsque l'utilisateur clique sur le lien "Télécharger"
+$('#uploadLink').click(function() {
+    // Récupérez l'ID de la caméra à partir de la ligne sélectionnée
+    var cameraId = $(this).closest('tr').attr('data-camera-id');
+    // Définissez l'ID de la caméra sélectionnée
+    setSelectedCameraId(cameraId);
+});
+
+// Fonction pour définir l'ID de la caméra sélectionnée
+function setSelectedCameraId(cameraId) {
+    selectedCameraId = cameraId;
+}
+
+
+</script>
+<script>
+    // Lorsque l'utilisateur clique sur le bouton "Télécharger"
+    $('#uploadModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var cameraId = button.data('camera-id'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#cameraId').val(cameraId);
+    });
+</script>
+
+<script>
+    // Lorsque le formulaire d'ajout de photo est soumis
+    $('#uploadForm').submit(function(event) {
+        // Empêche le comportement par défaut du formulaire
+        event.preventDefault();
+        
+        // Récupère les données du formulaire
+        var formData = new FormData(this);
+        
+        // Effectue une requête AJAX pour soumettre le formulaire
+        $.ajax({
+            url: $(this).attr('action'), // URL de l'action du contrôleur pour ajouter la photo
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Si l'ajout de la photo réussit, ferme le modal et affiche un message de succès si nécessaire
+                $('#uploadModal').modal('hide');
+                alert('Photo ajoutée avec succès !');
+            },
+            error: function(xhr, status, error) {
+                // Si une erreur se produit lors de l'ajout de la photo, affiche un message d'erreur
+                alert('Échec de l\'ajout de la photo : ' + xhr.responseText);
+            }
+        });
+    });
+</script>
+
+
+
 {% endblock %}
