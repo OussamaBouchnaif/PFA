@@ -116,7 +116,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        {# {% for user in users %}
+                                       {% for user in users %}
                                         <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                             <div class="d-flex">
                                                {% if user.getImage() %}
@@ -127,7 +127,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                          {% endfor %} #}
+                                          {% endfor %} 
 
                                         <!-- item -->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
@@ -709,7 +709,7 @@
                         </div>
 
                         <div class="dropdown ms-sm-3 header-item topbar-user">
-                            {# <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
                                     {% if app.user %}
                                         <img class="rounded-circle header-profile-user" src="{{ asset(app.user.image) }}" alt="Header Avatar">
@@ -725,7 +725,7 @@
                                         <span class="ms-xl-2">Connectez-vous</span>
                                     {% endif %}
                                 </span>
-                            </button> #}
+                            </button>
 
 
                             <div class="dropdown-menu dropdown-menu-end">
