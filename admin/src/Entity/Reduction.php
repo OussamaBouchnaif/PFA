@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
 class Reduction
@@ -17,17 +18,25 @@ class Reduction
     private ?int $id = null;
 
     #[ORM\Column(length: 300)]
+    #[Assert\NotBlank(message: "Veuillez fournir une description.")]
+    #[Assert\Length(max: 300, maxMessage: "La description ne doit pas dépasser {{ limit }} caractères.")]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank(message: "Veuillez fournir un pourcentage.")]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: "Le pourcentage doit être compris entre {{ min }} et {{ max }}.")]
     private ?int $poucentage = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "Veuillez fournir une date de début.")]
+    #[Assert\Date(message: "La date de début doit être une date valide.")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "Veuillez fournir une date de fin.")]
+    #[Assert\Date(message: "La date de fin doit être une date valide.")]
+    #[Assert\GreaterThanOrEqual(propertyPath: "dateDebut", message: "La date de fin doit être postérieure à la date de début.")]
     private ?\DateTimeInterface $dateFin = null;
-
     #[ORM\OneToMany(mappedBy: 'reduction', targetEntity: LigneReduction::class)]
     private Collection $ligneReductions;
 
