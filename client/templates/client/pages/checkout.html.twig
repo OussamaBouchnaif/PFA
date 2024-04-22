@@ -82,52 +82,87 @@
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
-                        <h3>Billing Details</h3>
-
-                        <div class="cart_page_tabel">
-                            <table>
-                                <tbody>
-                                    {% if cart is not empty %}
-
-                                        {% for item in cart.getLines %}
-
-                                            <tr class="border-top">
-                                                <td>
-                                                    {% set imageCamera = item.image|first %}
-                                                    {% if imageCamera %}
-                                                        <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
-                                                    {% else %}
-                                                        <img src="" alt="oussama">
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    <div class="cart_product_text">
-                                                        <h4>Example With Title Product</h4>
-                                                        <ul>
-                                                            <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.stockage}}</span></li>
-                                                            <li><i class="ion-ios-arrow-right"></i> Size : <span>XL</span></li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="cart_product_price">
-                                                        <span>${{ item.TotalPriceItem }}</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% endif %}
-                                </tbody>
-                            </table>
-                            {% if cart is empty or cart.getLines is empty %}
-                                <div class="col-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        No items in your cart.
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
+                        
+                            <h3>Billing Details</h3>
+                            <div class="checkout_form_input">
+                                <label for="country">country <span>*</span></label>
+                                    <select class="select_option" name="cuntry" id="country">
+                                    <option value="2">United Kingdom (UK)  </option>
+                                    <option value="3">Algeria</option>
+                                    <option value="4">Afghanistan</option>
+                                    <option value="5">Ghana</option>
+                                    <option value="6">Albania</option>
+                                    <option value="7">Bahrain</option>
+                                    <option value="8">Colombia</option>
+                                    <option value="9">Dominican Republic</option>
+                                </select>
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>First Name <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Last Name  <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Company Name</label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                               <label>Address  <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Town / City <span>*</span></label>
+                                <input  type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label> Email Address   <span>*</span></label>
+                                <input  type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label> Phone <span>*</span></label>
+                                <input  type="text">
+                            </div>
+                            <p class="different_address"><i class="ion-android-checkbox-outline"></i> Ship to a different address?</p>
+                            <div class="checkout_form_input">
+                                <label for="country2">country <span>*</span></label>
+                                    <select class="select_option" name="cuntry" id="country2">
+                                    <option value="2">United Kingdom (UK)  </option>
+                                    <option value="3">Algeria</option>
+                                    <option value="4">Afghanistan</option>
+                                    <option value="5">Ghana</option>
+                                    <option value="6">Albania</option>
+                                    <option value="7">Bahrain</option>
+                                    <option value="8">Colombia</option>
+                                    <option value="9">Dominican Republic</option>
+                                </select>
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>First Name <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Last Name  <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Company Name</label>
+                                <input type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Town / City <span>*</span></label>
+                                <input  type="text">
+                            </div>
+                            <div class="checkout_form_input">
+                                <label>Order Notes</label>
+                                <textarea></textarea>
+                            </div>
+                        
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="order_table_right">
@@ -135,7 +170,22 @@
                                 <h3>Your order</h3>
                                 <div class="order_table table-responsive">
                                     <table>
-
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th class="text-right">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if cart is not empty %}
+                                                {% for item in cart.getLines %}
+                                                    <tr>
+                                                        <td> {{item.name}}  </td>
+                                                        <td class="text-right"> ${{item.TotalPriceItem}}  </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td>Cart Subtotal  </td>
@@ -145,7 +195,7 @@
                                                 <th>Order Total</th>
                                                 <td class="text-right">
                                                     
-                                                    {% if totalItems is not same as(discount)  %}
+                                                    {% if 0 != rate %}
                                                         <span class="text-decoration-line-through">${{totalItems}}</span>
                                                          <br />
                                                         <span style="font-size: 150%">${{ discount | number_format(2, ',', ' ') }}</span>
@@ -157,44 +207,23 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    {% for child in formOrder.payment %}
                                         <div class="panel-default">
-                                            {{form_widget(formOrder.paiment)}}
                                             <div class="panel_radio">
-
+                                                {{ form_widget(child, {'attr': {'id': 'payment' ~ loop.index, 'class': 'radio_input'}}) }}
                                                 <span class="checkmark"></span>
                                             </div>
-
-                                            <label for="payment1" data-toggle="collapse" data-target="#panel1" >direct bank transfer</label>
-                                            <div id="panel1" class="collapse show one" data-parent="#accordion">
+                                            <label for="payment{{ loop.index }}" data-toggle="collapse" data-target="#panel{{ loop.index }}">
+                                                {{ child.vars.label }}
+                                            </label>
+                                            <div id="panel{{ loop.index }}" class="collapse {{ loop.index == 1 ? 'show one' : 'two' }}" data-parent="#accordion">
                                                 <div class="card-body1">
-                                                    <p>Donec sed odio dui. Nulla vitae elit libero, a phara etra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. </p>
+                                                    <p>{{ 'Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit.' }}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel-default">
-                                            <div class="panel_radio">
-                                                <input id="payment2" name="check_method" type="radio" data-target="createp_account" />
-                                                <span class="checkmark"></span>
-                                            </div>
-                                            <label for="payment2" data-toggle="collapse" data-target="#method2" >cheque payment</label>
-                                            <div id="method2" class="collapse two" data-parent="#accordion">
-                                                <div class="card-body1">
-                                                    <p>Donec sed odio dui. Nulla vitae elit libero, a phara etra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel-default">
-                                            <div class="panel_radio">
-                                                <input id="payment3" name="check_method" type="radio" data-target="createp_account" />
-                                                <span class="checkmark"></span>
-                                            </div>
-                                            <label for="payment3" data-toggle="collapse" data-target="#method3" >cash on delivery</label>
-                                            <div id="method3" class="collapse three" data-parent="#accordion">
-                                                <div class="card-body1">
-                                                    <p>Donec sed odio dui. Nulla vitae elit libero, a phara etra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    {% endfor %}
+                                
                                         <div class="place_order_btn">
                                             {{ form_widget(formOrder.placeOrder, {attr: {class: 'btn btn-primary'}})}}
                                         </div>

@@ -4,9 +4,7 @@
 
 namespace App\Cart\Handler;
 
-use App\Entity\Cart;
 use App\Entity\Camera;
-use App\Entity\CartItem;
 use App\ValueObject\CartValueObject;
 
 interface CartStorageInterface 

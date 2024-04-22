@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Enum\PaymentMethod;
+use App\Enum\PaymentStatus;
 use App\Repository\PaiementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -76,9 +78,9 @@ class Paiement
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(PaymentStatus $status): static
     {
-        $this->status = $status;
+        $this->status = $status->value;
 
         return $this;
     }

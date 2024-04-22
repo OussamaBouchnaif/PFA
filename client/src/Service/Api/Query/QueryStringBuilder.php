@@ -12,33 +12,32 @@ class QueryStringBuilder
     {
     }
 
-    public function addPriceRangeParameter(?string $price=null): static
+    public function addPriceRangeParameter(?string $price = null): static
     {
         $this->appendParameter('prix[between]', $price);
 
         return $this;
     }
 
-    public function addCategorieNameParameter(?string $name = null):static
+    public function addCategorieNameParameter(?string $name = null): static
     {
-        $this->appendParameter('categorie.nom',$name);
-        return $this;
-
-    }
-
-    public function addResolution(?string $resolution=null):static
-    {
-        $this->appendParameter('resolution',$resolution);
+        $this->appendParameter('categorie.nom', $name);
         return $this;
     }
 
-    public function addAngleVision(?string $angleVision = null):static
+    public function addResolution(?string $resolution = null): static
     {
-        $this->appendParameter('angleVision',$angleVision);
+        $this->appendParameter('resolution', $resolution);
         return $this;
     }
 
-    public function addOrder(?string $orderBy=null): static
+    public function addAngleVision(?string $angleVision = null): static
+    {
+        $this->appendParameter('angleVision', $angleVision);
+        return $this;
+    }
+
+    public function addOrder(?string $orderBy = null): static
     {
         $this->appendParameter('order[' . $orderBy . ']', 'asc');
 

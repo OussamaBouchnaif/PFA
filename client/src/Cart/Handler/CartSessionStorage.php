@@ -16,21 +16,27 @@ class CartSessionStorage implements CartStorageInterface
 {
     private $cartSessionKey = 'cart';
 
-    public function __construct(private readonly RequestStack $request,
-    private CalculatorContext $calculator,
-    private Security $security)
-    {
-
+    public function __construct(
+        private readonly RequestStack $request,
+        private Security $security
+    ) {
     }
-    
-    public function addToCart(Camera $camera,int $qte,float $stockage)
+
+    public function addToCart(Camera $camera, int $qte, float $stockage)
     {
-        $cart = $this->getCart(); 
-        $cart->addToCart(new CartItemValueObject($camera->getId(),$camera->getImageCameras(),$camera->getPrix(),$qte,$stockage));
+        $cart = $this->getCart();
+        $cart->addToCart(new CartItemValueObject(
+            $camera->getId(),
+            $camera->getImageCameras(),
+            $camera->getPrix(),
+            $qte,
+            $stockage,
+            $camera->getNom()
+        ));
         $this->saveCart($cart);
     }
-   
-    public function getCart():CartValueObject
+
+    public function getCart(): CartValueObject
     {
         $session = $this->request->getSession();
         $cart = $session->get($this->cartSessionKey);
@@ -43,14 +49,21 @@ class CartSessionStorage implements CartStorageInterface
 
         return $cart;
     }
-    
-    public function TotalPriceItems():float
+
+    public function TotalPriceItems(): float
     {
-        return $this->calculator->priceCalculator($this->getCart());
+        $totalPrice = 0.0;
+        $cart = $this->getCart();
+        $items = $cart->getItems();
+        foreach ($items as $item) {
+            $totalPrice += $item->getPrice() * $item->getQuantity();
+        }
+
+        return $totalPrice;
     }
     public function removeFromCart(int $idItem)
     {
-        $cart = $this->getCart(); 
+        $cart = $this->getCart();
         $items = $cart->getItems();
         if (array_key_exists($idItem, $items)) {
             $cartItem = $items[$idItem];
@@ -58,9 +71,10 @@ class CartSessionStorage implements CartStorageInterface
             $this->saveCart($cart);
         }
     }
-   
 
-    public function clearCart(CartValueObject $cart){
+
+    public function clearCart(CartValueObject $cart)
+    {
         $cart->clear();
     }
 
@@ -69,5 +83,4 @@ class CartSessionStorage implements CartStorageInterface
         $session = $this->request->getSession();
         $session->set($this->cartSessionKey, $cart);
     }
-
 }

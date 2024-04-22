@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\UX\Turbo\TurboBundle;
 use Symfony\Component\Mercure\Update;
+use App\Cart\Handler\CartStorageInterface;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TestController extends AbstractController
 {
     
- 
 
+    public function __construct(private CartStorageInterface $cartStorage)
+    {
+        
+    }
 
     #[Route('/test',name:'test')]
     public function testss(Request $request):Response
@@ -46,10 +50,13 @@ class TestController extends AbstractController
 
    
     
-    #[Route('/shop', name: 'shop')]
+    #[Route('/pay', name: 'shop')]
     public function shop(): Response
     {
-        return $this->render('client/pages/shop.html.twig');
+        return $this->render('client/pages/pay.html.twig',[
+            'cart'=> $this->cartStorage->getCart(),
+            'totalItems'=>$this->cartStorage->TotalPriceItems(),
+        ]);
     }
 
     #[Route('/product', name: 'product')]

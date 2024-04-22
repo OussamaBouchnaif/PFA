@@ -35,6 +35,21 @@ services:
     App\Twig\MinioExtension:
         arguments:
             $endpointMinio: '%env(ENDPOINT_MINIO)%'
+    
+
+    App\Payment\Strategy\PaypalePayment:
+        tags:
+            - { name: 'app.payment_processor' }
+
+    App\Payment\Strategy\CreditCartPayment:
+        tags:
+            - { name: 'app.payment_processor' }
+
+    App\Payment\PaymentManager:
+        arguments:
+            $paymentProcessors: !tagged_iterator app.payment_processor
+
+    
 
 
     # add more service definitions when explicit configuration is needed
