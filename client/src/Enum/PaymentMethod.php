@@ -6,5 +6,5 @@ enum PaymentMethod :string
 {
     case paypal  = 'paypal ';
 
-    case cart_credit ='cart_credit';
+    case credit_card ='credit_card';
 }

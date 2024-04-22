@@ -8,59 +8,58 @@
 {% block body %}
 
 	{% if strategy is same as('paypal') %}
-        <div class="container mt-5 mb-5">	
-            <div class="row d-flex justify-content-center align-items-center">
-                <aside class="col-sm-6">
-                    <article class="card">
-                        <div class="card-body p-5">
-                            <h3>Paypal</h3>
-                            <div class="tab-content">
-                                <div class="tab-pane fade " id="nav-tab-card"> 
-
-                                </div>
-                                <!-- tab-pane.// -->
-                                <div class="tab-pane fade show active" id="nav-tab-paypal">
-                                    <p>Paypal is easiest way to pay online</p>
+    <div class="container mt-5 mb-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <aside class="col-sm-6">
+                <article class="card">
+                    <div class="card-body p-5">
+                        <h3>Paypal</h3>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="nav-tab-card">
+                                <!-- Content for card payment -->
+                            </div>
+                            <div class="tab-pane fade show active" id="nav-tab-paypal">
+                                <p>Paypal is the easiest way to pay online</p>
+                                {{ form_start(form) }}
                                     <p>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="icon-paypal"></i>
-                                            Log in my Paypal
-                                        </button>
+                                        {{ form_widget(form.paypal) }}
                                     </p>
-                                    <p>
-                                        <strong>Note:</strong>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                    </p>
-                                    <a href="{{path('order')}}">return</a>
-                                </div>
+                                    
+                                {{ form_end(form) }}
+                                <p>
+                                    <strong>Note:</strong>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                                <a href="{{ path('order') }}">return</a>
                             </div>
                         </div>
-                    </article>
-                </aside>
-            </div>
+                    </div>
+                </article>
+            </aside>
         </div>
+    </div>
+    
 	{% else %}
-        <div class="container mt-5 mb-5">	
-            <div class="row d-flex justify-content-center align-items-center">
-                <aside class="col-sm-6">
-                    <article class="card">
-                        <div class="card-body p-5">
-                            <h3>Credit Card</h3>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="nav-tab-card">
-                                
-                                    <form role="form">
+		<div class="container mt-5 mb-5">
+			<div class="row d-flex justify-content-center align-items-center">
+				<aside class="col-sm-6">
+					<article class="card">
+						<div class="card-body p-5">
+							<h3>Credit Card</h3>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="nav-tab-card">
+
+									{{ form_start(form) }}
                                         <div class="form-group">
                                             <label for="username">Full name (on the card)</label>
-                                            <input type="text" class="form-control" name="username" placeholder="" required="">
+                                            {{ form_widget(form.Name, {'attr': {'class': 'form-control', 'placeholder': 'Full name on the card', 'required': 'required'}}) }}
                                         </div>
-                                        <!-- form-group.// -->
 
                                         <div class="form-group">
                                             <label for="cardNumber">Card number</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                {{ form_widget(form.cardNumber, {'attr': {'class': 'form-control', 'placeholder': 'Card number'}}) }}
                                                 <div class="input-group-append">
                                                     <span class="input-group-text text-muted h-100">
                                                         <i class="icon-credit-card"></i>
@@ -68,64 +67,44 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- form-group.// -->
 
                                         <div class="row">
                                             <div class="col-sm-8">
                                                 <div class="form-group">
-                                                    <label>
-                                                        <span class="hidden-xs">Expiration</span>
-                                                    </label>
+                                                    <label>Expiration</label>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" placeholder="MM" name="">
-                                                        <input type="number" class="form-control" placeholder="YY" name="">
+                                                        {{ form_widget(form.expirationMonth, {'attr': {'class': 'form-control', 'placeholder': 'MM'}}) }}
+                                                        {{ form_widget(form.expirationYear, {'attr': {'class': 'form-control', 'placeholder': 'YY'}}) }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV
+                                                    <label>CVV
                                                         <i class="fa fa-question-circle"></i>
                                                     </label>
-                                                    <input type="number" class="form-control" required="">
+                                                    {{ form_widget(form.cvv, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
                                                 </div>
-                                                <!-- form-group.// -->
                                             </div>
-                                        </div><br>
-                                        <!-- row.// -->
-                                        <button class="subscribe btn btn-primary btn-block" type="button">
+                                        </div>
+                                        <br>
+                                        <button class="subscribe btn btn-primary btn-block" type="submit">
                                             Confirm
                                         </button>
-                                        <a href="{{path('order')}}">return</a>
-                                    </form>
-                                </div>
-                                <!-- tab-pane.// -->
-                                <div class="tab-pane fade" id="nav-tab-paypal">
-                                    <p>Paypal is easiest way to pay online</p>
-                                    <p>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fab fa-paypal"></i>
-                                            Log in my Paypal
-                                        </button>
-                                    </p>
-                                    <p>
-                                        <strong>Note:</strong>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </aside>
-            </div>
-        </div>
+                                        <a href="{{ path('order') }}">return</a>
+									{{ form_end(form) }}
+
+								</div>
+							
+							</div>
+						</div>
+					</article>
+				</aside>
+			</div>
+		</div>
 
 	{% endif %}
-		
-	{% endblock %}
 
-	{% block stylesheets %}
+{% endblock %}
 
-	
-	{% endblock %}
+{% block stylesheets %}{% endblock %}

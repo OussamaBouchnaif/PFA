@@ -3,6 +3,7 @@
 namespace App\Forms;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,8 +14,9 @@ class CreditCardType extends AbstractType
     {
         $builder
             ->add('Name', TextType::class)
-            ->add('expirationDate',  TextType::class)
-            ->add('cvv', TextType::class)
-            ->add('Submit', SubmitType::class, ['label' => 'submit']);
+            ->add('cardNumber', TextType::class)  
+            ->add('expirationMonth', NumberType::class)  
+            ->add('expirationYear', NumberType::class)  
+            ->add('cvv', TextType::class);
     }
 }

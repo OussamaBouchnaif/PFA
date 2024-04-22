@@ -26,7 +26,6 @@ class OrderController extends AbstractController
     public function check(
         Request $request,
         VoucherInterface $voucherManager,
-        CartProcessor $cartProcessor,
         Security $security
     ): Response {
 
@@ -52,7 +51,6 @@ class OrderController extends AbstractController
                 $session->set('voucher',$voucherData);
             }
             if ($formOrder->getClickedButton() && 'placeOrder' === $formOrder->getClickedButton()->getName()) {
-                
                 $session->set('payment',$formOrder->getData()['payment']);
                 return $this->redirectToRoute('app_payment');
             }

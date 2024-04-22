@@ -2,6 +2,7 @@
 
 namespace App\Payment;
 
+use App\Entity\Cart;
 use App\Entity\Paiement;
 use App\Payment\Strategy\PaymentInterface;
 
@@ -24,13 +25,5 @@ class PaymentManager
     }
 
 
-    public function createPayment(string $method): Paiement 
-    {
-        $strategy = $this->getPaymentStrategy($method);
-        
-        $payment = new Paiement();
-        $strategy->pay($payment); 
-
-        return $payment;
-    }
+   
 }

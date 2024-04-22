@@ -60,6 +60,7 @@ class CartController extends AbstractController
             return $this->redirectToRoute('fetch');
         }
     }
+    
     #[Route('/clear',name:'clear')]
     public function clear(Request $request){
         $this->cartStorage->clearCart($this->cartStorage->getCart());
@@ -81,6 +82,13 @@ class CartController extends AbstractController
         }
     
         return new JsonResponse(['success' => false, 'message' => 'Invalid request.'], 400);
+    }
+
+    #[Route('/remove',name:'clear')]
+    public function remove(Request $request){
+       $session = $request->getSession();
+       $session->remove('cart');
+        return $this->redirectToRoute('app_cart');
     }
 
 }

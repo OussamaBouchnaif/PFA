@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\PaymentMethod;
 use App\Enum\PaymentStatus;
 use App\Repository\PaiementRepository;
 use Doctrine\DBAL\Types\Types;
@@ -25,7 +26,7 @@ class Paiement
     private ?float $montant = null;
 
     #[ORM\Column(length: 100)]
-    private ?PaymentStatus $status = null;
+    private ?string $status = null;
 
     
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -79,7 +80,7 @@ class Paiement
 
     public function setStatus(PaymentStatus $status): static
     {
-        $this->status = $status;
+        $this->status = $status->value;
 
         return $this;
     }
