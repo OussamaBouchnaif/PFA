@@ -52,7 +52,7 @@ final class CartValueObject
         {
             return $requestedCartItem;
         }
-        return new CartItemValueObject($index,$exsistingCartItem->getImage(),$exsistingCartItem->getPrice(),$requestedCartItem->getQuantity()+$exsistingCartItem->getQuantity(),$exsistingCartItem->getStockage());
+        return new CartItemValueObject($index,$exsistingCartItem->getImage(),$exsistingCartItem->getPrice(),$requestedCartItem->getQuantity()+$exsistingCartItem->getQuantity(),$exsistingCartItem->getStockage(),$exsistingCartItem->getName());
     }
 
     

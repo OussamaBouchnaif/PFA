@@ -9,10 +9,10 @@ final class CartItemValueObject
     public function __construct(private int $id,private Collection $image,
     private float $price,
     private float $quantity,
-    private float $stockage)
-    {
-        
-    }
+    private float $stockage,
+    private string $name)
+    {}
+    
     public function TotalPriceItem():float
     {
        return $this->getQuantity() * $this->getPrice();
@@ -83,6 +83,26 @@ final class CartItemValueObject
     public function setPrice($price)
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }

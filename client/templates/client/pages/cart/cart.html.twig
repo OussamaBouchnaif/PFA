@@ -57,7 +57,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="cart_product_text">
-                                                            <h4>Example With Title Product</h4>
+                                                            <h4>{{item.name}}</h4>
                                                             <ul>
                                                                 <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.stockage}}</span></li>
                                                                 <li><i class="ion-ios-arrow-right"></i> Size : <span>XL</span></li>
@@ -104,7 +104,7 @@
                                     <button class="btn btn-primary border" type="submit">UPDATE YOUR CART</button>
                                 </div>
                                 <div class="shopping_continue_btn">
-                                    <button class="btn btn-primary" type="submit">CONTINUE SHOPPING</button>
+                                    <a href="{{path('fetch')}}" class="btn btn-primary border">CONTINUE SHOPPING</a>
                                 </div>
                             </div>
                          </div>
@@ -142,7 +142,7 @@
                                    </div>
                                </div>
                                <div class="proceed_checkout_btn">
-                                   <a class="btn btn-primary" href="#">Proceed to Checkout</a>
+                                   <a class="btn btn-primary" href="{{path('order')}}">Proceed to Checkout</a>
                                </div>
                                <a href="#">Checkout with Mutilple Adresses</a>
                             </div>

@@ -17,7 +17,6 @@ class CartSessionStorage implements CartStorageInterface
     private $cartSessionKey = 'cart';
 
     public function __construct(private readonly RequestStack $request,
-    private CalculatorContext $calculator,
     private Security $security)
     {
 
@@ -26,7 +25,7 @@ class CartSessionStorage implements CartStorageInterface
     public function addToCart(Camera $camera,int $qte,float $stockage)
     {
         $cart = $this->getCart(); 
-        $cart->addToCart(new CartItemValueObject($camera->getId(),$camera->getImageCameras(),$camera->getPrix(),$qte,$stockage));
+        $cart->addToCart(new CartItemValueObject($camera->getId(),$camera->getImageCameras(),$camera->getPrix(),$qte,$stockage,$camera->getNom()));
         $this->saveCart($cart);
     }
    
@@ -46,7 +45,14 @@ class CartSessionStorage implements CartStorageInterface
     
     public function TotalPriceItems():float
     {
-        return $this->calculator->priceCalculator($this->getCart());
+        $totalPrice = 0.0; 
+        $cart = $this->getCart(); 
+        $items = $cart->getItems(); 
+        foreach ($items as $item) {
+            $totalPrice += $item->getPrice() * $item->getQuantity();
+        }
+
+        return $totalPrice;
     }
     public function removeFromCart(int $idItem)
     {

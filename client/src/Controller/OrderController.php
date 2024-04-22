@@ -49,14 +49,12 @@ class OrderController extends AbstractController
                     'discount' => $voucherManager->applyVoucher($voucherCode, $cart)->getTotal(),
                     'rate' => $voucherManager->applyVoucher($voucherCode, $cart)->getDiscountRate(),
                 ];
-                
                 $session->set('voucher',$voucherData);
             }
             if ($formOrder->getClickedButton() && 'placeOrder' === $formOrder->getClickedButton()->getName()) {
-                $voucherIdentifier = $voucherManager->getVoucherIdentifier();
-                $cartProcessor->process($cart, $voucherIdentifier);
-                $session->remove('voucher');
-                return $this->redirectToRoute('app_home');
+                
+                $session->set('payment',$formOrder->getData()['payment']);
+                return $this->redirectToRoute('app_payment');
             }
         }
 

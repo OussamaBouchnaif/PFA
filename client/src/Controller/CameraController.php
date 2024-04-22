@@ -7,13 +7,11 @@ use App\Repository\CameraRepository;
 
 use App\Repository\CategorieRepository;
 use App\Cart\Handler\CartStorageInterface;
-use App\Service\Api\Cameras\CameraFetcher;
-use App\Service\Api\Cameras\getAllCameras;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Service\Api\Cameras\CameraSearchFilter;
+use App\Service\Api\Cameras\CameraFetcherInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -21,7 +19,7 @@ class CameraController extends AbstractController
 {
     public function __construct(
         private CategorieRepository $categorie,
-        private CameraFetcher $callCamera,
+        private CameraFetcherInterface $callCamera,
         private CameraRepository $cameraRepo,
         private CartStorageInterface $cartStorage,
     ) {
