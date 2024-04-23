@@ -18,6 +18,7 @@ abstract class AbstractCameraFetcher implements CameraFetcherInterface
         protected GetDataService $getData,
         protected QueryStringBuilder $queryStringBuilder,
         protected Denormalizer $denormalizer,
+        
 
     ) {}
 

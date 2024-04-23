@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 
-use App\Repository\CameraRepository;
+use App\Formatter\PriceFormatter;
 
+use App\Repository\CameraRepository;
 use App\Repository\CategorieRepository;
 use App\Cart\Handler\CartStorageInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -28,21 +29,21 @@ class CameraController extends AbstractController
 
 
     #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request, PaginatorInterface $paginator, SessionInterface $session): Response
+    public function search(Request $request, PaginatorInterface $paginator, SessionInterface $session,PriceFormatter $priceFormatter): Response
     {
         $page = $request->query->getInt('page', 1);
         $newCriteria = [
-            'order' => $request->query->get('orderby'),
+            'order' => $request->query->get('orderby') ,
             'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
-            'angleVision' => $request->query->get('angle'),
-            'prix' => $request->query->get('price_range') ? implode('..', array_map(function ($price) {
-                return floatval(str_replace('$', '', $price));
-            }, explode(' - ', $request->query->get('price_range')))) : null,
-
+            'angleVision' => $request->query->get('angle') ,
+            'prix' => $request->query->get('price_range') ? $priceFormatter->formatPriceRange($request->query->get('price_range')) : null,
         ];
+        
         $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria, $session);
+        $formattedPrice = $priceFormatter->displayFormattedPrice($searchCriteria['prix'] ?? null);
         $session->set('searchCriteria', $searchCriteria);
+
         $cameras = $this->callCamera->searchBy($searchCriteria);
         $data = $this->cameraRepo->pagination($cameras, $page, $paginator);
         return $this->render('client/pages/shop.html.twig', [
@@ -53,6 +54,7 @@ class CameraController extends AbstractController
             'route' => 'camera_search',
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
+            'price'=>$formattedPrice,
         ]);
     }
 
@@ -69,6 +71,7 @@ class CameraController extends AbstractController
             'route' => 'fetch',
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
+            'price'=>'',
         ]);
     }
 }

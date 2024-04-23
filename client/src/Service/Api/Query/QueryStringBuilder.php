@@ -22,7 +22,7 @@ class QueryStringBuilder
     public function addCategorieNameParameter(?string $name = null): static
     {
         $this->appendParameter('categorie.nom', $name);
-        return $this;
+        return $this ;
     }
 
     public function addResolution(?string $resolution = null): static
@@ -62,7 +62,7 @@ class QueryStringBuilder
     {
         $this->query[$parameterName] =  $parameterValue;
 
-        return $this;
+        return $this ?? null;
     }
 
     public function getQueryString(): string
