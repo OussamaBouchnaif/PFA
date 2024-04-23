@@ -10,7 +10,6 @@ abstract class AbstractPayment implements PaymentInterface
 {
     public function __construct(
         protected PaymentValidatorInterface $validator,
-        protected CartStorageInterface $storage
     ) {}
 
     public function supportsMethod(string $method): bool

@@ -482,5 +482,17 @@ class Camera
 
         return $this;
     } 
+
+    public function decreaseStock(int $quantity): void
+    {
+        if ($quantity > $this->stock) {
+            throw new \LogicException("Cannot decrease stock by $quantity. Only $this->stock items in stock.");
+        }
+        $this->stock -= $quantity;
+
+        if ($this->stock < 0) {
+            $this->stock = 0;
+        }
+    }
     
 }
