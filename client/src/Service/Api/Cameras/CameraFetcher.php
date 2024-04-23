@@ -7,7 +7,7 @@ use App\Service\Api\Exception\ObjectNotFoundException;
 
 class CameraFetcher extends AbstractCameraFetcher
 {
-     /*
+    /*
         get All cameras 
      */
     public function getAllCamera(int $page): array
@@ -53,39 +53,12 @@ class CameraFetcher extends AbstractCameraFetcher
      */
     public function searchBy(array $searchCriteria): array
     {
-
-        $queryString = $this->prepareQueryString($searchCriteria);
-        return $this->getCameraData('api/cameras/?' . $queryString);
+        $queryString = $this->queryStringBuilder->addAngleVision($searchCriteria['angleVision'] ?? null)
+            ->addCategorieNameParameter($searchCriteria['categorie.nom'] ?? null)
+            ->addPriceRangeParameter($searchCriteria['prix'] ?? null)
+            ->addResolution($searchCriteria['resolution'] ?? null)
+            ->addOrder($searchCriteria['order'] ?? null);
+        return $this->getCameraData('api/cameras/?' . $queryString->getQueryString());
     }
 
-
-    private function prepareQueryString(array $searchCriteria): String
-    {
-        $queryStringBuilder = $this->queryStringBuilder;
-
-        foreach ($searchCriteria as $key => $value) {
-            if (!is_null($value)) {
-                switch ($key) {
-                    case 'categorie.nom':
-                        $queryStringBuilder = $queryStringBuilder->addCategorieNameParameter($value);
-                        break;
-                    case 'order':
-                        $queryStringBuilder = $queryStringBuilder->addOrder($value);
-                        break;
-                    case 'resolution':
-                        $queryStringBuilder = $queryStringBuilder->addResolution($value);
-                        break;
-                    case 'angleVision':
-                        $queryStringBuilder = $queryStringBuilder->addAngleVision($value);
-                        break;
-                    case 'prix':
-                        $queryStringBuilder = $queryStringBuilder->addPriceRangeParameter($value);
-                        break;
-                }
-            }
-        }
-        return $queryStringBuilder->getQueryString();
-    }
-
-    
 }

@@ -1,12 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     setupQuickViewButtons(); // Initialiser pour la première charge de page
-   
-    // Initialisation du curseur de sélection de la plage de prix
+    var defaultValue = [100, 1000];  // Valeurs par défaut si 'price' n'est pas définie
+    var inputVal = $("#amount").val();
+
+    // Vérifie si 'inputVal' contient une plage de prix valide
+    var prices = inputVal ? inputVal.replace(/\$/g, '').split(' - ').map(Number) : defaultValue;
+
+    // Initialisation du slider avec les valeurs extraites ou les valeurs par défaut
     $("#slider-range").slider({
         range: true,
         min: 0,
         max: 2000,
-        values: [16, 1000],
+        values: [prices[0], prices[1]],
         slide: function(event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         },
@@ -15,6 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#price-filter-form').submit(); // Soumet le formulaire automatiquement
         }
     });
+
+    // Définir la valeur initiale du champ 'amount' si elle n'était pas préremplie
+    if (!inputVal) {
+        $("#amount").val("$" + defaultValue[0] + " - $" + defaultValue[1]);
+    }
 
     // Initialisation du champ de montant
     $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
