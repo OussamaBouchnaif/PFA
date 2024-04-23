@@ -19,9 +19,5 @@ class CameraStockUpdater
             $this->entityManager->persist($item->getCamera());
         }
         $this->entityManager->flush();
-
-        $this->notifier->orderPlacedNotifier('oussama@gmail.com');
-
-
     }
 }

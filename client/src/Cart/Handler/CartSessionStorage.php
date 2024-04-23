@@ -3,8 +3,6 @@
 
 namespace App\Cart\Handler;
 
-use App\Calculator\CalculatorContext;
-use App\Entity\Cart;
 use App\Entity\Camera;
 use App\ValueObject\CartValueObject;
 use App\ValueObject\CartItemValueObject;
