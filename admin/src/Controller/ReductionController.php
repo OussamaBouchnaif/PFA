@@ -22,7 +22,7 @@ class ReductionController extends AbstractController
         $this->reductionRepository = $reductionRepository;
     }
 
-    #[Route('/reduction_add', name: 'reduction_add')]
+    #[Route('reduction/reduction_add', name: 'reduction_add')]
     public function add(Request $request): Response
     {
         $reduction = new Reduction();
@@ -31,6 +31,9 @@ class ReductionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $prixReduction = $reduction->getPrix() * ($reduction->getPoucentage() / 100);
+            $reduction->setPrixReduction($prixReduction);
+
             $this->entityManager->persist($reduction);
             $this->entityManager->flush();
 
@@ -42,6 +45,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
+
     #[Route('/reduction', name: 'reduction_show')]
     public function show(): Response
     {
@@ -52,7 +56,7 @@ class ReductionController extends AbstractController
     }
 
 
-    #[Route('/reductionedit/{id}', name: 'reduction_edit')]
+    #[Route('reduction/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, Reduction $reduction): Response
     {
         $form = $this->createForm(ReductionType::class, $reduction);
@@ -70,7 +74,7 @@ class ReductionController extends AbstractController
         ]);
     }
 
-    #[Route('/reductiondelete/{id}', name: 'reduction_delete')]
+    #[Route('reduction/reductiondelete/{id}', name: 'reduction_delete')]
     public function delete(Request $request, Reduction $reduction): Response
     {
         $this->entityManager->remove($reduction);

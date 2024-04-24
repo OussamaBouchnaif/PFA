@@ -40,6 +40,12 @@ class Reduction
     #[ORM\OneToMany(mappedBy: 'reduction', targetEntity: LigneReduction::class)]
     private Collection $ligneReductions;
 
+    #[ORM\Column]
+    private ?float $Prix = null;
+
+    #[ORM\Column]
+    private ?float $PrixReduction = null;
+
     public function __construct()
     {
         $this->ligneReductions = new ArrayCollection();
@@ -126,5 +132,39 @@ class Reduction
         }
 
         return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->Prix;
+    }
+
+    public function setPrix(float $Prix): static
+    {
+        $this->Prix = $Prix;
+
+        return $this;
+    }
+
+    public function getPrixReduction(): ?float
+    {
+        return $this->PrixReduction;
+    }
+
+    public function setPrixReduction(float $PrixReduction): static
+    {
+        $this->PrixReduction = $PrixReduction;
+
+        return $this;
+    }
+    public function calculateReducedPrice(): ?float
+    {
+        // Vérifier si le pourcentage et le prix sont définis
+        if ($this->poucentage !== null && $this->Prix !== null) {
+            // Calculer le prix de réduction
+            return $this->Prix * ($this->poucentage / 100);
+        } else {
+            return null;
+        }
     }
 }

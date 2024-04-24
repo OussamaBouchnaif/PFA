@@ -1,5 +1,6 @@
 <?php
 // src/Form/ReductionType.php
+// src/Form/ReductionType.php
 
 namespace App\Form;
 
@@ -10,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class ReductionType extends AbstractType
 {
@@ -20,18 +22,21 @@ class ReductionType extends AbstractType
                 'label' => 'Description',
             ])
             ->add('poucentage', IntegerType::class, [
-               
                 'label' => 'Pourcentage',
             ])
             ->add('dateDebut', DateType::class, [
-                'widget' => 'single_text', // Utiliser un champ de texte avec icône de calendrier
+                'widget' => 'single_text',
                 'attr' => ['class' => 'mt-2'],
                 'label' => 'Date de début',
             ])
-            ->add('dateFin', DateType::class, [ 
-                'widget' => 'single_text', // Utiliser un champ de texte avec icône de calendrier
+            ->add('dateFin', DateType::class, [
+                'widget' => 'single_text',
                 'attr' => ['class' => 'mt-2'],
                 'label' => 'Date de fin',
+            ])
+            ->add('prix', MoneyType::class, [
+                'label' => 'Prix',
+                'currency' => 'DH', // Changez cela selon votre besoin
             ]);
     }
 

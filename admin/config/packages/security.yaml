@@ -39,6 +39,8 @@ security:
     access_control:
        - { path: ^/camera, roles: ROLE_USER }
        - { path: ^/user, roles: ROLE_USER }
+       - { path: ^/reduction, roles: ROLE_USER }
+
 
 when@test:
     security:
