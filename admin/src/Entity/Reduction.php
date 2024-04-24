@@ -159,9 +159,7 @@ class Reduction
     }
     public function calculateReducedPrice(): ?float
     {
-        // Vérifier si le pourcentage et le prix sont définis
         if ($this->poucentage !== null && $this->Prix !== null) {
-            // Calculer le prix de réduction
             return $this->Prix * ($this->poucentage / 100);
         } else {
             return null;
