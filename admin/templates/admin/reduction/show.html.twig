@@ -16,7 +16,7 @@
             border: 1px white;
         }
         tr{
-         border: 1px white;
+        border: 1px white;
 
         }
         .horizontal-buttons {
@@ -86,7 +86,6 @@
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                     <h4 class="mb-sm-0">Products</h4>
-
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
@@ -116,12 +115,12 @@
 
                                     <div class="accordion accordion-flush filter-accordion">
 
-                                       <div class="card-body border-bottom">
+                                        <div class="card-body border-bottom">
                                         <div>
                                             <label for="PourcentageSelect">Pourcentage Select:</label>
                                         <select class="form-control" id="PourcentageSelect" placeholder="Sélectionnez un pourcentage">
                                             <option disabled selected hidden>Sélectionnez un poucentage</option>
-                                             {% for reduction in reductions %}
+                                            {% for reduction in reductions %}
                                                 <option value="{{ reduction.poucentage}}">{{ reduction.poucentage }}</option>
                                             {% endfor %} 
                                         </select>
@@ -130,11 +129,11 @@
                                         </div>
                                     </div>
 
-                                       <div class="card-body border-bottom">
+                                        <div class="card-body border-bottom">
                                             <p class="text-muted text-uppercase fs-13 fw-medium mb-4">last</p>
 
                                             <div id="product-price-range"></div>
-                                           <div class="formCost mt-3">
+                                            <div class="formCost mt-3">
                                             <div class="d-flex flex-column gap-2 align-items-start">
                                                 <p class="text-muted text-uppercase fs-13 fw-medium mb-0">Date de début</p>
                                                 <input class="form-control form-control-sm" type="date" id="minLast" />
@@ -159,7 +158,6 @@
                                                     <div>
                                                         <a href="{{ path('reduction_add') }}" class="btn btn-success" id="addproduct-btn">
                                                         <i class="ri-add-line align-bottom me-1"></i> Add reduction</a>
-                                                   
                                             <button type="button" class="btn btn-primary" onclick="confirmPrint()">
                                                 <i class="ri-printer-line align-middle me-1"></i> Imprimer tableau
                                             </button>
@@ -186,7 +184,8 @@
                                                     <th class="custom-header text-center">Pourcentage</th>
                                                     <th class="custom-header text-center">Date de début</th>
                                                     <th class="custom-header text-center">Date de fin</th>
-                                                   <th class="custom-header text-center">Action</th>
+                                                    <th class="custom-header text-center">prix</th>
+                                                    <th class="custom-header text-center">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -197,16 +196,17 @@
                                                     <td class="align-middle text-center price-cell">{{ reduction.poucentage }}</td>
                                                     <td class="align-middle text-center">{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
                                                     <td class="align-middle text-center">{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
+                                                    <td class="align-middle text-center price-cell">{{ reduction.prix }}</td>
+
                                                     <td class="text-center align-middle horizontal-buttons">
                                                     <button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('reduction_delete',{id:reduction.id}) }}')">
                                                         <i class="ri-delete-bin-line align-bottom me-2"></i> 
                                                     </button>
                                                     <a class="text-muted" href="{{ path('reduction_edit',{id:reduction.id}) }}">
                                                         <i class="ri-pencil-line align-bottom me-2"></i> 
-                                                    </a>
-                                                  
-                                                   </td>
-                                               </tr>
+                                                    </a>                                              
+                                                </td>
+                                                </tr>
                                                 {% endfor %}
                                             </tbody>
                                         </table>
@@ -225,7 +225,7 @@
                                                 <!-- end tab pane -->
 
                                                 <div class="noDataMessage" id="productnav-draft" role="tabpanel">
-                                                   <div class="py-4 text-center" id="noDataMessage" style="display: none;">
+                                                <div class="py-4 text-center" id="noDataMessage" style="display: none;">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:72px;height:72px"></lord-icon>
                                                     <h5 class="mt-4">Désolé ! Aucun résultat trouvé</h5>
                                                 </div>
