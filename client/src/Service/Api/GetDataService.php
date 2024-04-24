@@ -10,6 +10,7 @@ class GetDataService
     public function __construct(private HttpClientInterface $appDefaultApi, private  SerializerInterface $serializer)
     {
     }
+    
     public function getDataFromApi(String $endpoint): array
     {
         $response = $this->appDefaultApi->request('GET', $endpoint, ['headers' => [

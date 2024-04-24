@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af26218f-4f5f-4efb-a0c8-aef27b4081ac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../admin/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/src/Controller/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/templates/admin/Cameras/ShowProduct.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/templates/admin/Cameras/ShowProduct.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Api/GetDataService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Api/GetDataService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +168,7 @@
       <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -237,6 +239,7 @@
       <workItem from="1708945026958" duration="670000" />
       <workItem from="1708955148967" duration="185000" />
       <workItem from="1709404202651" duration="310000" />
+      <workItem from="1713983205732" duration="657000" />
     </task>
     <servers />
   </component>
