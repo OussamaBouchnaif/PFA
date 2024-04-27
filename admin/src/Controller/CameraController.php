@@ -181,4 +181,29 @@ class CameraController extends AbstractController
             return $this->redirectToRoute('camera');
         }
     }
+    #[Route('/camera/chart', name: 'camera_chart')]
+    public function chart(EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer le repository de l'entité Categorie
+        $categorieRepository = $entityManager->getRepository(Categorie::class);
+        
+        // Récupérer toutes les catégories avec le nombre de caméras associées
+        $categoriesWithCameraCount = $categorieRepository->createQueryBuilder('c')
+            ->select('c.nom as category_name', 'COUNT(ca.id) as camera_count')
+            ->leftJoin('c.cameras', 'ca')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+    
+        // Convertir le résultat en un tableau associatif
+        $categoriesData = [];
+        foreach ($categoriesWithCameraCount as $data) {
+            $categoriesData[$data['category_name']] = $data['camera_count'];
+        }
+    
+        return $this->render('admin/Cameras/chart.html.twig', [
+            'camerasByCategory' => $categoriesData,
+        ]);
+    }
+    
 }

@@ -1,247 +1,248 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des clients{% endblock %}
+{% block title %}Liste des clients
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+	{{ parent() }}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 {% endblock %}
 
 {% block body %}
-   <div class="main-content">
-      <div class="page-content">
-         <div class="container-fluid">
-            <!-- start page title -->
-            <div class="row">
-               <div class="col-12">
-                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                     <h4 class="mb-sm-0">Liste des clients</h4>
-                     <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                           <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                           <li class="breadcrumb-item active">Customers</li>
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- end page title -->
-            <div class="row">
-               <div class="col-lg-12">
-                  <div class="card" id="customerList">
-                     <div class="card-header border-bottom-dashed">
-                        <div class="row g-4 align-items-center">
-                           <div class="col-sm">
-                              <div>
-                                 <h5 class="card-title mb-0">Liste des clients</h5>
-                              </div>
-                           </div>
-                           <div class="col-sm-auto">
-                              <div class="d-flex flex-wrap align-items-start gap-2">
-                                 <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                 <button type="button" class="btn btn-success" id="printTableButton"><i class="ri-file-download-line align-bottom me-1"></i> Print Table</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card-body border-bottom-dashed border-bottom">
-                        <form>
-                           <div class="row g-3">
-                              
-                              <div class="col-xl-6">
-                                 <div class="row g-3">
-                                    <div class="col-sm-4">
-                                       <div>
-                                          <input type="date" class="form-control" id="datepicker" placeholder="Select date">
-                                       </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-sm-4">
-                                       <div>
-                                          <select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                             <option value="all">All</option>
-                                             <option value="active">Active</option>
-                                             <option value="inactive">Inactive</option>
-                                          </select>
-                                       </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-sm-4">
-                                       <div>
-                                          <button type="button" class="btn btn-info w-100" id="filterButton"> <i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
-                                       </div>
-                                    </div>
-                                    <!--end col-->
-                                 </div>
-                              </div>
-                           </div>
-                           <!--end row-->
-                        </form>
-                     </div>
-                     <div class="row">
-                        <div class="col-lg-12">
-                           <div class="card">
-                              <div class="card-body">
-                                 <table id="myTable" class="table table-bordered dt-responsive nowrap align-middle mdl-data-table" style="width:100%">
-                                    <thead>
-                                       <tr>
-                                          <th>Nom</th>
-                                          <th>Prénom</th>
-                                          <th>Email</th>
-                                          <th style="display: none;">Mot de passe</th> 
-                                          <th>Adresse</th>
-                                          <th>Inscription</th>
-                                          <th style="display: none;">Statut</th> 
-                                          <th>Adresses Sup</th>
-                                          <th>Compte</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                       {% for client in clients %}
-                                          <tr>
-                                             <td>{{ client.nom }}</td>
-                                             <td>{{ client.prenom }}</td>
-                                             <td>{{ client.email }}</td>
-                                             <td style="display: none;">{{ client.password }}</td> 
-                                             <td>{{ client.adresse }}</td>
-                                             <td>{{ client.dateInscription ? client.dateInscription|date('d/m/Y') : '' }}</td>
-                                             <td style="display: none;">{{ client.statusCompte }}</td> 
-                                             <td>{{ client.addressLivSup }}</td>
-                                             <td>
-                                                <div class="form-check form-switch d-flex justify-content-center">
-                                                   <input class="form-check-input btn-toggle-account {% if client.statusCompte == 'inactif' %}btn-danger{% else %}btn-success{% endif %} btn-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked{{ client.id }}" {% if client.statusCompte == 'active' %}checked{% endif %} data-client-id="{{ client.id }}" data-account-status="{{ client.statusCompte }}">
-                                                   <label class="form-check-label" for="flexSwitchCheckChecked{{ client.id }}"></label>
-                                                </div>
-                                             </td>
-                                          </tr>
-                                       {% endfor %}
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!--end col-->
-            </div>
-            <!--end row-->
-         </div>
-         <!-- container-fluid -->
-      </div>
-      <!-- End Page-content -->
-      
-     
-   </div>
+	<div class="main-content">
+		<div class="page-content">
+			<div
+				class="container-fluid">
+				<!-- start page title -->
+				<div class="row">
+					<div class="col-12">
+						<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+							<h4 class="mb-sm-0">Liste des clients</h4>
+							<div class="page-title-right">
+								<ol class="breadcrumb m-0">
+									<li class="breadcrumb-item">
+										<a href="javascript: void(0);">Ecommerce</a>
+									</li>
+									<li class="breadcrumb-item active">client</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end page title -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card" id="customerList">
+							<div class="card-header border-bottom-dashed">
+								<div class="row g-4 align-items-center">
+									<div class="col-sm">
+										<div>
+											<h5 class="card-title mb-0">Liste des clients</h5>
+										</div>
+									</div>
+									<div class="col-sm-auto">
+										<div class="d-flex flex-wrap align-items-start gap-2">
+											<button class="btn btn-soft-danger" id="remove-actions" onclick="deleteMultiple()">
+												<i class="ri-delete-bin-2-line"></i>
+											</button>
+											<button type="button" class="btn btn-success" id="printTableButton">
+												<i class="ri-file-download-line align-bottom me-1"></i>
+												Print Table</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body border-bottom-dashed border-bottom">
+								<form>
+									<div class="row g-3">
 
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-   <script src="{{ asset('public/assets/js/client.js') }}"></script>
-   <script>
-$(document).ready(function() {
-    // Fonction pour initialiser ou recharger la DataTable
-    function initDataTable() {
-        if ($.fn.DataTable.isDataTable('#myTable')) {
-            $('#myTable').DataTable().destroy();
-        }
-        $('#myTable').DataTable();
-    }
+										<div class="col-xl-6">
+											<div class="row g-3">
+												<div class="col-sm-4">
+													<div>
+														<input type="date" class="form-control" id="datepicker" placeholder="Select date">
+													</div>
+												</div>
+												<!--end col-->
+												<div class="col-sm-4">
+													<div>
+														<select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
+															<option value="all">All</option>
+															<option value="active">Active</option>
+															<option value="inactive">Inactive</option>
+														</select>
+													</div>
+												</div>
+												<!--end col-->
+												<div class="col-sm-4">
+													<div>
+														<button type="button" class="btn btn-info w-100" id="filterButton">
+															<i class="ri-equalizer-fill me-2 align-bottom"></i>Filters</button>
+													</div>
+												</div>
+												<!--end col-->
+											</div>
+										</div>
+									</div>
+									<!--end row-->
+								</form>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="card">
+										<div class="card-body">
+											<table id="myTable" class="table table-bordered dt-responsive nowrap align-middle mdl-data-table" style="width:100%">
+												<thead>
+													<tr>
+														<th>Nom</th>
+														<th>Prénom</th>
+														<th>Email</th>
+														<th style="display: none;">Mot de passe</th>
+														<th>Adresse</th>
+														<th>Inscription</th>
+														<th style="display: none;">Statut</th>
+														<th>Adresses Sup</th>
+														<th>Compte</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for client in clients %}
+														<tr>
+															<td>{{ client.nom }}</td>
+															<td>{{ client.prenom }}</td>
+															<td>{{ client.email }}</td>
+															<td style="display: none;">{{ client.password }}</td>
+															<td>{{ client.adresse }}</td>
+															<td>{{ client.dateInscription ? client.dateInscription|date('d/m/Y') : '' }}</td>
+															<td style="display: none;">{{ client.statusCompte }}</td>
+															<td>{{ client.addressLivSup }}</td>
+															<td>
+																<div class="form-check form-switch d-flex justify-content-center">
+																	<input class="form-check-input btn-toggle-account {% if client.statusCompte == 'inactif' %}btn-danger{% else %}btn-success{% endif %} btn-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked{{ client.id }}" {% if client.statusCompte == 'active' %} checked {% endif %} data-client-id="{{ client.id }}" data-account-status="{{ client.statusCompte }}">
+																	<label class="form-check-label" for="flexSwitchCheckChecked{{ client.id }}"></label>
+																</div>
+															</td>
+														</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+			</div>
+			<!-- container-fluid -->
+		</div>
+		<!-- End Page-content -->
 
-    // appliquer les filtres
-    function applyFilters() {
-    var statusFilter = $('#idStatus').val();
-    var dateFilter = $('#datepicker').val();
-    var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
 
-    var table = $('#myTable').DataTable();
+	</div>
 
-    // Réinitialiser les lignes affichées
-    table.rows().every(function () {
-        this.nodes().to$().show();
-    });
-    
-    // Appliquer le filtre par statut
-    if (statusFilter !== 'all') {
-        table.column(6).search('^' + statusFilter + '$', true, false).draw();
-    } else {
-        table.column(6).search('').draw();
-    }
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<script src="{{ asset('public/assets/js/client.js') }}"></script>
+	<script>
+		$(document).ready(function () { // Fonction pour initialiser ou recharger la DataTable
+function initDataTable() {
+if ($.fn.DataTable.isDataTable('#myTable')) {
+$('#myTable').DataTable().destroy();
+}
+$('#myTable').DataTable();
+}
 
-    
-    if (dateFilter) {
-        table.rows().every(function () {
-            var rowData = this.data();
-            var clientDate = moment(rowData[5], 'DD/MM/YYYY'); 
-            if (clientDate.isValid() && clientDate.isBefore(selectedDate)) {
-                // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
-                this.nodes().to$().hide();
-            }
-        });
-    }
+// appliquer les filtres
+function applyFilters() {
+var statusFilter = $('#idStatus').val();
+var dateFilter = $('#datepicker').val();
+var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
+
+var table = $('#myTable').DataTable();
+
+// Réinitialiser les lignes affichées
+table.rows().every(function () {
+this.nodes().to$().show();
+});
+
+// Appliquer le filtre par statut
+if (statusFilter !== 'all') {
+table.column(6).search('^' + statusFilter + '$', true, false).draw();
+} else {
+table.column(6).search('').draw();
 }
 
 
-    
-    $('#filterButton').on('click', function() {
-        applyFilters();
-    });
-
-    
-    $('.btn-toggle-account').on('click', function() {
-        var clientId = $(this).data('client-id');
-        var accountStatus = $(this).data('account-status');
-
-        
-        var button = $(this);
-
-       
-        $.ajax({
-            url: 'update-account-status', 
-            method: 'POST',
-            data: { clientId: clientId, accountStatus: accountStatus },
-            success: function(response) {
-                console.log(response);
-                if (response === 'success') {
-                    if (accountStatus === 'active' || accountStatus === 'actif') {
-                        // Si oui, le changer à "inactive"
-                        button.removeClass('btn-success').addClass('btn-danger');
-                        button.data('account-status', 'inactive');
-                    } else if (accountStatus === 'inactive' || accountStatus === 'innactif') {
-                        // Sinon, le changer à "active"
-                        button.removeClass('btn-danger').addClass('btn-success');
-                        button.data('account-status', 'active');
-                    }
-                    // Appliquer les filtres après le changement de statut
-                    applyFilters();
-                } else {
-                    alert('Erreur lors de la mise à jour de l\'état du compte.');
-                }
-            },
-            error: function() {
-                alert('Erreur lors de la requête AJAX.');
-            }
-        });
-    });
-
-    
-    $('#printTableButton').on('click', function() {
-       
-        printJS({
-            printable: 'myTable',
-            type: 'html',
-            
-            style: '.table { font-size: 12px; }' 
-            
-        });
-    });
-
-    
-    initDataTable();
+if (dateFilter) {
+table.rows().every(function () {
+var rowData = this.data();
+var clientDate = moment(rowData[5], 'DD/MM/YYYY');
+if (clientDate.isValid() && clientDate.isBefore(selectedDate)) { // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
+this.nodes().to$().hide();
+}
 });
-</script>
+}
+}
+
+
+$('#filterButton').on('click', function () {
+applyFilters();
+});
+
+
+$('.btn-toggle-account').on('click', function () {
+var clientId = $(this).data('client-id');
+var accountStatus = $(this).data('account-status');
+
+
+var button = $(this);
+
+
+$.ajax({
+url: 'update-account-status',
+method: 'POST',
+data: {
+clientId: clientId,
+accountStatus: accountStatus
+},
+success: function (response) {
+console.log(response);
+if (response === 'success') {
+if (accountStatus === 'active' || accountStatus === 'actif') { // Si oui, le changer à "inactive"
+button.removeClass('btn-success').addClass('btn-danger');
+button.data('account-status', 'inactive');
+} else if (accountStatus === 'inactive' || accountStatus === 'innactif') { // Sinon, le changer à "active"
+button.removeClass('btn-danger').addClass('btn-success');
+button.data('account-status', 'active');
+}
+// Appliquer les filtres après le changement de statut
+applyFilters();
+} else {
+alert('Erreur lors de la mise à jour de l\'état du compte.');
+}
+},
+error: function () {
+alert('Erreur lors de la requête AJAX.');
+}
+});
+});
+
+
+$('#printTableButton').on('click', function () {
+
+printJS({printable: 'myTable', type: 'html', style: '.table { font-size: 12px; }'});
+});
+
+
+initDataTable();
+});
+	</script>
 
 
 {% endblock %}

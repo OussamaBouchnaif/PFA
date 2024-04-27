@@ -14,7 +14,6 @@
 
 
 {% endblock %}
- 
 {% block body %}
     <div id="layout-wrapper">
         <div class="main-content">
@@ -28,7 +27,7 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
+                                        <li class="breadcrumb-item active">Create camera</li>
                                     </ol>
                                 </div>
                             </div>
@@ -275,7 +274,7 @@
 
                             <div class="text-end mb-3">
                                 <button type="submit" class="btn btn-success">Enregistrer</button>
-                                <a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
+                                <a href="{{ path('camera') }}" class="btn btn-danger">Annuler</a>
                             </div>
                             {% for child in form %}
                                 {% if child.vars.errors|length > 0 %}

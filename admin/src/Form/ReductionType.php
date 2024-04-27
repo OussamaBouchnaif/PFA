@@ -34,10 +34,11 @@ class ReductionType extends AbstractType
                 'attr' => ['class' => 'mt-2'],
                 'label' => 'Date de fin',
             ])
-            ->add('prix', MoneyType::class, [
+            ->add('Prix', null, [
                 'label' => 'Prix',
-                'currency' => 'DH', // Changez cela selon votre besoin
+                'attr' => ['class' => 'form-control']
             ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver)
