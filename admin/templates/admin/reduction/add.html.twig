@@ -1,70 +1,89 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une réduction{% endblock %}
+{% block title %}Ajouter une réduction
+{% endblock %}
 
 {% block body %}
-   <div id="layout-wrapper">
-        <div class="main-content">
+	<div id="layout-wrapper">
+		<div class="main-content">
 
-            <div class="page-content">
-                <div class="container-fluid">
+			<div class="page-content">
+				<div
+					class="container-fluid">
 
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0">Add Reduction </h4>
 
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create Product</li>
-                                    </ol>
-                                </div>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item">
+											<a href="javascript: void(0);">Ecommerce</a>
+										</li>
+										<li class="breadcrumb-item active">Create Reduction</li>
+									</ol>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end page title -->
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
 
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
-                                    {{ form_label(form.description) }}
-                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.poucentage) }}
-                                    {{ form_widget(form.poucentage, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.dateDebut) }}
-                                    {{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.dateFin) }}
-                                    {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <div class="mb-3">
-                                    {{ form_label(form.prix) }}
-                                    {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
-                                </div>
-                                <button type="submit" class="btn btn-success">Enregistrer</button>
-                                {{ form_end(form) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
+										{{ form_label(form.description) }}
+										{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+										{% if form_errors(form.description) %}
+											<div class="text-danger">{{ form_errors(form.description) }}</div>
+										{% endif %}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.poucentage) }}
+										{{ form_widget(form.poucentage, {'attr': {'class': 'form-control'}}) }}
+										{% if form_errors(form.poucentage) %}
+											<div class="text-danger">{{ form_errors(form.poucentage) }}</div>
+										{% endif %}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.dateDebut) }}
+										{{ form_widget(form.dateDebut, {'attr': {'class': 'form-control'}}) }}
+										{% if form_errors(form.dateDebut) %}
+											<div class="text-danger">{{ form_errors(form.dateDebut) }}</div>
+										{% endif %}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.dateFin) }}
+										{{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
+										{% if form_errors(form.dateFin) %}
+											<div class="text-danger">{{ form_errors(form.dateFin) }}</div>
+										{% endif %}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.Prix) }}
+										{{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
+										{% if form_errors(form.Prix) %}
+											<div class="text-danger">{{ form_errors(form.dateFin) }}</div>
+										{% endif %}
+									</div>
+									<button type="submit" class="btn btn-success">Enregistrer</button>
+                                    <a  class="btn btn-danger" href="{{ path('reduction_show') }} ">Retour</a>
 
-                </div>
-                <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
+									{{ form_end(form) }}
+								</div>
+							</div>
+						</div>
+					</div>
 
-           
-        </div>
-    </div>
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
+		</div>
+	</div>
 {% endblock %}

@@ -1,262 +1,264 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit camera {% endblock %}
-
-
-{% block stylesheets %}
+{% block title %}Edit camera
 {% endblock %}
+
+
+{% block stylesheets %}{% endblock %}
 
 {% block body %}
-   <div id="layout-wrapper">
-        <div class="main-content">
+	<div id="layout-wrapper">
+		<div class="main-content">
 
-            <div class="page-content">
-                <div class="container-fluid">
+			<div class="page-content">
+				<div
+					class="container-fluid">
 
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Edit Product</h4>
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
+								<h4 class="mb-sm-0">Edit Product</h4>
 
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Edit Product</li>
-                                    </ol>
-                                </div>
+								<div class="page-title-right">
+									<ol class="breadcrumb m-0">
+										<li class="breadcrumb-item">
+											<a href="javascript: void(0);">Ecommerce</a>
+										</li>
+										<li class="breadcrumb-item active">Edit Product</li>
+									</ol>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end page title -->
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
 
-                {{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            {{ form_label(form.nom) }}
-                                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div class="mb-3">
-                                              {{ form_label(form.description) }}
-                                              {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end card -->
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Product Gallery</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        
-                                        <div id="drop-area">
-                                            <h3>Drag & Drop Files Here</h3>
-                                                    {{ form_label(formI.imageFile) }}
-                                                    {{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                        <div id="gallery"></div>
-                                    </div>
-                                </div>
-                                <!-- end card -->
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-bs-toggle="tab" href="#addproduct-general-info" role="tab">
-                                                    General Info
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#addproduct-metadata" role="tab">
-                                                    Meta Data
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- end card header -->
-                                    <div class="card-body">
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="addproduct-general-info" role="tabpanel">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            {{ form_label(form.prix) }}
-                                                             {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            {{ form_label(form.stock) }}
-                                                            {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <!-- end row -->
-
-                                                <div class="row">
-                                                   
-                                                    <div class="col-lg-3 col-sm-6">
-                                                        <div class="mb-3">                                                  
-                                                            {{ form_label(form.resolution) }}
-                                                            {{ form_widget(form.resolution, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-6">
-                                                        <div class="mb-3">
-                                                            {{ form_label(form.status) }}
-                                                            <div class="input-group mb-3">
-                                                            {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-sm-6">
-                                                        <div class="mb-3">
-                                                             {{ form_label(form.materiaux) }}
-                                                             {{ form_widget(form.materiaux, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-                                                    </div>
-                                                    <!-- end col -->
-                                                </div>
-                                                <!-- end row -->
-                                            </div>
-                                            <!-- end tab-pane -->
-
-                                            <div class="tab-pane" id="addproduct-metadata" role="tabpanel">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                             {{ form_label(form.couleur) }}
-                                                                  {{ form_widget(form.couleur, {'attr': {'class': 'form-control'}}) }}
-
-                                                                  {{ form_label(form.stockage) }}
-                                                            {{ form_widget(form.stockage, {'attr': {'class': 'form-control'}}) }}
-                                                        </div>
-
-                                                    </div>
-                                                   
-
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            {{ form_label(form.visionNoctrune) }}
-                                                            {{ form_widget(form.visionNoctrune, {'attr': {'class': 'form-control'}}) }}
-                                                      
-                                                       {{ form_label(form.poids) }}
-                                                     {{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
-                                                      
-                                                        </div>
-                                                    </div>
-                                                     
-                                                    <!-- end col -->
-                                                </div>
-                                                <!-- end row -->
-
-                                                <div>
-                                                   
-                                                </div>
-
-                                            </div>
-                                            <!-- end tab pane -->
-                                        </div>
-                                        <!-- end tab content -->
-                                    </div>
-                                    <!-- end card body -->
-                                </div>
-                                <!-- end card -->             
-                            </div>
-                            <!-- end col -->
-
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Publish</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label for="choices-publish-status-input" class="form-label">{{ form_label(form.alimentation) }}</label>
-                                            {{ form_widget(form.alimentation, {'attr': {'class': 'form-control'}}) }}
-
-                           
-                                        </div>
-
-                                        <div>
-                                            <label for="choices-publish-visibility-input" class="form-label"> {{ form_label(form.angleVision) }}</label>
-                                             {{ form_widget(form.angleVision, {'attr': {'class': 'form-control'}}) }}
-
-                                        </div>
-                                    </div>
-                                    <!-- end card body -->
-                                </div>
-                                <!-- end card -->
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Publish Schedule</h5>
-                                    </div>
-                                    <!-- end card body -->
-                                    <div class="card-body">
-                                        <div>
-                                          
-                                            <label for="datepicker-publish-input" class="form-label">{{ form_label(form.dateAjout) }}</label>
-                                            {{ form_widget(form.dateAjout, {'attr': {'class': 'form-control'}}) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end card -->
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Product Categories</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="text-muted mb-2">  {{ form_label(form.categorie) }}</p>
-                                                
-                                              {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <!-- end card body -->
-                                </div>
-                                <!-- end card -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">{{ form_label(form.connectivite) }}</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="hstack gap-3 align-items-start">
-                                            <div class="flex-grow-1">
- 
-                            {{ form_widget(form.connectivite, {'attr': {'class': 'form-control'}}) }}                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
-                                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                                    <a href="{{ path('camera') }}" class="btn btn-secondary">Annuler</a>
-                                    {{ form_end(form) }}                 
-                            </div>
-                              
-
-                            <!-- end col -->
-                        </div>
-                        <!-- end row -->
+					{{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-body">
+									<div class="mb-3">
+										{{ form_label(form.nom) }}
+										{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div class="mb-3">
+										{{ form_label(form.description) }}
+										{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
 
 
-                </div>
-                <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
+									</div>
+								</div>
+							</div>
+							<!-- end card -->
 
-         
-        </div>
-    </div>
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Product Gallery</h5>
+								</div>
+								<div class="card-body">
+
+									<div id="drop-area">
+										<h3>Drag & Drop Files Here</h3>
+										{{ form_label(formI.imageFile) }}
+										{{ form_widget(formI.imageFile, {'attr': {'class': 'form-control'}}) }}
+									</div>
+									<div id="gallery"></div>
+								</div>
+							</div>
+							<!-- end card -->
+
+							<div class="card">
+								<div class="card-header">
+									<ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" data-bs-toggle="tab" href="#addproduct-general-info" role="tab">
+												General Info
+											</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-bs-toggle="tab" href="#addproduct-metadata" role="tab">
+												Meta Data
+											</a>
+										</li>
+									</ul>
+								</div>
+								<!-- end card header -->
+								<div class="card-body">
+									<div class="tab-content">
+										<div class="tab-pane active" id="addproduct-general-info" role="tabpanel">
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="mb-3">
+														{{ form_label(form.prix) }}
+														{{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="mb-3">
+														{{ form_label(form.stock) }}
+														{{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+													</div>
+												</div>
+
+											</div>
+											<!-- end row -->
+
+											<div class="row">
+
+												<div class="col-lg-3 col-sm-6">
+													<div class="mb-3">
+														{{ form_label(form.resolution) }}
+														{{ form_widget(form.resolution, {'attr': {'class': 'form-control'}}) }}
+													</div>
+												</div>
+												<div class="col-lg-3 col-sm-6">
+													<div class="mb-3">
+														{{ form_label(form.status) }}
+														<div class="input-group mb-3">
+															{{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-3 col-sm-6">
+													<div class="mb-3">
+														{{ form_label(form.materiaux) }}
+														{{ form_widget(form.materiaux, {'attr': {'class': 'form-control'}}) }}
+													</div>
+												</div>
+												<!-- end col -->
+											</div>
+											<!-- end row -->
+										</div>
+										<!-- end tab-pane -->
+
+										<div class="tab-pane" id="addproduct-metadata" role="tabpanel">
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="mb-3">
+														{{ form_label(form.couleur) }}
+														{{ form_widget(form.couleur, {'attr': {'class': 'form-control'}}) }}
+
+														{{ form_label(form.stockage) }}
+														{{ form_widget(form.stockage, {'attr': {'class': 'form-control'}}) }}
+													</div>
+
+												</div>
+
+
+												<div class="col-lg-6">
+													<div class="mb-3">
+														{{ form_label(form.visionNoctrune) }}
+														{{ form_widget(form.visionNoctrune, {'attr': {'class': 'form-control'}}) }}
+
+														{{ form_label(form.poids) }}
+														{{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
+
+													</div>
+												</div>
+
+												<!-- end col -->
+											</div>
+											<!-- end row -->
+
+											<div></div>
+
+										</div>
+										<!-- end tab pane -->
+									</div>
+									<!-- end tab content -->
+								</div>
+								<!-- end card body -->
+							</div>
+							<!-- end card -->
+						</div>
+						<!-- end col -->
+
+						<div class="col-lg-4">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Publish</h5>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<label for="choices-publish-status-input" class="form-label">{{ form_label(form.alimentation) }}</label>
+										{{ form_widget(form.alimentation, {'attr': {'class': 'form-control'}}) }}
+
+
+									</div>
+
+									<div>
+										<label for="choices-publish-visibility-input" class="form-label">
+											{{ form_label(form.angleVision) }}</label>
+										{{ form_widget(form.angleVision, {'attr': {'class': 'form-control'}}) }}
+
+									</div>
+								</div>
+								<!-- end card body -->
+							</div>
+							<!-- end card -->
+
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Publish Schedule</h5>
+								</div>
+								<!-- end card body -->
+								<div class="card-body">
+									<div>
+
+										<label for="datepicker-publish-input" class="form-label">{{ form_label(form.dateAjout) }}</label>
+										{{ form_widget(form.dateAjout, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+							<!-- end card -->
+
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Product Categories</h5>
+								</div>
+								<div class="card-body">
+									<p class="text-muted mb-2">
+										{{ form_label(form.categorie) }}</p>
+
+									{{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+								</div>
+								<!-- end card body -->
+							</div>
+							<!-- end card -->
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">{{ form_label(form.connectivite) }}</h5>
+								</div>
+								<div class="card-body">
+									<div class="hstack gap-3 align-items-start">
+										<div class="flex-grow-1">
+
+											{{ form_widget(form.connectivite, {'attr': {'class': 'form-control'}}) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-success">Enregistrer</button>
+							<a href="{{ path('camera') }}" class="btn btn-danger">Annuler</a>
+							{{ form_end(form) }}
+						</div>
+
+
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+
+
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
+
+
+		</div>
+	</div>
 {% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
+{% block javascripts %}{% endblock %}
