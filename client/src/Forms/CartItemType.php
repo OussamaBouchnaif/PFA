@@ -2,12 +2,12 @@
 
 namespace App\Forms;
 
-use App\Entity\CartItem;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CartItemType extends AbstractType
 {
@@ -20,23 +20,15 @@ class CartItemType extends AbstractType
             'html5' => true,
             'required' => true,
         ])
-        ->add('stockage', ChoiceType::class, [
-
-            'choices' => [
-                '100G' => '100G',
-                '200G' => '200G',
-                '500G' => '500G',
-                '1000G' => '1000G',
-            ],
-            'label' => 'Genre',// Allow only one selection
-        ]);;
+        ->add('delete', SubmitType::class, ['label' => 'delete'])
+        ->add('update', SubmitType::class, ['label' => 'update']);
 
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CartItem::class,
+            
         ]);
     }
 }

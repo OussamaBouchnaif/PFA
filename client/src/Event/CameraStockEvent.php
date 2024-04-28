@@ -5,9 +5,9 @@ namespace App\Event;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class OrderPlacedEvent extends Event
+class CameraStockEvent extends Event
 {
-    public const NAME = 'order.placed';
+    public const NAME = 'camera.stock';
 
     public function __construct(private Collection $cameras)
     {

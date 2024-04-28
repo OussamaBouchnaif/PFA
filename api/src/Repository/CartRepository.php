@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Commande;
+use App\Entity\Cart;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Commande>
+ * @extends ServiceEntityRepository<Cart>
  *
- * @method Commande|null find($id, $lockMode = null, $lockVersion = null)
- * @method Commande|null findOneBy(array $criteria, array $orderBy = null)
- * @method Commande[]    findAll()
- * @method Commande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Cart|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Cart|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Cart[]    findAll()
+ * @method Cart[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CommandeRepository extends ServiceEntityRepository
+class CartRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Commande::class);
+        parent::__construct($registry, Cart::class);
     }
-   
+
 //    /**
-//     * @return Commande[] Returns an array of Commande objects
+//     * @return Cart[] Returns an array of Cart objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class CommandeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Commande
+//    public function findOneBySomeField($value): ?Cart
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

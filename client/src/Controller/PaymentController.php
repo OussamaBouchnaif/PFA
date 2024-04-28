@@ -9,6 +9,7 @@ use App\Cart\Factory\CartFactory;
 use App\Voucher\VoucherInterface;
 use App\Payment\Factory\PaymentFactory;
 use App\Cart\Handler\CartStorageInterface;
+use App\Event\CameraStockEvent;
 use App\Mail\Notifier;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,8 +50,10 @@ class PaymentController extends AbstractController
             $this->paymentFactory->createPayment($startegy, $cart);
 
             // Dispatch the event
-            $event = new OrderPlacedEvent($cart->getItems());
-            $this->eventDispatcher->dispatch($event, OrderPlacedEvent::NAME);
+            $event = new CameraStockEvent($cart->getItems());
+            $this->eventDispatcher->dispatch($event, CameraStockEvent::NAME);
+             
+            
             // Notifier
             $this->notifier->orderPlacedNotifier($security->getUser()->getEmail());
             
@@ -65,9 +68,10 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('/done',name:'done')]
+    #[Route('/process',name:'done')]
     public function done(Request $request)
     {
+        
         $session = $request->getSession();
         $session->remove('voucher');
         $this->cartStorage->clearCart($this->cartStorage->getCart());

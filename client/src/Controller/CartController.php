@@ -25,11 +25,14 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart', name: 'app_cart')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $form = $this->createForm(CartItemType::class);
+        $form->handleRequest($request);
         return $this->render('client/pages/cart/cart.html.twig', [
             'cart' =>  $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -66,6 +69,18 @@ class CartController extends AbstractController
         $this->cartStorage->clearCart($this->cartStorage->getCart());
         $request->getSession()->remove('voucher');
         return $this->redirectToRoute('app_cart');
+    }
+
+    #[Route('update_cart' , name:'update')]
+    public function update(Request $request):Response
+    {
+        
+        $id = $request->query->get('id');
+        $quantity = $request->query->get('quantity');
+        $quantitys = $request->query->get('quantities');
+        dd($id,$quantity,$quantitys);
+
+        
     }
 
     #[Route('/deleteCamera/{id}',name:'deletecamera')]

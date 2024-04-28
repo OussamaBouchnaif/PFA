@@ -61,4 +61,17 @@ class CameraFetcher extends AbstractCameraFetcher
         return $this->getCameraData('api/cameras/?' . $queryString->getQueryString());
     }
 
+    /* 
+        return the cameras the most orders  
+   */
+    public function CameratheMostOrders()
+    {
+        $response =  $this->getData->getDataFromApi("api/cameras/mostOrders");
+        if (!$response) {
+            throw new ObjectNotFoundException('Camera Not Found !!');
+        }
+        return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO[]', 'json');
+    }
+
+
 }

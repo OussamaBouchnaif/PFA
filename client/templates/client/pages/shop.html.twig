@@ -242,7 +242,7 @@
                                         </li>
                                     {% endfor %}
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" aria-label="Next">Suivant</a>
+                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" tabindex="-1"  aria-label="Next">Suivant</a>
                                     </li>
                                     
                                 </ul>

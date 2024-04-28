@@ -34,12 +34,12 @@ class CodePromo
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'codePromo', targetEntity: Commande::class)]
-    private Collection $commandes;
+    #[ORM\OneToMany(mappedBy: 'codePromo', targetEntity: Cart::class)]
+    private Collection $cart;
 
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
+        $this->cart = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,32 +119,24 @@ class CodePromo
         return $this;
     }
 
+   
+
     /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
+     * Get the value of cart
+     */ 
+    public function getCart()
     {
-        return $this->commandes;
+        return $this->cart;
     }
 
-    public function addCommande(Commande $commande): static
+    /**
+     * Set the value of cart
+     *
+     * @return  self
+     */ 
+    public function setCart($cart)
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setCodePromo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getCodePromo() === $this) {
-                $commande->setCodePromo(null);
-            }
-        }
+        $this->cart = $cart;
 
         return $this;
     }

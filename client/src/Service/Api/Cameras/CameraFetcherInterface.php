@@ -9,4 +9,8 @@ interface CameraFetcherInterface
     public function getItems():int;
     public function searchBy(array $searchCriteria): array;
     public function getLastCameras();
+    /* 
+        return the cameras the most orders  
+   */
+  public function CameratheMostOrders();
 }

@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Camera;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Doctrine\ORM\Query\Expr\Join;
 /**
  * @extends ServiceEntityRepository<Camera>
  *
@@ -28,31 +28,46 @@ class CameraRepository extends ServiceEntityRepository
             ->orderBy('c.dateAjout', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
-            ->getResult();
+            ->getResult();  
     }
 
-//    /**
-//     * @return Camera[] Returns an array of Camera objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findCameraWithMostOrders()
+    {
+      
 
-//    public function findOneBySomeField($value): ?Camera
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('c')
+            ->select('c.id, COUNT(crt.id) AS nbrCommand') 
+            ->join('c.cartItem', 'crt', Join::WITH, 'c.id = crt.Camera') 
+            ->join('crt.cart', 'cr', Join::WITH, 'crt.cart = cr.id') 
+            ->groupBy('c.id') 
+            ->orderBy('nbrCommand', 'DESC')
+            ->getQuery()
+            ->getArrayResult(); 
+             
+    }
+
+    //    /**
+    //     * @return Camera[] Returns an array of Camera objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('c.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Camera
+    //    {
+    //        return $this->createQueryBuilder('c')
+    //            ->andWhere('c.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

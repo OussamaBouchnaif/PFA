@@ -2,8 +2,7 @@
 
 namespace App\Payment\Strategy;
 
-use App\Cart\Handler\CartStorageInterface;
-use App\Payment\PaymentManager;
+
 use App\Payment\Validator\PaymentValidatorInterface;
 
 abstract class AbstractPayment implements PaymentInterface

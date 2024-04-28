@@ -53,7 +53,7 @@ services:
     
     App\EventListener\CameraStockUpdater:
         tags:
-            - { name: 'kernel.event_listener', event: 'order.placed', method: 'onOrderPlaced' }
+            - { name: 'kernel.event_listener', event: 'camera.stock', method: 'onOrderPlaced' }
 
     App\Mail\Notifier:
         arguments:
