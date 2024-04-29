@@ -5,12 +5,9 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        /* Définir la largeur du conteneur à 40% */
-        #chartContainer {
-            width: 40%;
-            /* Définir une hauteur spécifique */
-            height: 500px;
-        }
+       col{
+		height: 200px;
+	   }
     </style>
 {% endblock %}
 
@@ -28,7 +25,6 @@
                                     <li class="breadcrumb-item">
                                         <a href="javascript: void(0);">Charts</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Chartjs</li>
                                 </ol>
                             </div>
                         </div>
@@ -44,7 +40,7 @@
                             </div>
                             <div class="card-body">
                                 <div id="chartContainer">
-                                    <canvas id="cameraChart" width="200" height="200"></canvas>
+                                    <canvas id="cameraChart" class="chartjs-chart"></canvas>
                                 </div>
                             </div>
                         </div>

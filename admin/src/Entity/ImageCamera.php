@@ -27,6 +27,14 @@ class ImageCamera
     #[ORM\JoinColumn(nullable: false)]
     private ?Camera $camera;
 
+    public function __construct()
+    {
+        // Initialisez la propriété imageFile à null dans le constructeur
+        $this->imageFile = null;
+    }
+
+    // Getters et setters pour les autres propriétés
+
     public function getId(): ?int
     {
         return $this->id;
