@@ -2,8 +2,6 @@
 
 namespace App\Payment\Strategy;
 
-use App\Entity\Cart;
-use App\Entity\Paiement;
 
 interface PaymentInterface
 {

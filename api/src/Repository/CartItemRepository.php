@@ -4,10 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Camera;
 use App\Entity\CartItem;
-use App\Forms\CartItemType;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**

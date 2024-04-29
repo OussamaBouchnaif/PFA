@@ -136,7 +136,7 @@
                 <div class="product_tab_btn d-flex">
                   
                     <div class="all_product">
-                        <a href="shop.html">All Product</a>
+                        <a href="{{path('fetch')}}">All Product</a>
                     </div>
                 </div>
             </div>
@@ -157,8 +157,8 @@
                                 {"breakpoint":300, "settings": { "slidesToShow": 1 } }
                                 ]
                         }'>
-                       {#  {% if mostOrders %}
-                            {% for camera in latest %}
+                        {% if mostOrders %}
+                            {% for camera in mostOrders %}
                                 <article class="col single_product card-box">
                                     <figure>
                                         <div class="product_thumb">
@@ -178,15 +178,7 @@
                                                             data-tippy-arrow="true" data-tippy-placement="left"><i
                                                                 class="icon-heart icons"></i></a></li>
 
-                                                    <li class="quick_view"><a data-toggle="modal" data-target="#modal_box"
-                                                            data-tippy="Quick View" href="#" data-tippy-inertia="true"
-                                                            data-tippy-delay="50" data-tippy-arrow="true"
-                                                            data-tippy-placement="left"><i
-                                                                class="icon-size-fullscreen icons"></i></a></li>
-                                                    <li class="compare"><a data-tippy="Compare" href="#"
-                                                            data-tippy-inertia="true" data-tippy-delay="50"
-                                                            data-tippy-arrow="true" data-tippy-placement="left"><i
-                                                                class="icon-refresh icons"></i></a></li>
+                                                  
                                                 </ul>
                                             </div>
                                             <div class="product_label">
@@ -218,7 +210,7 @@
                             {% endfor %}   
                         {% else %}
                                 <p>makanch produits</p>
-                        {% endif %} #}
+                        {% endif %}
                         </div>
                     </div>
                   
@@ -315,15 +307,6 @@
                                                         data-tippy-arrow="true" data-tippy-placement="left"><i
                                                             class="icon-heart icons"></i></a></li>
 
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box"
-                                                        data-tippy="Quick View" href="#" data-tippy-inertia="true"
-                                                        data-tippy-delay="50" data-tippy-arrow="true"
-                                                        data-tippy-placement="left"><i
-                                                            class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#"
-                                                        data-tippy-inertia="true" data-tippy-delay="50"
-                                                        data-tippy-arrow="true" data-tippy-placement="left"><i
-                                                            class="icon-refresh icons"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product_label">

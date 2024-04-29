@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Camera;
 use App\Entity\CartItem;
+use App\Entity\Categorie;
 use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,9 +49,22 @@ class CameraController extends AbstractController
     }
 
     #[Route('/api/cameras/mostOrders' ,name:"mostOrders" , methods:['GET'] , priority: 3)]
-    public function CameraWithMostOrders()
+    public function cameraWithMostOrders()
     {
         $cameras = $this->manager->getRepository(CartItem::class)->TheMostOrder();
+        if(null === $cameras)
+        {
+            return new JsonResponse(null,Response::HTTP_NOT_FOUND);
+        }
+        $data = $this->serializer->serialize($cameras, 'json', ['groups' => 'camera:read']);
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
+
+    }
+
+    #[Route('/api/cameras/related' ,name:"mostOrders" , methods:['GET'] , priority: 3)]
+    public function related()
+    {
+        $cameras = $this->manager->getRepository(Categorie::class)->related();
         if(null === $cameras)
         {
             return new JsonResponse(null,Response::HTTP_NOT_FOUND);

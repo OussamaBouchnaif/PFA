@@ -23,7 +23,7 @@ class HomeController extends AbstractController
             'cart'=> $this->cartStorage->getCart(),
             'totalItems'=>$this->cartStorage->TotalPriceItems(),
             'latest'=> $this->fetcher->getLastCameras(),
-            
+            'mostOrders'=>$this->fetcher->CameratheMostOrders(),
         ]);
     }
 }

@@ -31,19 +31,26 @@ class CameraRepository extends ServiceEntityRepository
             ->getResult();  
     }
 
-    public function findCameraWithMostOrders()
+    public function findCamerasSameCategoryAsCameraId(int $cameraId)
     {
-      
 
-        return $this->createQueryBuilder('c')
-            ->select('c.id, COUNT(crt.id) AS nbrCommand') 
-            ->join('c.cartItem', 'crt', Join::WITH, 'c.id = crt.Camera') 
-            ->join('crt.cart', 'cr', Join::WITH, 'crt.cart = cr.id') 
-            ->groupBy('c.id') 
-            ->orderBy('nbrCommand', 'DESC')
+        // Requête pour obtenir l'ID de la catégorie du produit 65
+        $categoryId = $this->createQueryBuilder('c')
+            ->select('c.category')
+            ->from(Camera::class, 'c')
+            ->where('c.id = :id')
+            ->setParameter('id', $cameraId)
             ->getQuery()
-            ->getArrayResult(); 
-             
+            ->getSingleScalarResult();
+
+        // Requête pour obtenir tous les produits de la même catégorie
+        return $this->createQueryBuilder()
+            ->select('c')
+            ->from(Camera::class, 'c')
+            ->where('c.category = :category')
+            ->setParameter('category', $categoryId)
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**
