@@ -31,7 +31,7 @@ final class CartProcessor
             $this->discountLoader->loadDiscount($instance, $voucherIdentifier, $this->strategy);
             $instance = $this->doUpdateTotal($instance, $voucherIdentifier);
             
-            $this->doCleaning($voucherIdentifier);
+            $this->doCleaning();
         } else {
             
             $instance->setTotal($instance->computeTotal());
@@ -56,9 +56,8 @@ final class CartProcessor
     /**
      * Internally clears the cart from the storage and invalidates the voucher.
      */
-    private function doCleaning(string $voucherIdentifier): void
+    private function doCleaning(): void
     {
         $this->cartStorage->clearCart($this->cartStorage->getCart());
-        $this->voucherManager->invalidateVoucher($voucherIdentifier);
     }
 }

@@ -51,9 +51,13 @@ services:
             $paymentProcessors: !tagged_iterator app.payment_processor
 
     
-    App\EventListener\CameraStockUpdater:
+    App\EventListener\CameraStockListener:
         tags:
-            - { name: 'kernel.event_listener', event: 'camera.stock', method: 'onOrderPlaced' }
+           - { name: 'kernel.event_listener', event: 'camera.stock', method: 'onOrderPlaced' }
+
+    App\EventListener\VoucherUsedListener:
+        tags:
+           - { name: 'kernel.event_listener', event: 'voucher.used', method: 'onVoucherUsed' }
 
     App\Mail\Notifier:
         arguments:

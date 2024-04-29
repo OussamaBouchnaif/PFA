@@ -61,7 +61,7 @@ class CameraController extends AbstractController
 
     }
 
-    #[Route('/api/cameras/related' ,name:"mostOrders" , methods:['GET'] , priority: 3)]
+   /*  #[Route('/api/cameras/related' ,name:"mostOrders" , methods:['GET'] , priority: 3)]
     public function related()
     {
         $cameras = $this->manager->getRepository(Categorie::class)->related();
@@ -72,7 +72,7 @@ class CameraController extends AbstractController
         $data = $this->serializer->serialize($cameras, 'json', ['groups' => 'camera:read']);
         return new JsonResponse($data, Response::HTTP_OK, [], true);
 
-    }
+    } */
     
     
 }

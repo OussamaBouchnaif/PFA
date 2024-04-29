@@ -2,11 +2,8 @@
 
 
 namespace App\EntityListener;
-use App\Entity\Client;
 use App\Entity\Personne;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class UserListener {
 

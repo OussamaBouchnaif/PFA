@@ -21,7 +21,7 @@ class PaypalType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'action' => "https:paypal.com",
+            
         ]);
     } 
 }
