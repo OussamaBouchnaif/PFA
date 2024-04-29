@@ -2,42 +2,38 @@
 
 {% block title %}Add camera{% endblock %}
 
-
 {% block stylesheets %}
-
 <style>
     body {
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
-}
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    }
 </style>
-
-
-
 {% endblock %}
+
 {% block body %}
-    <div id="layout-wrapper">
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- Start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Create Product</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                        <li class="breadcrumb-item active">Create camera</li>
-                                    </ol>
-                                </div>
+<div id="layout-wrapper">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Create Product</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                    <li class="breadcrumb-item active">Create camera</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
-                    <!-- End page title -->
-                    
-                        {{ form_start(form, {'attr': {'id': 'add_camera_form', 'enctype': 'multipart/form-data'}}) }}
-                    
-                    <div class="row">
+                </div>
+                <!-- End page title -->
+                
+                {{ form_start(form, {'attr': {'id': 'add_camera_form', 'enctype': 'multipart/form-data'}}) }}
+                
+                <div class="row">
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
@@ -51,7 +47,7 @@
                                     <div class="mb-3">
                                         {{ form_label(form.description) }}
                                         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                                         <div class="form-error">
+                                    <div class="form-error">
                                             {{ form_errors(form.description) }}
                                         </div>
                                     </div>
@@ -288,55 +284,46 @@
                         </div>
                         <!-- End col-lg-4 -->
                     </div>
-                    <!-- End row -->
-                    
-                    
-                </div>
-                <!-- End container-fluid -->
             </div>
-            <!-- End page-content -->
         </div>
-        <!-- End main-content -->
     </div>
-    <!-- End layout-wrapper -->
-
+</div>
 {% endblock %}
 
 {% block javascripts %}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{# <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(document).ready(function() {
     $('#add_camera_form').on('submit', function (e) {
-        e.preventDefault(); // Empêcher la soumission du formulaire par défaut
+        e.preventDefault(); // Prevent the default form submission
                 
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
             data: $(this).serialize(),
             success: function (response) {
-                // Afficher une alerte SweetAlert2 avec un message de succès
+                // Display a SweetAlert2 alert with success message
                 Swal.fire({
-                    title: 'Succès!',
-                    text: 'Caméra ajoutée avec succès!',
+                    title: 'Success!',
+                    text: 'Camera added successfully!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
-                    // Rediriger l'utilisateur après l'ajout réussi
+                    // Redirect the user after successful addition
                     window.location.href = "{{ path('camera') }}";
                 });
             },
             error: function () {
-                // Afficher une alerte SweetAlert2 en cas d'erreur
+                // Display a SweetAlert2 alert in case of error
                 Swal.fire({
-                    title: 'Erreur!',
-                    text: 'Une erreur est survenue lors de l\'ajout de la caméra.',
+                    title: 'Error!',
+                    text: 'An error occurred while adding the camera.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
             }
         });
     });
-});
-
-    </script>
+}); #}
+</script>
 {% endblock %}

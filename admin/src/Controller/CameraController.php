@@ -6,6 +6,7 @@ use App\Entity\Camera;
 use App\Entity\Categorie;
 use App\Entity\ImageCamera;
 use App\Form\CameraType;
+use App\Services\CameraModel;
 use App\Form\PhotoType;
 use App\Repository\CategorieRepository;
 use App\Repository\CameraRepository;
@@ -21,7 +22,12 @@ use Doctrine\ORM\ORMException;
 
 class CameraController extends AbstractController
 {
+    private $cameraModel;
 
+    public function __construct(CameraModel $cameraModel)
+    {
+        $this->cameraModel = $cameraModel;
+    }
 
     #[Route('/cus', name: 'cus')]
     public function cus(): Response
@@ -50,7 +56,7 @@ class CameraController extends AbstractController
     }
 
     #[Route('/camera/Add_camera', name: 'Add_camera')]
-    public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
+    public function addCamera(Request $request, EntityManagerInterface $entityManager, CameraModel $cameraModel): Response
     {
         $camera = new Camera();
         $imageCamera = new ImageCamera();
@@ -63,17 +69,9 @@ class CameraController extends AbstractController
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             $camera = $formCamera->getData();
-
             $imageCamera->setCamera($camera);
-            $entityManager->persist($imageCamera);
 
-            $entityManager->persist($camera);
-            $entityManager->flush();
-
-            // Retourner une réponse JSON avec un message de succès
-            return new JsonResponse([
-                'message' => 'Camera added successfully!',
-            ]);
+            return $cameraModel->addCamera($camera, $imageCamera);
         }
 
         return $this->render('admin/Cameras/addProduct.html.twig', [
@@ -82,45 +80,22 @@ class CameraController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
-    public function editCamera(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera, CameraModel $cameraModel): Response
     {
-        // Fetch the camera entity to edit
-        $camera = $entityManager->getRepository(Camera::class)->find($id);
+        $imageCamera = new ImageCamera();
 
-        if (!$camera) {
-            throw $this->createNotFoundException('Camera not found');
-        }
-
-        // Create form for camera details
         $formCamera = $this->createForm(CameraType::class, $camera);
         $formCamera->handleRequest($request);
 
-        // Create form for photo
-        $imageCamera = new ImageCamera();
         $formImage = $this->createForm(PhotoType::class, $imageCamera);
         $formImage->handleRequest($request);
 
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Handle camera form submission
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Camera details updated successfully!');
-            return $this->redirectToRoute('camera');
-        }
-
-        if ($formCamera->isSubmitted() && $formCamera->isValid()) {
-
-            $camera = $formCamera->getData();
-
-            $imageCamera->setCamera($camera);
-            $entityManager->persist($imageCamera);
-
-            $entityManager->persist($camera);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Camera added successfully!');
-            return $this->redirectToRoute('camera');
+            return $cameraModel->editCamera($camera, $imageCamera, $request);
         }
 
         return $this->render('admin/Cameras/editProduct.html.twig', [
@@ -160,12 +135,13 @@ class CameraController extends AbstractController
 
             $formImage = $this->createForm(PhotoType::class, $imageCamera);
             $formImage->handleRequest($request);
-
+            $files = $request->files->all();
+            // dd($files);
+            // dd($formImage->getErrors());
             if ($formImage->isSubmitted() && $formImage->isValid()) {
                 $imageCamera = $formImage->getData();
                 $entityManager->persist($imageCamera);
                 $entityManager->flush();
-
                 // Redirigez vers une autre page ou retournez une réponse si nécessaire
                 return $this->redirectToRoute('camera');
             } else {
@@ -182,28 +158,12 @@ class CameraController extends AbstractController
         }
     }
     #[Route('/camera/chart', name: 'camera_chart')]
-    public function chart(EntityManagerInterface $entityManager): Response
+    public function chart(): Response
     {
-        // Récupérer le repository de l'entité Categorie
-        $categorieRepository = $entityManager->getRepository(Categorie::class);
-        
-        // Récupérer toutes les catégories avec le nombre de caméras associées
-        $categoriesWithCameraCount = $categorieRepository->createQueryBuilder('c')
-            ->select('c.nom as category_name', 'COUNT(ca.id) as camera_count')
-            ->leftJoin('c.cameras', 'ca')
-            ->groupBy('c.id')
-            ->getQuery()
-            ->getResult();
-    
-        // Convertir le résultat en un tableau associatif
-        $categoriesData = [];
-        foreach ($categoriesWithCameraCount as $data) {
-            $categoriesData[$data['category_name']] = $data['camera_count'];
-        }
-    
+        $camerasByCategory = $this->cameraModel->getCamerasByCategory();
+
         return $this->render('admin/Cameras/chart.html.twig', [
-            'camerasByCategory' => $categoriesData,
+            'camerasByCategory' => $camerasByCategory,
         ]);
     }
-    
 }
