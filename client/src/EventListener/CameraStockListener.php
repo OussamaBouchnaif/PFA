@@ -6,7 +6,7 @@ use App\Event\CameraStockEvent;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class CameraStockUpdater
+class CameraStockListener
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {

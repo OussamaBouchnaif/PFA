@@ -35,7 +35,7 @@ class CameraRepository extends ServiceEntityRepository
     {
 
         // Requête pour obtenir l'ID de la catégorie du produit 65
-        $categoryId = $this->createQueryBuilder('c')
+      /*   $categoryId = $this->createQueryBuilder('c')
             ->select('c.category')
             ->from(Camera::class, 'c')
             ->where('c.id = :id')
@@ -50,7 +50,7 @@ class CameraRepository extends ServiceEntityRepository
             ->where('c.category = :category')
             ->setParameter('category', $categoryId)
             ->getQuery()
-            ->getResult();
+            ->getResult(); */
     }
 
     //    /**

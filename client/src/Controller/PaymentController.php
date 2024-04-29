@@ -2,21 +2,16 @@
 
 namespace App\Controller;
 
-use App\Event\OrderPlacedEvent;
 use App\Payment\PaymentManager;
 use App\Processor\CartProcessor;
 use App\Cart\Factory\CartFactory;
 use App\Voucher\VoucherInterface;
 use App\Payment\Factory\PaymentFactory;
 use App\Cart\Handler\CartStorageInterface;
-use App\Event\CameraStockEvent;
-use App\Mail\Notifier;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class PaymentController extends AbstractController
 {
@@ -28,13 +23,12 @@ class PaymentController extends AbstractController
         private CartFactory $cartFactory,
         private VoucherInterface $voucherManager,
         private PaymentFactory $paymentFactory,
-        private EventDispatcherInterface $eventDispatcher,
-        private Notifier $notifier,
+
     ) {
     }
 
     #[Route('/payment', name: 'app_payment')]
-    public function index(Request $request,Security $security): Response
+    public function index(Request $request): Response
     {
         $cart = $this->cartFactory->build();
         $session = $request->getSession();
@@ -44,21 +38,11 @@ class PaymentController extends AbstractController
 
         $formPayment->handleRequest($request);
         if ($formPayment->isSubmitted() && $formPayment->isValid()) {
-            
+
             $voucherIdentifier = $this->voucherManager->getVoucherIdentifier();
             $this->cartProcessor->process($cart, $voucherIdentifier);
             $this->paymentFactory->createPayment($startegy, $cart);
-
-            // Dispatch the event
-            $event = new CameraStockEvent($cart->getItems());
-            $this->eventDispatcher->dispatch($event, CameraStockEvent::NAME);
-             
-            
-            // Notifier
-            $this->notifier->orderPlacedNotifier($security->getUser()->getEmail());
-            
             return $this->redirectToRoute('done');
-           
         }
         return $this->render('client/payment/index.html.twig', [
             'form' => $formPayment->createView(),
@@ -68,10 +52,9 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('/process',name:'done')]
+    #[Route('/process', name: 'done')]
     public function done(Request $request)
     {
-        
         $session = $request->getSession();
         $session->remove('voucher');
         $this->cartStorage->clearCart($this->cartStorage->getCart());

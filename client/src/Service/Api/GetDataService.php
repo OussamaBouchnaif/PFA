@@ -13,12 +13,24 @@ class GetDataService
     
     public function getDataFromApi(String $endpoint): array
     {
-        $response = $this->appDefaultApi->request('GET', $endpoint, ['headers' => [
-            'Content-Type' => 'application/json',
-        ]]);
-        $jsonData = $response->getContent();
-        $data = $this->serializer->decode($jsonData, 'json');
-        return $data;
+        try {
+            $response = $this->appDefaultApi->request('GET', $endpoint, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'timeout' => 30
+                ]
+            ]);
+            $jsonData = $response->getContent();
+            if ($response->getStatusCode() == 404) {
+                throw new \Exception("Resource not found at {$endpoint}");
+            }
+            $data = $this->serializer->decode($jsonData, 'json');
+            return $data;
+        } catch (\Exception $e) {
+
+            error_log($e->getMessage());
+            return ['error' => $e->getMessage()];
+        }
     }
     public function getTotalItems($endpoint)
     {
