@@ -48,20 +48,20 @@
                     <div id="menu" class="text-left ">
                         <ul class="offcanvas_main_menu">
                             <li class="menu-item-has-children active">
-                                <a href="#">Home</a>
+                                <a href="{{path('app_home')}}">Home</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="shop.html">Shop</a>
+                                <a href="{{path('fetch')}}">Shop</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="product-details.html"> Product Details</a>
+                                <a href=""> Product Details</a>
                             </li>
                             <li><a href="#">sale</a></li>
                             <li class="menu-item-has-children">
                                 <a href="#">pages </a>
                                 <ul class="sub-menu">
-                                    <li><a href="cart.html">cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="{{path('cart')}}">cart</a></li>
+                                    <li><a href="{{path('order')}}">Checkout</a></li>
                                 </ul>
                             </li>
                             <li class="menu-item-has-children">
@@ -156,7 +156,7 @@
                             <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
                         </div>
                         <div class="header_logo">
-                            <a class="sticky_none" href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a class="sticky_none" href="{{path('app_home')}}"><img src="{{asset('assets/img/logo/logo.jpg')}}      " style="width:70px;" alt=""></a>
                         </div>
                         <!--main menu start-->
                         <div class="main_menu d-none d-lg-block">

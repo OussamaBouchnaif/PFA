@@ -7,8 +7,6 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie

@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Cart\Factory\CartFactory;
 use App\Cart\Handler\CartStorageInterface;
 use App\Forms\CheckoutType;
-use App\Processor\CartProcessor;
 use App\Voucher\VoucherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

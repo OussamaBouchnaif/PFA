@@ -2,17 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
-
-
 use ApiPlatform\Metadata\ApiFilter;
-
 use App\Repository\CameraRepository;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
@@ -66,14 +60,8 @@ class Camera
     #[Groups(['camera:read','camera:write'])]
     private ?string $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
-    private Collection $avisCameras;
-
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class)]
-    private Collection $favoritCameras;
-
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneCommande::class)]
-    private Collection $ligneCommandes;
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: CartItem::class)]
+    private Collection $cartItem;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
     #[Groups(['camera:read','camera:write'])]
@@ -123,17 +111,13 @@ class Camera
     #[Groups(['camera:read','camera:write'])]
     private ?string $alimentation = null;
 
-    #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
-    private Collection $blogs;
+
 
     public function __construct()
     {
-        $this->avisCameras = new ArrayCollection();
-        $this->favoritCameras = new ArrayCollection();
-        $this->ligneCommandes = new ArrayCollection();
+        $this->cartItem = new ArrayCollection();
         $this->imageCameras = new ArrayCollection();
         $this->ligneReductions = new ArrayCollection();
-        $this->blogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,96 +197,9 @@ class Camera
         return $this;
     }
 
-    /**
-     * @return Collection<int, AvisCamera>
-     */
-    public function getAvisCameras(): Collection
-    {
-        return $this->avisCameras;
-    }
+    
 
-    public function addAvisCamera(AvisCamera $avisCamera): static
-    {
-        if (!$this->avisCameras->contains($avisCamera)) {
-            $this->avisCameras->add($avisCamera);
-            $avisCamera->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAvisCamera(AvisCamera $avisCamera): static
-    {
-        if ($this->avisCameras->removeElement($avisCamera)) {
-            // set the owning side to null (unless already changed)
-            if ($avisCamera->getCamera() === $this) {
-                $avisCamera->setCamera(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, FavoritCamera>
-     */
-    public function getFavoritCameras(): Collection
-    {
-        return $this->favoritCameras;
-    }
-
-    public function addFavoritCamera(FavoritCamera $favoritCamera): static
-    {
-        if (!$this->favoritCameras->contains($favoritCamera)) {
-            $this->favoritCameras->add($favoritCamera);
-            $favoritCamera->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoritCamera(FavoritCamera $favoritCamera): static
-    {
-        if ($this->favoritCameras->removeElement($favoritCamera)) {
-            // set the owning side to null (unless already changed)
-            if ($favoritCamera->getCamera() === $this) {
-                $favoritCamera->setCamera(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, LigneCommande>
-     */
-    public function getLigneCommandes(): Collection
-    {
-        return $this->ligneCommandes;
-    }
-
-    public function addLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if (!$this->ligneCommandes->contains($ligneCommande)) {
-            $this->ligneCommandes->add($ligneCommande);
-            $ligneCommande->setCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLigneCommande(LigneCommande $ligneCommande): static
-    {
-        if ($this->ligneCommandes->removeElement($ligneCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneCommande->getCamera() === $this) {
-                $ligneCommande->setCamera(null);
-            }
-        }
-
-        return $this;
-    }
-
+  
     /**
      * @return Collection<int, ImageCamera>
      */
@@ -494,31 +391,26 @@ class Camera
         return $this;
     }
 
-    /**
-     * @return Collection<int, Blog>
-     */
-    public function getBlogs(): Collection
-    {
-        return $this->blogs;
-    }
-
-    public function addBlog(Blog $blog): static
-    {
-        if (!$this->blogs->contains($blog)) {
-            $this->blogs->add($blog);
-            $blog->addCamera($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlog(Blog $blog): static
-    {
-        if ($this->blogs->removeElement($blog)) {
-            $blog->removeCamera($this);
-        }
-
-        return $this;
-    } 
+   
     
+
+    /**
+     * Get the value of cartItem
+     */ 
+    public function getCartItem()
+    {
+        return $this->cartItem;
+    }
+
+    /**
+     * Set the value of cartItem
+     *
+     * @return  self
+     */ 
+    public function setCartItem($cartItem)
+    {
+        $this->cartItem = $cartItem;
+
+        return $this;
+    }
 }

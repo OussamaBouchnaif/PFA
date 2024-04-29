@@ -11,7 +11,6 @@ class Notifier
         private readonly MailerInterface $mailer,
         private readonly string $Entreprise
     ) {
-
     }
 
     public function orderPlacedNotifier(string $destination): void

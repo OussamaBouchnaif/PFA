@@ -4,6 +4,7 @@ namespace App\Forms;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PaypalType extends AbstractType
@@ -13,6 +14,14 @@ class PaypalType extends AbstractType
         $builder->add('paypal', SubmitType::class, [
             'label' => 'Pay with PayPal',
             'attr' => ['class' => 'btn btn-primary']
+
         ]);
+
     }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'action' => "https:paypal.com",
+        ]);
+    } 
 }

@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Camera;
 use App\Entity\Categorie;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 /**
  * @extends ServiceEntityRepository<Categorie>
  *
@@ -21,6 +22,8 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+
+   
 //    /**
 //     * @return Categorie[] Returns an array of Categorie objects
 //     */

@@ -2,10 +2,7 @@
 
 namespace App\Payment\Strategy;
 
-use App\Entity\Cart;
-use App\Entity\Paiement;
-use App\Enum\PaymentMethod;
-use App\Enum\PaymentStatus;
+
 use App\Forms\CreditCardType;
 use App\Payment\Strategy\AbstractPayment;
 

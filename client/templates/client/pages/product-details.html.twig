@@ -140,61 +140,7 @@
                                     <p>{{camera.description}}</p>
                                 </div>
                                 <div class="product_variant">
-                                    <div class="filter__list d-flex">
-                                        <h3>Connectivite</h3>
-                                        <div class="form-check pr-3">
-                                            <input class="form-check-input" type="radio" name="conn" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                            YES
-                                            </label>
-                                        </div>
-                                        <div class="form-check  pr-3">
-                                            <input class="form-check-input" type="radio" name="conn" id="flexRadioDefault2" checked>
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                            NO
-                                            </label>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="filter__list widget_size d-flex align-items-center">
-                                        <h3>Angle Vision</h3>
-                                        <ul>
-                                            <li>
-                                                <a href="javascript:void(0)">90</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">120</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">180</a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)">360</a>
-                                            </li>
-                                        
-                                        </ul>
-                                    </div>
-                                    <div class="filter__list d-flex">
-                                        <h3>Resolution</h3>
-                                        <div class="form-check pr-3">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                            SD
-                                            </label>
-                                        </div>
-                                        <div class="form-check  pr-3">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                            HD
-                                            </label>
-                                        </div>
-                                        <div class="form-check  pr-3">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                            4K
-                                            </label>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="variant_quantity_btn d-flex">
                                         <div class="pro-qty border">
                                             <input min="1" max="100" type="tex" value="1">
@@ -209,9 +155,8 @@
                                 <div class="product_tags d-flex">
                                     <span>tags: </span>
                                     <ul class="d-flex">
-                                        <li><a href="#">fashion,</a></li>
-                                        <li><a href="#">clothings,</a></li>
-                                        <li><a href="#">accessorires</a></li>
+                                        <li><a href="#">Camera</a></li>
+                                        <li><a href="#">surveillance,</a></li>
                                     </ul>
                                 </div>
                                 <div class="priduct_social d-flex">
@@ -246,32 +191,23 @@
                                     <li>
                                         <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews          </a>
                                     </li>
-                                        <li>
-                                        <a data-toggle="tab" href="#tags" role="tab" aria-controls="tags" aria-selected="false">Tags </a>
-                                    </li>
+                                    
                                     <li>
                                             <a data-toggle="tab" href="#additional" role="tab" aria-controls="additional" aria-selected="false">Additional Information </a>
                                     </li>
-                                    <li>
-                                            <a data-toggle="tab" href="#tabinfo" role="tab" aria-controls="tabinfo" aria-selected="false">Custom Tab Info  </a>
-                                    </li>
-                                    <li>
-                                            <a data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Custom Tab Video </a>
-                                    </li>
-
+                                   
                                 </ul>
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="info" role="tabpanel" >
                                     <div class="product_info_content">
-                                        <p>Coupling a blended linen construction with tailored style, the River Island HR Jasper Blazer will imprint a touch of dapper charm into your after-dark wardrobe. <br> Our model wearing a size medium blazer, and usually takes a size medium/38L shirt. <br> He is 6’2 1/2” (189cm) tall with a 38” (96 cm) chest and a 31” (78 cm) waist.</p>
+                                        <p>{{camera.description}}</p>
                                         <ul>
-                                            <li>Length: 74cm</li>
-                                            <li>Regular fit</li>
-                                            <li>Notched lapels</li>
-                                            <li>Twin button front fastening</li>
-                                            <li>Front patch pockets; chest pocket</li>
-                                            <li> Internal pockets</li>
+                                            <li>Couleur : {{camera.couleur}}</li>
+                                            <li>Vision Noctrune : {{camera.visionNoctrune}}</li>
+                                            <li>poids : {{camera.poids}}</li>
+                                            <li>resolution : {{camera.resolution}}</li>
+                                            <li>Angle Vision  : {{camera.angleVision}}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -287,19 +223,11 @@
                                                         </div>
                                                         <div class="comment_text">
                                                             <div class="reviews_meta">
-                                                                
-                                                                
                                                                 <p><strong>{{comment.client.nom}}</strong>- {{ comment.createdAt|date('F j, Y') }}</p>
                                                                 <span>{{comment.commentaire}}</span>
                                                             </div>
                                                         </div>
                                                     {% endfor %}
-                                                {% else %}
-                                                <div class="col-12">
-                                                    <div class="alert alert-info" role="alert">
-                                                        No comments available.
-                                                    </div>
-                                                </div>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -331,74 +259,37 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="tags" role="tabpanel" >
-                                    <div class="product_info_content">
-                                        <ul>
-                                            <li>Length: 74cm</li>
-                                            <li>Regular fit</li>
-                                            <li>Notched lapels</li>
-                                            <li>Twin button front fastening</li>
-                                            <li>Front patch pockets; chest pocket</li>
-                                            <li> Internal pockets</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                              
                                 <div class="tab-pane fade" id="additional" role="tabpanel" >
                                     <div class="product_d_table">
                                         <form action="#">
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="first_child">Compositions</td>
-                                                        <td>Polyester</td>
+                                                        <td class="first_child">Connectivite</td>
+                                                        <td>{{camera.connectivite}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="first_child">Styles</td>
-                                                        <td>Girly</td>
+                                                        <td class="first_child">Stockage</td>
+                                                        <td>{{camera.stockage}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="first_child">Properties</td>
-                                                        <td>Short Dress</td>
+                                                        <td class="first_child">Alimentation</td>
+                                                        <td>{{camera.alimentation}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="first_child">Materiaux</td>
+                                                        <td>{{camera.materiaux}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </form>
                                     </div>
                                     <div class="product_info_content">
-                                        <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
+                                        <p>{{camera.description}}</p>
                                     </div>
                                 </div>
-                                    <div class="tab-pane fade" id="tabinfo" role="tabpanel" >
-                                    <div class="product_d_table">
-                                        <form action="#">
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="first_child">Compositions</td>
-                                                        <td>Polyester</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="first_child">Styles</td>
-                                                        <td>Girly</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="first_child">Properties</td>
-                                                        <td>Short Dress</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </form>
-                                    </div>
-                                    <div class="product_info_content">
-                                        <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="video" role="tabpanel" >
-                                    <div class="product_tab_vidio text-center">
-                                        <iframe width="729" height="410" src="https://www.youtube.com/embed/BUWzX78Ye_8"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-
+                            
                             </div>
                         </div>
                     </div>
@@ -473,219 +364,7 @@
                                 </figure>
                             </article>
                         </div>
-                        <div class="col-lg-3">
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product2.jpg" alt="consectetur">
-                                        </a>
-                                        <div class="product_action">
-                                            <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_label">
-                                            <span>-20%</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(6)</span></li>
-                                            </ul>
-                                        </div>
-                                        <h4 class="product_name"><a href="product-details.html">Make Thing Happen T-Shirts</a></h4>
-                                        <div class="price_box">
-                                            <span class="text-black">$38.00</span>
-
-                                        </div>
-                                        <div class="add_to_cart">
-                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3">
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product3.jpg" alt="consectetur">
-                                        </a>
-                                        <div class="product_action">
-                                            <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_label">
-                                            <span>-18%</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(2)</span></li>
-                                            </ul>
-                                        </div>
-                                        <h4 class="product_name"><a href="product-details.html">Basic White Simple Sneaker</a></h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$43.00</span>
-                                            <span class="old_price">$46.00</span>
-                                        </div>
-                                        <div class="add_to_cart">
-                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3">
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product4.jpg" alt="consectetur">
-                                        </a>
-                                        <div class="product_action">
-                                            <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(8)</span></li>
-                                            </ul>
-                                        </div>
-                                        <h4 class="product_name"><a href="product-details.html">Simple Rounded Sunglasses</a></h4>
-                                        <div class="price_box">
-                                            <span class="text-black">$42.00</span>
-                                        </div>
-                                        <div class="add_to_cart">
-                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3">
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product1.jpg" alt="consectetur">
-                                        </a>
-                                        <div class="product_action">
-                                            <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(12)</span></li>
-                                            </ul>
-                                        </div>
-                                        <h4 class="product_name"><a href="product-details.html">Basic Joggin Shorts</a></h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$26.00</span>
-                                            <span class="old_price">$362.00</span>
-                                        </div>
-                                        <div class="add_to_cart">
-                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
-                        <div class="col-lg-3">
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product2.jpg" alt="consectetur">
-                                        </a>
-                                        <div class="product_action">
-                                            <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-heart icons"></i></a></li>
-
-                                                <li class="quick_view"><a data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                <li class="compare"><a data-tippy="Compare" href="#" data-tippy-inertia="true" data-tippy-delay="50"
-                                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_label">
-                                            <span>-20%</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(14)</span></li>
-                                            </ul>
-                                        </div>
-                                        <h4 class="product_name"><a href="product-details.html">Simple Rounded Sunglasses</a></h4>
-                                        <div class="price_box">
-                                            <span class="current_price">$35.00</span>
-                                            <span class="old_price">$38.00</span>
-                                        </div>
-                                        <div class="add_to_cart">
-                                            <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

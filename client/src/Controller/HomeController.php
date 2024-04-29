@@ -10,7 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    public function __construct(private CartStorageInterface $cartStorage,
+    public function __construct(
+    private CartStorageInterface $cartStorage,
     private CameraFetcherInterface $fetcher,
     )
     {
@@ -22,6 +23,7 @@ class HomeController extends AbstractController
             'cart'=> $this->cartStorage->getCart(),
             'totalItems'=>$this->cartStorage->TotalPriceItems(),
             'latest'=> $this->fetcher->getLastCameras(),
+            'mostOrders'=>$this->fetcher->CameratheMostOrders(),
         ]);
     }
 }

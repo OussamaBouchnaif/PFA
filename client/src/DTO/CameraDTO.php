@@ -5,9 +5,9 @@ namespace App\DTO;
 
 use App\Entity\Categorie;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
-class CameraDTO 
+
+class CameraDTO
 {
 
     public ?int $id = null;
@@ -27,11 +27,11 @@ class CameraDTO
 
     public ?string $status = null;
 
-    public array  $imageCameras= [];
+    public array  $imageCameras = [];
 
     public Collection $ligneReductions;
 
-   
+
 
     public ?Categorie $categorie = null;
 
@@ -53,7 +53,7 @@ class CameraDTO
 
     public ?string $angleVision = null;
 
-  
+
     public ?bool $connectivite = null;
 
 
@@ -63,7 +63,4 @@ class CameraDTO
     public ?string $alimentation = null;
 
     public Collection $blogs;
-
-  
-
 }
