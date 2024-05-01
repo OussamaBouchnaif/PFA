@@ -2,11 +2,26 @@
 <turbo-stream action="append" target="messages">
     <template>  
         <div class="comment_thmb">
-            <img src="assets/img/blog/comment2.jpg" alt="">
+            
         </div>
         <div class="comment_text">
             <div class="reviews_meta">
                 <p><strong>{{name}} </strong>- {{ createdAt|date('F j, Y') }}</p>
+                <ul class="d-flex">
+                    
+                    {% for i in 1..start %}
+                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                    {% endfor %}
+
+                    {% if start < 5 %}
+                        {% for i in start+1..5 %}
+                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {# Affichage du nombre de la note #}
+                    <li><span>({{ start }})</span></li>
+                </ul>
                 <span>{{content}}</span>
             </div>
         </div>

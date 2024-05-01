@@ -18,21 +18,17 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class AvisCameraRepository extends ServiceEntityRepository
 {
-    private CameraRepository $camrepo;
-    public function __construct(ManagerRegistry $registry,CameraRepository $camrepo)
+
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AvisCamera::class);
-        $this->camrepo =$camrepo;
     }
 
-
-
-    public function addAvisCamera(AvisCamera $avisCamera,$content,Camera $camera,Client $user)
+    public function addAvisCamera(AvisCamera $avisCamera,Camera $camera,Client $user)
     {
         $avisCamera->setClient($user);
         $avisCamera->setCamera($camera);
-        $avisCamera->setCommentaire($content);
-        $avisCamera->setNote(5);
+
         $this->doSave($avisCamera,true);
     }
 

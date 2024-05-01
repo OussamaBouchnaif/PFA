@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
+    
     if (cartContainer) {
         cartContainer.addEventListener('click', function(e) {
             if (e.target && e.target.closest('.cart_remove a')) {
