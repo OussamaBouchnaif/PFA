@@ -8,12 +8,11 @@
             <div class="reviews_meta">
                 <p><strong>{{name}} </strong>- {{ createdAt|date('F j, Y') }}</p>
                 <ul class="d-flex">
-                    {# Boucle pour les étoiles pleines #}
+                    
                     {% for i in 1..start %}
                         <li><a href="#"><i class="ion-android-star"></i></a></li>
                     {% endfor %}
-                
-                    {# Boucle pour les étoiles vides, seulement si la note est inférieure à 5 #}
+
                     {% if start < 5 %}
                         {% for i in start+1..5 %}
                             <li><a href="#"><i class="ion-android-star-outline"></i></a></li>

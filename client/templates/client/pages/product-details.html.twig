@@ -226,19 +226,19 @@
                                                             <div class="reviews_meta">
                                                                 <p><strong>{{comment.client.nom}}</strong>- {{ comment.createdAt|date('F j, Y') }}</p>
                                                                 <ul class="d-flex">
-                                                                    {# Boucle pour les étoiles pleines #}
+                                                                    
                                                                     {% for i in 1..comment.note %}
                                                                         <li><a href="#"><i class="ion-android-star"></i></a></li>
                                                                     {% endfor %}
                                                                 
-                                                                    {# Boucle pour les étoiles vides, seulement si la note est inférieure à 5 #}
+                                                                    
                                                                     {% if comment.note < 5 %}
                                                                         {% for i in comment.note+1..5 %}
                                                                             <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
                                                                         {% endfor %}
                                                                     {% endif %}
                                                                     
-                                                                    {# Affichage du nombre de la note #}
+                                                                    
                                                                     <li><span>({{ comment.note }})</span></li>
                                                                 </ul>
                                                                 
