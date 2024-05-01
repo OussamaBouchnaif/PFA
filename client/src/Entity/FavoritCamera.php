@@ -26,6 +26,10 @@ class FavoritCamera
     #[ORM\ManyToOne(inversedBy: 'favoritCameras')]
     private ?Camera $camera = null;
 
+    public function __construct()
+    {
+        $this->dateAjout = new \DateTimeImmutable();
+    }
     public function getId(): ?int
     {
         return $this->id;

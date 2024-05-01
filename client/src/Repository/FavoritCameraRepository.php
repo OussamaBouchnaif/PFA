@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Camera;
+use App\Entity\Client;
 use App\Entity\FavoritCamera;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<FavoritCamera>
@@ -21,6 +23,23 @@ class FavoritCameraRepository extends ServiceEntityRepository
         parent::__construct($registry, FavoritCamera::class);
     }
 
+    public function addToWishlist(Camera $camera,Client $client)
+    {
+        $favorit = new FavoritCamera();
+        $favorit->setCamera($camera);
+        $favorit->setClient($client);
+        $this->doSave($favorit,true);
+    }
+
+    private function doSave($object,bool $isPersist = false):void
+    {
+        $manager = $this->getEntityManager();
+        if(true === $isPersist)
+        {
+            $manager->persist($object);
+        }
+        $manager->flush();
+    }
 //    /**
 //     * @return FavoritCamera[] Returns an array of FavoritCamera objects
 //     */
