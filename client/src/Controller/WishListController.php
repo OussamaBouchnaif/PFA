@@ -40,9 +40,15 @@ class WishListController extends AbstractController
     public function addWishList(Camera $camera):Response
     {
         if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('app_login');
+            return new JsonResponse(['success' => false, 'message' => 'Authentication required'], 401); 
         }
-        $this->manager->getRepository(FavoritCamera::class)->addToWishlist($camera,$this->security->getUser());
-        return new JsonResponse(['success' => true]);
+        $favorit = $this->manager->getRepository(FavoritCamera::class)->findOneBy(['camera'=>$camera]);
+        if(null === $favorit)
+        {
+            $this->manager->getRepository(FavoritCamera::class)->addToWishlist($camera, $this->security->getUser());
+            return new JsonResponse(['success' => true,'message' => 'Authentication required'], 200);
+        }
+        return new JsonResponse(['success' => false, 'message' => 'Product already in wishlist'], 409);
+        
     }
 }

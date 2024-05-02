@@ -178,12 +178,12 @@
                                             <div class="product_action">
                                                 <ul>
                                                     <li class="wishlist">
-                                                        <button type="button" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
+                                                        <a href="javascript:void(0);" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
                                                         data-tippy-arrow="true" data-tippy-placement="left">
                                                             <i class="icon-heart icons"></i>
-                                                        </button>
-                                                    </li>   
-                    
+                                                        </a>
+                                                    </li>
+                                                    
                                                     <li ><a class="quick_view"    data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
                                                     <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
                                                     data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
@@ -339,52 +339,7 @@
     
 {% endblock %}
 
-{% block javascripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Attacher un gestionnaire d'événements au document pour capturer les clics sur les liens de wishlist
-        document.addEventListener('click', function(event) {
-            // Vérifier si le lien cliqué a la classe 'add-to-wishlist'
-            var wishlistLink = event.target.closest('.add-to-wishlist');
-            console.log('oussama');
-            if (wishlistLink) {
-                event.preventDefault();  // Empêcher la navigation
-                var cameraId = wishlistLink.getAttribute('data-id');  // Récupérer l'ID de la caméra
-    
-                // Envoyer la requête AJAX
-                fetch(`/add/${cameraId}`, {
-                    method: 'GET', // Méthode GET, assurez-vous que cela correspond à votre configuration de route Symfony
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest', // Important pour Symfony afin de détecter une requête AJAX
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        // Gérer le succès, par exemple afficher une notification ou actualiser un élément de l'interface utilisateur
-                        alert("Camera added to wishlist successfully!");
-                    } else if (data.redirect) {
-                        // Rediriger si nécessaire (par exemple, vers la page de connexion)
-                        window.location.href = data.redirect;
-                    }
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                    alert("Erreur lors de l'ajout à la wishlist.");
-                });
-            }
-        });
-    });
-    
-</script>
 
-
-{% endblock %}
 
 
 
