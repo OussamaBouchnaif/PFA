@@ -13,7 +13,7 @@
                             <li><a href="index.html">home</a></li>
                             <li><a href="#">pages</a></li>
                         </ul>
-                        <h3>Shopping Cart</h3>
+                        <h3>Wish List</h3>
                     </div>
                 </div>
             </div>
@@ -35,19 +35,17 @@
                                             <th>product </th>
                                             <th>information</th>
                                             <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% if cart is not empty %}
-                                                {% for item in cart.getLines %}
+                                        {% if wishList is not empty %}
+                                                {% for item in wishList %}
                                                    
                                                         <tr class="border-top">
                                                             <td>
                                                                 <div class="cart_product_thumb">
-                                                                    {% set imageCamera = item.image|first %}
+                                                                    {% set imageCamera = item.camera.imageCameras|first %}
                                                                     {% if imageCamera %}
                                                                         <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
                                                                     {% else %}
@@ -57,38 +55,21 @@
                                                             </td>
                                                             <td>
                                                                 <div class="cart_product_text">
-                                                                    <h4>{{item.name}}</h4>
+                                                                    <h4>{{item.camera.nom}}</h4>
                                                                     <ul>
-                                                                        <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.stockage}}</span></li>
+                                                                        <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.camera.stockage}}</span></li>
                                                                         <li><i class="ion-ios-arrow-right"></i> Size : <span>XL</span></li>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="cart_product_price">
-                                                                    <span>${{item.price}}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="product_quantity">
-                                                                <div class="cart_product_quantity">
-                                                                    
-                                                                    <input min="1" max="100" value="10" name="quantities" type="number">
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_price">
-                                                                    <span>${{ item.TotalPriceItem }}</span>
-                                                                </div>
-                                                            </td>
-                                                            
-                                                            <td>
-                                                                <div class="cart_product_remove text-right">
-                                                                    
+                                                                    <span>${{item.camera.prix}}</span>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="cart_product_remove text-right">
-                                                                    
+                                                                    <a href="#"><i class="ion-android-close"></i></a>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -99,19 +80,16 @@
                                         {% endif %}
                                     </tbody>
                                 </table>
-                                {% if cart is empty or cart.getLines is empty %}
+                                {% if wishList is empty  %}
                                     <div class="col-12">
                                         <div class="alert alert-warning" role="alert">
-                                            No items in your cart.
+                                            No items in your wish list.
                                         </div>
                                     </div>
                                 {% endif %}
                             </div>
                             <div class="cart_page_button border-top d-flex justify-content-between">
-                                <div class="shopping_cart_btn">
-                                    <a href="{{path('clear')}}" class="btn btn-primary border">CLEAR SHOPPING CART</a>
-                                    <a href="{{path('update')}}" class="btn btn-primary border" type="submit">UPDATE YOUR CART</a>
-                                </div>
+                               
                                 <div class="shopping_continue_btn">
                                     <a href="{{path('fetch')}}" class="btn btn-primary border">CONTINUE SHOPPING</a>
                                 </div>
@@ -119,47 +97,7 @@
                          </div>
                      </div>
                  </div>
-                 <!--coupon code area start-->
-                <div class="cart_page_bottom">
-                    <div class="row d-flex justify-content-between">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="shopping_coupon_calculate top">
-                                <h3 class="border-bottom">Calculate Shipping </h3>
-                                <select class="select_option border">
-                                    <option value="1">United Kingdom (UK)  </option>
-                                    <option value="2">Åland Islands  </option>
-                                    <option value="3">Afghanistan  </option>
-                                    <option value="4">Belgium </option>
-                                    <option value="5">Albania  </option>
-                                </select>
-                                <input class="border" placeholder="State / Country" type="text">
-                                <input class="border" placeholder="Postcode / Zip" type="text">
-                                <button class="btn btn-primary" type="submit">get a quote</button>
-                            </div>
-                        </div>
-                       
-                        <div class="col-lg-4 col-md-6 col-sm-8">
-                            <div class="grand_totall_area">
-                               <div class="grand_totall_inner border-bottom">
-                                   <div class="cart_subtotal d-flex justify-content-between">
-                                       <p>sub total </p>
-                                       <span>${{totalItems}}</span>
-                                   </div>
-                                   <div class="cart_grandtotal d-flex justify-content-between">
-                                       <p>grand total</p>
-                                       <span>${{totalItems}}</span>
-                                   </div>
-                               </div>
-                               <div class="proceed_checkout_btn">
-                                   <a class="btn btn-primary" href="{{path('order')}}">Proceed to Checkout</a>
-                               </div>
-                               <a href="#">Checkout with Mutilple Adresses</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--coupon code area end-->
-           
+                 
         </div>
     </div>
      <!--shopping cart area end -->

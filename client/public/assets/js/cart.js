@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     Swal.fire({
                         icon: 'info',
                         title: 'Already Added',
-                        text: 'This item is already in your wishlist.'
+                        text: 'This item is already in your wishlist.',
+                        footer: '<a href="/wish/list">Click here to view your wishlist</a>'
                     });
                }
                else if(response.status === 200)
@@ -43,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         customClass: {
                             popup: 'my-custom-popup-class', 
                         }
+                    });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Your Camera has been added',  
+                        timer: 2000,
                     });
                }
                     

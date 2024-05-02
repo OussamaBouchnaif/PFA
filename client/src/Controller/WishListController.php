@@ -28,9 +28,10 @@ class WishListController extends AbstractController
     #[Route('/wish/list', name: 'app_wish_list')]
     public function index(): Response
     {
-        
+        $wishList = $this->manager->getRepository(FavoritCamera::class)->wishList($this->security->getUser());
         return $this->render('client/pages/wish_list/index.html.twig', [
             'controller_name' => 'WishListController',
+            'wishList'=>$wishList,
             'cart'=> $this->cartStorage->getCart(),
             'totalItems'=>$this->cartStorage->TotalPriceItems(),
         ]);
@@ -42,7 +43,7 @@ class WishListController extends AbstractController
         if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return new JsonResponse(['success' => false, 'message' => 'Authentication required'], 401); 
         }
-        $favorit = $this->manager->getRepository(FavoritCamera::class)->findOneBy(['camera'=>$camera]);
+        $favorit = $this->manager->getRepository(FavoritCamera::class)->findOneBy(['camera'=>$camera,'client'=>$this->security->getUser()]);
         if(null === $favorit)
         {
             $this->manager->getRepository(FavoritCamera::class)->addToWishlist($camera, $this->security->getUser());
