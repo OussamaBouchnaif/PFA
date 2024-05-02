@@ -7,7 +7,7 @@ use App\Entity\Client;
 use App\Entity\FavoritCamera;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
+use Doctrine\ORM\Query\Expr\Join;
 /**
  * @extends ServiceEntityRepository<FavoritCamera>
  *
@@ -40,6 +40,19 @@ class FavoritCameraRepository extends ServiceEntityRepository
         }
         $manager->flush();
     }
+
+    public function wishList(Client $client)
+    {
+        return $this->createQueryBuilder('fc') 
+            ->select('c, fc,im') 
+            ->innerJoin('fc.camera', 'c') 
+            ->innerJoin('c.imageCameras','im')
+            ->where('fc.client = :client') 
+            ->setParameter('client', $client) 
+            ->getQuery() 
+            ->getResult(); 
+    }
+
 //    /**
 //     * @return FavoritCamera[] Returns an array of FavoritCamera objects
 //     */

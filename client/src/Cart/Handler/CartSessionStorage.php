@@ -6,8 +6,8 @@ namespace App\Cart\Handler;
 use App\Entity\Camera;
 use App\ValueObject\CartValueObject;
 use App\ValueObject\CartItemValueObject;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 
 class CartSessionStorage implements CartStorageInterface
@@ -16,7 +16,8 @@ class CartSessionStorage implements CartStorageInterface
 
     public function __construct(
         private readonly RequestStack $request,
-        private Security $security
+        private Security $security,
+        
     ) {
     }
 
