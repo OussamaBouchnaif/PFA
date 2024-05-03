@@ -1,20 +1,26 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
 
 {% block title %}Cameras Chart{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
     <style>
+    body {
+	background-color: whitesmoke  !important;
+    }
        col{
 		height: 200px;
 	   }
+       
     </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
+
 {% endblock %}
 
 {% block body %}
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
+            
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
@@ -31,7 +37,33 @@
                     </div>
                 </div>
                 <!-- end page title -->
-
+                    <div class="col-xl-3 col-md-6">
+                                        <!-- card -->
+                                        <div class="card card-animate bg-primary">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-grow-1 overflow-hidden">
+                                                        <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Total Commandes</p>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        {# <h5 class="text-white fs-14 mb-0">
+                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
+                                                        </h5> #}
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-end justify-content-between mt-4">
+                                                    <div>
+                                                        <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">$<span class="counter-value" >{{ totalCommandes }}</span>k</h4>
+                                                    </div>
+                                                    <div class="avatar-sm flex-shrink-0">
+                                                        <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
+                                                            <i class="bx bx-dollar-circle text-white"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end card body -->
+                                        </div><!-- end card -->
+                                    </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card">
@@ -53,7 +85,9 @@
                                 <h4 class="card-title mb-0">Bar Chart</h4>
                             </div>
                             <div class="card-body">
-                                <canvas id="bar" class="chartjs-chart" data-colors='["--vz-primary-rgb, 0.8", "--vz-primary-rgb, 0.9"]'></canvas>
+                            <div id="chartContainer">
+                                  <canvas id="CommandChart" class="chartjs-chart"></canvas>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -93,7 +127,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         var ctx = document.getElementById('cameraChart').getContext('2d');
         var camerasByCategory = {{ camerasByCategory | json_encode | raw }};
@@ -130,4 +165,41 @@
             }
         });
     </script>
+   <script>
+    var ctx = document.getElementById('CommandChart').getContext('2d');
+    var CountCommandes = {{ CountCommandes | json_encode | raw }};
+    var Command = Object.keys(CountCommandes);
+    var counts = Object.values(CountCommandes);
+
+    // Couleurs personnalisées pour chaque type de caméra
+    var customColors = [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56',
+        '#4BC0C0',
+        '#9966FF',
+        '#FF8C00'
+    ];
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Command, // Utilisation de Command comme étiquettes pour les axes X
+            datasets: [{
+                label: 'Count of Commandes',
+                data: counts,
+                backgroundColor: customColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 {% endblock %}

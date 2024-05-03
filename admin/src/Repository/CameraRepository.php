@@ -2,19 +2,26 @@
 
 namespace App\Repository;
 
+use App\Entity\Categorie;
 use App\Entity\Camera;
+use App\Entity\Commande;
+use Aws\Command;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\ORM\EntityManagerInterface; 
 
 class CameraRepository extends ServiceEntityRepository
 {
+    private $entityManager; // Déclarez la propriété $entityManager
+
     private $paginator;
 
-    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator, EntityManagerInterface $entityManager) // Injectez EntityManagerInterface dans le constructeur
     {
         parent::__construct($registry, Camera::class);
+        $this->entityManager = $entityManager; // Assignez l'EntityManagerInterface à la propriété $entityManager
         $this->paginator = $paginator;
     }
 
@@ -25,53 +32,24 @@ class CameraRepository extends ServiceEntityRepository
      * @param int $limit
      * @return PaginationInterface
      */
-    public function findPaginatedCameras(int $page = 1, int $limit = 10): PaginationInterface
+    public function getCamerasByCategory(): array
     {
-        $queryBuilder = $this->createQueryBuilder('c')
-            ->orderBy('c.id', 'ASC');
+        $categorieRepository = $this->entityManager->getRepository(Categorie::class);
 
-        return $this->getPaginator()->paginate(
-            $queryBuilder,
-            $page,
-            $limit
-        );
+        $categoriesWithCameraCount = $categorieRepository->createQueryBuilder('c')
+            ->select('c.nom as category_name', 'COUNT(ca.id) as camera_count')
+            ->leftJoin('c.cameras', 'ca')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+
+        $categoriesData = [];
+        foreach ($categoriesWithCameraCount as $data) {
+            $categoriesData[$data['category_name']] = $data['camera_count'];
+        }
+
+        return $categoriesData;
     }
 
-    private function getPaginator(): PaginatorInterface
-    {
-        return $this->paginator;
-    }
-    public function Rechereche( String $Status ): array
-    {    
-        return $this->createQueryBuilder('c')
-        ->andWhere('c.status = :status')
-        ->setParameter('status', $status)
-        ->getQuery()
-        ->getResult();
-    }
-
-//    /**
-//     * @return Camera[] Returns an array of Camera objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Camera
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    // Le reste du code de votre CameraRepository...
 }

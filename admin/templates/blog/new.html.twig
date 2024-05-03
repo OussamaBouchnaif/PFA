@@ -1,0 +1,137 @@
+{# templates/blog/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un article{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="layout-wrapper">
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <!-- Début du titre de la page -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Créer un article</h4>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                        <li class="breadcrumb-item active">Créer un article</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fin du titre de la page -->
+
+                    <!-- Formulaire d'ajout d'article -->
+                    {{ form_start(form.Camera, {'attr': {'id': 'add_blog_form', 'enctype': 'multipart/form-data'}}) }}
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        {{ form_label(form.title) }}
+                                        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="form-error">
+                                            {{ form_errors(form.title) }}
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_label(form.contenu) }}
+                                        {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+                                        <div class="form-error">
+                                            {{ form_errors(form.contenu) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin de la carte -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Product Gallery</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="drop-area">
+                                        <h3>Drag & Drop Files Here</h3>
+                                        {{ form_label(form.imageFile) }}
+                                        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div id="gallery"></div>
+                                </div>
+                            </div>
+                            <div class="text-end mb-3">
+                                <button style="width: 60%;" type="submit" class="btn btn-success">Enregistrer</button>
+                            </div>
+
+                            {% for child in form %}
+                                {% if child.vars.errors|length > 0 %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {% for error in child.vars.errors %}
+                                            {{ error.message }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <!-- Fin de la colonne -->
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">{{ form_label(form.user) }}</h5>
+                                    <div class="card-body">
+                                    <div class="hstack gap-3 align-items-start">
+                                        <div class="flex-grow-1">
+                                            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                            <div class="form-error">
+                                                        {{ form_errors(form.user) }}
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="card-header">
+                                    <h5 class="card-title mb-0">{{ form_label(form.Camera) }}</h5>
+                                    <div class="card-body">
+                                    <div class="hstack gap-3 align-items-start">
+                                        <div class="flex-grow-1">
+                                            {{ form_widget(form.Camera, {'attr': {'class': 'form-control'}}) }}
+                                            <div class="form-error">
+                                                        {{ form_errors(form.Camera) }}
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                                <!-- Fin du corps de la carte -->
+                            </div>
+                            <!-- Fin de la carte -->
+                        </div>
+                        <!-- Fin de la colonne -->
+                    </div>
+                    <!-- Fin de la rangée -->
+                    {{ form_end(form) }}
+                </div>
+                <!-- Fin du conteneur fluide -->
+            </div>
+            <!-- Fin du contenu de la page -->
+        </div>
+        <!-- Fin du contenu principal -->
+    </div>
+    <!-- Fin de l'enveloppe du layout -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
