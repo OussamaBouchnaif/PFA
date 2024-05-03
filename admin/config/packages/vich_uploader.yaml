@@ -7,5 +7,5 @@ vich_uploader:
             uri_prefix: '/fichier'
             upload_destination: minio.storage
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-       
+
         

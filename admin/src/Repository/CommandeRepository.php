@@ -20,7 +20,30 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
-   
+    public function countCommandesByStatus(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c.status, COUNT(c) as count')
+            ->groupBy('c.status');
+
+        $results = $queryBuilder->getQuery()->getResult();
+
+        $countByStatus = [];
+        foreach ($results as $result) {
+            $countByStatus[$result['status']] = $result['count'];
+        }
+
+        return $countByStatus;
+    }
+    public function getTotalCommandes(): float
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        $queryBuilder->select('SUM(c.total) as totalCommandes');
+
+        $result = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return (float) $result;
+    }
 //    /**
 //     * @return Commande[] Returns an array of Commande objects
 //     */
