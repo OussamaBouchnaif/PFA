@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\AvisCameraRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\AvisCameraRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AvisCameraRepository::class)]
-
+#[ApiResource(normalizationContext: ['groups' => ['avis:read']])]
 class AvisCamera
 {
     #[ORM\Id]
@@ -17,13 +18,11 @@ class AvisCamera
     private ?int $id = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['avis:read', 'camera:read'])]
     private ?int $note = null;
 
     #[ORM\Column(length: 400)]
     private ?string $commentaire = null;
-
-    #[ORM\ManyToOne(inversedBy: 'avisCameras')]
-    private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'avisCameras')]
     #[ORM\JoinColumn(nullable: false)]
@@ -65,17 +64,6 @@ class AvisCamera
         return $this;
     }
 
-    public function getClient(): ?client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?client $client): static
-    {
-        $this->client = $client;
-
-        return $this;
-    }
 
     public function getCamera(): ?camera
     {

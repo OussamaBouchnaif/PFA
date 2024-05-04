@@ -7,7 +7,6 @@ use App\Repository\ImageCameraRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: ImageCameraRepository::class)]

@@ -3464,7 +3464,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   display: inline-block;
   font-weight: 600;
   color: #ffffff;
-  background: #ff2f2f;
+  
 }
 @media only screen and (max-width: 575px) {
   .product_label span {

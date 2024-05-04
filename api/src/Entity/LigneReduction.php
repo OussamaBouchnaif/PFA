@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\LigneReductionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\LigneReductionRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LigneReductionRepository::class)]
+#[ApiResource(normalizationContext: ['groups' => ['LigneReduction:read']])]
 class LigneReduction
 {
     #[ORM\Id]
@@ -15,6 +18,7 @@ class LigneReduction
 
     #[ORM\ManyToOne(inversedBy: 'ligneReductions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['LigneReduction:read','camera:read'])]
     private ?Reduction $reduction = null;
 
     #[ORM\ManyToOne(inversedBy: 'ligneReductions')]

@@ -51,7 +51,7 @@ class CameraController extends AbstractController
     #[Route('/api/cameras/mostOrders' ,name:"mostOrders" , methods:['GET'] , priority: 3)]
     public function cameraWithMostOrders()
     {
-        $cameras = $this->manager->getRepository(CartItem::class)->TheMostOrder();
+        $cameras = $this->manager->getRepository(CartItem::class)->theMostOrder();
         if(null === $cameras)
         {
             return new JsonResponse(null,Response::HTTP_NOT_FOUND);

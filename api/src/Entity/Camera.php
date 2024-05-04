@@ -68,7 +68,12 @@ class Camera
     private Collection $imageCameras;
 
     #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
+    #[Groups(['camera:read'])]
     private Collection $ligneReductions;
+    
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
+    #[Groups(['camera:read'])]
+    private Collection $avisCameras;
 
     #[ORM\ManyToOne(inversedBy: 'cameras')]
     #[ORM\JoinColumn(nullable: false)]
@@ -410,6 +415,26 @@ class Camera
     public function setCartItem($cartItem)
     {
         $this->cartItem = $cartItem;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of avisCameras
+     */ 
+    public function getAvisCameras()
+    {
+        return $this->avisCameras;
+    }
+
+    /**
+     * Set the value of avisCameras
+     *
+     * @return  self
+     */ 
+    public function setAvisCameras($avisCameras)
+    {
+        $this->avisCameras = $avisCameras;
 
         return $this;
     }

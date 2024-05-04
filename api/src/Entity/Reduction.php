@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\ReductionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ReductionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ReductionRepository::class)]
+#[ApiResource(normalizationContext:['groups'=>['reduction:read']])]
 class Reduction
 {
     #[ORM\Id]
@@ -20,12 +23,15 @@ class Reduction
     private ?string $description = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['reduction:read','ligneReduction:read','camera:read'])]
     private ?int $poucentage = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['reduction:read','ligneReduction:read','camera:read'])]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['reduction:read','ligneReduction:read','camera:read'])]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\OneToMany(mappedBy: 'reduction', targetEntity: LigneReduction::class)]
