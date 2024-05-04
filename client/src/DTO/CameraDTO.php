@@ -29,7 +29,8 @@ class CameraDTO
 
     public array  $imageCameras = [];
 
-    public Collection $ligneReductions;
+    public array $ligneReductions = [];
+    public array  $avisCameras = [];
 
 
 

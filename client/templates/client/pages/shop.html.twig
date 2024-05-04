@@ -1,345 +1,463 @@
 {% extends 'client/base.html.twig' %}
 
 
-{% block title %}Shop{% endblock %}
-
-
-{% block body %}
-    
-    <!--shop  area start -->
-    <div class="shop_section shop_reverse">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-12">
-                   <!--sidebar widget start-->
-                    <aside class="sidebar_widget">
-                        <div class="widget_inner">
-                            <div class="widget_list widget_categories">
-                                <h2>Categories</h2>
-                                <ul>
-                                    <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
-                                        <ul class="widget_dropdown_categories collapse show" id="men">  
-                                            {% for cat in categories %}
-                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>69</span></a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="widget_list widget_filter">
-                                <div class="filter__list slider_range">
-                                    <h3>price</h3>
-                                    <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
-                                        <div id="slider-range"></div>
-                                        <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount"  value="{{ price }}"  >
-                                    </form>
-                                </div>
-
-                                <div class="filter__list widget_size">
-                                    <h3>ANGLE VISION</h3>
-                                    <ul>
-                                        <li>
-                                            <a href="{{path('camera_search',{angle:'90'})}}" >90</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('camera_search',{angle:'120'})}}" >120</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('camera_search',{angle:'180'})}}" >180</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('camera_search',{angle:'360'})}}" >360</a>
-                                        </li>
-                                       
-                                    </ul>
-                                </div>
-                                
-                                <div class="filter__list widget_brands">
-                                    <form action="{{path('camera_search')}}" id="res-filter-form" method="get">
-                                        
-                                        <h3 data-toggle="collapse" data-target="#brands">Resolution</h3>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="radio" value="SD"  name="res">
-                                            <label class="form-check-label" >SD</label>
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="radio" value="HD"  name="res" >
-                                            <label class="form-check-label" >HD</label>
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="radio" value="4K"  name="res" >
-                                            <label class="form-check-label" >4K</label>
-                                        </div> 
-                                    </form>   
-                                </div>
-                                
-                                
-                               
-                            </div>
-                            <div class="widget_list">
-                                <h2>Recent Product</h2>
-                                <div class="recent_product">
-                                    <div class="recent_product_list d-flex mb-25">
-                                        <div class="recent_thumb">
-                                            <a href="product-details.html"><img src="assets/img/product/product4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_content">
-                                            <h4><a href="product-details.html">Barbour T-shirt <br> International</a></h4>
-                                            <span>$32.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="recent_product_list d-flex">
-                                        <div class="recent_thumb">
-                                            <a href="product-details.html"><img src="assets/img/product/product6.jpg" alt=""></a>
-                                        </div>
-                                        <div class="recent_content">
-                                            <h4><a href="product-details.html">Barbour T-shirt <br> International</a></h4>
-                                            <span>$32.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <!--sidebar widget end-->
-                </div>
-                <div class="col-lg-9 col-md-12">
-                    <!--shop wrapper start-->
-
-                    <!--breadcrumbs area start-->
-                    <div class="breadcrumb_content">
-                        <ul>
-                            <li><a href="index.html">home</a></li>
-                            <li><a href="{{path('fetch')}}">shop</a></li>
-                        </ul>
-                    </div>
-                    <!--breadcrumbs area end-->
-
-                    <div class="shop_banner d-flex align-items-center">
-                        <img src="{{asset('assets/img/R.jpg')}}" alt="Essential Wears Background" class="shop_banner_bgimg">
-                        <div class="shop_banner_text">
-                            <h2>essential <br> camera</h2>
-                            <p>The collections basic items <br> essential for all </p>
-                        </div>
-                    </div>
-
-                    <!--shop toolbar start-->
-                    <div class="shop_toolbar_wrapper d-flex justify-content-between align-items-center"  >
-                        <div class="page_amount">
-                            <p><span>{{items}}</span> Products Found</p>
-                        </div>
-                        
-                        <div class=" sorting_by d-flex align-items-center">
-                            <span>SORT BY :</span>
-                            <form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
-                                <select name="orderby" id="shorts">
-                                    <option selected value="prix">Prix</option>
-                                    <option  value="date">Date</option>
-                                    <option  value="rate">Rate</option>                                    
-                                </select>
-                                
-                            </form>
-                        </div>
-                        <div class="toolbar_btn_wrapper d-flex align-items-center">
-                            <div class="view_btn">
-                                <a class="view" href="#">VIEW</a>
-                            </div>
-                            <div class="shop_toolbar_btn">
-                                <ul class="d-flex align-items-center">
-                                    <li><a href="#" class="active btn-grid-3" data-role="grid_3" data-tippy="3"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i class="ion-grid"></i></a></li>
-
-                                    <li><a href="#" class="btn-list" data-role="grid_list" data-tippy="List" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i class="ion-navicon"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                     <!--shop toolbar end-->
-                    
-                 
-                     <div class="row shop_wrapper" id="results-container">
-                        <div id="loadingSpinner" style="display: none;">
-                            <div class="spinner"></div>
-                        </div>
-                        {% if cameras is not empty %}
-                            {%  for camera in cameras %}
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
-                                    <div class="single_product card-box">
-                                        <div class="product_thumb">
-                                            <a href="{{ path('app_details', {id: camera.id}) }}">
-                                                {% set imageCamera = camera.imageCameras|first %}
-                                                {% if imageCamera %}
-                                                    <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
-                                                    {% set img = imageCamera.image %}
-                                                {% else %}
-                                                    {% set img = '' %}
-                                                {% endif %}
-                                            </a>
-                                            <div class="product_action">
-                                                <ul>
-                                                    <li class="wishlist">
-                                                        <a href="javascript:void(0);" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
-                                                        data-tippy-arrow="true" data-tippy-placement="left">
-                                                            <i class="icon-heart icons"></i>
-                                                        </a>
-                                                    </li>
-                                                    
-                                                    <li ><a class="quick_view"    data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                                    <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
-                                                    data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
-                                                </ul>
-                                                
-                                            </div>
-                                           
-                                            <div class="product_label">
-                                                <span>-18%</span>
-                                            </div>
-                                        </div>
-                                        <div class="product_content grid_content text-center">
-                                            <div class="product_ratting">
-                                                <ul class="d-flex justify-content-center">
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><span>(2)</span></li>
-                                                </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
-                                            <div class="price_box">
-                                                <span class="current_price">${{camera.prix}}</span>
-                                                <span class="old_price">$46.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{minio_url(img) }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_content">
-                                            <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
-                                            <p><a href="#">shows</a></p>
-                                            <div class="price_box">
-                                                <span class="current_price">${{camera.prix}}</span>
-                                                <span class="old_price">$46.00</span>
-                                            </div>
-                                            <div class="product_desc">
-                                                <p>{{camera.description}}</p>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <button type="button" class="btn btn-primary" href="" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</button>
-                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                            {% endfor %} 
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
-                                    </li>
-                                    {% for page in 1..pagination.totalPages %}
-                                        <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
-                                            <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
-        
-                                        </li>
-                                    {% endfor %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" tabindex="-1"  aria-label="Next">Suivant</a>
-                                    </li>
-                                    
-                                </ul>
-                            </nav>
-                        {% else %}
-                            <div class="col-12">
-                                <div class="alert alert-warning" role="alert">
-                                    No cameras available.
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true"><i class="ion-android-close"></i></span>
-                </button>
-                <div class="modal_body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="modal_zoom_gallery">
-                                   <div class="product_zoom_thumb">
-                                        <img src="assets/img/product/big-product/product1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="modal_right">
-                                    <div class="modal_title mb-10">
-                                        <h2 class="txt-title"></h2>
-                                    </div>
-                                    <div class="modal_price mb-10">
-                                        <span class="new_price">$64.99</span>
-                                        <span class="old_price" >$78.99</span>
-                                    </div>
-                                    <div class="modal_description mb-15">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,  </p>
-                                    </div>
-                                    <div class="variants_selects ">
-                                        <div class="modal_add_to_cart">
-                                            <form action="{{path('addtocart')}}" id="addToCartForm" method="post">
-                                                <div class="variants_size">
-                                                    <div class="" >
-                                                        <h2>Stockage</h2>
-                                                        <select class="select_option" name="stockage">
-                                                            <option selected value="1000">1000G</option>
-                                                            <option value="1200">1200G</option>
-                                                            <option value="1500">1500G</option>
-                                                            <option value="2000">2000G</option>
-                                                        </select>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <input type="hidden" name="idcamera" id="idcamera">
-                                            
-                                                
-                                                  <input min="1" max="100" step="2" value="1" type="number" name="quantity">
-                                                  <button type="submit" id="addtc">add to cart</button>
-                                                  
-                                            </form>
-    
-                                        </div>  
-                                    </div>
-                                    <div class="modal_social">
-                                        <h2>Share this product</h2>
-                                        <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+{% block title %}Shop
 {% endblock %}
 
 
+{% block body %}
+
+	<!--shop  area start -->
+	<div class="shop_section shop_reverse">
+		<div class="container">
+			<div class="row">
+				<div
+					class="col-lg-3 col-md-12">
+					<!--sidebar widget start-->
+					<aside class="sidebar_widget">
+						<div class="widget_inner">
+							<div class="widget_list widget_categories">
+								<h2>Categories</h2>
+								<ul>
+									<li class="widget_sub_categories category">
+										<a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
+										<ul class="widget_dropdown_categories collapse show" id="men">
+											{% for cat in categories %}
+												<li>
+													<a href="{{path('camera_search',{categorie:cat.nom})}}" data-turbo-frame="recherch">{{cat.nom}}
+														<span>69</span>
+													</a>
+												</li>
+											{% endfor %}
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="widget_list widget_filter">
+								<div class="filter__list slider_range">
+									<h3>price</h3>
+									<form action="{{path('camera_search')}}" method="get" id="price-filter-form">
+										<div id="slider-range"></div>
+										<span>Range:</span>
+										<input type="text" name="price_range" id="amount" value="{{ price }}">
+									</form>
+								</div>
+
+								<div class="filter__list widget_size">
+									<h3>ANGLE VISION</h3>
+									<ul>
+										<li><ahref="{{path('camera_search',{angle:'90'})}}">90</a></li>
+										<li><ahref="{{path('camera_search',{angle:'120'})}}">120</a></li>
+										<li><ahref="{{path('camera_search',{angle:'180'})}}">180</a></li>
+										<li><ahref="{{path('camera_search',{angle:'360'})}}">360</a></li>
+
+									</ul>
+								</div>
+
+								<div class="filter__list widget_brands">
+									<form action="{{path('camera_search')}}" id="res-filter-form" method="get">
+
+										<h3 data-toggle="collapse" data-target="#brands">Resolution</h3>
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="radio" value="SD" name="res">
+											<label class="form-check-label">SD</label>
+										</div>
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="radio" value="HD" name="res">
+											<label class="form-check-label">HD</label>
+										</div>
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="radio" value="4K" name="res">
+											<label class="form-check-label">4K</label>
+										</div>
+									</form>
+								</div>
 
 
+							</div>
+							<div class="widget_list">
+								<h2>Recent Product</h2>
+								<div class="recent_product">
+									<div class="recent_product_list d-flex mb-25">
+										<div class="recent_thumb">
+											<a href="product-details.html"><img src="assets/img/product/product4.jpg" alt=""></a>
+										</div>
+										<div class="recent_content">
+											<h4>
+												<a href="product-details.html">Barbour T-shirt
+													<br>
+													International</a>
+											</h4>
+											<span>$32.00</span>
+										</div>
+									</div>
+									<div class="recent_product_list d-flex">
+										<div class="recent_thumb">
+											<a href="product-details.html"><img src="assets/img/product/product6.jpg" alt=""></a>
+										</div>
+										<div class="recent_content">
+											<h4>
+												<a href="product-details.html">Barbour T-shirt
+													<br>
+													International</a>
+											</h4>
+											<span>$32.00</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aside>
+					<!--sidebar widget end-->
+				</div>
+				<div class="col-lg-9 col-md-12">
+					<!--shop wrapper start-->
 
+					<!--breadcrumbs area start-->
+						<div class="breadcrumb_content"> <ul>
+							<li><a href="index.html">home</a></li>
+							<li><ahref="{{path('fetch')}}">shop</a></li>
+						</ul>
+					</div>
+					<!--breadcrumbs area end-->
+
+					<div class="shop_banner d-flex align-items-center">
+						<img src="{{asset('assets/img/R.jpg')}}" alt="Essential Wears Background" class="shop_banner_bgimg">
+						<div class="shop_banner_text">
+							<h2>essential
+								<br>
+								camera</h2>
+							<p>The collections basic items
+								<br>
+								essential for all
+							</p>
+						</div>
+					</div>
+
+					<!--shop toolbar start-->
+					<div class="shop_toolbar_wrapper d-flex justify-content-between align-items-center">
+						<div class="page_amount">
+							<p>
+								<span>{{items}}</span>
+								Products Found</p>
+						</div>
+
+						<div class=" sorting_by d-flex align-items-center">
+							<span>SORT BY :</span>
+							<form class="select_options" action="{{path('camera_search')}}" method="get" id="form_sort">
+								<select name="orderby" id="shorts">
+									<option selected value="prix">Prix</option>
+									<option value="date">Date</option>
+									<option value="rate">Rate</option>
+								</select>
+
+							</form>
+						</div>
+						<div class="toolbar_btn_wrapper d-flex align-items-center">
+							<div class="view_btn">
+								<a class="view" href="#">VIEW</a>
+							</div>
+							<div class="shop_toolbar_btn">
+								<ul class="d-flex align-items-center">
+									<li>
+										<a href="#" class="active btn-grid-3" data-role="grid_3" data-tippy="3" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">
+											<i class="ion-grid"></i>
+										</a>
+									</li>
+
+									<li>
+										<a href="#" class="btn-list" data-role="grid_list" data-tippy="List" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">
+											<i class="ion-navicon"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--shop toolbar end-->
+
+
+					<div class="row shop_wrapper" id="results-container">
+						<div id="loadingSpinner" style="display: none;">
+							<div class="spinner"></div>
+						</div>
+						{% if cameras is not empty %}
+							{%  for camera in cameras %}
+								<div class="col-lg-4 col-md-4 col-sm-6 col-6">
+									<div class="single_product card-box">
+										<div class="product_thumb">
+											<a href="{{ path('app_details', {id: camera.id}) }}">
+												{% set imageCamera = camera.imageCameras|first %}
+												{% if imageCamera %}
+													<img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">
+													{% set img = imageCamera.image %}
+												{% else %}
+													{% set img = '' %}
+												{% endif %}
+											</a>
+											<div class="product_action">
+												<ul>
+													<li class="wishlist">
+														<a href="javascript:void(0);" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left">
+															<i class="icon-heart icons"></i>
+														</a>
+													</li>
+
+													<li>
+														<a class="quick_view" data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left">
+															<i class="icon-size-fullscreen icons"></i>
+														</a>
+													</li>
+													<li class="compare">
+														<a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left">
+															<i class="icon-refresh icons"></i>
+														</a>
+													</li>
+												</ul>
+
+											</div>
+
+											<div class="product_label">
+												{% if null != camera.ligneReductions %}
+													<div style=" background: #ff2f2f;">
+														{% set ligneReduction = camera.ligneReductions|first %}
+														<span>-{{ligneReduction.reduction.poucentage}}%</span>
+													</div>
+												{% endif %}
+
+												<div style="background: #4CAF50; margin-top: 3px;">
+													<span>NEW</span>
+												</div>
+
+											</div>
+										</div>
+										<div class="product_content grid_content text-center">
+
+											{% set notes = [] %}
+											{% set average = 0 %}
+											{% for avis in camera.avisCameras %}
+												{% set notes = notes|merge([avis.note]) %}
+											{% endfor %}
+											{% set totalNotes = notes|length %}
+
+											{% set sumNotes = 0 %}
+
+											{% for note in notes %}
+												{% set sumNotes = sumNotes + note %}
+											{% endfor %}
+
+											{% if totalNotes > 0 %}
+												{% set average = (sumNotes / totalNotes)|round(0, 'floor') %}
+											{% else %}
+												{% set average = 0 %}
+											{% endif %}
+
+
+											<div class="product_ratting">
+												<ul class="d-flex justify-content-center">
+
+													{% if average == 0 %}
+														{% for i in 1..5 %}
+															<li>
+																<a href="#">
+																	<i class="ion-android-star-outline"></i>
+																</a>
+															</li>
+														{% endfor %}
+													{% elseif average == 5 %}
+														{% for i in 1..5 %}
+															<li>
+																<a href="#">
+																	<i class="ion-android-star"></i>
+																</a>
+															</li>
+														{% endfor %}
+													{% else %}
+
+														{% for i in 1..average %}
+															<li>
+																<a href="#">
+																	<i class="ion-android-star"></i>
+																</a>
+															</li>
+														{% endfor %}
+
+														{% for i in average+1..5 %}
+															<li>
+																<a href="#">
+																	<i class="ion-android-star-outline"></i>
+																</a>
+															</li>
+														{% endfor %}
+													{% endif %}
+
+													<li>
+														<span>({{ totalNotes }}
+															avis, moyenne :
+															{{ average }})</span>
+													</li>
+												</ul>
+											</div>
+
+											<ul class="d-flex"></ul>
+											<h4 class="product_name">
+												<a href="product-details.html">{{camera.nom}}</a>
+											</h4>
+											<div class="price_box">
+												<span class="current_price">${{camera.prix}}</span>
+												<span class="old_price">$46.00</span>
+											</div>
+											<div class="add_to_cart">
+												<a class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}" data-image="{{minio_url(img) }}" data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+											</div>
+										</div>
+										<div class="product_list_content">
+											<h4 class="product_name">
+												<a href="product-details.html">{{camera.nom}}</a>
+											</h4>
+											<p>
+												<a href="#">shows</a>
+											</p>
+											<div class="price_box">
+												<span class="current_price">${{camera.prix}}</span>
+												<span class="old_price">$46.00</span>
+											</div>
+											<div class="product_desc">
+												<p>{{camera.description}}</p>
+											</div>
+											<div class="add_to_cart">
+												<button type="button" class="btn btn-primary" href="" data-tippy="Add To Cart" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</button>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+							{% endfor %}
+							<nav aria-label="Page navigation example">
+								<ul class="pagination justify-content-center">
+									<li class="page-item">
+										<a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+									</li>
+									{% for page in 1..pagination.totalPages %}
+										<li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
+											<a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
+
+										</li>
+									{% endfor %}
+									<li class="page-item">
+										<a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" tabindex="-1" aria-label="Next">Suivant</a>
+									</li>
+
+								</ul>
+							</nav>
+						{% else %}
+							<div class="col-12">
+								<div class="alert alert-warning" role="alert">
+									No cameras available.
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">
+						<i class="ion-android-close"></i>
+					</span>
+				</button>
+				<div class="modal_body">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="modal_zoom_gallery">
+									<div class="product_zoom_thumb">
+										<img src="assets/img/product/big-product/product1.png" alt="">
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="modal_right">
+									<div class="modal_title mb-10">
+										<h2 class="txt-title"></h2>
+									</div>
+									<div class="modal_price mb-10">
+										<span class="new_price">$64.99</span>
+										<span class="old_price">$78.99</span>
+									</div>
+									<div class="modal_description mb-15">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,
+										</p>
+									</div>
+									<div class="variants_selects ">
+										<div class="modal_add_to_cart">
+											<form action="{{path('addtocart')}}" id="addToCartForm" method="post">
+												<div class="variants_size">
+													<div class="">
+														<h2>Stockage</h2>
+														<select class="select_option" name="stockage">
+															<option selected value="1000">1000G</option>
+															<option value="1200">1200G</option>
+															<option value="1500">1500G</option>
+															<option value="2000">2000G</option>
+														</select>
+													</div>
+
+												</div>
+												<input type="hidden" name="idcamera" id="idcamera">
+
+
+												<input min="1" max="100" step="2" value="1" type="number" name="quantity">
+												<button type="submit" id="addtc">add to cart</button>
+
+											</form>
+
+										</div>
+									</div>
+									<div class="modal_social">
+										<h2>Share this product</h2>
+										<ul>
+											<li class="facebook">
+												<a href="#">
+													<i class="fa fa-facebook"></i>
+												</a>
+											</li>
+											<li class="twitter">
+												<a href="#">
+													<i class="fa fa-twitter"></i>
+												</a>
+											</li>
+											<li class="pinterest">
+												<a href="#">
+													<i class="fa fa-pinterest"></i>
+												</a>
+											</li>
+											<li class="google-plus">
+												<a href="#">
+													<i class="fa fa-google-plus"></i>
+												</a>
+											</li>
+											<li class="linkedin">
+												<a href="#">
+													<i class="fa fa-linkedin"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

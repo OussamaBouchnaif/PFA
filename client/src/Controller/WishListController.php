@@ -52,4 +52,16 @@ class WishListController extends AbstractController
         return new JsonResponse(['success' => false, 'message' => 'Product already in wishlist'], 409);
         
     }
+
+    #[Route('/delete/wishCamera/{id}',name:'delete_favorit')]
+    public function deleteWishCamera(FavoritCamera $favoritCamera):Response
+    {
+        if(null !== $favoritCamera)
+        {
+            $this->manager->remove($favoritCamera);
+            $this->manager->flush();    
+        }
+        return $this->redirectToRoute('app_wish_list');
+        
+    }
 }

@@ -173,27 +173,71 @@
                                             </a>
                                             <div class="product_action">
                                                 <ul>
-                                                    <li class="wishlist"><a href="#" data-tippy="Wishlist"
-                                                            data-tippy-inertia="true" data-tippy-delay="50"
-                                                            data-tippy-arrow="true" data-tippy-placement="left"><i
-                                                                class="icon-heart icons"></i></a></li>
-
+                                                    <li class="wishlist">
+                                                        <a href="javascript:void(0);" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
+                                                        data-tippy-arrow="true" data-tippy-placement="left">
+                                                            <i class="icon-heart icons"></i>
+                                                        </a>
+                                                    </li>
                                                   
                                                 </ul>
                                             </div>
                                             <div class="product_label">
-                                                <span>-18%</span>
+                                                <div style=" background: #ff2f2f;">
+                                                    <span >-18%</span>
+                                                </div>
+                                                
+                                                <div style="background: #4CAF50; margin-top: 3px;">
+                                                    <span >NEW</span>
+                                                </div>
+                                                
                                             </div>
+                                        
                                         </div>
                                         <figcaption class="product_content text-center">
+                                            {% set notes = [] %} 
+                                            {% set average = 0 %}
+                                            {% for avis in camera.avisCameras %}
+                                                {% set notes = notes|merge([avis.note]) %} 
+                                            {% endfor %}
+                                            {% set totalNotes = notes|length %} 
+                                            
+                                            {% set sumNotes = 0 %} 
+
+                                            {% for note in notes %}
+                                                {% set sumNotes = sumNotes + note %} 
+                                            {% endfor %}
+
+                                            {% if totalNotes > 0 %}
+                                                {% set average = (sumNotes / totalNotes)|round(0, 'floor') %} 
+                                            {% else %}
+                                                {% set average = 0 %} 
+                                            {% endif %}
+
+                                            
                                             <div class="product_ratting">
                                                 <ul class="d-flex justify-content-center">
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    <li><span>(2)</span></li>
+                                                    
+                                                    {% if average == 0 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% elseif average == 5 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+                                                    {% else %}
+
+                                                        {% for i in 1..average %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+
+                                                        {% for i in average+1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                            
+                                                    <li><span>({{ totalNotes }} avis, moyenne : {{ average }})</span></li>
                                                 </ul>
                                             </div>
                                             <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
@@ -302,28 +346,72 @@
                                         </a>
                                         <div class="product_action">
                                             <ul>
-                                                <li class="wishlist"><a href="#" data-tippy="Wishlist"
-                                                        data-tippy-inertia="true" data-tippy-delay="50"
-                                                        data-tippy-arrow="true" data-tippy-placement="left"><i
-                                                            class="icon-heart icons"></i></a></li>
+                                                <li class="wishlist">
+                                                    <a href="javascript:void(0);" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
+                                                    data-tippy-arrow="true" data-tippy-placement="left">
+                                                        <i class="icon-heart icons"></i>
+                                                    </a>
+                                                </li>
 
                                             </ul>
                                         </div>
                                         <div class="product_label">
-                                            <span>-18%</span>
+                                            <div style=" background: #ff2f2f;">
+                                                <span >-18%</span>
+                                            </div>
+                                            
+                                            <div style="background: #4CAF50; margin-top: 3px;">
+                                                <span >NEW</span>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(2)</span></li>
-                                            </ul>
-                                        </div>
+                                        {% set notes = [] %} 
+                                            {% set average = 0 %}
+                                            {% for avis in camera.avisCameras %}
+                                                {% set notes = notes|merge([avis.note]) %} 
+                                            {% endfor %}
+                                            {% set totalNotes = notes|length %} 
+                                            
+                                            {% set sumNotes = 0 %} 
+
+                                            {% for note in notes %}
+                                                {% set sumNotes = sumNotes + note %} 
+                                            {% endfor %}
+
+                                            {% if totalNotes > 0 %}
+                                                {% set average = (sumNotes / totalNotes)|round(0, 'floor') %} 
+                                            {% else %}
+                                                {% set average = 0 %} 
+                                            {% endif %}
+
+                                            
+                                            <div class="product_ratting">
+                                                <ul class="d-flex justify-content-center">
+                                                    
+                                                    {% if average == 0 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% elseif average == 5 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+                                                    {% else %}
+
+                                                        {% for i in 1..average %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+
+                                                        {% for i in average+1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                            
+                                                    <li><span>({{ totalNotes }} avis, moyenne : {{ average }})</span></li>
+                                                </ul>
+                                            </div>
                                         <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
                                         <div class="price_box">
                                             <span class="current_price">${{camera.prix}}</span>
