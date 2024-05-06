@@ -7,7 +7,6 @@ use App\Entity\Camera;
 use App\Entity\ImageCamera;
 use App\Form\CameraType;
 use App\Form\PhotoType;
-use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

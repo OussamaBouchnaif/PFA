@@ -70,8 +70,8 @@
 			margin-bottom: 10px; /* Adjust spacing between rows */
 		}
 		.card {
-		width: 137%;
-        }
+			width: 137%;
+		}
 	</style>
 {% endblock %}
 
@@ -104,32 +104,31 @@
 						</div>
 					</div>
 					<!-- end page title -->
-{# 
-					<div class="row">
-						<div class="col-xl-3 col-lg-4">
-							<div class="card">
-								<div class="card-header">
-									<div class="d-flex mb-3">
-										
-										
-
-									</div>
-								</div>
-
-								<div class="accordion accordion-flush filter-accordion">
-
-									
-								</div>
-
-
-							</div>
-						</div>
-						<!-- end card -->
-					</div> #}
+					{# 
+										<div class="row">
+											<div class="col-xl-3 col-lg-4">
+												<div class="card">
+													<div class="card-header">
+														<div class="d-flex mb-3">
+															
+															
+					
+														</div>
+													</div>
+					
+													<div class="accordion accordion-flush filter-accordion">
+					
+														
+													</div>
+					
+					
+												</div>
+											</div>
+											<!-- end card -->
+										</div> #}
 					<!-- end col -->
 
-					<div class="col-xl-9 col-lg-8">
-						<div>
+						<div class="col-xl-9 col-lg-8"> <div>
 							<div class="card">
 								<div class="card-header border-0">
 									<div class="row g-4">
@@ -137,7 +136,7 @@
 											<div>
 												<a href="{{ path('app_blog_new') }}" class="btn btn-success" id="addproduct-btn">
 													<i class="ri-add-line align-bottom me-1"></i>
-													Add Product</a>
+													Add Blog</a>
 
 												<button type="button" class="btn btn-primary" onclick="confirmPrint()">
 													<i class="ri-printer-line align-middle me-1"></i>
@@ -158,7 +157,7 @@
 
 								<div class="card-body">
 
-									<table id="myTable" class="table" >
+									<table id="myTable" class="table">
 										<thead>
 											<tr class="align-middle custom-header-bg">
 												<th class="custom-header text-center">Image</th>
@@ -245,97 +244,83 @@
 
 
 	</div>
-</div>
-</div>
-</div>
-{% endblock %}
-{% block javascripts %}
-{{ parent() }}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-<script>
-function printTable() {
-    var printWindow = window.open('', '_blank');
-    printWindow.document.open();
-    printWindow.document.write('<html><head><title>Print Table</title>');
-    printWindow.document.write('<style>');
-    printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
-    printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
-    printWindow.document.write('th {font-weight: bold; text-align: center;}');
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<table>');
-    printWindow.document.write('<thead>');
-    printWindow.document.write('<tr>');
-    printWindow.document.write('<th>Image</th>');
-    printWindow.document.write('<th>Contenu</th>');
-    printWindow.document.write('<th>Title</th>');
-    printWindow.document.write('<th>User</th>');
-    printWindow.document.write('<th>Cameras</th>');
-    printWindow.document.write('</tr>');
-    printWindow.document.write('</thead>');
-    printWindow.document.write('<tbody>');
+</div></div></div>{% endblock %}{% block javascripts %}{{ parent() }}<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script><script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script><script>function printTable() {
+var printWindow = window.open('', '_blank');
+printWindow.document.open();
+printWindow.document.write('<html><head><title>Print Table</title>');
+printWindow.document.write('<style>');
+printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+printWindow.document.write('th {font-weight: bold; text-align: center;}');
+printWindow.document.write('</style>');
+printWindow.document.write('</head><body>');
+printWindow.document.write('<table>');
+printWindow.document.write('<thead>');
+printWindow.document.write('<tr>');
+printWindow.document.write('<th>Image</th>');
+printWindow.document.write('<th>Contenu</th>');
+printWindow.document.write('<th>Title</th>');
+printWindow.document.write('<th>User</th>');
+printWindow.document.write('<th>Cameras</th>');
+printWindow.document.write('</tr>');
+printWindow.document.write('</thead>');
+printWindow.document.write('<tbody>');
 
-    var tableRows = document.getElementById('myTable').querySelectorAll('tbody tr');
-    tableRows.forEach(function(row) {
-        var rowData = row.querySelectorAll('td');
-        if (rowData.length > 0) {
-            printWindow.document.write('<tr>');
-            rowData.forEach(function(cell, index) {
-                if (index !== rowData.length - 1) {
-                    printWindow.document.write('<td>' + cell.innerText + '</td>');
-                }
-            });
-            printWindow.document.write('</tr>');
-        }
-    });
-    printWindow.document.write('</tbody>');
-    printWindow.document.write('</table>');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print();
+var tableRows = document.getElementById('myTable').querySelectorAll('tbody tr');
+tableRows.forEach(function (row) {
+var rowData = row.querySelectorAll('td');
+if (rowData.length > 0) {
+printWindow.document.write('<tr>');
+rowData.forEach(function (cell, index) {
+if (index !== rowData.length - 1) {
+printWindow.document.write('<td>' + cell.innerText + '</td>');
+}
+});
+printWindow.document.write('</tr>');
+}
+});
+printWindow.document.write('</tbody>');
+printWindow.document.write('</table>');
+printWindow.document.write('</body></html>');
+printWindow.document.close();
+printWindow.print();
 }
 
 function exportToExcel() {
-		var table = document.getElementById('myTable');
-		var rows = table.querySelectorAll('tr');
-		var csvData = [];
+var table = document.getElementById('myTable');
+var rows = table.querySelectorAll('tr');
+var csvData = [];
 
-		for (var i = 0; i < rows.length; i++) {
-		var row = rows[i];
-		var rowData = [];
-		var cols = row.querySelectorAll('td');
+for (var i = 0; i < rows.length; i++) {
+var row = rows[i];
+var rowData = [];
+var cols = row.querySelectorAll('td');
 
-		for (var j = 0; j < cols.length; j++) {
-		rowData.push(cols[j].innerText);
-		}
-
-		csvData.push(rowData.join(';'));
-		}
-
-		var csvContent = 'data:text/csv;charset=utf-8,';
-		csvContent += 'Image;Contenu;Prix;Title;User;Cameras\n';
-
-		for (var i = 0; i < csvData.length; i++) {
-		csvContent += csvData[i] + '\n';
-		}
-
-		var encodedUri = encodeURI(csvContent);
-		var link = document.createElement('a');
-		link.setAttribute('href', encodedUri);
-		link.setAttribute('download', 'BlogesCamera.csv');
-		document.body.appendChild(link);
-		link.click();
+for (var j = 0; j < cols.length; j++) {
+rowData.push(cols[j].innerText);
 }
 
+csvData.push(rowData.join(';'));
+}
+
+var csvContent = 'data:text/csv;charset=utf-8,';
+csvContent += 'Image;Contenu;Prix;Title;User;Cameras\n';
+
+for (var i = 0; i < csvData.length; i++) {
+csvContent += csvData[i] + '\n';
+}
+
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement('a');
+link.setAttribute('href', encodedUri);
+link.setAttribute('download', 'BlogesCamera.csv');
+document.body.appendChild(link);
+link.click();
+}
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.delete-blog-link').forEach(function (link) {
         link.addEventListener('click', function (event) {
             event.preventDefault(); // Empêcher le comportement par défaut du lien
-
-            var deleteUrl = this.href;
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -347,22 +332,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-                    fetch(deleteUrl, {
+                    fetch(this.getAttribute('href'), {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
+                            'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
                         },
-                        body: JSON.stringify({
-                            _method: 'DELETE'
-                        })
+                        body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
                     }).then(response => response.json()).then(data => {
                         if (data.success) {
-                            Swal.fire('Deleted!', 'Your Blog has been deleted.', 'success');
-                            // Mettre à jour la liste des blogs après la suppression
-                            window.location.reload();
+                            Swal.fire('Deleted!', 'Your blog has been deleted.', 'success');
+                            // Rediriger vers la page d'index des blogs après la suppression réussie
+                            window.location.href = "{{ path('app_blog_index') }}";
                         } else {
-                            Swal.fire('Error!', 'An error occurred while deleting the Blog.', 'error');
+                            Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
                         }
                     }).catch(error => {
                         console.error('Error:', error);
@@ -375,37 +358,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function confirmPrint() {
-	Swal.fire({
-	title: 'Print Table',
-	text: "Are you sure you want to print the table?",
-	icon: 'question',
-	showCancelButton: true,
-	confirmButtonColor: '#3085d6',
-	cancelButtonColor: '#d33',
-	confirmButtonText: 'Yes, print it!'
-	}).then((result) => {
-	if (result.isConfirmed) {
-	printTable();
-	}
-	});
-}
-
-function confirmExport() {
-	Swal.fire({
-	title: 'Export to Excel',
-	text: "Are you sure you want to export the table to Excel?",
-	icon: 'question',
-	showCancelButton: true,
-	confirmButtonColor: '#3085d6',
-	cancelButtonColor: '#d33',
-	confirmButtonText: 'Yes, export it!'
-	}).then((result) => {
-	if (result.isConfirmed) {
-	exportToExcel();
+Swal.fire({
+title: 'Print Table',
+text: "Are you sure you want to print the table?",
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, print it!'
+}).then((result) => {
+if (result.isConfirmed) {
+printTable();
 }
 });
 }
-</script>
 
-
-{% endblock %}
+function confirmExport() {
+Swal.fire({
+title: 'Export to Excel',
+text: "Are you sure you want to export the table to Excel?",
+icon: 'question',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, export it!'
+}).then((result) => {
+if (result.isConfirmed) {
+exportToExcel();
+}
+});
+}</script>{% endblock %}

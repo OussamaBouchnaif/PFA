@@ -9,16 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\PhotoType;
-use App\Repository\CategorieRepository;
-use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Doctrine\ORM\ORMException;
 use App\Entity\LigneReduction;
 use App\Form\LigneReductionTypeForm;
+
 class ReductionController extends AbstractController
 {
     private $entityManager;
@@ -87,20 +82,20 @@ class ReductionController extends AbstractController
 
 
     #[Route('reduction/reductiondelete/{id}', name: 'reduction_delete')]
-public function delete(Request $request, Reduction $reduction, EntityManagerInterface $entityManager): Response
-{
-    // Supprimer toutes les lignes de ligne_reduction associées à cette réduction
-    $ligneReductions = $reduction->getLigneReductions();
-    foreach ($ligneReductions as $ligneReduction) {
-        $entityManager->remove($ligneReduction);
+    public function delete(Request $request, Reduction $reduction, EntityManagerInterface $entityManager): Response
+    {
+        // Supprimer toutes les lignes de ligne_reduction associées à cette réduction
+        $ligneReductions = $reduction->getLigneReductions();
+        foreach ($ligneReductions as $ligneReduction) {
+            $entityManager->remove($ligneReduction);
+        }
+
+        // Ensuite, supprimer la réduction elle-même
+        $entityManager->remove($reduction);
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
     }
-
-    // Ensuite, supprimer la réduction elle-même
-    $entityManager->remove($reduction);
-    $entityManager->flush();
-
-    return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
-}
 
 
 

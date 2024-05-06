@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Form\ClientStatusType;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +23,7 @@ class ClientController extends AbstractController
         ]);
     }
 
-    
+
     #[Route('/clients/{id}/activate', name: 'client_activate')]
     public function activateClient(Client $client, EntityManagerInterface $entityManager): Response
     {
@@ -55,7 +53,7 @@ class ClientController extends AbstractController
         return $this->redirectToRoute('client_list');
     }
 
-    
+
 
     #[Route('/update-account-status', name: 'update_account_status')]
     public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse

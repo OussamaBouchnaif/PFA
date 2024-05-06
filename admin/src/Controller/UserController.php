@@ -38,60 +38,59 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             // Hash the password
             $hashedPassword = $passwordEncoder->hashPassword($user, $user->getPassword());
             $user->setPassword($hashedPassword);
-    
+
             // Save the user
             $this->manager->saveUser($user, true);
-    
+
             $this->addFlash('success', 'User added successfully!');
-    
+
             return $this->redirectToRoute('users_index'); // Redirection vers la liste des utilisateurs
         }
-    
+
         return $this->render('user/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-    
 
-   
-#[Route('/user/edit/{id}', name: 'user_edit')]
-public function edit(Request $request, User $user, UserPasswordHasherInterface $passwordEncoder): Response
-{
-    $form = $this->createForm(UserType::class, $user);
-    $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Vérifiez si un nouveau mot de passe a été fourni dans le formulaire
-        $newPassword = $form->get('password')->getData();
-        if (!empty($newPassword)) {
-            // Hash the new password
-            $hashedPassword = $passwordEncoder->hashPassword($user, $newPassword);
-            $user->setPassword($hashedPassword);
+
+    #[Route('/user/edit/{id}', name: 'user_edit')]
+    public function edit(Request $request, User $user, UserPasswordHasherInterface $passwordEncoder): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifiez si un nouveau mot de passe a été fourni dans le formulaire
+            $newPassword = $form->get('password')->getData();
+            if (!empty($newPassword)) {
+                // Hash the new password
+                $hashedPassword = $passwordEncoder->hashPassword($user, $newPassword);
+                $user->setPassword($hashedPassword);
+            }
+
+            // Enregistrez les modifications de l'utilisateur
+            $this->manager->saveUser($user, false);
+
+            $this->addFlash('success', 'User updated successfully!');
+
+            return $this->redirectToRoute('users_index');
         }
 
-        // Enregistrez les modifications de l'utilisateur
-        $this->manager->saveUser($user, false);
-
-        $this->addFlash('success', 'User updated successfully!');
-
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/user/delete/{id}', name: 'user_delete')]
+    public function delete(User $user): Response
+    {
+        $this->manager->removeUser($user);
         return $this->redirectToRoute('users_index');
     }
-
-    return $this->render('user/edit.html.twig', [
-        'user' => $user,
-        'form' => $form->createView(),
-    ]);
-}
-    #[Route('/user/delete/{id}', name: 'user_delete')]
-public function delete(User $user): Response
-{
-    $this->manager->removeUser($user); 
-    return $this->redirectToRoute('users_index'); 
-}
-
 }

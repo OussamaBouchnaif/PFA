@@ -17,11 +17,6 @@ class BlogModel
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
     }
-    public function getBlogs(){
-        $blogs = $this->entityManager->getRepository(Blog::class)->findAll();
-        return $blogs;
-        
-    }
 
     public function addBlog(Blog $blog, User $user)
     {
@@ -33,8 +28,8 @@ class BlogModel
         $entityManager->persist($blog);
         $entityManager->flush();
 
-        // Redirection vers une route nommée 'blog'
-        return $this->urlGenerator->generate('blog');
+        // Redirection vers une route nommée 'app_blog_index'
+        return $this->urlGenerator->generate('app_blog_index');
     }
 
     public function editBlog(Blog $blog)
@@ -42,10 +37,18 @@ class BlogModel
         $entityManager = $this->entityManager;
 
         // Persistez les modifications
-        $entityManager->persist($blog);
         $entityManager->flush();
 
-        // Redirection vers une route nommée 'blog'
-        return $this->urlGenerator->generate('blog');
+        // Redirection vers une route nommée 'app_blog_index'
+        return $this->urlGenerator->generate('app_blog_index');
+    }
+
+    public function deleteBlog(Blog $blog)
+    {
+        $entityManager = $this->entityManager;
+
+        // Supprimer le blog
+        $entityManager->remove($blog);
+        $entityManager->flush();
     }
 }
