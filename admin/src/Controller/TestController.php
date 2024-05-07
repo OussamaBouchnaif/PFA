@@ -7,7 +7,6 @@ use App\Entity\Camera;
 use App\Entity\ImageCamera;
 use App\Form\CameraType;
 use App\Form\PhotoType;
-use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
-    #[Route('/addtest', name: 'addtest')]
+    #[Route('/Camera/add', name: 'addtest')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
         $camera = new Camera();

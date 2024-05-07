@@ -3,13 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Camera;
-use App\Entity\Categorie;
 use App\Entity\Commande;
 use App\Entity\ImageCamera;
 use App\Form\CameraType;
 use App\Services\CameraModel;
 use App\Form\PhotoType;
-use App\Repository\CommandeRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\CameraRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,13 +16,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Doctrine\ORM\ORMException;
+
 
 class CameraController extends AbstractController
 {
- 
+
     public function __construct(
         private CameraModel $cameraModel,
         private EntityManagerInterface $manager,
@@ -130,36 +126,6 @@ class CameraController extends AbstractController
         return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
     }
 
-    // #[Route('/add_photo', name: 'add_photo', methods: ['POST'])]
-    // public function addPhoto(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     try {
-    //         $imageCamera = new ImageCamera();
-
-    //         $formImage = $this->createForm(PhotoType::class, $imageCamera);
-    //         $formImage->handleRequest($request);
-    //         $files = $request->files->all();
-    //         // dd($files);
-    //         // dd($formImage->getErrors());
-    //         if ($formImage->isSubmitted() && $formImage->isValid()) {
-    //             $imageCamera = $formImage->getData();
-    //             $entityManager->persist($imageCamera);
-    //             $entityManager->flush();
-    //             // Redirigez vers une autre page ou retournez une réponse si nécessaire
-    //             return $this->redirectToRoute('camera');
-    //         } else {
-    //             return $this->render('error_page.html.twig', [
-    //                 'form' => $formImage->createView(),
-    //             ]);
-    //         }
-    //     } catch (\Exception $e) {
-    //         // Gérer l'erreur
-    //         $this->addFlash('error', 'An error occurred while adding the photo.');
-
-    //         // Redirigez ou retournez une réponse avec des erreurs
-    //         return $this->redirectToRoute('camera');
-    //     }
-    // }
     #[Route('/camera/chart', name: 'camera_chart')]
     public function chart(): Response
     {
