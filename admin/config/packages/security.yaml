@@ -40,6 +40,9 @@ security:
        - { path: ^/camera, roles: ROLE_USER }
        - { path: ^/user, roles: ROLE_USER }
        - { path: ^/reduction, roles: ROLE_USER }
+       - { path: ^/blog, roles: ROLE_USER }
+       - { path: ^/clients, roles: ROLE_USER }
+
 
 
 when@test:

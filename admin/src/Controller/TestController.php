@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
-    #[Route('/addtest', name: 'addtest')]
+    #[Route('/Camera/add', name: 'addtest')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
         $camera = new Camera();

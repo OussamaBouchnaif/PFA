@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}
-	Liste des caméras
-{% endblock %}
-
 {% block stylesheets %}
+{{parent()}}
 	<style>
 		.carousel-inner {
 			height: 500px;
@@ -61,10 +57,12 @@
 
 													<!-- The slideshow/carousel -->
 													<div class="carousel-inner">
+													
 														{% for imageCamera in camera.imageCameras %}
-															<!-- Assurez-vous que la classe "active" n'est ajoutée que sur le premier élément -->
+														{% set a =  "http://127.0.0.1:9000/fichier/" ~ imageCamera.image %}
+													
 															<div class="carousel-item {% if loop.first %}{% endif %}">
-																<img src="http://127.0.0.1:9000/fichier/{{ imageCamera.image }}" alt="Image" class="d-block w-100"/>
+																<img src="{{ a }}" alt="Image" class="d-block w-100"/>
 															</div>
 														{% endfor %}
 													</div>
@@ -263,4 +261,6 @@
 	</button>
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+{{parent()}}
+{% endblock %}
