@@ -3,150 +3,169 @@
 {% block title %}Avis des clients{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="assets/css/avis.css">
+<link rel="stylesheet" type="text/css" href="assets/css/avis.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
-        integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
-    <section class="section">
-        <div class="container">
-            <div class="justify-content-center row">
-                <div class="col-lg-12">
-                    <div class="candidate-list-widgets mb-4">
-                        <form action="#" class="">
-                            <div class="g-2 row">
-                                <div class="col-lg-3">
-                                    <div class="filler-job-form">
-                                        <i class="uil uil-briefcase-alt"></i><input id="exampleFormControlInput1"
-                                            placeholder="Search by keywords" type="search"
-                                            class="form-control filler-job-input-box form-control" />
-                                    </div>
-                                </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous"/>
+<section class="section">
+    <div class="container">
+        <div class="justify-content-center row">
+            <div class="col-lg-12">
+                <div class="candidate-list-widgets mb-4">
+                    <form action="#" class="">
+                        <div class="g-2 row">
+                            
 
-                                <div class="col-lg-3">
-                                    <div class="filler-job-form">
-                                        <i class="uil uil-clipboard-notes"></i>
-                                        <select class="form-select selectForm__inner" data-trigger="true"
-                                            name="choices-single-categories" id="choices-single-categories"
-                                            aria-label="Default select example">
-                                            <option value="0">All</option>
-                                            <option value="1">1 Star</option>
-                                            <option value="2">2 stars or less</option>
-                                            <option value="3">3 stars</option>
-                                            <option value="4">4 stars or more</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div>
-                                        <a class="btn btn-primary" href="#" id="filterButton">
-                                            <i class="uil uil-filter"></i>
-                                            Filter</a>
-
-                                    </div>
+                            <div class="col-lg-3">
+                                <div class="filler-job-form">
+                                    <i class="uil uil-clipboard-notes"></i>
+                                    <select class="form-select selectForm__inner" data-trigger="true" name="choices-single-categories" id="choices-single-categories" aria-label="Default select example">
+                                        <option value="0">All</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 stars or less</option>
+                                        <option value="3">3 stars</option>
+                                        <option value="4">4 stars or more</option>
+                                    </select>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <div>
+                                    <a class="btn btn-primary" href="#" id="filterButton">
+                                        <i class="uil uil-filter"></i>
+                                        Filter</a>
 
-                    <div class="candidate-list">
-                        {% for avis in avis_list|slice(0, 5) %}
-                            <div class="candidate-list-box card mt-4 avis" data-rating="{{ avis.note }}">
-                                <div class="p-4 card-body">
-                                    <div class="align-items-center row">
-                                        <div class="col-auto">
-                                            <div class="candidate-list-images">
-                                                <a href="#"><img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                                        alt=""
-                                                        class="avatar-md img-thumbnail rounded-circle" /></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <div class="candidate-list-content mt-3 mt-lg-0">
-                                                <h5 class="fs-19 mb-0">
-                                                    <a class="primary-link" href="#">{{ avis.client.nom }} {{ avis.client.prenom }}</a>
-                                                    <span class="badge bg-{{ avis.note <= 2 ? 'danger' : (avis.note == 3 ? 'warning' : 'success') }} ms-1">
-                                                        <i class="mdi mdi-star align-middle"></i>{{ avis.note }}</span>
-                                                </h5>
-                                                <p class="text-muted mb-2">{{ avis.client.email }}</p>
-                                                <ul class="list-inline mb-0 text-muted">
-                                                    <li class="list-inline-item">
-                                                        <i class="mdi mdi-map-marker"></i>
-                                                        {{ avis.client.adresse }}</li>
-                                                    <li class="list-inline-item">
-                                                        <img src="/assets/images/avis/videosurveillance.png"
-                                                            alt="Video Surveillance" style="width: 16px; height: 16px;">
-                                                        {{ avis.camera.nom }}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                                <span class="badge bg-soft-secondary fs-18 mt-1">{{ avis.commentaire }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="favorite-icon">
-                                        <a href="#">
-                                            <i class="mdi mdi-heart fs-18"></i>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
-                        {% endfor %}
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="pagination justify-content-center">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="row">
+            <div class="col-lg-12">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#filterButton').click(function () {
-                var selectedRating = $('#choices-single-categories').val();
+                <div class="candidate-list" id="avisList">
+                    {% set numAvis = avis_list|length %}
+                    {% set numPages = (numAvis / 5)|round(0, 'ceil') %}
+                    {% for i in 0..(numPages - 1) %}
+                        <div class="avis-page" id="avisPage{{ i }}" style="display: none;">
+                            {% for avis in avis_list|slice(i*5, (i+1)*5) %}
+                                <div class="candidate-list-box card mt-4 avis" data-rating="{{ avis.note }}">
+                                    <div class="p-4 card-body">
+                                        <div class="align-items-center row">
+                                            <div class="col-auto">
+                                                <div class="candidate-list-images">
+                                                    <a href="#"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-md img-thumbnail rounded-circle"/></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="candidate-list-content mt-3 mt-lg-0">
+                                                    <h5 class="fs-19 mb-0">
+                                                        <a class="primary-link" href="#">{{ avis.client.nom }}
+                                                            {{ avis.client.prenom }}</a>
+                                                        <span class="badge bg-{{ avis.note <= 2 ? 'danger' : (avis.note == 3 ? 'warning' : 'success') }} ms-1">
+                                                            <i class="mdi mdi-star align-middle"></i>
+                                                            {{ avis.note }}</span>
+                                                    </h5>
+                                                    <p class="text-muted mb-2">{{ avis.client.email }}</p>
+                                                    <ul class="list-inline mb-0 text-muted">
+                                                        <li class="list-inline-item">
+                                                            <i class="mdi mdi-map-marker"></i>
+                                                            {{ avis.client.adresse }}</li>
+                                                        <li class="list-inline-item">
+                                                            <img src="/assets/images/avis/videosurveillance.png" alt="Video Surveillance" style="width: 16px; height: 16px;">
+                                                            {{ avis.camera.nom }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                    <span class="badge bg-soft-secondary fs-18 mt-1">{{ avis.commentaire }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="favorite-icon">
+                                            <a href="#">
+                                                <i class="mdi mdi-heart fs-18"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
 
-                $('.avis').each(function () {
-                    var rating = $(this).data('rating');
-                    if (selectedRating == 0) {
-                        $(this).show();
-                    } else if (selectedRating == 1 && rating != 1) {
-                        $(this).hide();
-                    } else if (selectedRating == 2 && rating > 2) {
-                        $(this).hide();
-                    } else if (selectedRating == 3 && rating != 3) {
-                        $(this).hide();
-                    } else if (selectedRating == 4 && rating < 4) {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
-                    }
-                });
+                <!-- Pagination -->
+                <div class="pagination justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination">
+                            {% for i in 0..(numPages - 1) %}
+                                <li class="page-item{% if i == 0 %} active{% endif %}">
+                                    <a class="page-link" href="#" data-page="{{ i }}">{{ i + 1 }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Function to show avis items for a specific page
+        function showAvisItemsForPage(page) {
+            $('.avis-page').hide();
+            $('#avisPage' + page).show();
+        }
+
+        // Function to filter avis by rating
+        function filterAvisByRating(rating) {
+            $('.avis').each(function () {
+                var avisRating = $(this).data('rating');
+                if (
+                    (rating == 0) || // Afficher tous les avis lorsque "All" est sélectionné
+                    (rating == 1 && avisRating == 1) || // Afficher les avis avec 1 étoile
+                    (rating == 2 && avisRating <= 2) || // Afficher tous les avis avec 2 étoiles ou moins
+                    (rating == 3 && avisRating == 3) || // Afficher les avis avec 3 étoiles
+                    (rating == 4 && avisRating >= 4) // Afficher les avis avec 4 étoiles ou plus
+                ) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
             });
+
+            // Réinitialiser l'affichage de la pagination pour afficher tous les avis filtrés dès la première page
+            showAvisItemsForPage(0);
+        }
+
+        // Pagination link click handler
+        $(document).on('click', '.page-link', function (e) {
+            e.preventDefault();
+            var page = parseInt($(this).data('page'));
+            showAvisItemsForPage(page);
         });
-    </script>
+
+        // Filter button click handler
+        $('#filterButton').click(function (e) {
+            e.preventDefault(); // Empêche le comportement par défaut du formulaire
+
+            var selectedRating = $('#choices-single-categories').val();
+            filterAvisByRating(parseInt(selectedRating));
+        });
+
+        // Show the first page initially
+        showAvisItemsForPage(0);
+    });
+</script>
 {% endblock %}
