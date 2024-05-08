@@ -29,7 +29,7 @@ class AvisCamera
     #[ORM\JoinColumn(nullable: false)]
     private ?Camera $camera = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
