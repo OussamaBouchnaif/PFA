@@ -20,10 +20,10 @@ class BlogType extends AbstractType
         $builder
             ->add('title', TextType::class, ['label' => 'Titre'])
             ->add('contenu', TextareaType::class, ['label' => 'Contenu'])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Image',
-                'required' => false,
-            ])
+            // ->add('imageFile', VichImageType::class, [
+            //     'label' => 'Image',
+            //     'required' => false,
+            // ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',

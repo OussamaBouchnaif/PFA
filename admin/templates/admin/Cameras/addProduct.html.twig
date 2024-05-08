@@ -29,6 +29,15 @@
                         </div>
                     </div>
                 </div>
+                {% for child in form %}
+                    {% if child.vars.errors|length > 0 %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in child.vars.errors %}
+                                {{ error.message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 <!-- End page title -->
                 
                 {{ form_start(form, {'attr': {'id': 'add_camera_form', 'enctype': 'multipart/form-data'}}) }}
@@ -272,15 +281,6 @@
                                 <button type="submit" class="btn btn-success">Enregistrer</button>
                                 <a href="{{ path('camera') }}" class="btn btn-danger">Annuler</a>
                             </div>
-                            {% for child in form %}
-                                {% if child.vars.errors|length > 0 %}
-                                    <div class="alert alert-danger" role="alert">
-                                        {% for error in child.vars.errors %}
-                                            {{ error.message }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
                         </div>
                         <!-- End col-lg-4 -->
                     </div>

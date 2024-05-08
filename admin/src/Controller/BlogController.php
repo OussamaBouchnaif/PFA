@@ -13,13 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
-
-
-
     #[Route('/blog', name: 'app_blog_index', methods: ['GET'])]
     public function index(BlogRepository $blogRepository): Response
     {
         $blogs = $blogRepository->findAll();
+
         return $this->render('blog/show.html.twig', [
             'blogs' => $blogs,
         ]);
@@ -60,6 +58,7 @@ class BlogController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $blogModel->editBlog($blog);
+
             return $this->redirect($url);
         }
 
@@ -73,6 +72,7 @@ class BlogController extends AbstractController
     public function delete(Blog $blog, BlogModel $blogModel): Response
     {
         $blogModel->deleteBlog($blog);
+
         return $this->redirectToRoute('app_blog_index');
     }
 }

@@ -157,12 +157,5 @@ class Reduction
 
         return $this;
     }
-    public function calculateReducedPrice(): ?float
-    {
-        if ($this->poucentage !== null && $this->Prix !== null) {
-            return $this->Prix * ($this->poucentage / 100);
-        } else {
-            return null;
-        }
-    }
+
 }

@@ -6,10 +6,10 @@ use App\Entity\Client;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ClientController extends AbstractController
 {
@@ -23,11 +23,10 @@ class ClientController extends AbstractController
         ]);
     }
 
-
     #[Route('/clients/{id}/activate', name: 'client_activate')]
     public function activateClient(Client $client, EntityManagerInterface $entityManager): Response
     {
-        // Activer 
+        // Activer
         $client->setStatusCompte('active');
         $entityManager->flush();
 
@@ -37,7 +36,6 @@ class ClientController extends AbstractController
         // Rediriger vers la liste des clients
         return $this->redirectToRoute('client_list');
     }
-
 
     #[Route('/clients/{id}/deactivate', name: 'client_deactivate')]
     public function deactivateClient(Client $client, EntityManagerInterface $entityManager): Response
@@ -52,8 +50,6 @@ class ClientController extends AbstractController
         // Rediriger vers la liste des clients
         return $this->redirectToRoute('client_list');
     }
-
-
 
     #[Route('/update-account-status', name: 'update_account_status')]
     public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
@@ -70,7 +66,7 @@ class ClientController extends AbstractController
         }
 
         // Basculer l'état du compte entre actif et inactif
-        $newStatus = $accountStatus === 'active' ? 'inactive' : 'active';
+        $newStatus = 'active' === $accountStatus ? 'inactive' : 'active';
         $client->setStatusCompte($newStatus);
         $entityManager->flush();
 

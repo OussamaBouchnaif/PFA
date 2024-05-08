@@ -510,4 +510,5 @@ class Camera
         return $this;
     } 
     
+    
 }

@@ -17,9 +17,10 @@
 {% block body %}
 	<div id="layout-wrapper">
 		<div class="main-content">
+
 			<div class="page-content">
-				<div
-					class="container-fluid">
+				<div class="container-fluid">
+
 					<!-- start page title -->
 					<div class="row">
 						<div class="col-12">
@@ -28,12 +29,11 @@
 
 								<div class="page-title-right">
 									<ol class="breadcrumb m-0">
-										<li class="breadcrumb-item">
-											<a href="javascript: void(0);">Ecommerce</a>
-										</li>
+										<li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
 										<li class="breadcrumb-item active">Product Details</li>
 									</ol>
 								</div>
+
 							</div>
 						</div>
 					</div>
@@ -46,35 +46,39 @@
 									<div class="row gx-lg-5">
 										<div class="col-xl-4 col-md-8 mx-auto">
 											<div class="product-img-slider sticky-side-div">
-												<div
-													id="demo" class="carousel slide" data-bs-ride="carousel">
-													<!-- Indicators/dots -->
-													<div class="carousel-indicators">
-														<button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-														<button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-														<button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-													</div>
+												<div class="swiper product-thumbnail-slider p-2 rounded bg-light">
+													<div class="swiper-wrapper">
+														<div class="swiper-slide">
+															{% for imageCamera in camera.imageCameras %}
+																{% set a =  "http://127.0.0.1:9000/fichier/" ~ imageCamera.image %}
 
-													<!-- The slideshow/carousel -->
-													<div class="carousel-inner">
-													
-														{% for imageCamera in camera.imageCameras %}
-														{% set a =  "http://127.0.0.1:9000/fichier/" ~ imageCamera.image %}
-													
-															<div class="carousel-item {% if loop.first %}{% endif %}">
-																<img src="{{ a }}" alt="Image" class="d-block w-100"/>
-															</div>
-														{% endfor %}
-													</div>
+																<div class="carousel-item {% if loop.first %}{% endif %}">
+																	<img src="{{ a }}" alt="Image" class="d-block w-100"/>
+																</div>
+															{% endfor %}
 
-													<!-- Left and right controls/icons -->
-													<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-														<span class="carousel-control-prev-icon"></span>
-													</button>
-													<button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-														<span class="carousel-control-next-icon"></span>
-													</button>
+														</div>
+													</div>
+													<div class="swiper-button-next"></div>
+													<div class="swiper-button-prev"></div>
 												</div>
+												<!-- end swiper thumbnail slide -->
+												<div class="swiper product-nav-slider mt-2">
+													<div class="swiper-wrapper">
+														<div class="swiper-slide">
+															<div class="nav-slide-item ">
+																{% for imageCamera in camera.imageCameras %}
+																	{% set a =  "http://127.0.0.1:9000/fichier/" ~ imageCamera.image %}
+
+																	<div class="carousel-item {% if loop.first %}{% endif %}">
+																		<img src="{{ a }}" alt="Image" class="d-block w-100"/>
+																	</div>
+																{% endfor %}
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- end swiper nav slide -->
 											</div>
 										</div>
 										<!-- end col -->
@@ -159,7 +163,7 @@
 												</div>
 
 												<div
-													class="row">
+														class="row">
 													<!-- end col -->
 
 													<div class="col-xl-6"></div>
@@ -186,51 +190,51 @@
 															<div class="table-responsive">
 																<table class="table mb-0">
 																	<tbody>
-																		<tr>
-																			<th scope="row" style="width: 200px;">Category</th>
-																			<td>{{ camera.categorie.nom }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Brand</th>
-																			<td>{{ camera.status }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Color</th>
-																			<td>{{ camera.couleur }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Material</th>
-																			<td>{{ camera.materiaux }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Weight</th>
-																			<td>{{ camera.poids }}Gram</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">resolution</th>
-																			<td>{{ camera.resolution }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">angle vision</th>
-																			<td>{{ camera.angleVision }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">connectivite</th>
-																			<td>{{ camera.connectivite }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Stockage</th>
-																			<td>{{ camera.stockage }}</td>
-																		</tr>
-																		<tr>
-																			<th scope="row">Alimentation</th>
-																			<td>{{ camera.alimentation }}</td>
-																		</tr>
+																	<tr>
+																		<th scope="row" style="width: 200px;">Category</th>
+																		<td>{{ camera.categorie.nom }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Brand</th>
+																		<td>{{ camera.status }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Color</th>
+																		<td>{{ camera.couleur }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Material</th>
+																		<td>{{ camera.materiaux }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Weight</th>
+																		<td>{{ camera.poids }}Gram</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">resolution</th>
+																		<td>{{ camera.resolution }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">angle vision</th>
+																		<td>{{ camera.angleVision }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">connectivite</th>
+																		<td>{{ camera.connectivite }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Stockage</th>
+																		<td>{{ camera.stockage }}</td>
+																	</tr>
+																	<tr>
+																		<th scope="row">Alimentation</th>
+																		<td>{{ camera.alimentation }}</td>
+																	</tr>
 																	</tbody>
 																</table>
 															</div>
 														</div>
-														
+
 													</div>
 												</div>
 												<!-- product-content -->
@@ -249,12 +253,31 @@
 						<!-- end col -->
 					</div>
 					<!-- end row -->
+
 				</div>
 				<!-- container-fluid -->
 			</div>
 			<!-- End Page-content -->
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+							<script>document.write(new Date().getFullYear())</script> © Velzon.
+						</div>
+						<div class="col-sm-6">
+							<div class="text-sm-end d-none d-sm-block">
+								Design & Develop by Themesbrand
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
 		</div>
-	</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- End Page-content -->
+
 	<!-- start back-to-top -->
 	<button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
 		<i class="ri-arrow-up-line"></i>

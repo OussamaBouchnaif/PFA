@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\LigneReduction;
 use App\Entity\Reduction;
+use App\Form\LigneReductionTypeForm;
 use App\Form\ReductionType;
 use App\Repository\ReductionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\LigneReduction;
-use App\Form\LigneReductionTypeForm;
 
 class ReductionController extends AbstractController
 {
@@ -46,17 +46,15 @@ class ReductionController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/reduction', name: 'reduction_show')]
     public function show(): Response
     {
         $reductions = $this->reductionRepository->findAll();
+
         return $this->render('admin/reduction/show.html.twig', [
             'reductions' => $reductions,
         ]);
     }
-
 
     #[Route('reduction/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, Reduction $reduction): Response
@@ -78,34 +76,26 @@ class ReductionController extends AbstractController
         ]);
     }
 
-
-
-
     #[Route('reduction/reductiondelete/{id}', name: 'reduction_delete')]
-    public function delete(Request $request, Reduction $reduction, EntityManagerInterface $entityManager): Response
+    public function deleteReduction(EntityManagerInterface $entityManager, ReductionRepository $reductionRepository, $id): JsonResponse
     {
-        // Supprimer toutes les lignes de ligne_reduction associées à cette réduction
-        $ligneReductions = $reduction->getLigneReductions();
-        foreach ($ligneReductions as $ligneReduction) {
+        $reduction = $reductionRepository->find($id);
+
+        if (!$reduction) {
+            return new JsonResponse(['success' => false, 'message' => 'Reduction not found'], 404);
+        }
+
+        // Supprimer toutes les lignes de réduction associées à cette réduction
+        foreach ($reduction->getLigneReductions() as $ligneReduction) {
             $entityManager->remove($ligneReduction);
         }
 
-        // Ensuite, supprimer la réduction elle-même
+        // Supprimer la réduction
         $entityManager->remove($reduction);
         $entityManager->flush();
 
-        return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
+        return new JsonResponse(['success' => true, 'message' => 'Reduction deleted successfully']);
     }
-
-
-
-
-
-
-
-
-
-
 
     #[Route('reduction/LigneReduction', name: 'LigneReduction')]
     public function addLigneReduction(Request $request, EntityManagerInterface $entityManager): Response
