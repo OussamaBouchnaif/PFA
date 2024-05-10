@@ -5,10 +5,8 @@ namespace App\Entity;
 use App\Repository\AvisCameraRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: AvisCameraRepository::class)]
-
 class AvisCamera
 {
     #[ORM\Id]

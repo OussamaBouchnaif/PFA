@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af26218f-4f5f-4efb-a0c8-aef27b4081ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/GitLink.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/.idea/admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/.idea/admin.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/src/Entity/Camera.php" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/src/Entity/Camera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/src/Entity/Categorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/src/Entity/Categorie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/src/Form/CameraType.php" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/src/Form/CameraType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../admin/templates/admin/Cameras/addProduct.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/templates/admin/Cameras/addProduct.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/client/pages/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/client/pages/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,23 +184,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "PHPUnit.Main.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "oussama",
-    "last_opened_file_path": "C:/Users/yassi/Desktop/E-commerce/PFA/admin",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php.debug",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;PHPUnit.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;oussama&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yassi/Desktop/E-commerce/PFA/admin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php.debug&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PFA_Project\public" />
@@ -248,6 +243,7 @@
       <workItem from="1709404202651" duration="310000" />
       <workItem from="1713983205732" duration="657000" />
       <workItem from="1715102712330" duration="220000" />
+      <workItem from="1715187216188" duration="1409000" />
     </task>
     <servers />
   </component>
@@ -256,6 +252,10 @@
   </component>
   <component name="WfRunsListSearchHistory"><![CDATA[{
   "history": [
+    {
+      "branch": "chidmi",
+      "currentBranchFilter": true
+    },
     {
       "branch": "chidmi",
       "currentBranchFilter": true

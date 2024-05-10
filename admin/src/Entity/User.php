@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use Symfony\Component\HttpFoundation\File\File;
-use App\Entity\Personne;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -92,6 +91,7 @@ class User extends Personne
 
         return $this;
     }
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -110,6 +110,7 @@ class User extends Personne
     {
         return $this->imageFile;
     }
+
     public function getUserIdentifier(): string
     {
         return '';

@@ -6,10 +6,9 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class UserManager
-{   
+{
     public function __construct(private readonly EntityManagerInterface $manager)
     {
-
     }
 
     public function saveUser(User $user, bool $mustPersist = false): void

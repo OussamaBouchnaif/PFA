@@ -2,20 +2,18 @@
 
 namespace App\Entity;
 
+use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[UniqueEntity("email")]
+#[UniqueEntity('email')]
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 // #[ORM\EntityListeners(["App\EntityListener\UserListener"])]
-class Client extends Personne 
+class Client extends Personne
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,8 +30,6 @@ class Client extends Personne
     #[ORM\Column(length: 20)]
     private ?string $statusCompte = null;
 
-    
-
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $pts_fidelite = null;
 
@@ -49,24 +45,22 @@ class Client extends Personne
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
 
-   
-
     public function __construct()
     {
         $this->dateInscription = new \DateTimeImmutable();
-        $this->statusCompte = "actif";
-        $this->addressLivSup = "Adress sup";
+        $this->statusCompte = 'actif';
+        $this->addressLivSup = 'Adress sup';
         $this->avisCameras = new ArrayCollection();
         $this->favoritCameras = new ArrayCollection();
         $this->commandes = new ArrayCollection();
         $this->roles[] = 'client';
-
     }
 
     public function getRole()
     {
         return $this->roles;
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,8 +114,6 @@ class Client extends Personne
         return $this;
     }
 
-    
-
     public function getDateInscription(): ?\DateTimeInterface
     {
         return $this->dateInscription;
@@ -145,7 +137,6 @@ class Client extends Personne
 
         return $this;
     }
-
 
     public function getPtsFidelite(): ?int
     {
@@ -260,24 +251,25 @@ class Client extends Personne
 
         return $this;
     }
+
     public function __toString()
     {
         return $this->getId();
     }
 
     /**
-     * Get the value of adresse
-     */ 
+     * Get the value of adresse.
+     */
     public function getAdresse()
     {
         return $this->adresse;
     }
 
     /**
-     * Set the value of adresse
+     * Set the value of adresse.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setAdresse($adresse)
     {
         $this->adresse = $adresse;
@@ -285,27 +277,26 @@ class Client extends Personne
         return $this;
     }
 
-    
-
     /**
-     * Get the value of plainPassword
-     */ 
+     * Get the value of plainPassword.
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
     /**
-     * Set the value of plainPassword
+     * Set the value of plainPassword.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
 
         return $this;
     }
+
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -316,10 +307,9 @@ class Client extends Personne
     {
         return $this->email;
     }
+
     public function getRoles(): array
     {
         return [''];
     }
-
-   
 }

@@ -14,20 +14,25 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 abstract class AbstractCameraFetcher implements CameraFetcherInterface
 {
+    private FilesystemAdapter $cache ;
     public function __construct(
         protected GetDataService $getData,
         protected QueryStringBuilder $queryStringBuilder,
         protected Denormalizer $denormalizer,
         
 
-    ) {}
+    ) {
+
+        $this->cache = new FilesystemAdapter();
+    }
 
     public function getCameraData(String $endpoint):array
     {
+        
         $cacheKey = md5($endpoint);
-        $cache = new FilesystemAdapter();
+        
 
-        $data = $cache->get($cacheKey, function (ItemInterface $item) use ($endpoint) {
+        $data = $this->cache->get($cacheKey, function (ItemInterface $item) use ($endpoint) {
             $item->expiresAfter(3600);
             $data = $this->getData->getDataFromApi($endpoint);
             if (!$data) {
@@ -37,5 +42,10 @@ abstract class AbstractCameraFetcher implements CameraFetcherInterface
         });
 
         return $this->denormalizer->dataDenormalizer($data['hydra:member'], 'App\DTO\CameraDTO[]', 'json');
+    }
+
+    public function clearCache()
+    {
+        $this->cache->clear();
     }
 }

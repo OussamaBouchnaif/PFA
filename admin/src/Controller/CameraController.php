@@ -6,7 +6,6 @@ use App\Entity\Camera;
 use App\Entity\Commande;
 use App\Entity\ImageCamera;
 use App\Entity\LigneReduction;
-use App\Entity\Reduction;
 use App\Form\CameraType;
 use App\Form\PhotoType;
 use App\Repository\CameraRepository;

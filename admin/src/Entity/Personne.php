@@ -2,34 +2,28 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\PersonneRepository;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\MappedSuperclass]
 abstract class Personne implements UserInterface, PasswordAuthenticatedUserInterface
 {
-   
-
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min:2,max:50)]
+    #[Assert\Length(min: 2, max: 50)]
     protected ?string $nom = null;
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min:2,max:50)]
+    #[Assert\Length(min: 2, max: 50)]
     protected ?string $prenom = null;
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank()]
     #[Assert\Email()]
     protected ?string $email = null;
-
 
     #[ORM\Column(length: 20)]
     #[Assert\NotBlank()]
@@ -46,12 +40,13 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
 
     #[ORM\Column(length: 15, nullable: true)]
     #[Assert\Regex(
-        "/^[0-9]{10}$/","Please enter a valid phone"
+        '/^[0-9]{10}$/', 'Please enter a valid phone'
     )]
     protected ?string $phoneNumber = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $genre = null;
+
     public function getNom(): ?string
     {
         return $this->nom;
@@ -63,11 +58,13 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
 
         return $this;
     }
+
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -117,18 +114,18 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * Get the value of plainPassword
-     */ 
+     * Get the value of plainPassword.
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
     /**
-     * Set the value of plainPassword
+     * Set the value of plainPassword.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
@@ -137,18 +134,18 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * Get the value of ville
-     */ 
+     * Get the value of ville.
+     */
     public function getVille()
     {
         return $this->ville;
     }
 
     /**
-     * Set the value of ville
+     * Set the value of ville.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setVille($ville)
     {
         $this->ville = $ville;
@@ -157,18 +154,18 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * Get the value of phoneNumber
-     */ 
+     * Get the value of phoneNumber.
+     */
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
     }
 
     /**
-     * Set the value of phoneNumber
+     * Set the value of phoneNumber.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
@@ -177,18 +174,18 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
     }
 
     /**
-     * Get the value of genre
-     */ 
+     * Get the value of genre.
+     */
     public function getGenre()
     {
         return $this->genre;
     }
 
     /**
-     * Set the value of genre
+     * Set the value of genre.
      *
-     * @return  self
-     */ 
+     * @return self
+     */
     public function setGenre($genre)
     {
         $this->genre = $genre;

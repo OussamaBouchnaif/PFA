@@ -1,14 +1,16 @@
 <?php
+
 // src/Form/LigneReductionType.php
+
 namespace App\Form;
 
+use App\Entity\Camera;
 use App\Entity\LigneReduction;
+use App\Entity\Reduction;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Camera;
-use App\Entity\Reduction;
 
 class LigneReductionTypeForm extends AbstractType
 {

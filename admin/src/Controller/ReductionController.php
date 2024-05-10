@@ -25,8 +25,8 @@ class ReductionController extends AbstractController
         $this->reductionRepository = $reductionRepository;
     }
 
-    #[Route('reduction/reduction_add', name: 'reduction_add')]
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/reduction/reduction_add', name: 'reduction_add')]
+    public function add(Request $request): Response
     {
         $reduction = new Reduction();
         $form = $this->createForm(ReductionType::class, $reduction);
@@ -34,18 +34,16 @@ class ReductionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $prixReduction = $reduction->getPrix() * ($reduction->getPoucentage() / 100);
-            $reduction->setPrixReduction($prixReduction);
+            $this->entityManager->persist($reduction);
+            $this->entityManager->flush();
 
-            $entityManager->persist($reduction);
-            $entityManager->flush();
+            return $this->redirectToRoute('reduction_show', ['id' => $reduction->getId()]);
         }
 
         return $this->render('admin/reduction/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
     #[Route('/reduction', name: 'reduction_show')]
     public function show(): Response
     {
@@ -79,24 +77,28 @@ class ReductionController extends AbstractController
     #[Route('reduction/reductiondelete/{id}', name: 'reduction_delete')]
     public function deleteReduction(EntityManagerInterface $entityManager, ReductionRepository $reductionRepository, $id): JsonResponse
     {
+        // Find the reduction by ID
         $reduction = $reductionRepository->find($id);
 
+        // If reduction is not found, return a JSON response with an error message
         if (!$reduction) {
-            return new JsonResponse(['success' => false, 'message' => 'Reduction not found'], 404);
+            return new JsonResponse(['success' => false, 'message' => 'Reduction not found'], Response::HTTP_NOT_FOUND);
         }
 
-        // Supprimer toutes les lignes de réduction associées à cette réduction
+        // Delete all associated ligne reductions
         foreach ($reduction->getLigneReductions() as $ligneReduction) {
             $entityManager->remove($ligneReduction);
         }
 
-        // Supprimer la réduction
+        // Remove the reduction itself
         $entityManager->remove($reduction);
+
+        // Flush changes to the database
         $entityManager->flush();
 
+        // Return a JSON response indicating success
         return new JsonResponse(['success' => true, 'message' => 'Reduction deleted successfully']);
     }
-
     #[Route('reduction/LigneReduction', name: 'LigneReduction')]
     public function addLigneReduction(Request $request, EntityManagerInterface $entityManager): Response
     {

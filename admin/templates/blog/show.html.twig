@@ -324,44 +324,7 @@ document.body.appendChild(link);
 link.click();
 }
 
-	document.addEventListener('DOMContentLoaded', function () {
-		document.querySelectorAll('.delete-blog-link').forEach(function (link) {
-			link.addEventListener('click', function (event) {
-				event.preventDefault(); // Empêcher le comportement par défaut du lien
-
-				Swal.fire({
-					title: 'Are you sure?',
-					text: "You won't be able to revert this!",
-					icon: 'warning',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Yes, delete it!'
-				}).then((result) => {
-					if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-						fetch(this.getAttribute('href'), {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-								'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
-							},
-							body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
-						}).then(response => response.json()).then(data => {
-							if (data.success) {
-								Swal.fire('Deleted!', 'Your blog has been deleted.', 'success');
-								// Recharger les données du DataTable après la suppression réussie
-								$('#myTable').DataTable().ajax.reload();
-							} else {
-								Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
-							}
-						}).catch(error => {
-							console.error('Error:', error);
-						});
-					}
-				});
-			});
-		});
-	});
+	
 
 
 	function confirmPrint() {
@@ -394,4 +357,53 @@ if (result.isConfirmed) {
 exportToExcel();
 }
 });
-}</script>{% endblock %}
+}</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-blog-link').forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Empêcher le comportement par défaut du lien
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
+                            fetch(this.getAttribute('href'), {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
+                                },
+                                body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
+                            }).then(response => response.json()).then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'Your blog has been deleted.',
+                                        icon: 'success',
+                                        showConfirmButton: false // Hide the confirm button
+                                    });
+                                    // Recharger la page après la suppression réussie
+                                    setTimeout(function () {
+                                        location.reload();
+                                    }, 1500); // Reload after 1.5 seconds
+                                } else {
+                                    Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
+                                }
+                            }).catch(error => {
+                                console.error('Error:', error);
+                            });
+                        }
+                    });
+                });
+            });
+        });
+</script>
+
+{% endblock %}

@@ -13,6 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ClientController extends AbstractController
 {
+    #[Route('/', name: '')]
+    public function test(Request $request, ClientRepository $clientRepository): Response
+    {
+        $clients = $clientRepository->findAll();
+
+        return $this->render('admin/client/client_list.html.twig', [
+            'clients' => $clients,
+        ]);
+    }
+
     #[Route('/clients', name: 'client_list')]
     public function listClients(Request $request, ClientRepository $clientRepository): Response
     {

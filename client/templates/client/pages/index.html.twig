@@ -335,7 +335,7 @@
                             <article class="col single_product card-box">
                                 <figure>
                                     <div class="product_thumb">
-                                        <a href="{{ path('app_details', {id: camera.id}) }}">
+{#                                        <a href="{{ path('app_details', {'id': camera.id}) }}">#}
                                             {% set imageCamera = camera.imageCameras|first %}
                                             {% if imageCamera %}
                                                 <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   

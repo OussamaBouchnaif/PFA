@@ -4,16 +4,16 @@ namespace App\Form;
 
 use App\Entity\Camera;
 use App\Entity\Categorie;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CameraType extends AbstractType
 {
@@ -24,41 +24,41 @@ class CameraType extends AbstractType
                 'label' => 'Nom',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le nom de la caméra'
-                ]
+                    'placeholder' => 'Entrez le nom de la caméra',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez la description de la caméra'
-                ]
+                    'placeholder' => 'Entrez la description de la caméra',
+                ],
             ])
             ->add('prix', MoneyType::class, [
                 'label' => 'Prix',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le prix de la caméra'
-                ]
+                    'placeholder' => 'Entrez le prix de la caméra',
+                ],
             ])
             ->add('stock', IntegerType::class, [
                 'label' => 'Stock',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le stock de la caméra'
-                ]
+                    'placeholder' => 'Entrez le stock de la caméra',
+                ],
             ])
             ->add('dateAjout', DateType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'mt-2']
+                'attr' => ['class' => 'mt-2'],
             ])
             ->add('status', TextType::class, [
                 'label' => 'Statut',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le statut de la caméra'
-                ]
+                    'placeholder' => 'Entrez le statut de la caméra',
+                ],
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -66,61 +66,61 @@ class CameraType extends AbstractType
                 'label' => 'Catégorie',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Sélectionnez une catégorie'
-                ]
+                    'placeholder' => 'Sélectionnez une catégorie',
+                ],
             ])
             ->add('visionNoctrune', ChoiceType::class, [
                 'label' => 'Vision Nocturne',
                 'choices' => ['Oui' => true, 'Non' => false],
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Sélectionnez la disponibilité de la vision nocturne'
-                ]
+                    'placeholder' => 'Sélectionnez la disponibilité de la vision nocturne',
+                ],
             ])
             ->add('materiaux', ChoiceType::class, [
                 'label' => 'Matériaux',
-                'choices' =>  [
+                'choices' => [
                     'Plastique' => 'plastique',
                     'Métal' => 'métal',
                     'Autre' => 'autre',
                 ],
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('resolution', ChoiceType::class, [
                 'label' => 'Résolution',
-                'choices' =>  [
+                'choices' => [
                     'Haute' => 'haute',
                     'Moyenne' => 'moyenne',
                     'Basse' => 'basse',
                 ],
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('angleVision', ChoiceType::class, [
                 'label' => 'Angle de Vision',
-                'choices' =>  [
+                'choices' => [
                     'Large' => 'large',
                     'Moyen' => 'moyen',
                     'Étroit' => 'étroit',
                 ],
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('connectivite', ChoiceType::class, [
                 'label' => 'Connectivité',
-                'choices' =>  [
+                'choices' => [
                     'Wi-Fi' => 'wi-fi',
                     'Bluetooth' => 'bluetooth',
                     'USB' => 'usb',
                     'Aucune' => 'aucune',
                 ],
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('alimentation', ChoiceType::class, [
                 'label' => 'Alimentation',
@@ -131,31 +131,30 @@ class CameraType extends AbstractType
                     'Prise électrique' => 'prise',
                 ],
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('stockage', IntegerType::class, [
                 'label' => 'Stockage',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez la capacité de stockage'
-                ]
+                    'placeholder' => 'Entrez la capacité de stockage',
+                ],
             ])
             ->add('couleur', TextType::class, [
                 'label' => 'Couleur',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez la couleur'
-                ]
+                    'placeholder' => 'Entrez la couleur',
+                ],
             ])
             ->add('poids', IntegerType::class, [
                 'label' => 'Poids',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le poids'
-                ]
+                    'placeholder' => 'Entrez le poids',
+                ],
             ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

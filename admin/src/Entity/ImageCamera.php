@@ -1,4 +1,5 @@
 <?php
+
 // src/Entity/ImageCamera.php
 
 namespace App\Entity;

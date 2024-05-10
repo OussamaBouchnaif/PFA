@@ -7,7 +7,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class BlogModel 
+class BlogModel
 {
     private $entityManager;
     private $urlGenerator;

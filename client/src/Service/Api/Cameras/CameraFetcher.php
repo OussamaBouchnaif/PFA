@@ -12,6 +12,7 @@ class CameraFetcher extends AbstractCameraFetcher
      */
     public function getAllCamera(int $page): array
     {
+        $this->clearCache();
         return $this->getCameraData('api/cameras?page=' . $page);
     }
 
@@ -67,9 +68,9 @@ class CameraFetcher extends AbstractCameraFetcher
     public function CameratheMostOrders()
     {
         $response =  $this->getData->getDataFromApi("api/cameras/mostOrders");
-        if (!$response) {
+       /*  if (!$response) {
             throw new ObjectNotFoundException('Camera Not Found !!');
-        }
+        } */
         return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO[]', 'json');
     }
 

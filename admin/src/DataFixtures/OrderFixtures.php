@@ -2,15 +2,13 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
-use App\Entity\Camera;
 use App\Entity\Client;
-use App\Entity\Commande;
 use App\Entity\CodePromo;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\Commande;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class OrderFixtures extends Fixture implements FixtureGroupInterface
 {
@@ -18,12 +16,11 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
     {
         return ['order'];
     }
+
     public function load(ObjectManager $manager): void
     {
-       
         $faker = Factory::create();
-        for ($i = 0; $i < 5; $i++) 
-        {
+        for ($i = 0; $i < 5; ++$i) {
             $client = new Client();
             $client->setNom($faker->lastName);
             $client->setPrenom($faker->firstName);
@@ -38,7 +35,7 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
 
             $code = new CodePromo();
             $code->setCode(substr($faker->word, 0, 10));
-            $code->setDescription("Static description for testing");
+            $code->setDescription('Static description for testing');
             $code->setPourcentage($faker->numberBetween(1, 50));
             $code->setDateExpiration($faker->dateTimeBetween('now', '+1 year'));
             $code->setNombreAutorisation($faker->numberBetween(1, 10));
@@ -57,6 +54,4 @@ class OrderFixtures extends Fixture implements FixtureGroupInterface
         }
         $manager->flush();
     }
-
-   
 }
