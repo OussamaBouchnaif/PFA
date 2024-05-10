@@ -57,6 +57,7 @@
 								<div class="filter__list widget_brands">
 									<form action="{{path('camera_search')}}" id="res-filter-form" method="get">
 
+
 										<h3 data-toggle="collapse" data-target="#brands">Resolution</h3>
 										<div class="form-check form-switch">
 											<input class="form-check-input" type="radio" value="SD" name="res">
@@ -72,6 +73,121 @@
 										</div>
 									</form>
 								</div>
+
+                                    <li><a href="#" class="btn-list" data-role="grid_list" data-tippy="List" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i class="ion-navicon"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                     <!--shop toolbar end-->
+                    
+                 
+                     <div class="row shop_wrapper" id="results-container">
+                        <div id="loadingSpinner" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+                        {% if cameras is not empty %}
+                            {%  for camera in cameras %}
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
+                                    <div class="single_product card-box">
+                                        <div class="product_thumb">
+                                            <a href="{{ path('app_details', {id: camera.id}) }}">
+                                                {% set imageCamera = camera.imageCameras|first %}
+                                                {% if imageCamera %}
+                                                    <img src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
+                                                    {% set img = imageCamera.image %}
+                                                {% else %}
+                                                    {% set img = '' %}
+                                                {% endif %}
+                                            </a>
+                                            <div class="product_action">
+                                                <ul>
+                                                    <li class="wishlist">
+                                                        <button type="button" class="add-to-wishlist" data-id="{{ camera.id }}" data-tippy="Wishlist" data-tippy-inertia="true" data-tippy-delay="50"
+                                                        data-tippy-arrow="true" data-tippy-placement="left">
+                                                            <i class="icon-heart icons"></i>
+                                                        </button>
+                                                    </li>   
+                    
+                                                    <li ><a class="quick_view"    data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+                                                    <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
+                                                    data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                                                </ul>
+                                                
+                                            </div>
+                                           
+                                            <div class="product_label">
+                                                <span>-18%</span>
+                                            </div>
+                                        </div>
+                                        <div class="product_content grid_content text-center">
+                                            <div class="product_ratting">
+                                                <ul class="d-flex justify-content-center">
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                    <li><span>(2)</span></li>
+                                                </ul>
+                                            </div>
+                                            <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
+                                            <div class="price_box">
+                                                <span class="current_price">${{camera.prix}}</span>
+                                                <span class="old_price">$46.00</span>
+                                            </div>
+                                            <div class="add_to_cart">
+                                                <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{minio_url(img) }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="product_list_content">
+                                            <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
+                                            <p><a href="#">shows</a></p>
+                                            <div class="price_box">
+                                                <span class="current_price">${{camera.prix}}</span>
+                                                <span class="old_price">$46.00</span>
+                                            </div>
+                                            <div class="product_desc">
+                                                <p>{{camera.description}}</p>
+                                            </div>
+                                            <div class="add_to_cart">
+                                                <button type="button" class="btn btn-primary" href="" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</button>
+                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                            {% endfor %} 
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage - 1}) }}" aria-label="Previous">Précédent</a>
+                                    </li>
+                                    {% for page in 1..pagination.totalPages %}
+                                        <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
+        
+                                        </li>
+                                    {% endfor %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('fetch', {'page': pagination.currentPage + 1}) }}" tabindex="-1"  aria-label="Next">Suivant</a>
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        {% else %}
+                            <div class="col-12">
+                                <div class="alert alert-warning" role="alert">
+                                    No cameras available.
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 							</div>
