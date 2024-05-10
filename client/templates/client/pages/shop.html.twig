@@ -32,7 +32,7 @@
                                     <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount"  value="{{ price }}"  >
+                                        <input type="text" name="price_range" id="amount"   >
                                     </form>
                                 </div>
 
@@ -197,21 +197,14 @@
                                                         {% set ligneReduction = camera.ligneReductions|first %}
                                                         <span >-{{ligneReduction.reduction.poucentage}}%</span>
                                                     </div>
-                                                {% endif %}
-                                                
-                                                <div style="background: #4CAF50; margin-top: 3px;">
-                                                    <span >NEW</span>
-                                                </div>
-                                                
+                                                {% endif %}   
                                             </div>
 
                                             
                                         </div>
                                        
                                         <div class="product_content grid_content text-center">
-
                                             {% set average = camera.calculatingTheAverage %}
-
                                             <div class="product_ratting">
                                                 <ul class="d-flex justify-content-center">
                                                     

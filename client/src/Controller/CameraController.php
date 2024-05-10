@@ -46,6 +46,20 @@ class CameraController extends AbstractController
 
         $cameras = $this->callCamera->searchBy($searchCriteria);
         $data = $this->cameraRepo->pagination($cameras, $page, $paginator);
+
+        if ($request->isXmlHttpRequest()) {
+            
+            return $this->render('client/pages/components/cameras.html.twig', [
+                'cameras' => $data,
+                'categories' => $this->categorie->findAll(),
+                'items' => $this->callCamera->getItems(),
+                'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9), $page),
+                'route' => 'camera_search',
+                'cart' => $this->cartStorage->getCart(),
+                'totalItems' => $this->cartStorage->TotalPriceItems(),
+                'price'=>$formattedPrice,
+            ]);
+        }
         return $this->render('client/pages/shop.html.twig', [
             'cameras' => $data,
             'categories' => $this->categorie->findAll(),

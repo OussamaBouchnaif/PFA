@@ -17,8 +17,10 @@ class CartSessionStorage implements CartStorageInterface
     public function __construct(
         private readonly RequestStack $request,
         private Security $security,
-        
+
+
     ) {
+
     }
 
     public function addToCart(Camera $camera, int $qte, float $stockage)
@@ -31,9 +33,15 @@ class CartSessionStorage implements CartStorageInterface
             $qte,
             $stockage,
             $camera->getNom()
-        ));
+        )); 
         $this->saveCart($cart);
     }
+
+    /**
+     * Retrieves or initializes cart.
+     *
+     * @return CartValueObject 
+     */
 
     public function getCart(): CartValueObject
     {
@@ -49,6 +57,11 @@ class CartSessionStorage implements CartStorageInterface
         return $cart;
     }
 
+    /**
+     * Calculate the total price of all items in the cart.
+     *
+     * @return float The total price of all items.
+     */
     public function TotalPriceItems(): float
     {
         $totalPrice = 0.0;
@@ -60,6 +73,12 @@ class CartSessionStorage implements CartStorageInterface
 
         return $totalPrice;
     }
+
+    /**
+     * remove line from cart 
+     *
+     * @return void .
+     */
     public function removeFromCart(int $idItem)
     {
         $cart = $this->getCart();
@@ -71,7 +90,26 @@ class CartSessionStorage implements CartStorageInterface
         }
     }
 
-
+    /**
+     * update line from cart 
+     *
+     * @return void .
+     */
+    public function updateLine(int $id, int $qte)
+    {
+        $cart = $this->getCart();
+        $items = $cart->getItems();
+        if (array_key_exists($id, $items)) {
+            $cartItem = $items[$id];
+            $cartItem->setQuantity($qte);
+            $this->saveCart($cart);
+        }
+    }
+    /**
+     * clear cart 
+     *
+     * @return void .
+     */
     public function clearCart(CartValueObject $cart)
     {
         $cart->clear();

@@ -46,9 +46,7 @@ final class CartValueObject
        return null;
     }
 
-    public function updateCartItem(CartItemValueObject $requestedCartItem,
-    CartItemValueObject $exsistingCartItem,
-    ?int $index)
+    public function updateCartItem(CartItemValueObject $requestedCartItem,CartItemValueObject $exsistingCartItem,?int $index)
     {
         if(null === $index)
         {
@@ -58,7 +56,8 @@ final class CartValueObject
                 $exsistingCartItem->getImage(),
                 $exsistingCartItem->getPrice(),
                 $requestedCartItem->getQuantity()+$exsistingCartItem->getQuantity(),
-                $exsistingCartItem->getStockage(),$exsistingCartItem->getName());
+                $exsistingCartItem->getStockage(),
+                $exsistingCartItem->getName());
     }
 
     

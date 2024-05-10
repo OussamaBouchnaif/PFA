@@ -18,7 +18,7 @@ class CartItem
 
     #[ORM\Column]
     private ?float $price = null;
-    
+
     #[ORM\ManyToOne(inversedBy: 'cartItems', cascade: ['persist'])]
     private ?Camera $Camera = null;
 
@@ -28,10 +28,9 @@ class CartItem
     #[ORM\Column(length: 15, nullable: true)]
     private ?string $stockage = null;
 
-    public function TotalPriceItem():float
+    public function TotalPriceItem(): float
     {
-       return $this->getQuantity() * $this->getPrice();
-
+        return $this->getQuantity() * $this->getPrice();
     }
     public function getId(): ?int
     {
@@ -40,7 +39,7 @@ class CartItem
     public function setId(int $id)
     {
         $this->id = $id;
-    } 
+    }
     public function getQuantity(): ?float
     {
         return $this->quantity;

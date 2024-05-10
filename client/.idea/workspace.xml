@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af26218f-4f5f-4efb-a0c8-aef27b4081ac" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/client/pages/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/client/pages/index.html.twig" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/Cart/Handler/CartSessionStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cart/Handler/CartSessionStorage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cart/Handler/CartStorageInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cart/Handler/CartStorageInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WishListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WishListController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DTO/CameraDTO.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DTO/CameraDTO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/CartItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CartItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/VoucherUsedListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/VoucherUsedListener.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Forms/CartItemType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Forms/CartItemType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ValueObject/CartItemValueObject.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ValueObject/CartItemValueObject.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ValueObject/CartValueObject.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ValueObject/CartValueObject.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/client/pages/cart/cart.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/client/pages/cart/cart.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/client/pages/shop.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/client/pages/shop.html.twig" afterDir="false" />
+>>>>>>> 783fb0b3 (maintain code)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,8 +257,12 @@
       <workItem from="1708955148967" duration="185000" />
       <workItem from="1709404202651" duration="310000" />
       <workItem from="1713983205732" duration="657000" />
+<<<<<<< HEAD
       <workItem from="1715102712330" duration="220000" />
       <workItem from="1715187216188" duration="1409000" />
+=======
+      <workItem from="1715097012197" duration="214000" />
+>>>>>>> 783fb0b3 (maintain code)
     </task>
     <servers />
   </component>

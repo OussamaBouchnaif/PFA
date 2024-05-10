@@ -43,7 +43,7 @@
                                     <tbody>
                                         {% if cart is not empty %}
                                                 {% for item in cart.getLines %}
-                                                    {{form_start(form)}}
+                                                    {{form_start(form[item.id])}}
                                                         <tr class="border-top">
                                                             <td>
                                                                 <div class="cart_product_thumb">
@@ -71,10 +71,10 @@
                                                             </td>
                                                             <td class="product_quantity">
                                                                 <div class="cart_product_quantity">
-                                                                    
-                                                                    <input min="1" max="100" value="10" name="quantities" type="number">
+                                                                    {{form_widget(form[item.id].quantity,{'value':item.quantity})}}
                                                                 </div>
                                                             </td>
+
                                                             <td>
                                                                 <div class="cart_product_price">
                                                                     <span>${{ item.TotalPriceItem }}</span>
@@ -83,16 +83,17 @@
                                                             
                                                             <td>
                                                                 <div class="cart_product_remove text-right">
-                                                                    
+                                                                    {{form_widget(form[item.id].update)}}
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="cart_product_remove text-right">
-                                                                    
+                                                                    {{form_widget(form[item.id].delete)}}
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                    {{form_end(form)}}
+                                                        {{ form_widget(form[item.id].id, {'value': item.id}) }}
+                                                    {{form_end(form[item.id])}}
                                                 {% endfor %}
                                                                                 
                                             

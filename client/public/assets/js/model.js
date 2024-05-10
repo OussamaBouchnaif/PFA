@@ -1,28 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
     setupQuickViewButtons(); // Initialiser pour la première charge de page
-    var defaultValue = [100, 1000];  // Valeurs par défaut si 'price' n'est pas définie
-    var inputVal = $("#amount").val();
-
-    // Vérifie si 'inputVal' contient une plage de prix valide
-    var prices = inputVal ? inputVal.replace(/\$/g, '').split(' - ').map(Number) : defaultValue;
-
-    // Initialisation du slider avec les valeurs extraites ou les valeurs par défaut
+   
+  
     $("#slider-range").slider({
         range: true,
         min: 0,
         max: 2000,
-        values: [prices[0], prices[1]],
+        values: [16, 1000],
         slide: function(event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         },
         change: function(event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-            $('#price-filter-form').submit(); // Soumet le formulaire automatiquement
+
+            var criteria = {
+                price_range: "$" + ui.values[0] + " - $" + ui.values[1]  
+            };
+            fetchData(criteria);
         }
     });
 
     // Définir la valeur initiale du champ 'amount' si elle n'était pas préremplie
-    if (!inputVal) {
+    /* if (!inputVal) {
         $("#amount").val("$" + defaultValue[0] + " - $" + defaultValue[1]);
     }
 
@@ -35,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     $('#shorts').change(function() {
         $(this).closest('form').submit(); // Soumet le formulaire de tri
-    });
+    }); */
 });
     // Gestion des clics sur les filtres de catégorie
-    /*document.querySelectorAll('.widget_dropdown_categories a').forEach(function(link) {
+    document.querySelectorAll('.widget_dropdown_categories a').forEach(function(link) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             var categorie = this.getAttribute('href').split('categorie=')[1];
@@ -88,13 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
             order = 'prix';
         }
         fetchData({ 'orderby': order });
-    });*/
+    });
 // Fonction fetchData avec la logique de réinitialisation des boutons de visualisation rapide
 function fetchData(criteria) {
     var url = new URL('/camera/search', window.location.origin);
     Object.keys(criteria).forEach(key => url.searchParams.append(key, criteria[key]));
-    //document.getElementById('loadingSpinner').style.display = 'flex';
-    //document.getElementById('results-container').style.filter = 'blur(2px)';
+    document.getElementById('loadingSpinner').style.display = 'flex';
+    document.getElementById('results-container').style.filter = 'blur(2px)';
     fetch(url, {
         method: 'GET',
         headers: {
@@ -105,15 +104,15 @@ function fetchData(criteria) {
     .then(html => {
         document.getElementById('results-container').innerHTML = html;
         setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
-        //document.getElementById('loadingSpinner').style.display = 'none';
-        //document.getElementById('results-container').style.filter = 'none';
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
         
     })
     .catch(error => {
         console.error('Error:', error)
         document.getElementById('results-container').innerHTML = error;
-        //document.getElementById('loadingSpinner').style.display = 'none';
-        //document.getElementById('results-container').style.filter = 'none';
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('results-container').style.filter = 'none';
     });
 }
 
