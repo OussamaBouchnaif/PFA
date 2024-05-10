@@ -10,6 +10,7 @@ class SessionManager implements SessionManagerInterface
     {
         
     }
+    
     public function fillInTheSession($newCriteria):array
     {
         $session = $this->request->getSession();
