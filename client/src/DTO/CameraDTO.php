@@ -3,6 +3,7 @@
 
 namespace App\DTO;
 
+use App\Entity\AvisCamera;
 use App\Entity\Categorie;
 
 class CameraDTO
@@ -62,8 +63,7 @@ class CameraDTO
 
         return $totalNotes > 0 ? round($sumNotes / $totalNotes) : 0;
     }
-    
-    public function totalNotes(): int
+    public function totalNotes():int
     {
         return count($this->getNotes());
     }
