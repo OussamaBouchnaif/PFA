@@ -158,7 +158,7 @@
 									<table id="myTable" class="table">
 										<thead>
 											<tr class="align-middle custom-header-bg">
-												<th class="custom-header text-center">Image</th>
+												{# <th class="custom-header text-center">Image</th> #}
 												<th class="custom-header text-center">Contenu</th>
 												<th class="custom-header text-center">Title</th>
 												<th class="custom-header text-center">User</th>
@@ -169,13 +169,13 @@
 										<tbody>
 											{% for blog in blogs %}
 												<tr data-camera-id="{{ blog.id }}">
-													<td>
+													{# <td>
 														<div class="avatar-group">
 															<a href="javascript: void(0);" class="avatar-group-item" data-img="avatar-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
 																<img src="http://127.0.0.1:9000/fichier/{{ blog.imageCoverture }}" alt="" class="rounded-circle avatar-xxs">
 															</a>
 														</div>
-													</td>
+													</td> #}
 													<td class="align-middle text-center">{{ blog.title }}</td>
 													<td class="align-middle text-center price-cell">{{ blog.contenu }}</td>
 													<td class="align-middle text-center price-cell">{{ blog.user.nom }}</td>
@@ -323,47 +323,11 @@ link.setAttribute('download', 'BlogesCamera.csv');
 document.body.appendChild(link);
 link.click();
 }
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.delete-blog-link').forEach(function (link) {
-        link.addEventListener('click', function (event) {
-            event.preventDefault(); // Empêcher le comportement par défaut du lien
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-                    fetch(this.getAttribute('href'), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
-                        },
-                        body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
-                    }).then(response => response.json()).then(data => {
-                        if (data.success) {
-                            Swal.fire('Deleted!', 'Your blog has been deleted.', 'success');
-                            // Rediriger vers la page d'index des blogs après la suppression réussie
-                            window.location.href = "{{ path('app_blog_index') }}";
-                        } else {
-                            Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
-                        }
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-            });
-        });
-    });
-});
+	
 
 
-function confirmPrint() {
+	function confirmPrint() {
 Swal.fire({
 title: 'Print Table',
 text: "Are you sure you want to print the table?",
@@ -393,4 +357,53 @@ if (result.isConfirmed) {
 exportToExcel();
 }
 });
-}</script>{% endblock %}
+}</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-blog-link').forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Empêcher le comportement par défaut du lien
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
+                            fetch(this.getAttribute('href'), {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
+                                },
+                                body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
+                            }).then(response => response.json()).then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        title: 'Deleted!',
+                                        text: 'Your blog has been deleted.',
+                                        icon: 'success',
+                                        showConfirmButton: false // Hide the confirm button
+                                    });
+                                    // Recharger la page après la suppression réussie
+                                    setTimeout(function () {
+                                        location.reload();
+                                    }, 1500); // Reload after 1.5 seconds
+                                } else {
+                                    Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
+                                }
+                            }).catch(error => {
+                                console.error('Error:', error);
+                            });
+                        }
+                    });
+                });
+            });
+        });
+</script>
+
+{% endblock %}

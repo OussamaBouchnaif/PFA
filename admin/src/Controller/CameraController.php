@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Camera;
 use App\Entity\Commande;
 use App\Entity\ImageCamera;
+use App\Entity\LigneReduction;
 use App\Form\CameraType;
-use App\Services\CameraModel;
 use App\Form\PhotoType;
-use App\Repository\CategorieRepository;
 use App\Repository\CameraRepository;
+use App\Repository\CategorieRepository;
+use App\Services\CameraModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,10 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class CameraController extends AbstractController
 {
-
     public function __construct(
         private CameraModel $cameraModel,
         private EntityManagerInterface $manager,
@@ -38,9 +37,9 @@ class CameraController extends AbstractController
     {
         return $this->render('admin/Cameras/details.html.twig', [
             'camera' => $camera,
-
         ]);
     }
+
     #[Route('/camera', name: 'camera')]
     public function showCamera(Request $request, CameraRepository $cameraRepository, CategorieRepository $categorieRepository): Response
     {
@@ -78,8 +77,6 @@ class CameraController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/camera/Edit_camera/{id}', name: 'Edit_camera')]
     public function editCamera(Request $request, EntityManagerInterface $entityManager, Camera $camera, CameraModel $cameraModel): Response
     {
@@ -94,6 +91,7 @@ class CameraController extends AbstractController
         if ($formCamera->isSubmitted() && $formCamera->isValid()) {
             // Handle camera form submission
             $cameraModel->editCamera($camera, $imageCamera, $request);
+
             return $this->redirectToRoute('camera');
         }
 
@@ -104,7 +102,6 @@ class CameraController extends AbstractController
         ]);
     }
 
-
     #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
     public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): JsonResponse
     {
@@ -114,12 +111,15 @@ class CameraController extends AbstractController
             return new JsonResponse(['success' => false, 'message' => 'Camera not found'], 404);
         }
 
-        // Supprimer toutes les images associées à cette caméra
         foreach ($camera->getImageCameras() as $imageCamera) {
             $entityManager->remove($imageCamera);
         }
 
-        // Supprimer la caméra
+        $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
+        foreach ($reductions as $reduction) {
+            $entityManager->remove($reduction);
+        }
+
         $entityManager->remove($camera);
         $entityManager->flush();
 
@@ -132,6 +132,7 @@ class CameraController extends AbstractController
         $CountCommandes = $this->manager->getRepository(Commande::class)->countCommandesByStatus();
         $camerasByCategory = $this->manager->getRepository(Camera::class)->getCamerasByCategory();
         $totalCommandes = $this->manager->getRepository(Commande::class)->getTotalCommandes();
+
         return $this->render('admin/Cameras/chart.html.twig', [
             'camerasByCategory' => $camerasByCategory,
             'CountCommandes' => $CountCommandes,

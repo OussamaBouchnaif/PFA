@@ -11,8 +11,8 @@ use App\User\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
@@ -29,8 +29,6 @@ class UserController extends AbstractController
             'users' => $users,
         ]);
     }
-
-
 
     #[Route('/user/create', name: 'user_create')]
     public function addtest(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
@@ -56,8 +54,6 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
 
     #[Route('/user/edit/{id}', name: 'user_edit')]
     public function edit(Request $request, User $user, UserPasswordHasherInterface $passwordEncoder): Response
@@ -87,10 +83,12 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     #[Route('/user/delete/{id}', name: 'user_delete')]
     public function delete(User $user): Response
     {
         $this->manager->removeUser($user);
+
         return $this->redirectToRoute('users_index');
     }
 }

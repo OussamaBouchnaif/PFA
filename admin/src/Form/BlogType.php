@@ -1,4 +1,5 @@
 <?php
+
 // src/Form/BlogType.php
 
 namespace App\Form;
@@ -9,10 +10,11 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class BlogType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -20,10 +22,10 @@ class BlogType extends AbstractType
         $builder
             ->add('title', TextType::class, ['label' => 'Titre'])
             ->add('contenu', TextareaType::class, ['label' => 'Contenu'])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Image',
-                'required' => false,
-            ])
+            // ->add('imageFile', VichImageType::class, [
+            //     'label' => 'Image',
+            //     'required' => false,
+            // ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',
@@ -35,8 +37,8 @@ class BlogType extends AbstractType
                 'label' => 'Cameras',
                 'multiple' => true, // Permettre la sélection de plusieurs caméras
             ])
-            
-            ;
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

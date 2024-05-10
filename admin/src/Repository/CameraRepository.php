@@ -2,15 +2,13 @@
 
 namespace App\Repository;
 
-use App\Entity\Categorie;
 use App\Entity\Camera;
-use App\Entity\Commande;
-use Aws\Command;
+use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use Doctrine\ORM\EntityManagerInterface; 
+use Knp\Component\Pager\PaginatorInterface;
 
 class CameraRepository extends ServiceEntityRepository
 {
@@ -28,8 +26,6 @@ class CameraRepository extends ServiceEntityRepository
     /**
      * Get paginated cameras.
      *
-     * @param int $page
-     * @param int $limit
      * @return PaginationInterface
      */
     public function getCamerasByCategory(): array

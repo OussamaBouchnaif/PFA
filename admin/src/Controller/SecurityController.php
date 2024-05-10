@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends AbstractController
 {
-
-
     #[Route('/login', name: 'app_login')]
     public function login(Request $request, \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils): Response
     {
@@ -27,7 +25,6 @@ class SecurityController extends AbstractController
             'error' => $error,
         ]);
     }
-
 
     #[Route('/logout', name: 'app_logout')]
     public function logout(): RedirectResponse

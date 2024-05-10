@@ -258,11 +258,48 @@
 <script>
 let table = null;
 $(document).ready(function () {
-// Vérifier si DataTables a déjà été initialisé sur la table
-
-
-// Autres fonctionnalités de votre script...
 });
+
+
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select the dropdown menu for percentages
+        var pourcentageSelect = document.getElementById('PourcentageSelect');
+
+        // Add change event listener to the dropdown menu
+        pourcentageSelect.addEventListener('change', function () {
+            // Get the selected value from the dropdown menu
+            var selectedPourcentage = pourcentageSelect.value;
+
+            // Call the function to filter the table by percentage
+            filterTableByPourcentage(selectedPourcentage);
+        });
+    });
+
+    function filterTableByPourcentage(pourcentage) {
+        // Get all the rows of the table
+        var tableRows = document.querySelectorAll('#myTable tbody tr');
+
+        // Loop through all rows
+        tableRows.forEach(function (row) {
+            // Get the percentage cell value in the row
+            var pourcentageCell = row.cells[1].textContent.trim();
+
+            // Check if the percentage matches the selected one or if the selected percentage is empty
+            if (pourcentage === '' || pourcentageCell === pourcentage) {
+                // Show the row
+                row.style.display = '';
+            } else {
+                // Hide the row
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+<script>
 
 
 function printTable() {
@@ -340,40 +377,6 @@ function exportToCSV() {
 }
 
 
-
-document.addEventListener('DOMContentLoaded', function () { // Sélectionnez l'élément de liste déroulante des pourcentages
-var pourcentageSelect = document.getElementById('PourcentageSelect');
-
-// Ajoutez un écouteur d'événements de changement à l'élément de liste déroulante
-pourcentageSelect.addEventListener('change', function () { // Récupérez la valeur sélectionnée dans la liste déroulante
-var selectedPourcentage = pourcentageSelect.value;
-
-// Appelez la fonction pour filtrer la table par pourcentage
-filterTableByPourcentage(selectedPourcentage);
-});
-});
-
-function filterTableByPourcentage(pourcentage) { // Récupérer toutes les lignes de la table
-var tableRows = document.querySelectorAll('#myTable tbody tr');
-
-// Parcourir toutes les lignes
-tableRows.forEach(function (row) { // Récupérer la cellule de pourcentage dans la ligne
-var pourcentageCell = row.cells[1].textContent.trim();
-
-// Vérifier si le pourcentage correspond à celui sélectionné ou si le pourcentage sélectionné est vide
-if (pourcentage === '' || pourcentageCell === pourcentage) { // Afficher la ligne
-row.style.display = '';
-} else { // Masquer la ligne
-row.style.display = 'none';
-}
-});
-}
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function () { // Fonction pour filtrer par date de début et de fin
 function filterByDates() {
 var minDate = new Date(document.getElementById('minLast').value);
@@ -416,7 +419,6 @@ document.getElementById('clearall').addEventListener('click', clearAllFilters);
         
 });
 </script>
-
 <script>
     function confirmDelete(deleteUrl) {
         Swal.fire({
@@ -429,12 +431,35 @@ document.getElementById('clearall').addEventListener('click', clearAllFilters);
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirection vers l'URL de suppression si confirmé
-                window.location.href = deleteUrl;
+                // Send AJAX request to delete URL
+                $.ajax({
+                    url: deleteUrl,
+                    type: 'DELETE',
+                    success: function(response) {
+                        if (response.success) {
+                            // Show success message
+                            Swal.fire('Success', response.message, 'success').then((result) => {
+                                // Reload the page after the user clicks OK
+                                if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            // Show error message
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Show error message
+                        Swal.fire('Error', 'An error occurred while deleting the reduction', 'error');
+                    }
+                });
             }
         });
     }
 </script>
+
+
 <script>
 function confirmAction(action) {
     let title = '';

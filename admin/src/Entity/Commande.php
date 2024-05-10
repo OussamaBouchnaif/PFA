@@ -25,8 +25,6 @@ class Commande
     #[ORM\Column]
     private ?float $total = null;
 
-    
-
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LigneCommande::class)]
     private Collection $ligneCommandes;
 
@@ -37,7 +35,6 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CodePromo $codePromo = null;
-
 
     public function __construct()
     {
@@ -85,8 +82,6 @@ class Commande
 
         return $this;
     }
-
-   
 
     /**
      * @return Collection<int, LigneCommande>

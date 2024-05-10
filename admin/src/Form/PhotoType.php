@@ -1,4 +1,5 @@
 <?php
+
 // src/Form/PhotoType.php
 // src/Form/PhotoType.php
 
@@ -7,8 +8,8 @@ namespace App\Form;
 use App\Entity\ImageCamera;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PhotoType extends AbstractType
 {

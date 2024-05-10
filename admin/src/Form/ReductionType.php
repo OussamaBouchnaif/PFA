@@ -1,17 +1,14 @@
 <?php
-// src/Form/ReductionType.php
-// src/Form/ReductionType.php
 
 namespace App\Form;
 
 use App\Entity\Reduction;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReductionType extends AbstractType
 {
@@ -36,9 +33,8 @@ class ReductionType extends AbstractType
             ])
             ->add('Prix', null, [
                 'label' => 'Prix',
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
             ]);
-            
     }
 
     public function configureOptions(OptionsResolver $resolver)

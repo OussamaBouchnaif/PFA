@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
 #[Vich\Uploadable]
@@ -18,22 +18,29 @@ class Blog
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre ne peut pas être vide")]
+    #[Assert\Length(max: 255, maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères")]
     private ?string $title = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le contenu ne peut pas être vide")]
     private ?string $contenu = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-
     private ?string $imageCoverture = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageCoverture')]
-
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        maxSizeMessage: "Le fichier ne peut pas dépasser {{ limit }}",
+        mimeTypesMessage: "Seuls les fichiers JPEG et PNG sont autorisés"
+    )]
     private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'blogs')]
+    #[Assert\NotNull(message: "L'utilisateur doit être spécifié")]
     private ?User $User = null;
 
     #[ORM\ManyToMany(targetEntity: Camera::class, inversedBy: 'blogs')]

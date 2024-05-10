@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\LigneReduction;
 use App\Entity\Reduction;
+use App\Form\LigneReductionTypeForm;
 use App\Form\ReductionType;
 use App\Repository\ReductionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\LigneReduction;
-use App\Form\LigneReductionTypeForm;
 
 class ReductionController extends AbstractController
 {
@@ -25,8 +25,8 @@ class ReductionController extends AbstractController
         $this->reductionRepository = $reductionRepository;
     }
 
-    #[Route('reduction/reduction_add', name: 'reduction_add')]
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/reduction/reduction_add', name: 'reduction_add')]
+    public function add(Request $request): Response
     {
         $reduction = new Reduction();
         $form = $this->createForm(ReductionType::class, $reduction);
@@ -34,29 +34,25 @@ class ReductionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $prixReduction = $reduction->getPrix() * ($reduction->getPoucentage() / 100);
-            $reduction->setPrixReduction($prixReduction);
+            $this->entityManager->persist($reduction);
+            $this->entityManager->flush();
 
-            $entityManager->persist($reduction);
-            $entityManager->flush();
+            return $this->redirectToRoute('reduction_show', ['id' => $reduction->getId()]);
         }
 
         return $this->render('admin/reduction/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
-
-
     #[Route('/reduction', name: 'reduction_show')]
     public function show(): Response
     {
         $reductions = $this->reductionRepository->findAll();
+
         return $this->render('admin/reduction/show.html.twig', [
             'reductions' => $reductions,
         ]);
     }
-
 
     #[Route('reduction/reductionedit/{id}', name: 'reduction_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager, Reduction $reduction): Response
@@ -78,35 +74,31 @@ class ReductionController extends AbstractController
         ]);
     }
 
-
-
-
     #[Route('reduction/reductiondelete/{id}', name: 'reduction_delete')]
-    public function delete(Request $request, Reduction $reduction, EntityManagerInterface $entityManager): Response
+    public function deleteReduction(EntityManagerInterface $entityManager, ReductionRepository $reductionRepository, $id): JsonResponse
     {
-        // Supprimer toutes les lignes de ligne_reduction associées à cette réduction
-        $ligneReductions = $reduction->getLigneReductions();
-        foreach ($ligneReductions as $ligneReduction) {
+        // Find the reduction by ID
+        $reduction = $reductionRepository->find($id);
+
+        // If reduction is not found, return a JSON response with an error message
+        if (!$reduction) {
+            return new JsonResponse(['success' => false, 'message' => 'Reduction not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Delete all associated ligne reductions
+        foreach ($reduction->getLigneReductions() as $ligneReduction) {
             $entityManager->remove($ligneReduction);
         }
 
-        // Ensuite, supprimer la réduction elle-même
+        // Remove the reduction itself
         $entityManager->remove($reduction);
+
+        // Flush changes to the database
         $entityManager->flush();
 
-        return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
+        // Return a JSON response indicating success
+        return new JsonResponse(['success' => true, 'message' => 'Reduction deleted successfully']);
     }
-
-
-
-
-
-
-
-
-
-
-
     #[Route('reduction/LigneReduction', name: 'LigneReduction')]
     public function addLigneReduction(Request $request, EntityManagerInterface $entityManager): Response
     {
