@@ -7,7 +7,6 @@ use App\Entity\FavoritCamera;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Cart\Handler\CartStorageInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,12 +55,9 @@ class WishListController extends AbstractController
     #[Route('/delete/wishCamera/{id}',name:'delete_favorit')]
     public function deleteWishCamera(FavoritCamera $favoritCamera):Response
     {
-        if(null !== $favoritCamera)
-        {
-            $this->manager->remove($favoritCamera);
-            $this->manager->flush();    
-        }
-        return $this->redirectToRoute('app_wish_list');
+        $this->manager->remove($favoritCamera);
+        $this->manager->flush();    
         
+        return $this->redirectToRoute('app_wish_list');
     }
 }

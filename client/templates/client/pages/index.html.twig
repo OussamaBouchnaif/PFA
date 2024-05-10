@@ -195,26 +195,7 @@
                                         
                                         </div>
                                         <figcaption class="product_content text-center">
-                                            {% set notes = [] %} 
-                                            {% set average = 0 %}
-                                            {% for avis in camera.avisCameras %}
-                                                {% set notes = notes|merge([avis.note]) %} 
-                                            {% endfor %}
-                                            {% set totalNotes = notes|length %} 
-                                            
-                                            {% set sumNotes = 0 %} 
-
-                                            {% for note in notes %}
-                                                {% set sumNotes = sumNotes + note %} 
-                                            {% endfor %}
-
-                                            {% if totalNotes > 0 %}
-                                                {% set average = (sumNotes / totalNotes)|round(0, 'floor') %} 
-                                            {% else %}
-                                                {% set average = 0 %} 
-                                            {% endif %}
-
-                                            
+                                            {% set average = camera.calculatingTheAverage %}
                                             <div class="product_ratting">
                                                 <ul class="d-flex justify-content-center">
                                                     
@@ -237,7 +218,7 @@
                                                         {% endfor %}
                                                     {% endif %}
                                             
-                                                    <li><span>({{ totalNotes }} avis, moyenne : {{ average }})</span></li>
+                                                    <li><span>({{ camera.totalNotes }} avis, moyenne : {{ average }})</span></li>
                                                 </ul>
                                             </div>
                                             <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
@@ -367,26 +348,7 @@
                                         </div>
                                     </div>
                                     <figcaption class="product_content text-center">
-                                        {% set notes = [] %} 
-                                            {% set average = 0 %}
-                                            {% for avis in camera.avisCameras %}
-                                                {% set notes = notes|merge([avis.note]) %} 
-                                            {% endfor %}
-                                            {% set totalNotes = notes|length %} 
-                                            
-                                            {% set sumNotes = 0 %} 
-
-                                            {% for note in notes %}
-                                                {% set sumNotes = sumNotes + note %} 
-                                            {% endfor %}
-
-                                            {% if totalNotes > 0 %}
-                                                {% set average = (sumNotes / totalNotes)|round(0, 'floor') %} 
-                                            {% else %}
-                                                {% set average = 0 %} 
-                                            {% endif %}
-
-                                            
+                                        {% set average = camera.calculatingTheAverage %}
                                             <div class="product_ratting">
                                                 <ul class="d-flex justify-content-center">
                                                     
@@ -409,7 +371,7 @@
                                                         {% endfor %}
                                                     {% endif %}
                                             
-                                                    <li><span>({{ totalNotes }} avis, moyenne : {{ average }})</span></li>
+                                                    <li><span>({{ camera.totalNotes }} avis, moyenne : {{ average }})</span></li>
                                                 </ul>
                                             </div>
                                         <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>

@@ -14,4 +14,5 @@ interface CartStorageInterface
     public function clearCart(CartValueObject $cart);
     public function getCart():CartValueObject;
     public function TotalPriceItems():float;
+    public function updateLine(int $id,int $qte);
 }

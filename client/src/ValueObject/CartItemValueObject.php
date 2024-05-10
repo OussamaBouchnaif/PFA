@@ -6,11 +6,13 @@ use Doctrine\Common\Collections\Collection;
 
 final class CartItemValueObject
 {
-    public function __construct(private int $id,private Collection $image,
-    private float $price,
-    private float $quantity,
-    private float $stockage,
-    private string $name)
+    public function __construct(
+        private int $id,
+        private Collection $image,
+        private float $price,
+        private int $quantity,
+        private float $stockage,
+        private string $name)
     {}
     
     public function TotalPriceItem():float
@@ -18,14 +20,7 @@ final class CartItemValueObject
        return $this->getQuantity() * $this->getPrice();
 
     }
-    /**
-     * Get the value of quantity
-     */ 
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
+  
 
 
     /**
@@ -103,6 +98,28 @@ final class CartItemValueObject
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+   
+
+    /**
+     * Get the value of quantity
+     */ 
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set the value of quantity
+     *
+     * @return  self
+     */ 
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

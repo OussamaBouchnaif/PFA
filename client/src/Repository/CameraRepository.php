@@ -38,16 +38,6 @@ class CameraRepository extends ServiceEntityRepository
     
         return $paginationInfo;
     }
-    public function fillInTheSession($newCriteria,SessionInterface $session):array
-    {
-        $searchCriteria = $session->get('searchCriteria', array());
-        foreach ($newCriteria as $key => $value) {
-            if (!empty($value)) {
-                $searchCriteria[$key] = $value; 
-            }
-        }
-        return $searchCriteria;
-    }
     public function pagination($cameras,$page,PaginatorInterface $paginator)
     {
         $data = $paginator->paginate(

@@ -3,8 +3,6 @@
 namespace App\EventListener;
 
 use App\Event\VoucherUsedEvent;
-use App\Voucher\Strategy\VoucherStrategyInterface;
-use App\Voucher\VoucherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class VoucherUsedListener
