@@ -1,6 +1,7 @@
 
 
-{% block stylesheets %}
+
+
 
 <style>
    
@@ -34,7 +35,7 @@
     }
     
 </style>
-{% endblock  %}
+
 <div class="row shop_wrapper" id="results-container">
     <div id="loadingSpinner" style="display: none;">
         <div class="spinner"></div>
@@ -62,9 +63,8 @@
                                     </a>
                                 </li>
                                 
-                                <li ><a class="quick_view"    data-toggle="modal" data-target="#modal_box" data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
-                                <li class="compare"><a data-tippy="Detaille" href="{{path('app_details',{id:camera.id})}}" data-tippy-inertia="true" data-tippy-delay="50"
-                                data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
+                                <li ><a class="quick_view" href="{{path('app_details',{id:camera.id})}}"   data-tippy="Quick View" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-size-fullscreen icons"></i></a></li>
+                            
                             </ul>
                             
                         </div>
@@ -165,6 +165,10 @@
         </div>
     {% endif %}
 </div>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="{{ asset('assets/js/model.js') }}"></script>
+<script src="{{ asset('assets/js/cart.js') }}"></script>
+
 
 
 

@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Service\Api\Cameras\CameraFetcherInterface;
+use App\Service\Pagination\PaginationServiceInterface;
+use App\Service\Session\SessionManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,56 +22,44 @@ class CameraController extends AbstractController
 {
     public function __construct(
         private CategorieRepository $categorie,
-        private CameraFetcherInterface $callCamera,
-        private CameraRepository $cameraRepo,
+        private CameraFetcherInterface $cameraFetcher,
         private CartStorageInterface $cartStorage,
+        private SessionManagerInterface $sessionManager,
+        private PaginationServiceInterface $paginationManager,
     ) {
-        
     }
 
 
     #[Route('/camera/search', name: 'camera_search')]
-    public function search(Request $request, PaginatorInterface $paginator, SessionInterface $session,PriceFormatter $priceFormatter): Response
+    public function search(Request $request, PriceFormatter $priceFormatter): Response
     {
         $page = $request->query->getInt('page', 1);
+        $session = $request->getSession();
         $newCriteria = [
-            'order' => $request->query->get('orderby') ,
+            'order' => $request->query->get('orderby'),
             'resolution' => $request->query->get('res'),
             'categorie.nom' => $request->query->get('categorie'),
-            'angleVision' => $request->query->get('angle') ,
+            'angleVision' => $request->query->get('angle'),
             'prix' => $request->query->get('price_range') ? $priceFormatter->formatPriceRange($request->query->get('price_range')) : null,
         ];
-        
-        $searchCriteria = $this->cameraRepo->fillInTheSession($newCriteria, $session);
-        $formattedPrice = $priceFormatter->displayFormattedPrice($searchCriteria['prix'] ?? null);
+
+        $searchCriteria = $this->sessionManager->fillInTheSession($newCriteria, $session);
         $session->set('searchCriteria', $searchCriteria);
 
-        $cameras = $this->callCamera->searchBy($searchCriteria);
-        $data = $this->cameraRepo->pagination($cameras, $page, $paginator);
+        $cameras = $this->cameraFetcher->searchBy($searchCriteria);
+        $data = $this->paginationManager->paginate($cameras, $page,);
 
         if ($request->isXmlHttpRequest()) {
-            
+
             return $this->render('client/pages/components/cameras.html.twig', [
                 'cameras' => $data,
                 'categories' => $this->categorie->findAll(),
-                'items' => $this->callCamera->getItems(),
-                'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9), $page),
-                'route' => 'camera_search',
+                'items' => $this->cameraFetcher->getItems(),
+                'pagination' => $this->paginationManager->extractPaginationInfo($data->getTotalItemCount(), $page,),
                 'cart' => $this->cartStorage->getCart(),
                 'totalItems' => $this->cartStorage->TotalPriceItems(),
-                'price'=>$formattedPrice,
             ]);
         }
-        return $this->render('client/pages/shop.html.twig', [
-            'cameras' => $data,
-            'categories' => $this->categorie->findAll(),
-            'items' => $this->callCamera->getItems(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($data->getTotalItemCount() / 9), $page),
-            'route' => 'camera_search',
-            'cart' => $this->cartStorage->getCart(),
-            'totalItems' => $this->cartStorage->TotalPriceItems(),
-            'price'=>$formattedPrice,
-        ]);
     }
 
     #[Route('/fetchCamera', name: 'fetch')]
@@ -78,14 +68,12 @@ class CameraController extends AbstractController
         $session->remove('searchCriteria');
         $page = $request->query->getInt('page', 1);
         return $this->render('client/pages/shop.html.twig', [
-            'cameras' => $this->callCamera->getAllCamera($page),
+            'cameras' => $this->cameraFetcher->getAllCamera($page),
             'categories' => $this->categorie->findAll(),
-            'items' => $this->callCamera->getItems(),
-            'pagination' => $this->cameraRepo->extractPaginationInfo(ceil($this->callCamera->getItems() / 9), $page),
-            'route' => 'fetch',
+            'items' => $this->cameraFetcher->getItems(),
+            'pagination' => $this->paginationManager->extractPaginationInfo($this->cameraFetcher->getItems(), $page,),
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
-            'price'=>'',
         ]);
     }
 }
