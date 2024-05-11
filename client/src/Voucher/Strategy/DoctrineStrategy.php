@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Voucher\Strategy;
 
-use App\Contract\VoucherModelInterface;
+use App\Contract\DiscountModelInterface;
 use App\Entity\CodePromo;
 use App\Repository\CodePromoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +18,7 @@ class DoctrineStrategy implements VoucherStrategyInterface
     {
     }
 
-    public function findVoucherModel(?string $voucherIdentifier): ?VoucherModelInterface
+    public function findVoucherModel(?string $voucherIdentifier): ?DiscountModelInterface
     {
         if (null === $voucherIdentifier) {
             return null;
@@ -30,7 +30,8 @@ class DoctrineStrategy implements VoucherStrategyInterface
             return null;
         }
 
-        return new class($adaptedVoucher) implements VoucherModelInterface {
+        return new class($adaptedVoucher) implements DiscountModelInterface
+        {
             private CodePromo $adaptedObject;
 
             public function __construct(CodePromo $adaptedObject)
@@ -46,6 +47,11 @@ class DoctrineStrategy implements VoucherStrategyInterface
             public function getRate(): float
             {
                 return $this->adaptedObject->getPourcentage();
+            }
+
+            public function getType(): string
+            {
+                return 'voucher';
             }
         };
     }

@@ -24,8 +24,16 @@ class CartItemType extends AbstractType
         ->add('id', HiddenType::class, [
             
         ])
-        ->add('delete', SubmitType::class, ['label' => 'delete'])
-        ->add('update', SubmitType::class, ['label' => 'update']);
+        ->add('delete', SubmitType::class, [
+            'label' => '<i class="ion-android-close"></i>',
+            'attr' => ['class' => 'btn btn-danger'],
+            'label_html' => true,  
+        ])
+        ->add('update', SubmitType::class, [
+            'label' => '<i class="icon-refresh"></i>',
+            'attr' => ['class' => 'btn btn-warning']  ,
+            'label_html' => true,
+        ]);
 
     }
 

@@ -33,6 +33,12 @@ services:
     App\Cart\Denormalizer\AbstractCartNormalizer:
         alias: App\Cart\Denormalizer\CartSessionNormalizer
     
+    App\Reduction\Manager\Strategy\AbstractReductionStrategy:
+        alias: App\Reduction\Manager\Strategy\ReductionwithPercentage
+    
+    App\Reduction\Applier\AbstractDiscountApplier:
+        alias: App\Reduction\Applier\DefaultApplier
+    
     App\Twig\MinioExtension:
         arguments:
             $endpointMinio: '%env(ENDPOINT_MINIO)%'

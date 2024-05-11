@@ -49,26 +49,7 @@ class CameraDTO
 
     private  ?string $alimentation = null;
 
-    public function getNotes(): array
-    {
-        return array_map(function ($avis) {
-            return $avis['note'];
-        }, $this->getAvisCameras());
-    }
-
-    public function calculatingTheAverage()
-    {
-        $totalNotes = $this->totalNotes();
-        $sumNotes =  array_sum($this->getNotes());
-
-        return $totalNotes > 0 ? round($sumNotes / $totalNotes) : 0;
-    }
-    public function totalNotes():int
-    {
-        return count($this->getNotes());
-    }
-
-
+   
     /**
      * Get the value of id
      */
@@ -467,5 +448,24 @@ class CameraDTO
         $this->alimentation = $alimentation;
 
         return $this;
+    }
+
+    public function getNotes(): array
+    {
+        return array_map(function ($avis) {
+            return $avis['note'];
+        }, $this->getAvisCameras());
+    }
+
+    public function calculatingTheAverage()
+    {
+        $totalNotes = $this->totalNotes();
+        $sumNotes =  array_sum($this->getNotes());
+
+        return $totalNotes > 0 ? round($sumNotes / $totalNotes) : 0;
+    }
+    public function totalNotes():int
+    {
+        return count($this->getNotes());
     }
 }

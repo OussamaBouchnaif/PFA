@@ -52,6 +52,7 @@ class FavoritCameraRepository extends ServiceEntityRepository
             ->getQuery() 
             ->getResult(); 
     }
+    
 
 //    /**
 //     * @return FavoritCamera[] Returns an array of FavoritCamera objects
