@@ -2,21 +2,31 @@
 
 namespace App\Controller;
 
+use App\Entity\Camera;
+use Doctrine\ORM\EntityManager;
 use Symfony\UX\Turbo\TurboBundle;
 use Symfony\Component\Mercure\Update;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Cart\Handler\CartStorageInterface;
 use Symfony\Component\Mercure\HubInterface;
+use App\Reduction\Manager\ReductionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Reduction\Manager\Strategy\AbstractReductionStrategy;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
     
 
-    public function __construct(private CartStorageInterface $cartStorage)
+    public function __construct(
+        private CartStorageInterface $cartStorage ,
+        private EntityManagerInterface $manager,
+        private AbstractReductionStrategy $strategy, 
+        private ReductionInterface $redumanager,
+        )
     {
         
     }
@@ -24,7 +34,7 @@ class TestController extends AbstractController
     #[Route('/test',name:'test')]
     public function testss(Request $request):Response
     {
-        $form = $this->createFormBuilder()
+        /* $form = $this->createFormBuilder()
             ->add('content', TextType::class)
             ->getForm();
 
@@ -44,7 +54,16 @@ class TestController extends AbstractController
         return $this->render('client/pages/product-details.html.twig', [
             'form' => $form->createView(),
             // Correction: Utilisez `createView()` pour passer le formulaire à Twig.
-        ]);
+        ]); */
+
+        $camera = $this->manager->getRepository(Camera::class)->find(65);
+        $reduction = $this->strategy->loadReduction($camera);
+        $reduc = $this->strategy->getReductionModel($camera);
+
+        $teste = $this->redumanager->getDiscountedCamera($camera,$reduc);
+
+
+        dd($teste);
     
     }
 

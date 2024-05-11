@@ -28,26 +28,7 @@ class CameraRepository extends ServiceEntityRepository
         parent::__construct($registry, Camera::class);
         
     }
-    public function extractPaginationInfo(int $totalPages,int $page)
-    {
-        
-        $paginationInfo = [
-            'totalPages' => $totalPages,
-            'currentPage' => $page,
-        ];
-    
-        return $paginationInfo;
-    }
-    public function pagination($cameras,$page,PaginatorInterface $paginator)
-    {
-        $data = $paginator->paginate(
-            $cameras,
-            $page,
-            9,
-
-        );
-        return $data;
-    }
+  
     public function findCameraWithImages($idcamera)
     {
         return $this->getEntityManager()
@@ -60,6 +41,18 @@ class CameraRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
    
+    public function findReductionsForCamera($cameraId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM App\Entity\Reduction r
+                 JOIN r.ligneReductions lr
+                 JOIN lr.camera c
+                 WHERE c.id = :cameraId'
+            )
+            ->setParameter('cameraId', $cameraId)
+            ->getOneOrNullResult();
+    }
 
     
 

@@ -2,12 +2,12 @@
 
 namespace App\Contract;
 
-/**
- * The contract of a Voucher.
- */
-interface VoucherModelInterface
+
+interface DiscountModelInterface
 {
     public function getDiscount(): float;
 
     public function getRate(): float;
+
+    public function getType(): string;
 }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Voucher\Strategy;
 
-use App\Contract\VoucherModelInterface;
+use App\Contract\DiscountModelInterface;
 
 interface VoucherStrategyInterface
 {
     /**
      * Returns a Voucher Model.
      */
-    public function findVoucherModel(?string $voucherIdentifier): ?VoucherModelInterface;
+    public function findVoucherModel(?string $voucherIdentifier): ?DiscountModelInterface;
 
     /**
      * Loads an instance based on the voucher identifier.

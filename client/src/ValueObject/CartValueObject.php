@@ -16,55 +16,6 @@ final class CartValueObject
 
     }
 
-    public function addToCart(CartItemValueObject $object)
-    {
-        if(($index=$this->findItem($object)) !== null)
-        {
-            $object = $this->updateCartItem($object,$this->items[$index],$index);
-        }
-        $this->items[$object->getId()] = $object;
-        
-    }
-    public function removeFromCart(CartItemValueObject $object)
-    {
-        if(($index=$this->findItem($object)) !== null) {
-            unset($this->items[$index]);
-        }
-    }
-
-    public function getLines()
-    {
-        return $this->items;
-    }
-
-    public function findItem(CartItemValueObject $object)
-    {
-        if (array_key_exists($object->getId(), $this->items)) {
-            return $object->getId();
-        }
-        
-       return null;
-    }
-
-    public function updateCartItem(CartItemValueObject $requestedCartItem,CartItemValueObject $exsistingCartItem,?int $index)
-    {
-        if(null === $index)
-        {
-            return $requestedCartItem;
-        }
-        return new CartItemValueObject($index,
-                $exsistingCartItem->getImage(),
-                $exsistingCartItem->getPrice(),
-                $requestedCartItem->getQuantity()+$exsistingCartItem->getQuantity(),
-                $exsistingCartItem->getStockage(),
-                $exsistingCartItem->getName());
-    }
-
-    
-    public function clear()
-    {
-        return $this->setItems([]);
-    }
     /**
      * Get the value of items
      */ 
@@ -103,5 +54,58 @@ final class CartValueObject
         $this->user = $user;
 
         return $this;
+    }
+
+    public function addToCart(CartItemValueObject $object)
+    {
+        if(($index=$this->findItem($object)) !== null)
+        {
+            $object = $this->updateCartItem($object,$this->items[$index],$index);
+        }
+        $this->items[$object->getId()] = $object;
+        
+    }
+    public function removeFromCart(CartItemValueObject $object)
+    {
+        if(($index=$this->findItem($object)) !== null) {
+            unset($this->items[$index]);
+        }
+    }
+
+    public function getLines()
+    {
+        return $this->items;
+    }
+
+    public function findItem(CartItemValueObject $object)
+    {
+        if (array_key_exists($object->getId(), $this->items)) {
+            return $object->getId();
+        }
+        
+       return null;
+    }
+
+    public function updateCartItem(CartItemValueObject $requestedCartItem,CartItemValueObject $exsistingCartItem,?int $index)
+    {
+        if(null === $index)
+        {
+            return $requestedCartItem;
+        }
+
+        $item = new CartItemValueObject($index,
+            $exsistingCartItem->getImage(),
+            $requestedCartItem->getQuantity()+$exsistingCartItem->getQuantity(),
+            $exsistingCartItem->getStockage(),
+            $exsistingCartItem->getName());
+        $item->setPrice($exsistingCartItem->getPrice());
+        
+        return $item;
+    }
+
+    
+    public function clear()
+    {
+        return $this->setItems([]);
     }
 }

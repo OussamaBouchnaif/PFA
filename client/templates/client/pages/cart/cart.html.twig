@@ -32,74 +32,66 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>product </th>
-                                            <th>information</th>
+                                            <th>Product</th>
+                                            <th>Information</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% if cart is not empty %}
-                                                {% for item in cart.getLines %}
-                                                    {{form_start(form[item.id])}}
-                                                        <tr class="border-top">
-                                                            <td>
-                                                                <div class="cart_product_thumb">
-                                                                    {% set imageCamera = item.image|first %}
-                                                                    {% if imageCamera %}
-                                                                        <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
-                                                                    {% else %}
-                                                                        <img src="" alt="oussama">
-                                                                    {% endif %}
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_text">
-                                                                    <h4>{{item.name}}</h4>
-                                                                    <ul>
-                                                                        <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.stockage}}</span></li>
-                                                                        <li><i class="ion-ios-arrow-right"></i> Size : <span>XL</span></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_price">
-                                                                    <span>${{item.price}}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="product_quantity">
-                                                                <div class="cart_product_quantity">
-                                                                    {{form_widget(form[item.id].quantity,{'value':item.quantity})}}
-                                                                </div>
-                                                            </td>
-
-                                                            <td>
-                                                                <div class="cart_product_price">
-                                                                    <span>${{ item.TotalPriceItem }}</span>
-                                                                </div>
-                                                            </td>
-                                                            
-                                                            <td>
-                                                                <div class="cart_product_remove text-right">
-                                                                    {{form_widget(form[item.id].update)}}
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_remove text-right">
-                                                                    {{form_widget(form[item.id].delete)}}
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        {{ form_widget(form[item.id].id, {'value': item.id}) }}
-                                                    {{form_end(form[item.id])}}
-                                                {% endfor %}
-                                                                                
-                                            
+                                            {% for item in cart.getLines %}
+                                                {{ form_start(form[item.id]) }}
+                                                <tr class="border-top">
+                                                    <td>
+                                                        <div class="cart_product_thumb">
+                                                            {% set imageCamera = item.image|first %}
+                                                            {% if imageCamera %}
+                                                                <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
+                                                            {% else %}
+                                                                <img src="" alt="oussama">
+                                                            {% endif %}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="cart_product_text">
+                                                            <h4>{{ item.name }}</h4>
+                                                            <ul>
+                                                                <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{ item.stockage }}</span></li>
+                                                                <li><i class="ion-ios-arrow-right"></i> Connectivité : <span></span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="cart_product_price">
+                                                            <span>${{ item.price }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="product_quantity">
+                                                        <div class="cart_product_quantity">
+                                                            {{ form_widget(form[item.id].quantity, {'value': item.quantity}) }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="cart_product_price">
+                                                            <span>${{ item.TotalPriceItem }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="2"> <!-- Fusion des deux cellules sous une seule colonne 'Action' -->
+                                                        <div class="cart_product_remove text-right">
+                                                            {{ form_widget(form[item.id].update) }}
+                                                            {{ form_widget(form[item.id].delete) }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {{ form_widget(form[item.id].id, {'value': item.id}) }}
+                                                {{ form_end(form[item.id]) }}
+                                            {% endfor %}
                                         {% endif %}
                                     </tbody>
                                 </table>
+                                
                                 {% if cart is empty or cart.getLines is empty %}
                                     <div class="col-12">
                                         <div class="alert alert-warning" role="alert">

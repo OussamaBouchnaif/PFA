@@ -2,9 +2,9 @@
 
 namespace App\Voucher;
 
-use App\Contract\DiscountedCartInterface;
-use App\Contract\VoucherModelInterface;
 use App\Entity\Cart;
+use App\Contract\DiscountedObjectInterface;
+use App\Contract\DiscountModelInterface;
 
 interface VoucherInterface
 {
@@ -17,7 +17,7 @@ interface VoucherInterface
     /**
      * Applies the voucher code to the Cart instance.
      */
-    public function applyVoucher(string $voucherCode, Cart $object): DiscountedCartInterface;
+    public function applyVoucher(string $voucherCode, Cart $object): DiscountedObjectInterface;
 
     /**
      * Checks if the current voucher code is already applied to the current Cart instance.
@@ -32,7 +32,7 @@ interface VoucherInterface
     /**
      * Get the discounted cart instance based on a cart instance and a voucher model instance.
      */
-    public function getDiscountedCart(Cart $object, ?VoucherModelInterface $voucherInstance): DiscountedCartInterface;
+    public function getDiscountedCart(Cart $object, ?DiscountModelInterface $voucherInstance): DiscountedObjectInterface;
 
     /**
      * Invalidates the voucher. Returns true when everything went well, false otherwise.

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Voucher;
 
 use App\Contract\DiscountedCartInterface;
+use App\Contract\DiscountedObjectInterface;
+use App\Contract\DiscountModelInterface;
 use App\Contract\VoucherModelInterface;
 use App\Entity\Cart;
 use App\Voucher\Strategy\VoucherStrategyInterface;
@@ -21,7 +23,7 @@ class DefaultVoucher implements VoucherInterface
     ) {
     }
 
-    public function applyVoucher(string $voucherCode, Cart $object): DiscountedCartInterface
+    public function applyVoucher(string $voucherCode, Cart $object): DiscountedObjectInterface
     {
         if (false === $this->isAlreadyApplied($voucherCode, $object)) {
             // if the voucher is already applied to the current cart, no need to re-apply it again.
@@ -60,13 +62,13 @@ class DefaultVoucher implements VoucherInterface
         return true;
     }
 
-    public function getDiscountedCart(Cart $object, ?VoucherModelInterface $voucherInstance): DiscountedCartInterface
+    public function getDiscountedCart(Cart $object, ?DiscountModelInterface $voucherInstance): DiscountedObjectInterface
     {
-        return new class($object, $voucherInstance) implements DiscountedCartInterface {
+        return new class($object, $voucherInstance) implements DiscountedObjectInterface {
             private Cart $object;
-            private ?VoucherModelInterface $voucherInstance;
+            private ?DiscountModelInterface $voucherInstance;
 
-            public function __construct(Cart $object, ?VoucherModelInterface $voucherInstance)
+            public function __construct(Cart $object, ?DiscountModelInterface $voucherInstance)
             {
                 $this->object = $object;
                 $this->voucherInstance = $voucherInstance;
@@ -97,6 +99,11 @@ class DefaultVoucher implements VoucherInterface
                     return 0.0; 
                 }
                 return $this->voucherInstance->getRate() ;
+            }
+
+            public function getDiscountedType(): string
+            {
+                return $this->voucherInstance->getType();
             }
         };
     }
