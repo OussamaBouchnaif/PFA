@@ -3,8 +3,9 @@
 
 namespace App\DTO;
 
-use App\Entity\AvisCamera;
+use App\Entity\Camera;
 use App\Entity\Categorie;
+use App\Entity\AvisCamera;
 
 class CameraDTO
 {
@@ -467,5 +468,13 @@ class CameraDTO
     public function totalNotes():int
     {
         return count($this->getNotes());
+    }
+
+    public function toCamera(): Camera {
+        
+        $camera = new Camera();
+        $camera->setPrix($this->getPrix()); 
+    
+        return $camera;
     }
 }

@@ -124,20 +124,25 @@ function setupQuickViewButtons() {
         button.addEventListener("click", function () {
             var name = this.getAttribute("data-name");
             var price = this.getAttribute("data-price");
+            var originalPrice = this.getAttribute("data-original-price");
+            var discountedPrice = this.getAttribute("data-discounted-price");
             var description = this.getAttribute("data-description");
             var image = this.getAttribute("data-image");
             var id = this.getAttribute("data-camera");
 
-            // Mise à jour du contenu du modal
             document.querySelector("#modal_box .modal_title h2").textContent = name;
             document.querySelector("#idcamera").value = id;
-            document.querySelector("#modal_box .modal_price .new_price").textContent =
-                "$" + price;
-            document.querySelector("#modal_box .modal_description p").textContent =
-                description;
-            document.querySelector(
-                "#modal_box .modal_zoom_gallery .product_zoom_thumb img"
-            ).src = image;
+            document.querySelector("#modal_box .modal_description p").textContent = description;
+            document.querySelector("#modal_box .modal_zoom_gallery .product_zoom_thumb img").src = image;
+
+            if (parseFloat(discountedPrice) < parseFloat(originalPrice)) {
+                document.querySelector("#modal_box .modal_price .new_price").textContent = "$" + discountedPrice;
+                document.querySelector("#modal_box .modal_price .old_price").textContent = "$" + originalPrice;
+                document.querySelector("#modal_box .modal_price .old_price").style.display = 'inline';
+            } else {
+                document.querySelector("#modal_box .modal_price .new_price").textContent = "$" + originalPrice;
+                document.querySelector("#modal_box .modal_price .old_price").style.display = 'none';
+            }
         });
     });
 }
