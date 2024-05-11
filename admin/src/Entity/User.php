@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Blog;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,8 +27,10 @@ class User extends Personne
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Blog::class)]
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Blog::class, cascade: ['remove'])]
     private Collection $blogs;
+    
+
 
     public function __construct()
     {

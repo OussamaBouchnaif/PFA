@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\User\UserManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AbstractController
 {
@@ -84,11 +88,36 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/delete/{id}', name: 'user_delete')]
-    public function delete(User $user): Response
-    {
-        $this->manager->removeUser($user);
 
-        return $this->redirectToRoute('users_index');
+ 
+    #[Route('/user/delete/{id}', name: 'user_delete')]
+public function deleteUser(EntityManagerInterface $entityManager, UserRepository $userRepository, int $id): Response
+{
+    $user = $userRepository->find($id);
+
+    if (!$user) {
+        return new Response(
+            json_encode(['success' => false, 'message' => 'User not found']),
+            Response::HTTP_NOT_FOUND,
+            ['Content-Type' => 'application/json']
+        );
     }
+
+    $blogs = $user->getBlogs();
+
+    foreach ($blogs as $blog) {
+        $entityManager->remove($blog);
+    }
+
+    $entityManager->remove($user);
+    $entityManager->flush();
+
+    return new Response(
+        json_encode(['success' => true, 'message' => 'User and associated blogs deleted successfully']),
+        Response::HTTP_OK,
+        ['Content-Type' => 'application/json']
+    );
+}
+
+
 }

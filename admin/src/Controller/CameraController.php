@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AvisCamera;
 use App\Entity\Camera;
 use App\Entity\Commande;
 use App\Entity\ImageCamera;
@@ -118,6 +119,10 @@ class CameraController extends AbstractController
         $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
         foreach ($reductions as $reduction) {
             $entityManager->remove($reduction);
+        }
+        $avis=$entityManager->getRepository(AvisCamera::class)->findBy(['camera'=> $camera]);
+        foreach ($avis as $avi ) {
+            $entityManager->remove($avi);
         }
 
         $entityManager->remove($camera);
