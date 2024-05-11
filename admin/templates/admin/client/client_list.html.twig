@@ -146,98 +146,91 @@
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<script src="{{ asset('public/assets/js/client.js') }}"></script>
 	<script>
-		$(document).ready(function () { // Fonction pour initialiser ou recharger la DataTable
-function initDataTable() {
-if ($.fn.DataTable.isDataTable('#myTable')) {
-$('#myTable').DataTable().destroy();
-}
-$('#myTable').DataTable();
-}
 
 // appliquer les filtres
 function applyFilters() {
-var statusFilter = $('#idStatus').val();
-var dateFilter = $('#datepicker').val();
-var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
+	var statusFilter = $('#idStatus').val();
+	var dateFilter = $('#datepicker').val();
+	var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
 
-var table = $('#myTable').DataTable();
+	var table = $('#myTable').DataTable();
 
-// Réinitialiser les lignes affichées
-table.rows().every(function () {
-this.nodes().to$().show();
-});
+	// Réinitialiser les lignes affichées
+	table.rows().every(function () {
+	this.nodes().to$().show();
+	});
 
-// Appliquer le filtre par statut
-if (statusFilter !== 'all') {
-table.column(6).search('^' + statusFilter + '$', true, false).draw();
-} else {
-table.column(6).search('').draw();
-}
+	// Appliquer le filtre par statut
+	if (statusFilter !== 'all') {
+	table.column(6).search('^' + statusFilter + '$', true, false).draw();
+	} else {
+	table.column(6).search('').draw();
+	}
 
 
-if (dateFilter) {
-table.rows().every(function () {
-var rowData = this.data();
-var clientDate = moment(rowData[5], 'DD/MM/YYYY');
-if (clientDate.isValid() && clientDate.isBefore(selectedDate)) { // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
-this.nodes().to$().hide();
-}
-});
-}
+		if (dateFilter) {
+		table.rows().every(function () {
+		var rowData = this.data();
+		var clientDate = moment(rowData[5], 'DD/MM/YYYY');
+		if (clientDate.isValid() && clientDate.isBefore(selectedDate)) { // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
+		this.nodes().to$().hide();
+		}
+		});
+		}
 }
 
 
 $('#filterButton').on('click', function () {
-applyFilters();
+ applyFilters();
 });
 
 
 $('.btn-toggle-account').on('click', function () {
-var clientId = $(this).data('client-id');
-var accountStatus = $(this).data('account-status');
+	var clientId = $(this).data('client-id');
+	var accountStatus = $(this).data('account-status');
 
 
-var button = $(this);
+	var button = $(this);
 
 
-$.ajax({
-url: 'update-account-status',
-method: 'POST',
-data: {
-clientId: clientId,
-accountStatus: accountStatus
-},
-success: function (response) {
-console.log(response);
-if (response === 'success') {
-if (accountStatus === 'active' || accountStatus === 'actif') { // Si oui, le changer à "inactive"
-button.removeClass('btn-success').addClass('btn-danger');
-button.data('account-status', 'inactive');
-} else if (accountStatus === 'inactive' || accountStatus === 'innactif') { // Sinon, le changer à "active"
-button.removeClass('btn-danger').addClass('btn-success');
-button.data('account-status', 'active');
-}
-// Appliquer les filtres après le changement de statut
-applyFilters();
-} else {
-alert('Erreur lors de la mise à jour de l\'état du compte.');
-}
-},
-error: function () {
-alert('Erreur lors de la requête AJAX.');
-}
-});
+	$.ajax({
+	url: 'update-account-status',
+	method: 'POST',
+	data: {
+	clientId: clientId,
+	accountStatus: accountStatus
+	},
+	success: function (response) {
+	console.log(response);
+	if (response === 'success') {
+	if (accountStatus === 'active' || accountStatus === 'actif') { // Si oui, le changer à "inactive"
+	button.removeClass('btn-success').addClass('btn-danger');
+	button.data('account-status', 'inactive');
+	} else if (accountStatus === 'inactive' || accountStatus === 'innactif') { // Sinon, le changer à "active"
+	button.removeClass('btn-danger').addClass('btn-success');
+	button.data('account-status', 'active');
+	}
+	// Appliquer les filtres après le changement de statut
+	applyFilters();
+	} else {
+	alert('Erreur lors de la mise à jour de l\'état du compte.');
+	}
+	},
+	error: function () {
+	alert('Erreur lors de la requête AJAX.');
+	}
+	});
 });
 
 
 $('#printTableButton').on('click', function () {
 
-printJS({printable: 'myTable', type: 'html', style: '.table { font-size: 12px; }'});
+	printJS({printable: 'myTable', type: 'html', style: '.table { font-size: 12px; }'});
 });
 
-
+{# 
 initDataTable();
-});
+}); #}
 	</script>
 
 

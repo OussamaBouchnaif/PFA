@@ -1,6 +1,4 @@
-{# templates/blog/new.html.twig #}
 {% extends 'base.html.twig' %}
-
 
 {% block stylesheets %}
     {{ parent() }}
@@ -76,29 +74,29 @@
                                 <div class="card-header">
                                     <h5 class="card-title mb-0">{{ form_label(form.user) }}</h5>
                                     <div class="card-body">
-                                    <div class="hstack gap-3 align-items-start">
-                                        <div class="flex-grow-1">
-                                            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-                                            <div class="form-error">
-                                                        {{ form_errors(form.user) }}
-                                                    </div>
+                                        <div class="hstack gap-3 align-items-start">
+                                            <div class="flex-grow-1">
+                                                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                                                <div class="form-error">
+                                                    {{ form_errors(form.user) }}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="card-header">
+                                <div class="card-header">
                                     <h5 class="card-title mb-0">{{ form_label(form.Camera) }}</h5>
                                     <div class="card-body">
-                                    <div class="hstack gap-3 align-items-start">
-                                        <div class="flex-grow-1">
-                                            {{ form_widget(form.Camera, {'attr': {'class': 'form-control'}}) }}
-                                            <div class="form-error">
-                                                        {{ form_errors(form.Camera) }}
-                                                    </div>
+                                        <div class="hstack gap-3 align-items-start">
+                                            <div class="flex-grow-1">
+                                                {{ form_widget(form.Camera, {'attr': {'class': 'form-control'}}) }}
+                                                <div class="form-error">
+                                                    {{ form_errors(form.Camera) }}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-                                
                                 <!-- Fin du corps de la carte -->
                             </div>
                             <!-- Fin de la carte -->
@@ -106,7 +104,8 @@
                         <!-- Fin de la colonne -->
                     </div>
                     <!-- Fin de la rangée -->
-                    {# {{ form_end(form) }} #}
+
+                    {{ form_end(form) }} {# Décommentez cette ligne pour terminer le formulaire #}
                 </div>
                 <!-- Fin du conteneur fluide -->
             </div>

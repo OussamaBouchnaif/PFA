@@ -175,7 +175,7 @@
 								<!-- end card header -->
 								<div class="card-body">
 
-									<table id="myTable" class="table">
+									<table id="myTable" class="table-striped">
 										<thead>
 											<tr class="align-middle custom-header-bg">
 												<th class="custom-header text-center">Description</th>
@@ -191,10 +191,10 @@
 											{% for reduction in reductions %}
 												<tr>
 													<td class="align-middle text-center">{{ reduction.description }}</td>
-													<td class="align-middle text-center price-cell">{{ reduction.poucentage }}</td>
+													<td class="align-middle text-center price-cell">{{ reduction.poucentage }} &percnt;</td>
 													<td class="align-middle text-center">{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
 													<td class="align-middle text-center">{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
-													<td class="align-middle text-center price-cell">{{ reduction.prix }}</td>
+													<td class="align-middle text-center price-cell">{{ reduction.prix }} <span>DH</span> </td>
 
 													<td class="text-center align-middle horizontal-buttons">
 														<button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('reduction_delete',{id:reduction.id}) }}')">
@@ -319,6 +319,8 @@ function printTable() {
     printWindow.document.write('<th>Pourcentage</th>');
     printWindow.document.write('<th>Date de début</th>');
     printWindow.document.write('<th>Date de fin</th>');
+	    printWindow.document.write('<th>Prix</th>');
+
     printWindow.document.write('</tr>');
     printWindow.document.write('</thead>');
     printWindow.document.write('<tbody>');

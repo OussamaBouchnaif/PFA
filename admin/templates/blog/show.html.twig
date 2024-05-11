@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 
-
+{% block title %} Blogs{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -87,14 +87,14 @@
 					<div class="row">
 						<div class="col-12">
 							<div class="page-title-box d-sm-flex align-items-center justify-content-between">
-								<h4 class="mb-sm-0">Cameras</h4>
+								<h4 class="mb-sm-0">Blogs</h4>
 
 								<div class="page-title-right">
 									<ol class="breadcrumb m-0">
 										<li class="breadcrumb-item">
 											<a href="javascript: void(0);">Ecommerce</a>
 										</li>
-										<li class="breadcrumb-item active">Camera</li>
+										<li class="breadcrumb-item active">Blogs</li>
 									</ol>
 								</div>
 
@@ -155,7 +155,7 @@
 
 								<div class="card-body">
 
-									<table id="myTable" class="table">
+									<table id="myTable" class="table-striped">
 										<thead>
 											<tr class="align-middle custom-header-bg">
 												{# <th class="custom-header text-center">Image</th> #}
@@ -359,51 +359,51 @@ exportToExcel();
 });
 }</script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.delete-blog-link').forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault(); // Empêcher le comportement par défaut du lien
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-blog-link').forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // Empêcher le comportement par défaut du lien
 
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-                            fetch(this.getAttribute('href'), {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
-                                },
-                                body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
-                            }).then(response => response.json()).then(data => {
-                                if (data.success) {
-                                    Swal.fire({
-                                        title: 'Deleted!',
-                                        text: 'Your blog has been deleted.',
-                                        icon: 'success',
-                                        showConfirmButton: false // Hide the confirm button
-                                    });
-                                    // Recharger la page après la suppression réussie
-                                    setTimeout(function () {
-                                        location.reload();
-                                    }, 1500); // Reload after 1.5 seconds
-                                } else {
-                                    Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
-                                }
-                            }).catch(error => {
-                                console.error('Error:', error);
-                            });
-                        }
-                    });
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
+                        fetch(this.getAttribute('href'), {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
+                            },
+                            body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
+                        }).then(response => response.json()).then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Your blog has been deleted.',
+                                    icon: 'success',
+                                    showConfirmButton: false // Hide the confirm button
+                                });
+                                // Recharger la page après la suppression réussie
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1500); // Reload after 1.5 seconds
+                            } else {
+                                Swal.fire('Error!', 'An error occurred while deleting the blog.', 'error');
+                            }
+                        }).catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
                 });
             });
         });
+    });
 </script>
 
 {% endblock %}

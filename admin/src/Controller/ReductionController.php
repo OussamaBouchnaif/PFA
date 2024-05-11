@@ -99,6 +99,7 @@ class ReductionController extends AbstractController
         // Return a JSON response indicating success
         return new JsonResponse(['success' => true, 'message' => 'Reduction deleted successfully']);
     }
+    
     #[Route('reduction/LigneReduction', name: 'LigneReduction')]
     public function addLigneReduction(Request $request, EntityManagerInterface $entityManager): Response
     {

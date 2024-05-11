@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVQZlZl5E/V7hRTtXxpgO9RY" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="https://unpkg.com/tableexport@5.0.2/dist/css/tableexport.min.css">
 	<style>
+
 		body {
 		background-color: whitesmoke  !important;
 		}
@@ -180,7 +181,7 @@
 
 								<div class="card-body">
 
-									<table id="myTable" class="table">
+									<table id="myTable" class="table-striped">
 										<thead>
 											<tr class="align-middle custom-header-bg">
 												<th class="custom-header text-center">Photo</th>
@@ -208,7 +209,7 @@
 
 													</td>
 													<td class="align-middle text-center">{{ camera.nom }}</td>
-													<td class="align-middle text-center price-cell">{{ camera.prix }}</td>
+													<td class="align-middle text-center price-cell">{{ camera.prix }} <span> DH</span></td>
 													<td class="align-middle text-center">{{ camera.dateAjout ? camera.dateAjout|date('Y-m-d') : '' }}</td>
 													<td class="align-middle text-center">{{ camera.status }}</td>
 													<td class="align-middle text-center">{{ camera.stock }}</td>
@@ -472,49 +473,46 @@ function clearAllFilters() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-document.querySelectorAll('.delete-camera-link').forEach(function (link) {
-link.addEventListener('click', function (event) {
-event.preventDefault(); // Empêcher le comportement par défaut du lien
+    document.querySelectorAll('.delete-camera-link').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Empêcher le comportement par défaut du lien
 
-Swal.fire({
-title: 'Are you sure?',
-text: "You won't be able to revert this!",
-icon: 'warning',
-showCancelButton: true,
-confirmButtonColor: '#3085d6',
-cancelButtonColor: '#d33',
-confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-fetch(this.getAttribute('href'), {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
-},
-body: JSON.stringify(
-{
-_method: 'DELETE' // Utiliser la méthode DELETE pour Symfony
-}
-)
-}).then(response => response.json()).then(data => {
-if (data.success) {
-Swal.fire('Deleted!', 'Your camera has been deleted.', 'success');
-// Rediriger vers la page des caméras après la suppression
-window.location.href = "{{ path('camera') }}";
-} else {
-Swal.fire('Error!', 'An error occurred while deleting the camera.', 'error');
-}
-}).catch(error => {
-console.error('Error:', error);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
+                    fetch(this.getAttribute('href'), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest' // Ajouter cette entête pour indiquer une requête AJAX
+                        },
+                        body: JSON.stringify({_method: 'DELETE'}) // Utiliser la méthode DELETE pour Symfony
+                    }).then(response => response.json()).then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', 'Your camera has been deleted.', 'success');
+                            // Rediriger vers la page des caméras après la suppression
+                            window.location.href = "{{ path('camera') }}";
+                        } else {
+                            Swal.fire('Error!', 'An error occurred while deleting the camera.', 'error');
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+    });
 });
-}
-});
-});
-});
-});
-</script>
-	<script>
+
+
+
 ddocument.addEventListener('DOMContentLoaded', function () {
 	document.querySelectorAll('.delete-camera-link').forEach(link => {
 		link.addEventListener('click', function (event) {
@@ -591,7 +589,7 @@ if (result.isConfirmed) {
 exportToExcel();
 }
 });
-}</script><script>
+}
 
 var selectedCameraId;
 // Définition de la variable selectedCameraId
@@ -606,7 +604,7 @@ setSelectedCameraId(cameraId);
 // Fonction pour définir l'ID de la caméra sélectionnée
 function setSelectedCameraId(cameraId) {
 selectedCameraId = cameraId;
-}</script><script>
+}
 // Lorsque l'utilisateur clique sur le bouton "Télécharger"
 $('#uploadModal').on('show.bs.modal', function (event) {
 var button = $(event.relatedTarget); // Button that triggered the modal
@@ -636,4 +634,5 @@ error: function (xhr, status, error) { // Si une erreur se produit lors de l'ajo
 alert('Échec de l\'ajout de la photo : ' + xhr.responseText);
 }
 });
-});</script>{% endblock %}
+});
+</script>{% endblock %}
