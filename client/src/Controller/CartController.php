@@ -58,7 +58,8 @@ class CartController extends AbstractController
             'cart' => $this->cartStorage->getCart(),
             'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
-        return new JsonResponse(['html' => $htmlContent]);
+        $totalItemsCount = count($this->cartStorage->getCart()->getLines()); // Assurez-vous que cette méthode existe et renvoie le compte total
+        return new JsonResponse(['html' => $htmlContent, 'totalItems' => $totalItemsCount]);
     }
 
     #[Route('/addToCart', name: 'addtocart')]
@@ -106,13 +107,14 @@ class CartController extends AbstractController
                 'cart' => $this->cartStorage->getCart(),
                 'totalItems' => $this->cartStorage->TotalPriceItems(),
             ]);
-
-            return new JsonResponse(['success' => true, 'html' => $htmlContent]);
+            $totalItemsCount = count($this->cartStorage->getCart()->getLines());
+    
+            return new JsonResponse(['success' => true, 'html' => $htmlContent, 'totalItems' => $totalItemsCount]);
         }
-
+    
         return new JsonResponse(['success' => false, 'message' => 'Invalid request.'], 400);
     }
-
+    
     #[Route('/remove', name: 'clear')]
     public function remove(Request $request)
     {

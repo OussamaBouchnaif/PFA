@@ -1,0 +1,37 @@
+{% if wishList is not empty %}
+    {% for item in wishList %}
+        <tr class="border-top">
+            <td>
+                <div class="cart_product_thumb">
+                    {% set imageCamera = item.camera.imageCameras|first %}
+                    {% if imageCamera %}
+                        <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
+                    {% else %}
+                        <img src="" alt="No Image">
+                    {% endif %}
+                </div>
+            </td>
+            <td>
+                <div class="cart_product_text">
+                    <h4>{{ item.camera.nom }}</h4>
+                    <ul>
+                        <li><i class="ion-ios-arrow-right"></i> Stockage: <span>{{ item.camera.stockage }}</span></li>
+                        <li><i class="ion-ios-arrow-right"></i> Connectivité: <span>{{ item.camera.connectivite == 1 ? 'true' : 'false' }}</span></li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <div class="cart_product_price">
+                    <span>${{ item.camera.prix }}</span>
+                </div>
+            </td>
+            <td>
+                <div class="cart_product_remove text-right">
+                    <a href="#" class="delete-wishCamera" data-id="{{ item.id }}"><i class="ion-android-close"></i></a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% else %}
+    <tr><td colspan="4">No items in wishlist.</td></tr>
+{% endif %}

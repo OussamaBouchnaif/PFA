@@ -38,55 +38,17 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        {% if wishList is not empty %}
-                                                {% for item in wishList %}
-                                                   
-                                                        <tr class="border-top">
-                                                            <td>
-                                                                <div class="cart_product_thumb">
-                                                                    {% set imageCamera = item.camera.imageCameras|first %}
-                                                                    {% if imageCamera %}
-                                                                        <a href="#"><img src="{{ minio_url(imageCamera.image) }}" alt=""></a>
-                                                                    {% else %}
-                                                                        <img src="" alt="oussama">
-                                                                    {% endif %}
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_text">
-                                                                    <h4>{{item.camera.nom}}</h4>
-                                                                    <ul>
-                                                                        <li><i class="ion-ios-arrow-right"></i> Stockage : <span>{{item.camera.stockage}}</span></li>
-                                                                        <li><i class="ion-ios-arrow-right"></i> Connectivte : <span>{{item.camera.connectivite == 1 ? 'true' : 'false'}}</span></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_price">
-                                                                    <span>${{item.camera.prix}}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="cart_product_remove text-right">
-                                                                    <a href="{{path('delete_favorit',{'id':item.id})}}"><i class="ion-android-close"></i></a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    
-                                                {% endfor %}
-                                                                                
-                                            
-                                        {% endif %}
+                                    <tbody id="wishlistbody">
+                                        {% include "client/pages/components/wishlist_table.html.twig" %}
                                     </tbody>
                                 </table>
-                                {% if wishList is empty  %}
+                                {# {% if wishList is empty  %}
                                     <div class="col-12">
                                         <div class="alert alert-warning" role="alert">
                                             No items in your wish list.
                                         </div>
                                     </div>
-                                {% endif %}
+                                {% endif %} #}
                             </div>
                             <div class="cart_page_button border-top d-flex justify-content-between">
                                

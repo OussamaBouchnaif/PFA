@@ -193,8 +193,8 @@
                                         <li><a href="{{path('app_logout')}}">Logout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{path('app_wish_list')}}"><i class="icon-heart icons"></i></a> <span class="item_count">3</span></li>
-                                <li class="shopping_cart"><a href="#"><i class="icon-basket-loaded icons"></i></a> <span class="item_count">2</span></li>
+                                <li><a href="{{path('app_wish_list')}}"><i class="icon-heart icons"></i></a> <span class="item_count" id="item_favorit"></span></li>
+                                <li class="shopping_cart"><a href="#"><i class="icon-basket-loaded icons"></i></a> <span class="item_count" id="item_cart">{{ cart.getLines|length }}</span></li>
                             </ul>
                         </div>
                     </div>

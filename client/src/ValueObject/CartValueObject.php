@@ -56,7 +56,7 @@ final class CartValueObject
         return $this;
     }
 
-    public function addToCart(CartItemValueObject $object)
+    public function add(CartItemValueObject $object)
     {
         if(($index=$this->findItem($object)) !== null)
         {
@@ -65,7 +65,7 @@ final class CartValueObject
         $this->items[$object->getId()] = $object;
         
     }
-    public function removeFromCart(CartItemValueObject $object)
+    public function remove(CartItemValueObject $object)
     {
         if(($index=$this->findItem($object)) !== null) {
             unset($this->items[$index]);
@@ -75,6 +75,11 @@ final class CartValueObject
     public function getLines()
     {
         return $this->items;
+    }
+
+    public function getCount()
+    {
+        return count($this->getLines());
     }
 
     public function findItem(CartItemValueObject $object)
