@@ -114,8 +114,14 @@
                         </ul>
                         <h4 class="product_name"><a href="product-details.html">{{camera.nom}}</a></h4>
                         <div class="price_box">
-                            <span class="current_price">${{camera.prix}}</span>
-                            <span class="old_price">$46.00</span>
+                            {% if pricingDetails[camera.id].discountValue > 0 %}
+                                <span class="current_price">€{{ pricingDetails[camera.id].discountedPrice|number_format(2, ',', ' ') }}</span>
+                                <span class="old_price"><s>€{{ pricingDetails[camera.id].originalPrice|number_format(2, ',', ' ') }}</s></span>
+                                <p class="font-size: 14px;color: red;margin-top: 5px;">Réduction: {{ pricingDetails[camera.id].discountValue|number_format(2, ',', ' ') }}€</p>
+                            {% else %}
+                                <span class="current_price">€{{ pricingDetails[camera.id].originalPrice|number_format(2, ',', ' ') }}</span>
+                                <p style="font-size: 14px;color: #666;">Pas de réduction disponible.</p>
+                            {% endif %}
                         </div>
                         <div class="add_to_cart">
                             <a  class="btn btn-primary addcart" data-description="{{camera.description}}" data-name="{{camera.nom}}" data-price="{{camera.prix}}" data-camera="{{camera.id}}"  data-image="{{minio_url(img) }}"   data-toggle="modal" data-target="#modal_box" data-tippy="Add To Cart" href="#" data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
