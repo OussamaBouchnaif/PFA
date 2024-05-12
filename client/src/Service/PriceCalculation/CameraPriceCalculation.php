@@ -2,12 +2,11 @@
 
 namespace App\Service\PriceCalculation;
 
-use App\DTO\CameraDTO;
 use App\Entity\Camera;
-use App\ValueObject\CameraPriceValueObject;
+use App\Entity\CameraPrice;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Reduction\Manager\ReductionInterface;
 use App\Reduction\Manager\Strategy\AbstractReductionStrategy;
-use Doctrine\ORM\EntityManagerInterface;
 
 class CameraPriceCalculation implements PriceCalculationInterface
 {
@@ -18,7 +17,7 @@ class CameraPriceCalculation implements PriceCalculationInterface
     ) {
     }
 
-    public function prepareCameraPricingDetails(int $id): CameraPriceValueObject
+    public function prepareCameraPricingDetails(int $id): CameraPrice
     {
         $camera = $this->loadCamera($id);
         $discountModel = $this->strategy->getReductionModel($camera);
@@ -29,7 +28,7 @@ class CameraPriceCalculation implements PriceCalculationInterface
         $discountValue = $originalPrice - $discountedPrice;
         $discountRate = $discountedCamera->getDiscountRate();
 
-        return new CameraPriceValueObject($originalPrice, $discountedPrice, $discountValue, $discountRate);
+        return new CameraPrice($originalPrice, $discountedPrice, $discountValue, $discountRate);
     }
 
     public function applyDiscounts(array $cameras): array

@@ -1,19 +1,20 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Entity;
 
-class CameraPriceValueObject
+class CameraPrice
 {
-
-
-    public function __construct(private float $originalPrice,private  float $discountedPrice,private float $discountValue,private float $discountRate)
-    {
-        
+    public function __construct(
+        private float $originalPrice,
+        private  float $discountedPrice,
+        private float $discountValue,
+        private float $discountRate
+    ) {
     }
 
     /**
      * Get the value of originalPrice
-     */ 
+     */
     public function getOriginalPrice()
     {
         return $this->originalPrice;
@@ -23,7 +24,7 @@ class CameraPriceValueObject
      * Set the value of originalPrice
      *
      * @return  self
-     */ 
+     */
     public function setOriginalPrice($originalPrice)
     {
         $this->originalPrice = $originalPrice;
@@ -33,7 +34,7 @@ class CameraPriceValueObject
 
     /**
      * Get the value of discountedPrice
-     */ 
+     */
     public function getDiscountedPrice()
     {
         return $this->discountedPrice;
@@ -43,7 +44,7 @@ class CameraPriceValueObject
      * Set the value of discountedPrice
      *
      * @return  self
-     */ 
+     */
     public function setDiscountedPrice($discountedPrice)
     {
         $this->discountedPrice = $discountedPrice;
@@ -53,7 +54,7 @@ class CameraPriceValueObject
 
     /**
      * Get the value of discountValue
-     */ 
+     */
     public function getDiscountValue()
     {
         return $this->discountValue;
@@ -63,7 +64,7 @@ class CameraPriceValueObject
      * Set the value of discountValue
      *
      * @return  self
-     */ 
+     */
     public function setDiscountValue($discountValue)
     {
         $this->discountValue = $discountValue;
@@ -73,7 +74,7 @@ class CameraPriceValueObject
 
     /**
      * Get the value of discountRate
-     */ 
+     */
     public function getDiscountRate()
     {
         return $this->discountRate;
@@ -83,7 +84,7 @@ class CameraPriceValueObject
      * Set the value of discountRate
      *
      * @return  self
-     */ 
+     */
     public function setDiscountRate($discountRate)
     {
         $this->discountRate = $discountRate;

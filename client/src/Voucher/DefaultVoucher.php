@@ -7,7 +7,6 @@ namespace App\Voucher;
 use App\Contract\DiscountedCartInterface;
 use App\Contract\DiscountedObjectInterface;
 use App\Contract\DiscountModelInterface;
-use App\Contract\VoucherModelInterface;
 use App\Entity\Cart;
 use App\Voucher\Strategy\VoucherStrategyInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

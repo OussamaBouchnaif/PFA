@@ -2,14 +2,14 @@
 
 namespace App\Service\PriceCalculation;
 
-use App\DTO\CameraDTO;
+
 use App\Entity\Camera;
-use App\ValueObject\CameraPriceValueObject;
+use App\Entity\CameraPrice;
 
 interface PriceCalculationInterface
 {
 
-    public function prepareCameraPricingDetails(int $id): CameraPriceValueObject;
+    public function prepareCameraPricingDetails(int $id): CameraPrice;
 
     public function applyDiscounts(array $cameras): array;
 
