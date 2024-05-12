@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/Camera/add', name: 'addtest')]
+    #[Route('/camera/add', name: 'addtest')]
     public function addCamera(Request $request, EntityManagerInterface $entityManager): Response
     {
         $camera = new Camera();
