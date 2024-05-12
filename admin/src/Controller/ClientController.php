@@ -61,7 +61,7 @@ class ClientController extends AbstractController
         return $this->redirectToRoute('client_list');
     }
 
-    #[Route('/update-account-status', name: 'update_account_status')]
+    #[Route('/clients/update-account-status', name: 'update_account_status')]
     public function updateAccountStatus(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $clientId = $request->request->get('clientId');

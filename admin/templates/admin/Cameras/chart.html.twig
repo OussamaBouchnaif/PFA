@@ -1,25 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-{{parent()}}
+    {{ parent() }}
     <style>
-    body {
-	background-color: whitesmoke  !important;
-    }
-       col{
-		height: 200px;
-	   }
-       
-    </style>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
+        body {
+            background-color: whitesmoke !important;
+        }
 
+        col {
+            height: 200px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
 {% endblock %}
 
 {% block body %}
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-            
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
@@ -28,7 +26,7 @@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item">
-                                        <a href="javascript: void(0);">Charts</a>
+                                        <a href="javascript:void(0);">Charts</a>
                                     </li>
                                 </ol>
                             </div>
@@ -36,171 +34,179 @@
                     </div>
                 </div>
                 <!-- end page title -->
-                    <div class="col-xl-3 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate bg-primary">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Total Commandes</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        {# <h5 class="text-white fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                                        </h5> #}
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">$<span class="counter-value" >{{ totalCommandes }}</span>k</h4>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
-                                                            <i class="bx bx-dollar-circle text-white"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
+                {% if displayCharts %}
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card card-animate bg-primary">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Total Commandes</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            {# <h5 class="text-white fs-14 mb-0">
+                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
+                                            </h5> #}
+                                        </div>
                                     </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0">Line Chart</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="chartContainer">
-                                    <canvas id="cameraChart" class="chartjs-chart"></canvas>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">$<span class="counter-value">{{ totalCommandes }}</span>k</h4>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
+                                                <i class="bx bx-dollar-circle text-white"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Line Chart</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div id="chartContainer">
+                                        <canvas id="cameraChart" class="chartjs-chart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- end col -->
+                        <!-- end col -->
 
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0">Bar Chart</h4>
-                            </div>
-                            <div class="card-body">
-                            <div id="chartContainer">
-                                  <canvas id="CommandChart" class="chartjs-chart"></canvas>
-                            </div>
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Bar Chart</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div id="chartContainer">
+                                        <canvas id="CommandChart" class="chartjs-chart"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <!-- end col -->
                     </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
+                    <!-- end row -->
 
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0">Pie Chart</h4>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="pieChart" class="chartjs-chart" data-colors='["--vz-success", "--vz-light"]'></canvas>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Pie Chart</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="pieChart" class="chartjs-chart" data-colors='["--vz-success", "--vz-light"]'></canvas>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- end col -->
+                        <!-- end col -->
 
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0">Donut Chart</h4>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="doughnut" class="chartjs-chart" data-colors='["--vz-primary", "--vz-light"]'></canvas>
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Donut Chart</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="doughnut" class="chartjs-chart" data-colors='["--vz-primary", "--vz-light"]'></canvas>
+                                </div>
                             </div>
                         </div>
+                        <!-- end col -->
                     </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
+                    <!-- end row -->
+                {% endif %}
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-{{parent()}}
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    {{ parent() }}
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('cameraChart').getContext('2d');
-        var camerasByCategory = {{ camerasByCategory | json_encode | raw }};
-        var categories = Object.keys(camerasByCategory);
-        var counts = Object.values(camerasByCategory);
+        // JavaScript for chart creation
+        {% if displayCharts %}
+            var ctx = document.getElementById('cameraChart').getContext('2d');
+            var camerasByCategory = {{ camerasByCategory | json_encode | raw }};
+            var categories = Object.keys(camerasByCategory);
+            var counts = Object.values(camerasByCategory);
 
-        // Couleurs personnalisées pour chaque type de caméra
-        var customColors = [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56',
-            '#4BC0C0',
-            '#9966FF',
-            '#FF8C00'
-        ];
+            // Custom colors for each camera type
+            var customColors = [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF8C00'
+            ];
 
-        var myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: 'Cameras by Category',
-                    data: counts,
-                    backgroundColor: customColors,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Cameras by Category',
+                        data: counts,
+                        backgroundColor: customColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
+            });
+        {% endif %}
     </script>
-   <script>
-    var ctx = document.getElementById('CommandChart').getContext('2d');
-    var CountCommandes = {{ CountCommandes | json_encode | raw }};
-    var Command = Object.keys(CountCommandes);
-    var counts = Object.values(CountCommandes);
 
-    // Couleurs personnalisées pour chaque type de caméra
-    var customColors = [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-        '#4BC0C0',
-        '#9966FF',
-        '#FF8C00'
-    ];
+    <script>
+        // JavaScript for another chart creation
+        {% if displayCharts %}
+            var ctx = document.getElementById('CommandChart').getContext('2d');
+            var CountCommandes = {{ CountCommandes | json_encode | raw }};
+            var Command = Object.keys(CountCommandes);
+            var counts = Object.values(CountCommandes);
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: Command, // Utilisation de Command comme étiquettes pour les axes X
-            datasets: [{
-                label: 'Count of Commandes',
-                data: counts,
-                backgroundColor: customColors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            // Custom colors for each camera type
+            var customColors = [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF8C00'
+            ];
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Command,
+                    datasets: [{
+                        label: 'Count of Commandes',
+                        data: counts,
+                        backgroundColor: customColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
-            }
-        }
-    });
-</script>
-
+            });
+        {% endif %}
+    </script>
 {% endblock %}

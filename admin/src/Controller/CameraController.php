@@ -27,11 +27,6 @@ class CameraController extends AbstractController
     ) {
     }
 
-    #[Route('/cus', name: 'cus')]
-    public function cus(): Response
-    {
-        return $this->render('admin/Cameras/customers.html.twig');
-    }
 
     #[Route('/camera/details/{id}', name: 'camera_details')]
     public function cameraDetails(Camera $camera, CameraRepository $cameraRepository): Response
@@ -134,6 +129,7 @@ class CameraController extends AbstractController
     #[Route('/camera/chart', name: 'camera_chart')]
     public function chart(): Response
     {
+        $displayCharts = true;
         $CountCommandes = $this->manager->getRepository(Commande::class)->countCommandesByStatus();
         $camerasByCategory = $this->manager->getRepository(Camera::class)->getCamerasByCategory();
         $totalCommandes = $this->manager->getRepository(Commande::class)->getTotalCommandes();
@@ -142,6 +138,8 @@ class CameraController extends AbstractController
             'camerasByCategory' => $camerasByCategory,
             'CountCommandes' => $CountCommandes,
             'totalCommandes' => $totalCommandes,
+            'displayCharts' => $displayCharts, // Pass the variable to the template
+
         ]);
     }
 }
