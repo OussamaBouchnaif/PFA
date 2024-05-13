@@ -58,7 +58,9 @@
 		tbody tr:not(:last-child) {
 			margin-bottom: 10px; /* Adjust spacing between rows */
 		}
-
+        .card{
+			width: 135%;
+		}
 		{# .col-xl-9 {
 
 			width: 10%;
@@ -114,6 +116,16 @@
 													<a href="{{ path('user_create') }}" class="btn btn-success" id="addproduct-btn">
 														<i class="ri-add-line align-bottom me-1"></i>
 														Add Users</a>
+														<button type="button" class="btn btn-primary" onclick="confirmAction('print')">
+                                                    <i class="ri-printer-line align-middle me-1"></i>
+                                                    Imprimer tableau
+                                                </button>
+
+                                                <button type="button" class="btn btn-info" onclick="confirmAction('export')">
+                                                    <i class="ri-file-excel-line align-middle me-1"></i>
+                                                    Exporter Excel
+                                                </button>
+
 												</div>
 											</div>
 											<div class="col-sm"></div>
@@ -124,8 +136,8 @@
 
 									<div class="card-body">
 
-									<table id="myTable" class="table" style="width: 100%;">
-										<thead>
+									<table id="myTable" class="table-striped" style="width: 100%;">
+										<thead class="thead-dark">
 											<tr class="align-middle custom-header-bg">
 												<th class="custom-header text-center">Photo</th>
 												<th class="custom-header text-center">Nom</th>
@@ -216,6 +228,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/tableexport@5.0.2/dist/js/tableexport.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.8/xlsx.full.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.delete-user-link').forEach(function (link) {
@@ -256,5 +270,90 @@
             });
         });
     </script>
-{% endblock %}
 	
+    <script>
+        // Votre code JavaScript existant ici
+        
+        // Fonction pour imprimer le tableau
+        function printTable() {
+            var printWindow = window.open('', '_blank');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('table {margin: auto; border-collapse: collapse; width: 80%;}');
+            printWindow.document.write('th, td {border: 1px solid black; padding: 8px;}');
+            printWindow.document.write('th {font-weight: bold; text-align: center;}');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<table>');
+            printWindow.document.write('<thead>');
+            printWindow.document.write('<tr>');
+            printWindow.document.write('<th>Photo</th>');
+            printWindow.document.write('<th>Nom</th>');
+            printWindow.document.write('<th>Prenom</th>');
+            printWindow.document.write('<th>Email</th>');
+            printWindow.document.write('<th>Ville</th>');
+			printWindow.document.write('<th>Rôles</th>');
+
+            printWindow.document.write('</tr>');
+            printWindow.document.write('</thead>');
+            printWindow.document.write('<tbody>');
+
+            var tableRows = document.getElementById('myTable').querySelectorAll('tr');
+            for (var i = 0; i < tableRows.length; i++) {
+                var row = tableRows[i];
+                var rowData = row.querySelectorAll('td');
+                if (rowData.length > 0) {
+                    printWindow.document.write('<tr>');
+                    for (var j = 0; j < rowData.length; j++) {
+                        if (j !== rowData.length - 1) {
+                            printWindow.document.write('<td>' + rowData[j].innerText + '</td>');
+                        }
+                    }
+                    printWindow.document.write('</tr>');
+                }
+            }
+
+            printWindow.document.write('</tbody>');
+            printWindow.document.write('</table>');
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Fonction pour exporter vers CSV
+        function exportToExcel() {
+            TableExport(document.getElementById('myTable'), {
+                headers: true,
+                footers: true,
+                formats: ['xlsx'],
+                filename: 'utilisateurs',
+                exportButtons: false,
+            }).exportFile();
+        }
+        // Fonction pour confirmer l'action d'impression ou d'exportation
+        function confirmAction(action) {
+            var title = action === 'print' ? 'Imprimer' : 'Export Excel';
+            var confirmButtonText = action === 'print' ? 'Imprimer' : 'Exporter';
+
+            Swal.fire({
+                title: title,
+                text: `Êtes-vous sûr de vouloir ${action === 'print' ? 'imprimer' : 'exporter vers Excel'} ces données?`,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (action === 'print') {
+                        printTable(); // Appeler la fonction d'impression
+                    } else if (action === 'export') {
+                        exportToCSV(); // Appeler la fonction d'exportation vers CSV
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

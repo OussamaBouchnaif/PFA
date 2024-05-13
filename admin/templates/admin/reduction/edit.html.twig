@@ -70,13 +70,13 @@
 											<div class="text-danger">{{ form_errors(form.dateFin) }}</div>
 										{% endif %}
 									</div>
-									<div class="mb-3">
+									{# <div class="mb-3">
 										{{ form_label(form.Prix) }}
 										{{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
 										{% if form_errors(form.Prix) %}
 											<div class="text-danger">{{ form_errors(form.dateFin) }}</div>
 										{% endif %}
-									</div>
+									</div> #}
 									<button type="submit" class="btn btn-success">Enregistrer</button>
                                     <a  class="btn btn-danger" href="{{ path('reduction_show') }} ">Retour</a>
 

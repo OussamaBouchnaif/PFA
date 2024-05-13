@@ -30,11 +30,11 @@ class ReductionType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'mt-2'],
                 'label' => 'Date de fin',
-            ])
-            ->add('Prix', null, [
-                'label' => 'Prix',
-                'attr' => ['class' => 'form-control'],
             ]);
+            // ->add('Prix', null, [
+            //     'label' => 'Prix',
+            //     'attr' => ['class' => 'form-control'],
+            // ])
     }
 
     public function configureOptions(OptionsResolver $resolver)

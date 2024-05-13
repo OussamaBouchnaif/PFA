@@ -40,8 +40,8 @@ class Reduction
     #[ORM\OneToMany(mappedBy: 'reduction', targetEntity: LigneReduction::class)]
     private Collection $ligneReductions;
 
-    #[ORM\Column]
-    private ?float $Prix = null;
+    // #[ORM\Column]
+    // private ?float $Prix = null;
 
 
 
@@ -133,17 +133,17 @@ class Reduction
         return $this;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->Prix;
-    }
+    // public function getPrix(): ?float
+    // {
+    //     return $this->Prix;
+    // }
 
-    public function setPrix(float $Prix): static
-    {
-        $this->Prix = $Prix;
+    // public function setPrix(float $Prix): static
+    // {
+    //     $this->Prix = $Prix;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 
 

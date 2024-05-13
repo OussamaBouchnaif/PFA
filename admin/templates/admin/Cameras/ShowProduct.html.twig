@@ -513,51 +513,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-ddocument.addEventListener('DOMContentLoaded', function () {
-	document.querySelectorAll('.delete-camera-link').forEach(link => {
-		link.addEventListener('click', function (event) {
-			event.preventDefault(); // Empêcher le comportement par défaut du lien
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButton = document.getElementById('delete-camera-btn');
+    
+    if (deleteButton) {
+        deleteButton.addEventListener('click', function () {
+            const cameraId = deleteButton.dataset.cameraId;
 
-			Swal.fire({
-				title: 'Are you sure?',
-				text: "You won't be able to revert this!",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes, delete it!'
-			}).then(result => {
-				if (result.isConfirmed) { // Envoyer la requête de suppression via AJAX
-					const deleteUrl = this.dataset.deleteUrl;
-
-					fetch(deleteUrl, {
-						method: 'DELETE',
-						headers: {
-							'Content-Type': 'application/json',
-							'X-Requested-With': 'XMLHttpRequest'
-						}
-					}).then(response => {
-						if (!response.ok) {
-							throw new Error('Network response was not ok');
-						}
-						return response.json();
-					}).then(data => {
-						if (data.success) {
-							Swal.fire('Deleted!', 'Your camera has been deleted.', 'success');
-							// Rediriger vers la page des caméras après la suppression
-							window.location.href = "{{ path('camera') }}";
-						} else {
-							Swal.fire('Error!', 'An error occurred while deleting the camera: ' + data.message, 'error');
-						}
-					}).catch(error => {
-						console.error('Error:', error);
-						Swal.fire('Error!', 'An error occurred while deleting the camera.', 'error');
-					});
-				}
-			});
-		});
-	});
+            fetch(`/camera/Delete_camera/${cameraId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Afficher SweetAlert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        // Rafraîchir la page après la suppression
+                        location.reload();
+                    });
+                } else {
+                    // Afficher une alerte en cas d'erreur
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+                // Afficher une alerte en cas d'erreur
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred',
+                });
+            });
+        });
+    }
 });
+
 
 function confirmPrint() {
 Swal.fire({
@@ -591,48 +601,7 @@ exportToExcel();
 });
 }
 
-var selectedCameraId;
-// Définition de la variable selectedCameraId
 
-// Lorsque l'utilisateur clique sur le lien "Télécharger"
-$('#uploadLink').click(function () { // Récupérez l'ID de la caméra à partir de la ligne sélectionnée
-var cameraId = $(this).closest('tr').attr('data-camera-id');
-// Définissez l'ID de la caméra sélectionnée
-setSelectedCameraId(cameraId);
-});
 
-// Fonction pour définir l'ID de la caméra sélectionnée
-function setSelectedCameraId(cameraId) {
-selectedCameraId = cameraId;
-}
-// Lorsque l'utilisateur clique sur le bouton "Télécharger"
-$('#uploadModal').on('show.bs.modal', function (event) {
-var button = $(event.relatedTarget); // Button that triggered the modal
-var cameraId = button.data('camera-id'); // Extract info from data-* attributes
-var modal = $(this);
-modal.find('#cameraId').val(cameraId);
-});</script><script>
-// Lorsque le formulaire d'ajout de photo est soumis
-$('#uploadForm').submit(function (event) { // Empêche le comportement par défaut du formulaire
-event.preventDefault();
-
-// Récupère les données du formulaire
-var formData = new FormData(this);
-
-// Effectue une requête AJAX pour soumettre le formulaire
-$.ajax({
-url: $(this).attr('action'), // URL de l'action du contrôleur pour ajouter la photo
-type: 'POST',
-data: formData,
-processData: false,
-contentType: false,
-success: function (response) { // Si l'ajout de la photo réussit, ferme le modal et affiche un message de succès si nécessaire
-$('#uploadModal').modal('hide');
-alert('Photo ajoutée avec succès !');
-},
-error: function (xhr, status, error) { // Si une erreur se produit lors de l'ajout de la photo, affiche un message d'erreur
-alert('Échec de l\'ajout de la photo : ' + xhr.responseText);
-}
-});
-});
-</script>{% endblock %}
+</script>
+{% endblock %}
