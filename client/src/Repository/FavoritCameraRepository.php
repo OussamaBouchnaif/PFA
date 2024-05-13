@@ -52,6 +52,15 @@ class FavoritCameraRepository extends ServiceEntityRepository
             ->getQuery() 
             ->getResult(); 
     }
+    public function countUserWishlistItems(Client $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('count(f.id)')
+            ->where('f.client = :client')
+            ->setParameter('client', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     
 
 //    /**

@@ -2,22 +2,21 @@
 
 namespace App\Controller;
 
-
 use App\Cart\Factory\CartFactory;
 use App\Cart\Handler\CartStorageInterface;
 use App\Forms\CheckoutType;
 use App\Voucher\VoucherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderController extends AbstractController
 {
     public function __construct(
         private CartStorageInterface $cartStorage,
-        private  CartFactory $cartFactory,
+        private CartFactory $cartFactory,
     ) {
     }
 
@@ -27,7 +26,6 @@ class OrderController extends AbstractController
         VoucherInterface $voucherManager,
         Security $security
     ): Response {
-
         if (!$security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('app_login');
         }
@@ -38,7 +36,6 @@ class OrderController extends AbstractController
 
         $session = $request->getSession();
         if ($formOrder->isSubmitted() && $formOrder->isValid()) {
-
             if ($formOrder->getClickedButton() && 'applyVoucher' === $formOrder->getClickedButton()->getName()) {
                 $voucherCode = $formOrder->get('voucher')->getData();
                 $voucherManager->applyVoucher($voucherCode, $cart);
@@ -47,17 +44,16 @@ class OrderController extends AbstractController
                     'discount' => $voucherManager->applyVoucher($voucherCode, $cart)->getTotal(),
                     'rate' => $voucherManager->applyVoucher($voucherCode, $cart)->getDiscountRate(),
                 ];
-                $session->set('voucher',$voucherData);
+                $session->set('voucher', $voucherData);
             }
             if ($formOrder->getClickedButton() && 'placeOrder' === $formOrder->getClickedButton()->getName()) {
-                $session->set('payment',$formOrder->getData()['payment']);
+                $session->set('payment', $formOrder->getData()['payment']);
+
                 return $this->redirectToRoute('app_payment');
             }
         }
 
         return $this->render('client/pages/checkout.html.twig', [
-            'cart' => $this->cartStorage->getCart(),
-            'totalItems' => $this->cartStorage->TotalPriceItems(),
             'formOrder' => $formOrder->createView(),
             'voucher' => $session->get('voucher')['voucher'] ?? null,
             'amount' => $cart->computeTotal(),

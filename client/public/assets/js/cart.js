@@ -2,21 +2,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     var addToCartForm = document.getElementById('addToCartForm');
     var cartContainer = document.getElementById('cartitems');
+    var itemCountSpan = document.querySelector('#item_cart'); 
+    var FavoritCountSpan = document.querySelector('#item_favorit'); 
+
     document.querySelectorAll('.add-to-wishlist').forEach(function(item) {
         item.addEventListener('click', function(e) {
             const cameraId = this.dataset.id;
-            console.log('script loaded',cameraId);
-            var loginUrl = "login"; 
+            console.log('script loaded', cameraId);
+    
             fetch(`/add/${cameraId}`, {
-                method: 'GET',  // Ou 'POST' si votre route Symfony est configurée pour cela
+                method: 'GET',  
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest',  // Pour faire savoir à Symfony que c'est une requête AJAX
-                    'Accept': 'application/json'  // S'attendre à une réponse en JSON
+                    'X-Requested-With': 'XMLHttpRequest',  
+                    'Accept': 'application/json'  
                 }
             })
             .then(response => {
-               if(response.status === 401)
-               {
+                if (response.status === 401) {
                     Swal.fire({
                         icon: 'info',
                         title: 'Connexion Requise',
@@ -24,44 +26,41 @@ document.addEventListener('DOMContentLoaded', function() {
                         confirmButtonColor: '#3085d6',
                         footer: '<a href="/login">Cliquez ici pour vous connecter</a>'
                     });
-               }else if(response.status === 409)
-               {
+                    return Promise.reject('Login required'); // Stop the chain with rejection
+                } else if (response.status === 409) {
                     Swal.fire({
                         icon: 'info',
                         title: 'Already Added',
                         text: 'This item is already in your wishlist.',
                         footer: '<a href="/wish/list">Click here to view your wishlist</a>'
                     });
-               }
-               else if(response.status === 200)
-               {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Your Camera has been added',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        customClass: {
-                            popup: 'my-custom-popup-class', 
-                        }
-                    });
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Your Camera has been added',  
-                        timer: 2000,
-                    });
-               }
-                    
-               
+                    return Promise.reject('Already added'); // Stop the chain with rejection
+                } else if (!response.ok) {
+                    return Promise.reject('Some error occurred');
+                }
+                return response.json();
+            })
+            .then(data => {
+                FavoritCountSpan.textContent = data.totalFavorit;
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your Camera has been added',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    customClass: {
+                        popup: 'my-custom-popup-class', 
+                    }
+                });
+                console.log(data.totalFavorit);
             })
             .catch(error => {
-                console.log(error)
-               
-                
+                console.log('Error:', error);
             });
-            
         });
     });
+    
+
     if (addToCartForm) {
         addToCartForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -78,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cartContainer && data.html) {
                     cartContainer.innerHTML = data.html;
                     $('#modal_box').modal('hide');
+                    
+                    itemCountSpan.textContent = data.totalItems; 
+                    
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -117,9 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Effectuer la requête AJAX si la suppression est confirmée
+                        
                         fetch(deleteUrl, {
-                            method: 'GET', // Adaptez selon la méthode attendue par votre backend
+                            method: 'GET', 
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
                             }
@@ -128,6 +130,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(data => {
                             if (data.success && cartContainer) {
                                 cartContainer.innerHTML = data.html;
+                                
+                                itemCountSpan.textContent = data.totalItems; 
+                                
                                 Swal.fire({
                                     title: "Deleted!",
                                     text: "Your camera   has been deleted.",

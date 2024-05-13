@@ -19,10 +19,7 @@ class CartSessionStorage implements CartStorageInterface
         private readonly RequestStack $request,
         private Security $security,
         private AbstractDiscountApplier $applier,
-
-
     ) {
-
     }
 
     public function addToCart(Camera $camera, int $qte, float $stockage)
@@ -36,7 +33,7 @@ class CartSessionStorage implements CartStorageInterface
             $camera->getNom()
         );
         $this->applier->applyDiscount($item);
-        $cart->addToCart($item); 
+        $cart->add($item);
         $this->saveCart($cart);
     }
 
@@ -88,7 +85,7 @@ class CartSessionStorage implements CartStorageInterface
         $items = $cart->getItems();
         if (array_key_exists($idItem, $items)) {
             $cartItem = $items[$idItem];
-            $cart->removeFromCart($cartItem);
+            $cart->remove($cartItem);
             $this->saveCart($cart);
         }
     }
@@ -107,6 +104,16 @@ class CartSessionStorage implements CartStorageInterface
             $cartItem->setQuantity($qte);
             $this->saveCart($cart);
         }
+    }
+
+    /**
+         * get number of items 
+         *
+         * @return int .
+     */
+    public function getCartCount():int
+    {
+        return $this->getCart()->getCount();
     }
     /**
      * clear cart 
