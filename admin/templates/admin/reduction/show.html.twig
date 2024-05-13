@@ -182,7 +182,7 @@
 												<th class="custom-header text-center">Pourcentage</th>
 												<th class="custom-header text-center">Date de début</th>
 												<th class="custom-header text-center">Date de fin</th>
-												<th class="custom-header text-center">prix</th>
+												{# <th class="custom-header text-center">prix</th> #}
 												<th class="custom-header text-center">Action</th>
 
 											</tr>
@@ -194,7 +194,7 @@
 													<td class="align-middle text-center price-cell">{{ reduction.poucentage }} &percnt;</td>
 													<td class="align-middle text-center">{{ reduction.dateDebut ? reduction.dateDebut|date('Y-m-d') : '' }}</td>
 													<td class="align-middle text-center">{{ reduction.dateFin ? reduction.dateFin|date('Y-m-d') : '' }}</td>
-													<td class="align-middle text-center price-cell">{{ reduction.prix }} <span>DH</span> </td>
+													{# <td class="align-middle text-center price-cell">{{ reduction.prix }} <span>DH</span> </td> #}
 
 													<td class="text-center align-middle horizontal-buttons">
 														<button class="dropdown-item text-muted" onclick="confirmDelete('{{ path('reduction_delete',{id:reduction.id}) }}')">

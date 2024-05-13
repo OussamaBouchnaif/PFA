@@ -98,33 +98,33 @@ class CameraController extends AbstractController
         ]);
     }
 
-    #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
-    public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): JsonResponse
-    {
-        $camera = $cameraRepository->find($id);
+        #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
+        public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): JsonResponse
+        {
+            $camera = $cameraRepository->find($id);
 
-        if (!$camera) {
-            return new JsonResponse(['success' => false, 'message' => 'Camera not found'], 404);
+            if (!$camera) {
+                return new JsonResponse(['success' => false, 'message' => 'Camera not found'], 404);
+            }
+
+            foreach ($camera->getImageCameras() as $imageCamera) {
+                $entityManager->remove($imageCamera);
+            }
+
+            $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
+            foreach ($reductions as $reduction) {
+                $entityManager->remove($reduction);
+            }
+            $avis = $entityManager->getRepository(AvisCamera::class)->findBy(['camera' => $camera]);
+            foreach ($avis as $avi) {
+                $entityManager->remove($avi);
+            }
+
+            $entityManager->remove($camera);
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
         }
-
-        foreach ($camera->getImageCameras() as $imageCamera) {
-            $entityManager->remove($imageCamera);
-        }
-
-        $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
-        foreach ($reductions as $reduction) {
-            $entityManager->remove($reduction);
-        }
-        $avis=$entityManager->getRepository(AvisCamera::class)->findBy(['camera'=> $camera]);
-        foreach ($avis as $avi ) {
-            $entityManager->remove($avi);
-        }
-
-        $entityManager->remove($camera);
-        $entityManager->flush();
-
-        return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
-    }
 
     #[Route('/camera/chart', name: 'camera_chart')]
     public function chart(): Response

@@ -46,19 +46,19 @@ class Camera
     #[Assert\Length(max: 50, maxMessage: 'Status should not exceed {{ limit }} characters.')]
     private ?string $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class)]
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: AvisCamera::class, cascade: ['remove'])]
     private Collection $avisCameras;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class)]
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: FavoritCamera::class, cascade: ['remove'])]
     private Collection $favoritCameras;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneCommande::class)]
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneCommande::class, cascade: ['remove'])]
     private Collection $ligneCommandes;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class)]
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: ImageCamera::class, cascade: ['remove'])]
     private Collection $imageCameras;
 
-    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class)]
+    #[ORM\OneToMany(mappedBy: 'camera', targetEntity: LigneReduction::class, cascade: ['remove'])]
     private Collection $ligneReductions;
 
     #[ORM\ManyToOne(inversedBy: 'cameras')]
@@ -108,7 +108,7 @@ class Camera
     #[Assert\Length(max: 40, maxMessage: 'Power source should not exceed {{ limit }} characters.')]
     private ?string $alimentation = null;
 
-    #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera')]
+    #[ORM\ManyToMany(targetEntity: Blog::class, mappedBy: 'Camera', cascade: ['remove'])]
     private Collection $blogs;
 
     public function __construct()
