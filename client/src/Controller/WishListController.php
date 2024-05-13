@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
+use App\Cart\Handler\CartStorageInterface;
 use App\Entity\Camera;
 use App\Entity\FavoritCamera;
+use App\Service\Api\Cameras\CameraFetcherInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Cart\Handler\CartStorageInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Service\Api\Cameras\CameraFetcherInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WishListController extends AbstractController
 {
@@ -35,8 +35,6 @@ class WishListController extends AbstractController
         return $this->render('client/pages/wish_list/index.html.twig', [
             'controller_name' => 'WishListController',
             'wishList' => $wishList,
-            'cart' => $this->cartStorage->getCart(),
-            'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
     }
 
@@ -49,11 +47,11 @@ class WishListController extends AbstractController
 
         $favorit = $this->manager->getRepository(FavoritCamera::class)->findOneBy(['camera' => $camera, 'client' => $this->security->getUser()]);
         if (null === $favorit) {
-
             $this->manager->getRepository(FavoritCamera::class)->addToWishlist($camera, $this->security->getUser());
 
             return new JsonResponse(['success' => true, 'message' => 'success required'], 200);
         }
+
         return new JsonResponse(['success' => false, 'message' => 'Product already in wishlist'], 409);
     }
 
@@ -62,10 +60,10 @@ class WishListController extends AbstractController
     {
         $this->manager->remove($favoritCamera);
         $this->manager->flush();
-        $wishlist = $this->manager->getRepository(FavoritCamera::class)->wishList($this->security->getUser());;
+        $wishlist = $this->manager->getRepository(FavoritCamera::class)->wishList($this->security->getUser());
 
         return $this->render('client/pages/components/wishlist_table.html.twig', [
-            'wishList' => $wishlist
+            'wishList' => $wishlist,
         ]);
     }
 }

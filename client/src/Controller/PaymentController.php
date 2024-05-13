@@ -2,20 +2,19 @@
 
 namespace App\Controller;
 
+use App\Cart\Factory\CartFactory;
+use App\Cart\Handler\CartStorageInterface;
+use App\Payment\Factory\PaymentFactory;
 use App\Payment\PaymentManager;
 use App\Processor\CartProcessor;
-use App\Cart\Factory\CartFactory;
 use App\Voucher\VoucherInterface;
-use App\Payment\Factory\PaymentFactory;
-use App\Cart\Handler\CartStorageInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PaymentController extends AbstractController
 {
-
     public function __construct(
         private PaymentManager $manager,
         private CartStorageInterface $cartStorage,
@@ -23,7 +22,6 @@ class PaymentController extends AbstractController
         private CartFactory $cartFactory,
         private VoucherInterface $voucherManager,
         private PaymentFactory $paymentFactory,
-
     ) {
     }
 
@@ -38,17 +36,16 @@ class PaymentController extends AbstractController
 
         $formPayment->handleRequest($request);
         if ($formPayment->isSubmitted() && $formPayment->isValid()) {
-
             $voucherIdentifier = $this->voucherManager->getVoucherIdentifier();
             $this->cartProcessor->process($cart, $voucherIdentifier);
             $this->paymentFactory->createPayment($startegy, $cart);
+
             return $this->redirectToRoute('done');
         }
+
         return $this->render('client/payment/index.html.twig', [
             'form' => $formPayment->createView(),
             'strategy' => $startegy,
-            'cart' => $this->cartStorage->getCart(),
-            'totalItems' => $this->cartStorage->TotalPriceItems(),
         ]);
     }
 

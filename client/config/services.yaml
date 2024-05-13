@@ -42,6 +42,9 @@ services:
     App\Twig\MinioExtension:
         arguments:
             $endpointMinio: '%env(ENDPOINT_MINIO)%'
+            
+    App\Twig\CartExtension:
+        tags: ['twig.extension']
     
 
     App\Payment\Strategy\PaypalePayment:

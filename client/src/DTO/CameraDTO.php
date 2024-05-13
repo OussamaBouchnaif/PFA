@@ -28,7 +28,7 @@ class CameraDTO
     private  array  $imageCameras = [];
 
     private  array $ligneReductions = [];
-    private  array  $avisCameras ;
+    private  array  $avisCameras = [];
 
     private  ?Categorie $categorie = null;
 
