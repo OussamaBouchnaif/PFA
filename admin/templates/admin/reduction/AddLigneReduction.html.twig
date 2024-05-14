@@ -17,16 +17,19 @@
                         <div class="col-lg-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="mb-3">
-                                        {{ form_start(form) }}
-                                        {{ form_row(form.camera) }}
-                                    </div>
-                                    <div class="mb-3">
-                                        {{ form_row(form.reduction) }}
-                                    </div>
-                                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                                    {{ form_end(form) }}
+                                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                                <div class="form-group mb-3">
+                                    {{ form_label(form.camera, 'Nom de la caméra', {'label_attr': {'class': 'control-label'}}) }}
+                                    {{ form_widget(form.camera, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom de la caméra'}}) }}
                                 </div>
+                                <div class="form-group mb-3">
+                                    {{ form_label(form.reduction, 'Réduction', {'label_attr': {'class': 'control-label'}}) }}
+                                    {{ form_widget(form.reduction, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la réduction'}}) }}
+                                </div>
+                                <button type="submit" class="btn btn-success">Enregistrer</button>
+                                {{ form_end(form) }}
+                            </div>
+
                             </div>
                         </div>
                     </div>

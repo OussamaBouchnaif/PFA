@@ -35,7 +35,17 @@ class CameraController extends AbstractController
             'camera' => $camera,
         ]);
     }
+    #[Route('/', name: 'home')]
+    public function home(Request $request, CameraRepository $cameraRepository, CategorieRepository $categorieRepository): Response
+    {
+        $cameras = $cameraRepository->findAll();
+        $categories = $categorieRepository->findAll(); // Récupérer toutes les catégories depuis le repository
 
+        return $this->render('admin/Cameras/ShowProduct.html.twig', [
+            'cameras' => $cameras,
+            'categories' => $categories, // Passer les catégories à la vue Twig
+        ]);
+    }
     #[Route('/camera', name: 'camera')]
     public function showCamera(Request $request, CameraRepository $cameraRepository, CategorieRepository $categorieRepository): Response
     {
