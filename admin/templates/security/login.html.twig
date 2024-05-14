@@ -1,4 +1,11 @@
-{% block stylesheets %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Page Title</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	{% block stylesheets %}
 	<link
 	rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -26,6 +33,9 @@
 		}
 	</style>
 {% endblock %}
+</head>
+<body>
+	
 
 {% block body %}
 
@@ -131,3 +141,6 @@
 	<script src="assets/js/pages/password-addon.init.js"></script>
 
 {% endblock %}
+
+</body>
+</html>!

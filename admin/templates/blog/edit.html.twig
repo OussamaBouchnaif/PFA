@@ -6,6 +6,9 @@
         body {
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
+        body {
+		background-color: whitesmoke  !important;
+		}
     </style>
 {% endblock %}
 
@@ -29,7 +32,15 @@
                         </div>
                     </div>
                     <!-- Fin du titre de la page -->
-
+{% for child in form %}
+											{% if child.vars.errors|length > 0 %}
+												<div class="alert alert-danger" role="alert">
+													{% for error in child.vars.errors %}
+														{{ error.message }}
+													{% endfor %}
+												</div>
+											{% endif %}
+										{% endfor %}
                     <!-- Formulaire d'ajout d'article -->
                     {{ form_start(form, {'attr': {'id': 'edit_blog_form', 'enctype': 'multipart/form-data'}}) }}
 

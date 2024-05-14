@@ -14,7 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 class CameraType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -40,6 +41,12 @@ class CameraType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le prix de la caméra',
                 ],
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value' => 0,
+                        'message' => 'Le prix doit être supérieur ou égal à {{ compared_value }}.',
+                    ]),
+                ],
             ])
             ->add('stock', IntegerType::class, [
                 'label' => 'Stock',
@@ -47,17 +54,32 @@ class CameraType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le stock de la caméra',
                 ],
+                'constraints' => [
+                    new GreaterThan([
+                        'value' => 0,
+                        'message' => 'Le stock doit être supérieur à zéro.',
+                    ]),
+                ],
             ])
             ->add('dateAjout', DateType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'mt-2'],
+                'attr' => [
+                    'class' => 'mt-2 form-control',
+                    'placeholder' => 'Sélectionnez la date d\'ajout',
+                ],
             ])
-            ->add('status', TextType::class, [
+            ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le statut de la caméra',
+                ],
+                'placeholder' => 'Choisissez le statut de la caméra',
+                'choices' => [
+                    'En stock' => 'en_stock',
+                    'En rupture de stock' => 'rupture_de_stock',
+                    'En commande' => 'en_commande',
+                    'Autre' => 'autre',
                 ],
             ])
             ->add('categorie', EntityType::class, [
@@ -87,6 +109,8 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'placeholder' => 'Choisissez materiaux',
+
             ])
             ->add('resolution', ChoiceType::class, [
                 'label' => 'Résolution',
@@ -98,6 +122,7 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'placeholder' => 'Choisissez la résolution',
             ])
             ->add('angleVision', ChoiceType::class, [
                 'label' => 'Angle de Vision',
@@ -109,6 +134,7 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'placeholder' => 'Choisissez l\'angle de vision',
             ])
             ->add('connectivite', ChoiceType::class, [
                 'label' => 'Connectivité',
@@ -121,6 +147,7 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'placeholder' => 'Choisissez le type de connectivité',
             ])
             ->add('alimentation', ChoiceType::class, [
                 'label' => 'Alimentation',
@@ -133,19 +160,41 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'placeholder' => 'Choisissez le type d\'alimentation',
             ])
-            ->add('stockage', IntegerType::class, [
+            ->add('stockage', TextType::class, [
                 'label' => 'Stockage',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Entrez la capacité de stockage',
                 ],
+                'help' => 'Entrez la capacité de stockage en gigaoctets (GB)',
+                'constraints' => [
+                    new GreaterThan([
+                        'value' => 0,
+                        'message' => 'Le stockage doit être supérieur à 0.',
+                    ]),
+                ],
             ])
-            ->add('couleur', TextType::class, [
+            ->add('couleur', ChoiceType::class, [
                 'label' => 'Couleur',
+                'required' => true, // ou false selon vos besoins
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez la couleur',
+                ],
+                'placeholder' => 'Choisissez ou entrez la couleur',
+                'choices' => [
+                    'Noir' => 'Noir',
+                    'Blanc' => 'Blanc',
+                    'Argent' => 'Argent',
+                    'Gris' => 'Gris',
+                    'Bleu' => 'Bleu',
+                    'Rouge' => 'Rouge',
+                    'Vert' => 'Vert',
+                    'Jaune' => 'Jaune',
+                    'Rose' => 'Rose',
+                    'Or' => 'Or',
+                    'Autre' => 'Autre',
                 ],
             ])
             ->add('poids', IntegerType::class, [
@@ -153,6 +202,12 @@ class CameraType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le poids',
+                ],
+                'constraints' => [
+                    new GreaterThan([
+                        'value' => 0,
+                        'message' => 'Le poids doit être supérieur à 0.',
+                    ]),
                 ],
             ]);
     }

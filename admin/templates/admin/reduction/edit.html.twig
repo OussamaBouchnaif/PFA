@@ -6,6 +6,9 @@
             display: flex;
             justify-content: center;
         }
+		body {
+		background-color: whitesmoke  !important;
+		}
         </style>
 {% endblock %}
 
@@ -36,7 +39,15 @@
 						</div>
 					</div>
 					<!-- end page title -->
-
+								{% for child in form %}
+											{% if child.vars.errors|length > 0 %}
+												<div class="alert alert-danger" role="alert">
+													{% for error in child.vars.errors %}
+														{{ error.message }}
+													{% endfor %}
+												</div>
+											{% endif %}
+										{% endfor %}
 					<div class="row">
 						<div class="col-lg-8">
 							<div class="card">

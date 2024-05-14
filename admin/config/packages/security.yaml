@@ -24,9 +24,7 @@ security:
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 60480078
-                path: /login
-                always_remember_me: true
-
+                path: /
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -36,12 +34,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-    #    - { path: ^/, roles: ROLE_USER }
+       - { path: ^/login$, roles: PUBLIC_ACCESS }
     #    - { path: ^/camera, roles: ROLE_USER }
     #    - { path: ^/user, roles: ROLE_USER }
     #    - { path: ^/reduction, roles: ROLE_USER }
     #    - { path: ^/blog, roles: ROLE_USER }
     #    - { path: ^/clients, roles: ROLE_USER }
+       - { path: ^/, roles: ROLE_USER }
 
 
 

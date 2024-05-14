@@ -116,7 +116,7 @@ class ReductionController extends AbstractController
             // Redirection vers une autre page ou affichage d'un message de succès
             $this->addFlash('success', 'La ligne de réduction a été ajoutée avec succès.');
 
-            return $this->redirectToRoute('reduction_show');
+            return $this->redirectToRoute('camera');
         }
 
         return $this->render('admin/reduction/AddLigneReduction.html.twig', [
