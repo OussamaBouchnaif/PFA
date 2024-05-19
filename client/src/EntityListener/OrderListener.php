@@ -6,13 +6,12 @@ use App\Entity\Cart;
 use App\Mail\Notifier;
 use App\Event\CameraStockEvent;
 use App\Event\VoucherUsedEvent;
-use App\Processor\CartProcessor;
 use App\Voucher\VoucherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Voucher\Strategy\VoucherStrategyInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class OrderPlacedListener
+class OrderListener
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,

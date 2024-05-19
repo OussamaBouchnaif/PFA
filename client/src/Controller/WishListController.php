@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,13 +22,16 @@ class WishListController extends AbstractController
         private CameraFetcherInterface $fetcher,
         private EntityManagerInterface $manager,
         private Security $security,
+        private RequestStack $stack,
     ) {
     }
 
     #[Route('/wish/list', name: 'app_wish_list')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $requestt = $this->stack->getCurrentRequest();
         if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $request->getSession()->set('referer',$requestt->getUri());
             return $this->redirectToRoute('app_login');
         }
 

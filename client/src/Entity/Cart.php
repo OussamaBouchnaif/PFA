@@ -7,7 +7,7 @@ use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-#[ORM\EntityListeners(["App\EntityListener\OrderPlacedListener"])]
+#[ORM\EntityListeners(["App\EntityListener\OrderListener"])]
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 
 class Cart

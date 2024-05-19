@@ -2,16 +2,16 @@
 
 namespace App\Payment;
 
-use App\Payment\Strategy\PaymentInterface;
+use App\Payment\Processor\PaymentProcessorInterface;
 
-class PaymentManager
+class PaymentProcessorSelector
 {
     public function __construct(
         private iterable  $paymentProcessors
     ) {
     }
 
-    public function getPaymentStrategy(string $method): PaymentInterface
+    public function getPaymentProcessor(string $method): PaymentProcessorInterface
     {
         foreach ($this->paymentProcessors as $processor) {
             if ($processor->supportsMethod($method)) {

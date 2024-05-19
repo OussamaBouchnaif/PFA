@@ -4,8 +4,12 @@ namespace App\Formatter;
 
 class PriceFormatter
 {
-    public function formatPriceRange(string $priceRange): string
+    public function formatPriceRange(?string $priceRange): string
     {
+        if (!$priceRange) {
+            return "";
+        }
+
         $prices = explode(' - ', $priceRange);
         $prices = array_map(function ($price) {
             return floatval(str_replace('$', '', $price));

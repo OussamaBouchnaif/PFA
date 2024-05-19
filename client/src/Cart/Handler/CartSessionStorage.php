@@ -6,20 +6,22 @@ namespace App\Cart\Handler;
 use App\Entity\Camera;
 use App\ValueObject\CartValueObject;
 use App\ValueObject\CartItemValueObject;
+use App\Cart\Handler\AbstractCartStorage;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Reduction\Applier\AbstractDiscountApplier;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 
-class CartSessionStorage implements CartStorageInterface
+class CartSessionStorage extends AbstractCartStorage
 {
     private $cartSessionKey = 'cart';
 
     public function __construct(
         private readonly RequestStack $request,
         private Security $security,
-        private AbstractDiscountApplier $applier,
+        AbstractDiscountApplier $applier
     ) {
+        parent::__construct($applier);
     }
 
     public function addToCart(Camera $camera, int $qte, float $stockage)
