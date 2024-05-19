@@ -34,14 +34,15 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/success', name: 'app_success')]
-    public function success(): Response
+    public function success(Request $request): Response
     {
         $cart = $this->cartFactory->build();
-
+        $session = $request->getSession();
         $voucherIdentifier = $this->voucherManager->getVoucherIdentifier();
         $this->cartProcessor->process($cart, $voucherIdentifier);
 
         $this->voucherManager->invalidateVoucher($voucherIdentifier);
+        $session->remove('voucher');
         $this->cartStorage->clearCart($this->cartStorage->getCart());
 
         return $this->redirectToRoute('app_home');

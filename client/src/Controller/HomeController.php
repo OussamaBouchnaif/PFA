@@ -2,24 +2,34 @@
 
 namespace App\Controller;
 
-use App\Service\Api\Cameras\CameraFetcherInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\Api\Cameras\CameraFetcherInterface;
+use App\Service\PriceCalculation\PriceCalculationInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
     public function __construct(
         private CameraFetcherInterface $fetcher,
+        private PriceCalculationInterface $priceCalculation,
     ) {
     }
 
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $last =$this->fetcher->getLastCameras();
+        $mostOrders = $this->fetcher->CameratheMostOrders();
+        $pricingDetailsLatest = $this->priceCalculation->applyDiscounts($last);
+        $pricingDetailsMost = $this->priceCalculation->applyDiscounts($mostOrders);
+
+        
         return $this->render('client/pages/index.html.twig', [
-            'latest' => $this->fetcher->getLastCameras(),
-            'mostOrders' => $this->fetcher->CameratheMostOrders(),
+            'latest' => $last,
+            'mostOrders' => $mostOrders ,
+            'pricingDetailsLatest' => $pricingDetailsLatest,
+            'pricingDetailsMost' => $pricingDetailsMost,
         ]);
     }
 }

@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OrderController extends AbstractController
 {
     public function __construct(
         private CartStorageInterface $cartStorage,
         private CartFactory $cartFactory,
-        private RequestStack $stack,
+        private UrlGeneratorInterface $generator,
 
     ) {
     }
@@ -30,9 +31,10 @@ class OrderController extends AbstractController
         Security $security
     ): Response {
 
-        $requestt = $this->stack->getCurrentRequest();
+        $url = $this->generator->generate("order", [], UrlGeneratorInterface::ABSOLUTE_URL);
+        
         if (!$security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $request->getSession()->set('referer', $requestt->getUri());
+            $request->getSession()->set('referer', $url);
             return $this->redirectToRoute('app_login');
         }
 

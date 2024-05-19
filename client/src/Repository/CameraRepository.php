@@ -41,7 +41,7 @@ class CameraRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
    
-    public function findReductionsForCamera($cameraId)
+    public function findReductionsForCamera(int $cameraId)
     {
         return $this->getEntityManager()
             ->createQuery(
