@@ -156,8 +156,12 @@
                             <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
                         </div>
                         <div class="header_logo">
-                            <a class="sticky_none" href="{{path('app_home')}}"><img src="{{asset('assets/img/logo/logo.jpg')}}      " style="width:70px;" alt=""></a>
+                            <a class="sticky_none" href="{{ path('app_home') }}">
+                                <img src="{{ asset('assets/img/logo/logo.jpg') }}" style="width:70px;" alt="Surveillance Hub Logo">
+                                <span style="font-size: 24px;">Surveillance Hub</span>
+                            </a>
                         </div>
+                        
                         <!--main menu start-->
                         <div class="main_menu d-none d-lg-block">
                             <nav>

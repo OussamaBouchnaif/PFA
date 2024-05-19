@@ -6,6 +6,7 @@ use App\Entity\AvisCamera;
 use App\Entity\Camera;
 use App\Forms\AvisType;
 use App\Service\Api\Cameras\CameraFetcherInterface;
+use App\Service\PriceCalculation\PriceCalculationInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ class DetailsController extends AbstractController
     public function __construct(
         private CameraFetcherInterface $cameraFetcher,
         private EntityManagerInterface $manager,
+        private PriceCalculationInterface $priceCalculation,
     ) {
     }
 
@@ -28,6 +30,8 @@ class DetailsController extends AbstractController
         $form = $this->createForm(AvisType::class, $avisCamera);
         $form->handleRequest($request);
         $comments = $camera->getAvisCameras();
+        $relatedCameras = $this->cameraFetcher->getRelatedCameras($camera->getId());
+        $pricingDetails = $this->priceCalculation->applyDiscounts($relatedCameras);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
@@ -43,11 +47,13 @@ class DetailsController extends AbstractController
                 ]); // Pass just the content string
             }
         }
-
         return $this->render('client/pages/product-details.html.twig', [
             'camera' => $this->cameraFetcher->getCameraById($camera->getId()),
             'form' => $form->createView(),
             'comments' => $comments,
+            'cameras' => $relatedCameras,
+            'pricingDetails' => $pricingDetails,
+
         ]);
     }
 }

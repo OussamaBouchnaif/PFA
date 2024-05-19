@@ -345,12 +345,20 @@
                             {"breakpoint":300, "settings": { "slidesToShow": 1 } }
                             ]
                     }'>
+                    
+                    {% if cameras %}
+
+                        {% for item in cameras %}
                         <div class="col-lg-3">
-                            <article class="single_product">
+                            <article class="single_product card-box">      
                                 <figure>
                                     <div class="product_thumb">
                                         <a href="product-details.html" >
-                                            <img class="primary_img" src="assets/img/product/product1.jpg" alt="consectetur">
+                                            {% set imageCamera = item.imageCameras|first %}
+                                            {% if imageCamera %}
+                                                <img class="primary_img" src="{{ minio_url(imageCamera.image) }}" alt="Camera Image">   
+                                                {% set img = imageCamera.image %}
+                                            {% endif %}
                                         </a>
                                         <div class="product_action">
                                             <ul>
@@ -362,22 +370,53 @@
                                                 data-tippy-arrow="true" data-tippy-placement="left"><i class="icon-refresh icons"></i></a></li>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <figcaption class="product_content text-center">
-                                        <div class="product_ratting">
-                                            <ul class="d-flex justify-content-center">
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                <li><span>(4)</span></li>
-                                            </ul>
+                                        <div class="product_label">
+                                            {% if pricingDetails[item.id].discountValue > 0 %}
+                                                <div style="background: #ff2f2f;">
+                                                    <span>-{{ pricingDetails[item.id].discountRate }}%</span>
+                                                </div>
+                                            {% endif %}
                                         </div>
-                                        <h4 class="product_name"><a href="product-details.html">Basic Joggin Shorts</a></h4>
+                                    </div>
+                                    
+                                    <figcaption class="product_content text-center">
+                                        {% set average = item.calculatingTheAverage %}
+                                            <div class="product_ratting">
+                                                <ul class="d-flex justify-content-center">
+                                                    
+                                                    {% if average == 0 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% elseif average == 5 %}
+                                                        {% for i in 1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+                                                    {% else %}
+
+                                                        {% for i in 1..average %}
+                                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                        {% endfor %}
+
+                                                        {% for i in average+1..5 %}
+                                                            <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                            
+                                                    <li><span>({{ camera.totalNotes }} avis, moyenne : {{ average }})</span></li>
+                                                </ul>
+                                            </div>
+                                            
+                                        <h4 class="product_name"><a href="product-details.html">{{item.nom}}</a></h4>
                                         <div class="price_box">
-                                            <span class="current_price">$26.00</span>
-                                            <span class="old_price">$62.00</span>
+                                            {% if pricingDetails[item.id].discountValue > 0 %}
+                                                <span class="current_price">€{{ pricingDetails[item.id].discountedPrice|number_format(2, ',', ' ') }}</span>
+                                                <span class="old_price"><s>€{{ pricingDetails[item.id].originalPrice|number_format(2, ',', ' ') }}</s></span>
+                                                <p class="font-size: 14px;color: red;margin-top: 5px;">Reduction: {{ pricingDetails[item.id].discountValue|number_format(2, ',', ' ') }}€</p>
+                                            {% else %}
+                                                <span class="current_price">€{{ pricingDetails[item.id].originalPrice|number_format(2, ',', ' ') }}</span>
+                                                <p style="font-size: 14px;color: #666;">No reduction available</p>
+                                            {% endif %}
                                         </div>
                                         <div class="add_to_cart">
                                             <a class="btn btn-primary" href="#" data-tippy="Add To Cart"  data-tippy-inertia="true" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top">Add To Cart</a>
@@ -385,8 +424,10 @@
                                     </figcaption>
                                 </figure>
                             </article>
+                            
                         </div>
-                       
+                       {% endfor %}
+                     {% endif %}  
                     </div>
                 </div>
             </div>

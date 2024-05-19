@@ -33,25 +33,22 @@ class CameraRepository extends ServiceEntityRepository
 
     public function findCamerasSameCategoryAsCameraId(int $cameraId)
     {
-
-        // Requête pour obtenir l'ID de la catégorie du produit 65
-      /*   $categoryId = $this->createQueryBuilder('c')
-            ->select('c.category')
-            ->from(Camera::class, 'c')
-            ->where('c.id = :id')
-            ->setParameter('id', $cameraId)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        // Requête pour obtenir tous les produits de la même catégorie
-        return $this->createQueryBuilder()
-            ->select('c')
-            ->from(Camera::class, 'c')
-            ->where('c.category = :category')
-            ->setParameter('category', $categoryId)
-            ->getQuery()
-            ->getResult(); */
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM App\Entity\Camera c
+                 JOIN c.categorie cat
+                 WHERE cat.id = (
+                     SELECT cat2.id FROM App\Entity\Camera c2
+                     JOIN c2.categorie cat2
+                     WHERE c2.id = :cameraId
+                 )
+                 AND c.id != :cameraId'
+            )
+            ->setParameter('cameraId', $cameraId)
+            ->getResult();
     }
+    
+    
 
     //    /**
     //     * @return Camera[] Returns an array of Camera objects

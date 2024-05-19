@@ -7,18 +7,13 @@ use App\Service\Api\Exception\ObjectNotFoundException;
 
 class CameraFetcher extends AbstractCameraFetcher
 {
-    /*
-        get All cameras 
-     */
+
     public function getAllCamera(int $page): array
     {
         $this->clearCache();
         return $this->getCameraData('api/cameras?page=' . $page);
     }
 
-    /*
-        get a specific camera using its ID
-     */
     public function getCameraById(int $id)
     {
         $response = $this->getData->getDataFromApi("/api/cameras/" . $id);
@@ -28,19 +23,13 @@ class CameraFetcher extends AbstractCameraFetcher
         return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO', 'json');
     }
 
-    /*
-        get number of cameras  
-     */
     public function getItems(): int
     {
         $items = $this->getData->getTotalItems("api/cameras/");
         return $items;
     }
 
-    /*
-        get last 5 cameras 
-     */
-    public function getLastCameras()
+    public function getLastCameras():array
     {
         $response =  $this->getData->getDataFromApi("api/cameras/latest");
         if (!$response) {
@@ -49,9 +38,6 @@ class CameraFetcher extends AbstractCameraFetcher
         return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO[]', 'json');
     }
 
-    /*
-        Search for cameras using various criteria
-     */
     public function searchBy(array $searchCriteria): array
     {
         $queryString = $this->queryStringBuilder->addAngleVision($searchCriteria['angleVision'] ?? null)
@@ -62,15 +48,18 @@ class CameraFetcher extends AbstractCameraFetcher
         return $this->getCameraData('api/cameras/?' . $queryString->getQueryString());
     }
 
-    /* 
-        return the cameras the most orders  
-   */
-    public function CameratheMostOrders()
+    public function CameratheMostOrders():array
     {
         $response =  $this->getData->getDataFromApi("api/cameras/mostOrders");
-       /*  if (!$response) {
+        /*  if (!$response) {
             throw new ObjectNotFoundException('Camera Not Found !!');
         } */
+        return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO[]', 'json');
+    }
+
+    public function getRelatedCameras(int $id):array
+    {
+        $response =  $this->getData->getDataFromApi("api/cameras/".$id."/related");
         return $this->denormalizer->dataDenormalizer($response, 'App\DTO\CameraDTO[]', 'json');
     }
 

@@ -183,13 +183,11 @@
                                                 </ul>
                                             </div>
                                             <div class="product_label">
-                                                <div style=" background: #ff2f2f;">
-                                                    <span >-18%</span>
-                                                </div>
-                                                
-                                                <div style="background: #4CAF50; margin-top: 3px;">
-                                                    <span >NEW</span>
-                                                </div>
+                                                {% if pricingDetailsMost[camera.id].discountValue > 0 %}
+                                                    <div style="background: #ff2f2f;">
+                                                        <span>-{{ pricingDetailsMost[camera.id].discountRate }}%</span>
+                                                    </div>
+                                                {% endif %}
                                                 
                                             </div>
                                         
@@ -337,9 +335,11 @@
                                             </ul>
                                         </div>
                                         <div class="product_label">
-                                            <div style=" background: #ff2f2f;">
-                                                <span >-18%</span>
-                                            </div>
+                                            {% if pricingDetailsLatest[camera.id].discountValue > 0 %}
+                                                <div style="background: #ff2f2f;">
+                                                    <span>-{{ pricingDetailsLatest[camera.id].discountRate }}%</span>
+                                                </div>
+                                            {% endif %}
                                             
                                             <div style="background: #4CAF50; margin-top: 3px;">
                                                 <span >NEW</span>
@@ -424,13 +424,13 @@
                     <article class="col single_blog">
                         <figure>
                             <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog1.jpg" alt=""></a>
+                                <a href="blog-details.html"><img src="{{asset('assets/img/blog/Rs.jpeg')}}" alt=""></a>
                             </div>
                             <figcaption class="blog_content">
                                 <div class="blog_meta">
                                     <ul class="d-flex">
                                         <li><span class="meta_tag">News</span></li>
-                                        <li><span>May 25, 2020</span></li>
+                                        <li><span>May 25, 2024</span></li>
                                     </ul>
                                 </div>
                                 <h3><a href="blog-details.html">Five things you only know if you’re at Chanel's Hamburg
@@ -441,53 +441,39 @@
                     <article class="col single_blog">
                         <figure>
                             <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog2.jpg" alt=""></a>
+                                <a href="blog-details.html"><img src="{{asset('assets/img/blog/R.jpeg')}}" alt=""></a>
                             </div>
                             <figcaption class="blog_content">
                                 <div class="blog_meta">
                                     <ul class="d-flex">
-                                        <li><span class="meta_tag">News</span></li>
-                                        <li><span>May 25, 2020</span></li>
+                                        <li><span class="meta_tag">Security</span></li>
+                                        <li><span>May 25, 2024</span></li>
                                     </ul>
                                 </div>
-                                <h3><a href="blog-details.html">Basic colord mixed - trendind 2020</a></h3>
+                                <h3><a href="blog-details.html">Top 5 Surveillance Cameras for 2024</a></h3>
+                                <p>Discover the best surveillance cameras to keep your property safe. Our top picks for 2024 include high-resolution, night vision, and easy installation features.</p>
                             </figcaption>
                         </figure>
                     </article>
                     <article class="col single_blog">
                         <figure>
                             <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog3.jpg" alt=""></a>
+                                <a href="blog-details.html"><img src="{{asset('assets/img/blog/cam.jpeg')}}" alt=""></a>
                             </div>
                             <figcaption class="blog_content">
                                 <div class="blog_meta">
                                     <ul class="d-flex">
-                                        <li><span class="meta_tag">News</span></li>
-                                        <li><span>May 25, 2020</span></li>
+                                        <li><span class="meta_tag">Security</span></li>
+                                        <li><span>May 25, 2024</span></li>
                                     </ul>
                                 </div>
-                                <h3><a href="blog-details.html">Calvin Klein Shoes Collection 2020, Activites Summer</a>
-                                </h3>
+                                <h3><a href="blog-details.html">Surveillance Technology Trends for 2024</a></h3>
+                                <p>Stay ahead of the curve with the latest trends in surveillance technology. From AI to smart home integration, see what 2024 has in store for security enthusiasts.</p>
                             </figcaption>
                         </figure>
                     </article>
-                    <article class="col single_blog">
-                        <figure>
-                            <div class="blog_thumb">
-                                <a href="blog-details.html"><img src="assets/img/blog/blog1.jpg" alt=""></a>
-                            </div>
-                            <figcaption class="blog_content">
-                                <div class="blog_meta">
-                                    <ul class="d-flex">
-                                        <li><span class="meta_tag">News</span></li>
-                                        <li><span>May 25, 2020</span></li>
-                                    </ul>
-                                </div>
-                                <h3><a href="blog-details.html">Five things you only know if you’re at Chanel's Hamburg
-                                        Show</a></h3>
-                            </figcaption>
-                        </figure>
-                    </article>
+                    
+                    
                 </div>
             </div>
         </div>

@@ -51,7 +51,7 @@ class CameraController extends AbstractController
             'categories' => $this->categorie->findAll(),
             'items' => $this->cameraFetcher->getItems(),
             'pagination' => $this->paginationManager->extractPaginationInfo($data->getTotalItemCount(), $page),
-            'price_range' => $priceFormatter->formatPriceRange($request->query->get('price_range')),
+            'price_range' => isset($searchCriteria['prix']) ? $searchCriteria['prix'] : '10..1000',
         ]);
     }
 
