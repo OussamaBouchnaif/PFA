@@ -1,44 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
     setupQuickViewButtons(); // Initialiser pour la première charge de page
 
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 2000,
-        values: [16, 1000],
-        slide: function (event, ui) {
-            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-        },
-        change: function (event, ui) {
-            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
 
-            var criteria = {
-                price_range: "$" + ui.values[0] + " - $" + ui.values[1],
-            };
-            fetchData(criteria);
-        },
+    $(document).ready(function() {
+        let initialPriceRange = $("#amount").val().split("..");
+        let initialMin = parseInt(initialPriceRange[0]);
+        let initialMax = parseInt(initialPriceRange[1]);
+        
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 2000,
+            values: [[initialMin], [initialMax]],
+            slide: function(event, ui) {
+                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            },
+            change: function(event, ui) {
+                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                $("#price-filter-form").submit();
+            }
+        });
+    $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+
+     // Correction du sélecteur pour la soumission automatique du formulaire de résolution
+     $('input[type="radio"][name="res"]').change(function() {
+        $('#res-filter-form').submit(); // Soumet le formulaire de filtre de résolution
     });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-        " - $" + $("#slider-range").slider("values", 1));
-
-    // Définir la valeur initiale du champ 'amount' si elle n'était pas préremplie
-    /* if (!inputVal) {
-          $("#amount").val("$" + defaultValue[0] + " - $" + defaultValue[1]);
-      }
+    $('#shorts').change(function() {
+        $(this).closest('form').submit(); // Soumet le formulaire de tri
+    });
+    });
+    
   
-      // Initialisation du champ de montant
-      $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-  
-      // Correction du sélecteur pour la soumission automatique du formulaire de résolution
-      $('input[type="radio"][name="res"]').change(function() {
-          $('#res-filter-form').submit(); // Soumet le formulaire de filtre de résolution
-      });
-      $('#shorts').change(function() {
-          $(this).closest('form').submit(); // Soumet le formulaire de tri
-      }); */
+     
 });
 // Gestion des clics sur les filtres de catégorie
-document
+/* document
     .querySelectorAll(".widget_dropdown_categories a")
     .forEach(function (link) {
         link.addEventListener("click", function (e) {
@@ -96,8 +93,8 @@ function fetchData(criteria) {
     Object.keys(criteria).forEach((key) =>
         url.searchParams.append(key, criteria[key])
     );
-    document.getElementById('loadingSpinner').style.display = 'flex';
-    document.getElementById('results-container').style.filter = 'blur(2px)';
+    //document.getElementById('loadingSpinner').style.display = 'flex';
+    //document.getElementById('results-container').style.filter = 'blur(2px)';
     fetch(url, {
         method: "GET",
         headers: {
@@ -108,16 +105,16 @@ function fetchData(criteria) {
         .then((html) => {
             document.getElementById("results-container").innerHTML = html;
             setupQuickViewButtons(); // Ré-initialiser après la mise à jour AJAX
-            document.getElementById('loadingSpinner').style.display = 'none';
-              document.getElementById('results-container').style.filter = 'none';
+            //document.getElementById('loadingSpinner').style.display = 'none';
+             // document.getElementById('results-container').style.filter = 'none';
         })
         .catch((error) => {
             console.error("Error:", error);
             document.getElementById("results-container").innerHTML = error;
-            document.getElementById('loadingSpinner').style.display = 'none';
-              document.getElementById('results-container').style.filter = 'none';
+            //document.getElementById('loadingSpinner').style.display = 'none';
+             // document.getElementById('results-container').style.filter = 'none';
         });
-}
+} */
 
 function setupQuickViewButtons() {
     document.querySelectorAll(".addcart").forEach((button) => {
@@ -129,12 +126,12 @@ function setupQuickViewButtons() {
             var description = this.getAttribute("data-description");
             var image = this.getAttribute("data-image");
             var id = this.getAttribute("data-camera");
-
+            console.log(name)
             document.querySelector("#modal_box .modal_title h2").textContent = name;
             document.querySelector("#idcamera").value = id;
             document.querySelector("#modal_box .modal_description p").textContent = description;
             document.querySelector("#modal_box .modal_zoom_gallery .product_zoom_thumb img").src = image;
-
+            
             if (parseFloat(discountedPrice) < parseFloat(originalPrice)) {
                 document.querySelector("#modal_box .modal_price .new_price").textContent = "$" + discountedPrice;
                 document.querySelector("#modal_box .modal_price .old_price").textContent = "$" + originalPrice;

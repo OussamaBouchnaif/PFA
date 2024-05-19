@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Cart\Factory\CartFactory;
 use App\Cart\Handler\CartStorageInterface;
-use App\Payment\Factory\PaymentFactory;
-use App\Payment\PaymentManager;
+use App\Payment\PaymentMethodeSelector;
+use App\Payment\PaymentProcessorSelector;
 use App\Processor\CartProcessor;
 use App\Voucher\VoucherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,46 +16,43 @@ use Symfony\Component\Routing\Attribute\Route;
 class PaymentController extends AbstractController
 {
     public function __construct(
-        private PaymentManager $manager,
         private CartStorageInterface $cartStorage,
         private CartProcessor $cartProcessor,
         private CartFactory $cartFactory,
         private VoucherInterface $voucherManager,
-        private PaymentFactory $paymentFactory,
+        private PaymentProcessorSelector $process,
     ) {
     }
 
     #[Route('/payment', name: 'app_payment')]
     public function index(Request $request): Response
     {
-        $cart = $this->cartFactory->build();
         $session = $request->getSession();
         $startegy = $session->get('payment');
-        $paymentStrategy = $this->manager->getPaymentStrategy($startegy);
-        $formPayment = $this->createForm($paymentStrategy->getForm());
 
-        $formPayment->handleRequest($request);
-        if ($formPayment->isSubmitted() && $formPayment->isValid()) {
-            $voucherIdentifier = $this->voucherManager->getVoucherIdentifier();
-            $this->cartProcessor->process($cart, $voucherIdentifier);
-            $this->paymentFactory->createPayment($startegy, $cart);
-
-            return $this->redirectToRoute('done');
-        }
-
-        return $this->render('client/payment/index.html.twig', [
-            'form' => $formPayment->createView(),
-            'strategy' => $startegy,
-        ]);
+        return $this->redirect($this->process->getPaymentProcessor($startegy)->getPaymentGateWay());
     }
 
-    #[Route('/process', name: 'done')]
-    public function done(Request $request)
+    #[Route('/success', name: 'app_success')]
+    public function success(): Response
     {
-        $session = $request->getSession();
-        $session->remove('voucher');
+        $cart = $this->cartFactory->build();
+
+        $voucherIdentifier = $this->voucherManager->getVoucherIdentifier();
+        $this->cartProcessor->process($cart, $voucherIdentifier);
+
+        $this->voucherManager->invalidateVoucher($voucherIdentifier);
         $this->cartStorage->clearCart($this->cartStorage->getCart());
 
         return $this->redirectToRoute('app_home');
     }
+
+
+    #[Route('/cancel', name: 'app_cancel')]
+    public function cancel(): Response
+    {
+        dd("cancel");
+    }
+
+   
 }

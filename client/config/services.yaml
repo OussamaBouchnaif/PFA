@@ -27,6 +27,8 @@ services:
         resource: "../src/EntityListener/"
         tags: ["doctrine.orm.entity_listener"]
     
+    # Aliases for
+
     App\Cart\Handler\CartStorageInterface:
         alias: App\Cart\Handler\CartSessionStorage
 
@@ -39,34 +41,49 @@ services:
     App\Reduction\Applier\AbstractDiscountApplier:
         alias: App\Reduction\Applier\DefaultApplier
     
+    # Twig Extensions
+
     App\Twig\MinioExtension:
         arguments:
             $endpointMinio: '%env(ENDPOINT_MINIO)%'
-            
+
     App\Twig\CartExtension:
         tags: ['twig.extension']
     
 
-    App\Payment\Strategy\PaypalePayment:
-        tags:
-            - { name: 'app.payment_processor' }
+     # Apply tags to services implementing StrategyInterface
+     
+    _instanceof:
+        App\Payment\Processor\PaymentProcessorInterface:
+            tags: ['app.payment_processor']
 
-    App\Payment\Strategy\CreditCartPayment:
-        tags:
-            - { name: 'app.payment_processor' }
-
-    App\Payment\PaymentManager:
+    App\Payment\PaymentProcessorSelector:
         arguments:
             $paymentProcessors: !tagged_iterator app.payment_processor
 
     
+    App\Payment\Processor\PaypalProcessor:
+        arguments:
+            $successUrl: '%env(SUCCESS_URL)%'
+            $cancelUrl: '%env(CANCEL_URL)%'
+    
+    App\Payment\Processor\CreditCardProcessor:
+        arguments:
+            $successUrl: '%env(SUCCESS_URL)%'
+            $cancelUrl: '%env(CANCEL_URL)%'
+            
+            
+    # Event Listeners
+
     App\EventListener\CameraStockListener:
         tags:
-           - { name: 'kernel.event_listener', event: 'camera.stock', method: 'onOrderPlaced' }
+            - { name: 'kernel.event_listener', event: 'camera.stock', method: 'onOrderPlaced', when: 'CameraStockListener' }
 
     App\EventListener\VoucherUsedListener:
         tags:
-           - { name: 'kernel.event_listener', event: 'voucher.used', method: 'onVoucherUsed' }
+            - { name: 'kernel.event_listener', event: 'voucher.used', method: 'onVoucherUsed', when: 'VoucherUsedListener' }
+
+    # Notifier
 
     App\Mail\Notifier:
         arguments:

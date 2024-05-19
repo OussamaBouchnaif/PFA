@@ -37,22 +37,22 @@ class CameraController extends AbstractController
             'angleVision' => $request->query->get('angle'),
             'prix' => $request->query->get('price_range') ? $priceFormatter->formatPriceRange($request->query->get('price_range')) : null,
         ];
-
+        
         $searchCriteria = $this->sessionManager->fillInTheSession($newCriteria, $session);
         $session->set('searchCriteria', $searchCriteria);
 
         $cameras = $this->cameraFetcher->searchBy($searchCriteria);
         $data = $this->paginationManager->paginate($cameras, $page);
         $pricingDetails = $this->priceCalculation->applyDiscounts($cameras);
-        if ($request->isXmlHttpRequest()) {
-            return $this->render('client/pages/components/cameras.html.twig', [
-                'cameras' => $data,
-                'pricingDetails' => $pricingDetails,
-                'categories' => $this->categorie->findAll(),
-                'items' => $this->cameraFetcher->getItems(),
-                'pagination' => $this->paginationManager->extractPaginationInfo($data->getTotalItemCount(), $page),
-            ]);
-        }
+
+        return $this->render('client/pages/shop.html.twig', [
+            'cameras' => $data,
+            'pricingDetails' => $pricingDetails,
+            'categories' => $this->categorie->findAll(),
+            'items' => $this->cameraFetcher->getItems(),
+            'pagination' => $this->paginationManager->extractPaginationInfo($data->getTotalItemCount(), $page),
+            'price_range' => $priceFormatter->formatPriceRange($request->query->get('price_range')),
+        ]);
     }
 
     #[Route('/fetchCamera', name: 'fetch')]
@@ -69,6 +69,7 @@ class CameraController extends AbstractController
             'categories' => $this->categorie->findAll(),
             'items' => $this->cameraFetcher->getItems(),
             'pagination' => $this->paginationManager->extractPaginationInfo($this->cameraFetcher->getItems(), $page),
+            'price_range' => '10..1000',
         ]);
     }
 }

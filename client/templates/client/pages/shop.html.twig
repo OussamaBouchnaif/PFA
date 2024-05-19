@@ -28,11 +28,12 @@
                             </div>
                             <div class="widget_list widget_filter">
                                 <div class="filter__list slider_range">
+                                    
                                     <h3>price</h3>
                                     <form action="{{path('camera_search')}}" method="get" id="price-filter-form">
                                         <div id="slider-range"></div>
                                         <span>Range:</span>
-                                        <input type="text" name="price_range" id="amount"   >
+                                        <input type="text" name="price_range" id="amount"  value="{{ price_range }}" >
                                     </form>
                                 </div>
 
@@ -163,6 +164,7 @@
                         </div>
                         {% if cameras is not empty %}
                             {%  for camera in cameras %}
+                            
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-6" >
                                     <div class="single_product card-box">
                                         <div class="product_thumb">
@@ -188,7 +190,7 @@
                                                 </ul>
                                                 
                                             </div>
-                                           
+                                        
                                             <div class="product_label">
                                                 {% if pricingDetails[camera.id].discountValue > 0 %}
                                                     <div style="background: #ff2f2f;">
@@ -199,7 +201,7 @@
 
                                             
                                         </div>
-                                       
+                                    
                                         <div class="product_content grid_content text-center">
                                             {% set average = camera.calculatingTheAverage %}
                                             <div class="product_ratting">
@@ -288,7 +290,7 @@
                                     {% for page in 1..pagination.totalPages %}
                                         <li class="page-item {{ page == pagination.currentPage ? 'active' : '' }}">
                                             <a class="page-link" href="{{ path('fetch', {'page': page}) }}">{{ page }}</a>
-        
+                    
                                         </li>
                                     {% endfor %}
                                     <li class="page-item">

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Voucher;
 
-use App\Contract\DiscountedCartInterface;
 use App\Contract\DiscountedObjectInterface;
 use App\Contract\DiscountModelInterface;
 use App\Entity\Cart;
@@ -100,7 +99,7 @@ class DefaultVoucher implements VoucherInterface
                 return $this->voucherInstance->getRate() ;
             }
 
-            public function getDiscountedType(): string
+            public function getDiscountType(): string
             {
                 return $this->voucherInstance->getType();
             }
