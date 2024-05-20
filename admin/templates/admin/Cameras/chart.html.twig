@@ -6,8 +6,7 @@
         body {
             background-color: whitesmoke !important;
         }
-
-        col {
+        .col {
             height: 200px;
         }
     </style>
@@ -44,15 +43,10 @@
                                         <div class="flex-grow-1 overflow-hidden">
                                             <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Total Commandes</p>
                                         </div>
-                                        <div class="flex-shrink-0">
-                                            {# <h5 class="text-white fs-14 mb-0">
-                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                            </h5> #}
-                                        </div>
                                     </div>
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
-                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">$<span class="counter-value">{{ totalCommandes }}</span>k</h4>
+                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">{{ totalCommandes }}</h4>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
@@ -63,7 +57,74 @@
                                 </div><!-- end card body -->
                             </div><!-- end card -->
                         </div>
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card card-animate bg-success">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Commandes par Année</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">{{ commandesParAn.data|join(', ') }}</h4>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
+                                                <i class="bx bx-calendar text-white"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card card-animate bg-info">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Revenu Mensuel</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">{{ totalRevenueYear }}</h4>                                            
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
+                                                <i class="bx bx-calendar text-white"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card card-animate bg-danger">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">Commandes Annulées</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">{{ commandesAnnulees }}</h4>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
+                                                <i class="bx bx-x-circle text-white"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
                     </div>
+                    <!-- end row -->
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card">
@@ -72,13 +133,12 @@
                                 </div>
                                 <div class="card-body">
                                     <div id="chartContainer">
-                                        <canvas id="cameraChart" class="chartjs-chart"></canvas>
+                                        <canvas id="commandesParJourChart" class="chartjs-chart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- end col -->
-
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
@@ -86,7 +146,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div id="chartContainer">
-                                        <canvas id="CommandChart" class="chartjs-chart"></canvas>
+                                        <canvas id="revenuMensuelChart" class="chartjs-chart"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -94,27 +154,25 @@
                         <!-- end col -->
                     </div>
                     <!-- end row -->
-
                     <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Bar Chart</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="produitsLesPlusVendusChart" class="chartjs-chart" data-colors='["--vz-success", "--vz-light"]'></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title mb-0">Pie Chart</h4>
                                 </div>
                                 <div class="card-body">
-                                    <canvas id="pieChart" class="chartjs-chart" data-colors='["--vz-success", "--vz-light"]'></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Donut Chart</h4>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="doughnut" class="chartjs-chart" data-colors='["--vz-primary", "--vz-light"]'></canvas>
+                                    <canvas id="countCommandesChart" class="chartjs-chart" data-colors='["--vz-primary", "--vz-light"]'></canvas>
                                 </div>
                             </div>
                         </div>
@@ -129,84 +187,65 @@
 
 {% block javascripts %}
     {{ parent() }}
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // JavaScript for chart creation
-        {% if displayCharts %}
-            var ctx = document.getElementById('cameraChart').getContext('2d');
-            var camerasByCategory = {{ camerasByCategory | json_encode | raw }};
-            var categories = Object.keys(camerasByCategory);
-            var counts = Object.values(camerasByCategory);
-
-            // Custom colors for each camera type
-            var customColors = [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF',
-                '#FF8C00'
-            ];
-
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: categories,
-                    datasets: [{
-                        label: 'Cameras by Category',
-                        data: counts,
-                        backgroundColor: customColors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        document.addEventListener('DOMContentLoaded', function () {
+            function createChart(ctx, type, labels, data, backgroundColor, borderColor) {
+                new Chart(ctx, {
+                    type: type,
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: backgroundColor,
+                            borderColor: borderColor,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: type === 'line' || type === 'bar' ? {
+                            y: {
+                                beginAtZero: true
+                            }
+                        } : {},
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Chart.js Chart'
+                            }
                         }
                     }
-                }
-            });
-        {% endif %}
-    </script>
+                });
+            }
 
-    <script>
-        // JavaScript for another chart creation
-        {% if displayCharts %}
-            var ctx = document.getElementById('CommandChart').getContext('2d');
-            var CountCommandes = {{ CountCommandes | json_encode | raw }};
-            var Command = Object.keys(CountCommandes);
-            var counts = Object.values(CountCommandes);
+            var ctx1 = document.getElementById('commandesParJourChart').getContext('2d');
+            var ctx2 = document.getElementById('revenuMensuelChart').getContext('2d');
+            var ctx3 = document.getElementById('produitsLesPlusVendusChart').getContext('2d');
+            var ctx4 = document.getElementById('countCommandesChart').getContext('2d');
 
-            // Custom colors for each camera type
-            var customColors = [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF',
-                '#FF8C00'
-            ];
-
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Command,
-                    datasets: [{
-                        label: 'Count of Commandes',
-                        data: counts,
-                        backgroundColor: customColors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        {% endif %}
+            createChart(ctx1, 'line', {{ commandesParJour.labels|json_encode|raw }}, {{ commandesParJour.data|json_encode|raw }}, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
+            createChart(ctx2, 'bar', {{ revenuMensuel.labels|json_encode|raw }}, {{ revenuMensuel.data|json_encode|raw }}, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
+            createChart(ctx3, 'bar', {{ produitsLesPlusVendus.labels|json_encode|raw }}, {{ produitsLesPlusVendus.data|json_encode|raw }}, 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');
+            createChart(ctx4, 'pie', {{ countCommandes.labels|json_encode|raw }}, {{ countCommandes.data|json_encode|raw }}, [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ], [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ]);
+        });
     </script>
 {% endblock %}

@@ -27,17 +27,17 @@ class Blog
     #[Assert\NotBlank(message: "Le contenu ne peut pas être vide")]
     private ?string $contenu = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageCoverture = null;
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $imageCoverture = null;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageCoverture')]
-    #[Assert\File(
-        maxSize: '5M',
-        mimeTypes: ['image/jpeg', 'image/png'],
-        maxSizeMessage: "Le fichier ne peut pas dépasser {{ limit }}",
-        mimeTypesMessage: "Seuls les fichiers JPEG et PNG sont autorisés"
-    )]
-    private ?File $imageFile = null;
+    // #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageCoverture')]
+    // #[Assert\File(
+    //     maxSize: '5M',
+    //     mimeTypes: ['image/jpeg', 'image/png'],
+    //     maxSizeMessage: "Le fichier ne peut pas dépasser {{ limit }}",
+    //     mimeTypesMessage: "Seuls les fichiers JPEG et PNG sont autorisés"
+    // )]
+    // private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'blogs')]
     #[Assert\NotNull(message: "L'utilisateur doit être spécifié")]
@@ -80,17 +80,17 @@ class Blog
         return $this;
     }
 
-    public function getImageCoverture(): ?string
-    {
-        return $this->imageCoverture;
-    }
+    // public function getImageCoverture(): ?string
+    // {
+    //     return $this->imageCoverture;
+    // }
 
-    public function setImageCoverture(string $imageCoverture): static
-    {
-        $this->imageCoverture = $imageCoverture;
+    // public function setImageCoverture(string $imageCoverture): static
+    // {
+    //     $this->imageCoverture = $imageCoverture;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUser(): ?User
     {
@@ -128,13 +128,13 @@ class Blog
         return $this;
     }
 
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
+    // public function getImageFile(): ?File
+    // {
+    //     return $this->imageFile;
+    // }
 
-    public function setImageFile(?File $imageFile): void
-    {
-        $this->imageFile = $imageFile;
-    }
+    // public function setImageFile(?File $imageFile): void
+    // {
+    //     $this->imageFile = $imageFile;
+    // }
 }

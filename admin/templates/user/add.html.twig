@@ -23,7 +23,15 @@
 							</div>
 						</div>
 					</div>
-
+                                        {% for child in form %}
+											{% if child.vars.errors|length > 0 %}
+												<div class="alert alert-danger" role="alert">
+													{% for error in child.vars.errors %}
+														{{ error.message }}
+													{% endfor %}
+												</div>
+											{% endif %}
+										{% endfor %}
 					{{ form_start(form, {'attr': {'class': 'form', 'enctype': 'multipart/form-data'}}) }}
 
 					<div class="row">
@@ -36,9 +44,9 @@
 										{{ form_errors(form.nom) }}
 									</div>
 									<div class="mb-3">
-										{{ form_label(form.email) }}
-										{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-										{{ form_errors(form.email) }}
+										{{ form_label(form.prenom) }}
+										{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+										{{ form_errors(form.prenom) }}
 									</div>
 								</div>
 							</div>
@@ -70,11 +78,11 @@
 										{{ form_label(form.phoneNumber) }}
 										{{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
 										{{ form_errors(form.phoneNumber) }}
-									</div>
+									</div>	
 									<div class="mb-3">
-										{{ form_label(form.prenom) }}
-										{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
-										{{ form_errors(form.prenom) }}
+										{{ form_label(form.email) }}
+										{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+										{{ form_errors(form.email) }}
 									</div>
 								</div>
 							</div>

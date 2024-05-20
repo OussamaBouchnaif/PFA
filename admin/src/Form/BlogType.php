@@ -20,17 +20,22 @@ class BlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, ['label' => 'Titre'])
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez le title de blog',
+                ],
+                ])
             ->add('contenu', TextareaType::class, ['label' => 'Contenu'])
-            // ->add('imageFile', VichImageType::class, [
-            //     'label' => 'Image',
-            //     'required' => false,
-            // ])
+           
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'nom',
                 'label' => 'Utilisateur',
+                'placeholder' => 'Sélectionnez un utilisateur', // Ajoutez cette ligne
             ])
+            
             ->add('Camera', EntityType::class, [
                 'class' => Camera::class,
                 'choice_label' => 'nom',

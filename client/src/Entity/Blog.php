@@ -21,8 +21,7 @@ class Blog
     #[ORM\Column(length: 255)]
     private ?string $contenu = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $imageCoverture = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'blogs')]
     private ?User $User = null;
@@ -64,17 +63,17 @@ class Blog
         return $this;
     }
 
-    public function getImageCoverture(): ?string
-    {
-        return $this->imageCoverture;
-    }
+    // public function getImageCoverture(): ?string
+    // {
+    //     return $this->imageCoverture;
+    // }
 
-    public function setImageCoverture(string $imageCoverture): static
-    {
-        $this->imageCoverture = $imageCoverture;
+    // public function setImageCoverture(string $imageCoverture): static
+    // {
+    //     $this->imageCoverture = $imageCoverture;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUser(): ?User
     {

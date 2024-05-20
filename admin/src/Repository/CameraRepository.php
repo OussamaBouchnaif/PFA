@@ -46,6 +46,6 @@ class CameraRepository extends ServiceEntityRepository
 
         return $categoriesData;
     }
+    
 
-    // Le reste du code de votre CameraRepository...
 }
