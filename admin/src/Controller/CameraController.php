@@ -108,48 +108,59 @@ class CameraController extends AbstractController
         ]);
     }
 
-        #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
-        public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): JsonResponse
-        {
-            $camera = $cameraRepository->find($id);
+    #[Route('/camera/Delete_camera/{id}', name: 'Delete_camera')]
+    public function deleteCamera(EntityManagerInterface $entityManager, CameraRepository $cameraRepository, $id): JsonResponse
+    {
+        $camera = $cameraRepository->find($id);
 
-            if (!$camera) {
-                return new JsonResponse(['success' => false, 'message' => 'Camera not found'], 404);
-            }
-
-            foreach ($camera->getImageCameras() as $imageCamera) {
-                $entityManager->remove($imageCamera);
-            }
-
-            $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
-            foreach ($reductions as $reduction) {
-                $entityManager->remove($reduction);
-            }
-            $avis = $entityManager->getRepository(AvisCamera::class)->findBy(['camera' => $camera]);
-            foreach ($avis as $avi) {
-                $entityManager->remove($avi);
-            }
-
-            $entityManager->remove($camera);
-            $entityManager->flush();
-
-            return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
+        if (!$camera) {
+            return new JsonResponse(['success' => false, 'message' => 'Camera not found'], 404);
         }
 
+        foreach ($camera->getImageCameras() as $imageCamera) {
+            $entityManager->remove($imageCamera);
+        }
+
+        $reductions = $entityManager->getRepository(LigneReduction::class)->findBy(['camera' => $camera]);
+        foreach ($reductions as $reduction) {
+            $entityManager->remove($reduction);
+        }
+        $avis = $entityManager->getRepository(AvisCamera::class)->findBy(['camera' => $camera]);
+        foreach ($avis as $avi) {
+            $entityManager->remove($avi);
+        }
+
+        $entityManager->remove($camera);
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => true, 'message' => 'Camera deleted successfully']);
+    }
     #[Route('/camera/chart', name: 'camera_chart')]
     public function chart(): Response
     {
-        $displayCharts = true;
-        $CountCommandes = $this->manager->getRepository(Commande::class)->countCommandesByStatus();
-        $camerasByCategory = $this->manager->getRepository(Camera::class)->getCamerasByCategory();
+        $currentYear = date('Y');
+        $countCommandes = $this->manager->getRepository(Commande::class)->countCommandesByStatus();
+        $commandesParJour = $this->manager->getRepository(Commande::class)->getCommandesParJour();
+        $revenuMensuel = $this->manager->getRepository(Commande::class)->getRevenuMensuel();
+        $produitsLesPlusVendus = $this->manager->getRepository(Commande::class)->getProduitsLesPlusVendus();
         $totalCommandes = $this->manager->getRepository(Commande::class)->getTotalCommandes();
-
+        $totalRevenueYear = $this->manager->getRepository(Commande::class)->getTotalRevenueByYear((int)$currentYear);
+        $commandesParAn = $this->manager->getRepository(Commande::class)->getCommandesParAn(); // Nouvelle fonction
+        $commandesAnnulees = $this->manager->getRepository(Commande::class)->countCommandeAnulees();
         return $this->render('admin/Cameras/chart.html.twig', [
-            'camerasByCategory' => $camerasByCategory,
-            'CountCommandes' => $CountCommandes,
+            'countCommandes' => $countCommandes,
+            'commandesAnnulees' => $commandesAnnulees,
+            'commandesParJour' => $commandesParJour,
+            'revenuMensuel' => $revenuMensuel,
+            'produitsLesPlusVendus' => $produitsLesPlusVendus,
             'totalCommandes' => $totalCommandes,
-            'displayCharts' => $displayCharts, // Pass the variable to the template
+            'totalRevenueYear' => $totalRevenueYear,
+            'commandesParAn' => $commandesParAn, // Nouvelle donnée
 
+            'displayCharts' => true,
         ]);
     }
+
+
+
 }
