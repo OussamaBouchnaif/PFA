@@ -20,7 +20,7 @@ class CameraFixtures extends Fixture implements FixtureGroupInterface
     {
         $faker = Factory::create();
 
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; $i < 9; ++$i) {
             $categorie = new Categorie();
             $categorie->setNom($faker->word);
             $categorie->setDescription('Static description for testing');
