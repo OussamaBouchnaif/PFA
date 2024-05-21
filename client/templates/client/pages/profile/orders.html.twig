@@ -1,0 +1,141 @@
+{% extends "client/pages/profile/index.html.twig" %}
+
+
+
+{% block content %}
+    <h2 style="text-align: left;">Order History</h2>
+    <div class="container table-container " style="width: 100%;">
+        <div class="row" style="width: 100%;">
+            <div class="col-xs-12">
+                <table id="country-table" class="table table-bordered table-hover dt-responsive" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                            <th>Total Amount</th>
+                            <th>Payment Method</th>
+                            <th>Shipping Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders %}
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.code }}</td>
+                                    <td>{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+                                    <td class="status-shipped">{{ order.status.getValue() }}</td>
+                                    <td>{{ order.total }}</td>
+                                    <td>Credit Card</td>
+                                    <td>123 Main St, City, Country</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            No orders
+                        {% endif %}
+                    </tbody>
+                </table>
+                <nav>
+                    <ul id="pagination" class="pagination"></ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const rowsPerPage = 5;
+        const table = document.getElementById('country-table');
+        const rows = table.querySelectorAll('tbody tr');
+        const pagination = document.getElementById('pagination');
+        const pageCount = Math.ceil(rows.length / rowsPerPage);
+        let currentPage = 1;
+    
+        function displayPage(page) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+    
+            rows.forEach((row, index) => {
+                if (index >= start && index < end) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+    
+            updatePagination(page);
+        }
+    
+        function updatePagination(page) {
+            pagination.innerHTML = '';
+    
+            
+            const prevItem = document.createElement('li');
+            prevItem.classList.add('page-item');
+            if (page === 1) {
+                prevItem.classList.add('disabled');
+            }
+            const prevLink = document.createElement('a');
+            prevLink.classList.add('page-link');
+            prevLink.href = '#';
+            prevLink.textContent = 'Previous';
+            prevLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (currentPage > 1) {
+                    displayPage(currentPage - 1);
+                }
+            });
+            prevItem.appendChild(prevLink);
+            pagination.appendChild(prevItem);
+    
+          
+            for (let i = 1; i <= pageCount; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.classList.add('page-item');
+                if (i === page) {
+                    pageItem.classList.add('active');
+                }
+                const pageLink = document.createElement('a');
+                pageLink.classList.add('page-link');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    displayPage(i);
+                });
+    
+                pageItem.appendChild(pageLink);
+                pagination.appendChild(pageItem);
+            }
+    
+           
+            const nextItem = document.createElement('li');
+            nextItem.classList.add('page-item');
+            if (page === pageCount) {
+                nextItem.classList.add('disabled');
+            }
+            const nextLink = document.createElement('a');
+            nextLink.classList.add('page-link');
+            nextLink.href = '#';
+            nextLink.textContent = 'Next';
+            nextLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (currentPage < pageCount) {
+                    displayPage(currentPage + 1);
+                }
+            });
+            nextItem.appendChild(nextLink);
+            pagination.appendChild(nextItem);
+        }
+    
+        displayPage(currentPage);
+    });
+    
+
+</script>
+        
+{% endblock %}

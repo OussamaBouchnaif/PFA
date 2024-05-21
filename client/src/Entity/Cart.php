@@ -138,7 +138,7 @@ class Cart
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?CartStatus
     {
         return $this->status;
     }

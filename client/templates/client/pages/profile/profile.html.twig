@@ -1,0 +1,224 @@
+{% extends "client/pages/profile/index.html.twig" %}
+
+{% block stylesheets %}
+    <style>
+       
+      
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .profile-header {
+            padding: 20px;
+            background-color: #6a7964;
+        }
+        
+        .profile-img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .profile-name {
+            margin: 10px 0 5px;
+            font-size: 20px;
+            color: white;
+        }
+        
+        .profile-role {
+            margin: 0;
+            font-size: 14px;
+            color: #d0e6d5;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #e6f3eb;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .profile-actions {
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .btn {
+            display: inline-block;
+            width: 100px;
+            padding: 10px 0;
+            margin: 5px 0;
+            border: 2px solid #6a7964;
+            border-radius: 5px;
+            color: #6a7964;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #6a7964;
+            color: white;
+        }
+        
+        .section-title {
+            text-align: left;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .customer-info {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .customer-info p {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+        
+        .customer-info p strong {
+            color: #333;
+        }
+        
+        .table-container {
+            margin-bottom: 20px;
+        }
+        
+        .pagination {
+            justify-content: center;
+        }
+        
+        .pagination .page-item .page-link {
+            color: #007bff;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+        
+        .custom-swal-popup {
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .custom-swal-title {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        
+        .custom-swal-content {
+            font-size: 18px;
+            color: #34495e;
+        }
+        
+        .custom-swal-confirm-button {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+    </style>
+    
+{% endblock %}
+
+{% block content %}
+    <div class="profile-card mb-5">
+        <div class="profile-header">
+            <h2 class="profile-name">{{ customer.nom }}</h2>
+            <p class="profile-role">{{ customer.prenom }}</p>
+        </div>
+        <div class="customer-info">
+            <p><span>Name : </span> {{ customer.nom }}</p>
+            <p><span>Email : </span> {{ customer.email }}</p>
+            <p><span>Phone : </strong> {{ customer.phoneNumber }}</p>
+            <p><span>Address : </span> {{ customer.adresse }}</p>
+        </div>
+        <div class="profile-stats">
+            <div class="stat">
+                <span class="stat-number">{{ orderCount|length }}</span>
+                <span class="stat-label">Orders Number</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">1387</span>
+                <span class="stat-label">Likes</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">146</span>
+                <span class="stat-label">Followers</span>
+            </div>
+        </div>
+       
+    </div>
+    <div class="container table-container " style="width: 100%;">
+        <div class="row" style="width: 100%;">
+            <div class="col-xs-12">
+                <table id="country-table" class="table table-bordered table-hover dt-responsive" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                            <th>Total Amount</th>
+                            <th>Payment Method</th>
+                            <th>Shipping Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders %}
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.code }}</td>
+                                    <td>{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+                                    <td class="status-shipped">{{ order.status.getValue() }}</td>
+                                    <td>{{ order.total }}</td>
+                                    <td>Credit Card</td>
+                                    <td>123 Main St, City, Country</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            No orders
+                        {% endif %}
+                    </tbody>
+                </table>
+                <nav>
+                    <ul id="pagination" class="pagination"></ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
