@@ -38,6 +38,9 @@ class Cart
     #[ORM\ManyToOne(inversedBy: 'Cart')]
     private ?CodePromo $codePromo = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
 
     public function __construct()
     {
@@ -183,5 +186,17 @@ class Cart
            fn (float $total, CartItem $item) => $total += $item->getItemTotal(),
            0
        );
+   }
+
+   public function getCode(): ?string
+   {
+       return $this->code;
+   }
+
+   public function setCode(string $code): static
+   {
+       $this->code = $code;
+
+       return $this;
    }
 }

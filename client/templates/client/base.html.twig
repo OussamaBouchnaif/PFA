@@ -3,8 +3,11 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{asset('assets/img/logo/lg.jpg')}}">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    
+      {% block stylesheets %}
+        
+    {% endblock %}
     {{include('client/links/cssLink.html.twig')}}
    
 </head>
@@ -17,5 +20,7 @@
         {{include('client/partials/footer.html.twig')}}
     </body>
     {{include('client/links/jsLink.html.twig')}}
-    
+    {% block javascripts %}
+
+    {% endblock %}
 </html>

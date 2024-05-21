@@ -10,6 +10,7 @@ use App\Voucher\VoucherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Voucher\Strategy\VoucherStrategyInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class OrderListener
 {
@@ -38,6 +39,19 @@ class OrderListener
 
         // Notifier
         $this->notifier->orderPlacedNotifier($this->security->getUser()->getEmail());
+    }
+
+    public function prePersist(Cart $order, LifecycleEventArgs $event)
+    {
+        if ($order->getCode() === null) {
+            $order->setCode($this->generateOrderCode());
+        }
+    }
+
+    private function generateOrderCode(): string
+    {
+        // Exemple de génération d'un code de commande unique
+        return 'ORD-' . strtoupper(uniqid());
     }
 
     private function doCleaning(string $voucherIdentifier): void

@@ -46,6 +46,11 @@ class Authenticator extends AbstractLoginFormAuthenticator
     {
         $referer = $request->getSession()->get('referer');
         $request->getSession()->remove('referer');
+        if(null === $referer)
+        {
+            $referer = 'http://localhost:9898/';
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
