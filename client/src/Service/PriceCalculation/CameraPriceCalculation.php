@@ -31,12 +31,20 @@ class CameraPriceCalculation implements PriceCalculationInterface
         return new CameraPrice($originalPrice, $discountedPrice, $discountValue, $discountRate);
     }
 
-    public function applyDiscounts(array $cameras): array
+    public function applyDiscounts($cameras): array
     {
         $details = [];
-        foreach ($cameras as $camera) {
-            $details[$camera->getId()] = $this->prepareCameraPricingDetails($camera->getId());
+
+        if (is_array($cameras)) {
+            foreach ($cameras as $camera) {
+                $details[$camera->getId()] = $this->prepareCameraPricingDetails($camera->getId());
+            }
+        } elseif ($cameras instanceof Camera) {
+            $details[$cameras->getId()] = $this->prepareCameraPricingDetails($cameras->getId());
+        } else {
+            throw new \InvalidArgumentException('Parameter must be an instance of Camera or an array of Camera objects.');
         }
+
         return $details;
     }
 

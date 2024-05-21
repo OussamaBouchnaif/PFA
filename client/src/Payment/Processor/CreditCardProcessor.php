@@ -12,8 +12,8 @@ class CreditCardProcessor extends AbstractPaymentProcessor
     public function __construct(
         protected string $successUrl,
         protected string $cancelUrl,
-        private CartStorageInterface $products)
-    {
+        private CartStorageInterface $products
+    ) {
         parent::__construct($successUrl, $cancelUrl);
         Stripe::setApiKey($_ENV['STRIPE_SECRETKEY']);
     }

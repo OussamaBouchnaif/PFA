@@ -32,7 +32,6 @@ class DetailsController extends AbstractController
         $comments = $camera->getAvisCameras();
         $relatedCameras = $this->cameraFetcher->getRelatedCameras($camera->getId());
         $pricingDetails = $this->priceCalculation->applyDiscounts($relatedCameras);
-
         if ($form->isSubmitted() && $form->isValid()) {
             if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
                 $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
@@ -53,6 +52,7 @@ class DetailsController extends AbstractController
             'comments' => $comments,
             'cameras' => $relatedCameras,
             'pricingDetails' => $pricingDetails,
+            'pricingDetalisCamera' => $this->priceCalculation->applyDiscounts($camera),
 
         ]);
     }

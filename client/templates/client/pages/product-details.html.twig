@@ -79,11 +79,15 @@
                         
                             <!-- The slideshow -->
                             <div class="carousel-inner">
+                                {% set img = '' %}
                                 {% for imageCamera in camera.imageCameras %}
+                                    {% set img = imageCamera.image %}
                                     <div class="carousel-item {% if loop.first %}active{% endif %}">
                                         <img src="{{ minio_url(imageCamera.image) }}" alt="Los Angeles">
                                     </div>
-                            {% endfor %}
+                                {% endfor %}
+                                
+                              
                             
                             </div>
                         
@@ -102,21 +106,33 @@
                             <form action="#">
                                 <h1>{{camera.nom}}</h1>
                                 <div class="product_ratting_review d-flex align-items-center">
-                                    <div class=" product_ratting">
-                                        <ul class="d-flex">
-                                            <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-ios-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-ios-star"></i></a></li>
+                                    {% set average = camera.calculatingTheAverage %}
+                                    <div class="product_ratting">
+                                        <ul class="d-flex justify-content-center">
+                                            
+                                            {% if average == 0 %}
+                                                {% for i in 1..5 %}
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                {% endfor %}
+                                            {% elseif average == 5 %}
+                                                {% for i in 1..5 %}
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                {% endfor %}
+                                            {% else %}
+
+                                                {% for i in 1..average %}
+                                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                                {% endfor %}
+
+                                                {% for i in average+1..5 %}
+                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                {% endfor %}
+                                            {% endif %}
+                                    
+                                            <li><span>({{ camera.totalNotes }} avis, moyenne : {{ average }})</span></li>
                                         </ul>
                                     </div>
-                                    <div class="product_review">
-                                        <ul class="d-flex">
-                                            <li>4 reviews</li>
-                                            <li>Write your review</li>
-                                        </ul>
-                                    </div>
+                                   
                                 </div>
                                 <div class="price_box">
                                     <span class="current_price">{{camera.prix}}$</span>
@@ -145,7 +161,23 @@
                                         <div class="pro-qty border">
                                             <input min="1" max="100" type="tex" value="1">
                                         </div>
-                                        <button class="button btn btn-primary" type="submit"><i class="ion-android-add"></i> Add To Cart</button>
+                                        <div class="add_to_cart">
+                                            
+                                        </div>
+                                        <a class="btn btn-primary addcart" 
+                                                data-name="{{ camera.nom }}" 
+                                                data-price="{{ pricingDetalisCamera[camera.id].discountedPrice }}"
+                                                data-original-price="{{ pricingDetalisCamera[camera.id].originalPrice }}"
+                                                data-discounted-price="{{ pricingDetalisCamera[camera.id].discountedPrice }}"
+                                                data-description="{{ camera.description }}" 
+                                                data-camera="{{ camera.id }}" 
+                                                data-image="{{minio_url(img) }}"
+                                                data-toggle="modal" 
+                                                data-target="#modal_box" 
+                                                data-tippy="Add To Cart" 
+                                                href="#">
+                                                Add To Cart
+                                            </a>
                                         <a class="wishlist" href="#"><i class="ion-ios-heart"></i></a>
                                     </div>
                                 </div>
@@ -219,10 +251,8 @@
                                             <div class="reviews_comment_box d-inline mb-5" id="messages">
                                                 {% if comments is not empty %}    
                                                     {% for comment in comments %}
-                                                        <div class="comment_thmb">
-                                                            <img src="assets/img/blog/comment2.jpg" alt="">
-                                                        </div>
-                                                        <div class="comment_text">
+                                                        
+                                                        <div class="comment_text  mt-2 ml-2">
                                                             <div class="reviews_meta">
                                                                 <p><strong>{{comment.client.nom}}</strong>- {{ comment.createdAt|date('F j, Y') }}</p>
                                                                 <ul class="d-flex">
@@ -432,6 +462,79 @@
                 </div>
             </div>
         </section>
+
+        <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true"><i class="ion-android-close"></i></span>
+                    </button>
+                    <div class="modal_body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="modal_zoom_gallery">
+                                       <div class="product_zoom_thumb">
+                                            <img src="assets/img/product/big-product/product1.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="modal_right">
+                                        <div class="modal_title mb-10">
+                                            <h2 class="txt-title"></h2>
+                                        </div>
+                                        <div class="modal_price mb-10">
+                                            <span class="new_price">$64.99</span>
+                                            <span class="old_price" >$78.99</span>
+                                        </div>
+                                        <div class="modal_description mb-15">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui,  </p>
+                                        </div>
+                                        <div class="variants_selects ">
+                                            <div class="modal_add_to_cart">
+                                                <form action="{{path('addtocart')}}" id="addToCartForm" method="post">
+                                                    <div class="variants_size">
+                                                        <div class="" >
+                                                            <h2>Stockage</h2>
+                                                            <select class="select_option" name="stockage">
+                                                                <option selected value="1000">1000G</option>
+                                                                <option value="1200">1200G</option>
+                                                                <option value="1500">1500G</option>
+                                                                <option value="2000">2000G</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <input type="hidden" name="idcamera" id="idcamera">
+                                                
+                                                    
+                                                      <input min="1" max="100" step="2" value="1" type="number" name="quantity">
+                                                      <button type="submit" id="addtc">add to cart</button>
+                                                      
+                                                </form>
+        
+                                            </div>  
+                                        </div>
+                                        <div class="modal_social">
+                                            <h2>Share this product</h2>
+                                            <ul>
+                                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                                <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--product area end-->
             {{include('client/partials/footer.html.twig')}}
     </body>

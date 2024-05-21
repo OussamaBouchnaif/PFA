@@ -49,7 +49,7 @@
   border-radius: 5px;
   background: linear-gradient(135deg, var(--main-half), var(--main));
 }
-.content form .user-details{
+.contents form .user-details{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -63,7 +63,7 @@ form .form_group{
 form .genre{
   z-index:10;
 }
-.content{
+.contents{
     border : solid 1px #6a7964;
     padding : 27px;
 }
@@ -86,7 +86,7 @@ form .genre{
   form .category{
     width: 100%;
   }
-  .content form .user-details{
+  .contents form .user-details{
     max-height: 300px;
     overflow-y: scroll;
   }
@@ -95,7 +95,7 @@ form .genre{
   }
   }
   @media(max-width: 459px){
-  .container .content .category{
+  .container .contents .category{
     flex-direction: column;
   }
 }
