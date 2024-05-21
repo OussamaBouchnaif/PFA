@@ -49,9 +49,7 @@
                                             <h4 class="fs-22 fw-bold ff-secondary text-white mb-4">{{ totalCommandes }}</h4>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
-                                            <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
-                                                <i class="bx bx-dollar-circle text-white"></i>
-                                            </span>
+                                           
                                         </div>
                                     </div>
                                 </div><!-- end card body -->
@@ -94,7 +92,7 @@
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-white bg-opacity-10 rounded fs-3">
-                                                <i class="bx bx-calendar text-white"></i>
+                                                <i class="bx bx-dollar-circle text-white"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -129,7 +127,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-0">Line Chart</h4>
+                                    <h4 class="card-title mb-0">commandesParJour</h4>
                                 </div>
                                 <div class="card-body">
                                     <div id="chartContainer">
@@ -142,7 +140,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-0">Bar Chart</h4>
+                                    <h4 class="card-title mb-0">revenuMensuel</h4>
                                 </div>
                                 <div class="card-body">
                                     <div id="chartContainer">
@@ -158,7 +156,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-0">Bar Chart</h4>
+                                    <h4 class="card-title mb-0">produitsLesPlusVendus</h4>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="produitsLesPlusVendusChart" class="chartjs-chart" data-colors='["--vz-success", "--vz-light"]'></canvas>
@@ -169,7 +167,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title mb-0">Pie Chart</h4>
+                                    <h4 class="card-title mb-0">countCommandes</h4>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="countCommandesChart" class="chartjs-chart" data-colors='["--vz-primary", "--vz-light"]'></canvas>
@@ -189,63 +187,85 @@
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function createChart(ctx, type, labels, data, backgroundColor, borderColor) {
-                new Chart(ctx, {
-                    type: type,
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            data: data,
-                            backgroundColor: backgroundColor,
-                            borderColor: borderColor,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: type === 'line' || type === 'bar' ? {
-                            y: {
-                                beginAtZero: true
-                            }
-                        } : {},
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: 'Chart.js Chart'
-                            }
+    document.addEventListener('DOMContentLoaded', function () {
+        function createChart(ctx, type, labels, data, backgroundColor, borderColor) {
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: type === 'line' || type === 'bar' ? {
+                        y: {
+                            beginAtZero: true
+                        }
+                    } : {},
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
                         }
                     }
-                });
+                }
+            });
+        }
+
+        function generateColors(length) {
+            const backgroundColors = [];
+            const borderColors = [];
+            for (let i = 0; i < length; i++) {
+                const r = Math.floor(Math.random() * 255);
+                const g = Math.floor(Math.random() * 255);
+                const b = Math.floor(Math.random() * 255);
+                backgroundColors.push(`rgba(${r}, ${g}, ${b}, 0.2)`);
+                borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`);
             }
+            return { backgroundColors, borderColors };
+        }
 
-            var ctx1 = document.getElementById('commandesParJourChart').getContext('2d');
-            var ctx2 = document.getElementById('revenuMensuelChart').getContext('2d');
-            var ctx3 = document.getElementById('produitsLesPlusVendusChart').getContext('2d');
-            var ctx4 = document.getElementById('countCommandesChart').getContext('2d');
+        var ctx1 = document.getElementById('commandesParJourChart').getContext('2d');
+        var ctx2 = document.getElementById('revenuMensuelChart').getContext('2d');
+        var ctx3 = document.getElementById('produitsLesPlusVendusChart').getContext('2d');
+        var ctx4 = document.getElementById('countCommandesChart').getContext('2d');
 
-            createChart(ctx1, 'line', {{ commandesParJour.labels|json_encode|raw }}, {{ commandesParJour.data|json_encode|raw }}, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
-            createChart(ctx2, 'bar', {{ revenuMensuel.labels|json_encode|raw }}, {{ revenuMensuel.data|json_encode|raw }}, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
-            createChart(ctx3, 'bar', {{ produitsLesPlusVendus.labels|json_encode|raw }}, {{ produitsLesPlusVendus.data|json_encode|raw }}, 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');
-            createChart(ctx4, 'pie', {{ countCommandes.labels|json_encode|raw }}, {{ countCommandes.data|json_encode|raw }}, [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ], [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ]);
-        });
-    </script>
+        console.log("commandesParJour:", {{ commandesParJour|json_encode|raw }});
+        console.log("revenuMensuel:", {{ revenuMensuel|json_encode|raw }});
+        console.log("produitsLesPlusVendus:", {{ produitsLesPlusVendus|json_encode|raw }});
+        console.log("countCommandes:", {{ countCommandes|json_encode|raw }});
+
+        createChart(ctx1, 'line', {{ commandesParJour.labels|json_encode|raw }}, {{ commandesParJour.data|json_encode|raw }}, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
+        createChart(ctx2, 'bar', {{ revenuMensuel.labels|json_encode|raw }}, {{ revenuMensuel.data|json_encode|raw }}, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
+
+        var produitsLesPlusVendus = {{ produitsLesPlusVendus|json_encode|raw }};
+        var colors = generateColors(produitsLesPlusVendus.labels.length);
+
+        createChart(ctx3, 'bar', produitsLesPlusVendus.labels, produitsLesPlusVendus.data, colors.backgroundColors, colors.borderColors);
+
+        createChart(ctx4, 'pie', {{ countCommandes.labels|json_encode|raw }}, {{ countCommandes.data|json_encode|raw }}, [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ], [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ]);
+    });
+</script>
 {% endblock %}

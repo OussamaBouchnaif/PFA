@@ -145,7 +145,7 @@ class CameraController extends AbstractController
         $produitsLesPlusVendus = $this->manager->getRepository(Commande::class)->getProduitsLesPlusVendus();
         $totalCommandes = $this->manager->getRepository(Commande::class)->getTotalCommandes();
         $totalRevenueYear = $this->manager->getRepository(Commande::class)->getTotalRevenueByYear((int)$currentYear);
-        $commandesParAn = $this->manager->getRepository(Commande::class)->getCommandesParAn(); // Nouvelle fonction
+        $commandesParAn = $this->manager->getRepository(Commande::class)->getCommandesParAn(); 
         $commandesAnnulees = $this->manager->getRepository(Commande::class)->countCommandeAnulees();
         return $this->render('admin/Cameras/chart.html.twig', [
             'countCommandes' => $countCommandes,
@@ -155,8 +155,7 @@ class CameraController extends AbstractController
             'produitsLesPlusVendus' => $produitsLesPlusVendus,
             'totalCommandes' => $totalCommandes,
             'totalRevenueYear' => $totalRevenueYear,
-            'commandesParAn' => $commandesParAn, // Nouvelle donnée
-
+            'commandesParAn' => $commandesParAn,
             'displayCharts' => true,
         ]);
     }
