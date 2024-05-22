@@ -15,26 +15,24 @@ class ReductionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description', TextType::class, [
-                'label' => 'Description',
-            ])
-            ->add('poucentage', IntegerType::class, [
-                'label' => 'Pourcentage',
-            ])
-            ->add('dateDebut', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'mt-2'],
-                'label' => 'Date de début',
-            ])
-            ->add('dateFin', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'mt-2'],
-                'label' => 'Date de fin',
-            ]);
-            // ->add('Prix', null, [
-            //     'label' => 'Prix',
-            //     'attr' => ['class' => 'form-control'],
-            // ])
+        ->add('description', TextType::class, [
+            'label' => 'Description',
+            'attr' => ['placeholder' => 'Entrez la description'],
+        ])
+        ->add('poucentage', IntegerType::class, [
+            'label' => 'Pourcentage',
+            'attr' => ['placeholder' => 'Entrez le pourcentage'],
+        ])
+        ->add('dateDebut', DateType::class, [
+            'widget' => 'single_text',
+            'attr' => ['class' => 'mt-2', 'placeholder' => 'Sélectionnez la date de début'],
+            'label' => 'Date de début',
+        ])
+        ->add('dateFin', DateType::class, [
+            'widget' => 'single_text',
+            'attr' => ['class' => 'mt-2', 'placeholder' => 'Sélectionnez la date de fin'],
+            'label' => 'Date de fin',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

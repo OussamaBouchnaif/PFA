@@ -1,31 +1,29 @@
 <!doctype html>
-<html
-	lang="en" data-layout="vertical" data-layout-style="default" data-layout-position="fixed" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-layout-width="fluid">
+<html lang="en" data-layout="vertical" data-layout-style="default" data-layout-position="fixed" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-layout-width="fluid">
 
+<head>
+<link
+	rel="shortcut icon" href="assets/images/logosite.png">
+    <!-- Meta Tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Multipurpose Admin & Dashboard Template">
+    <meta name="author" content="Themesbrand">
 
-	<!-- Mirrored from themesbrand.com/velzon/html/creative/layouts-vertical-hovered.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Feb 2024 08:36:52 GMT -->
-	<head>
-
-		<meta charset="utf-8"/>
-
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta content="Premium Multipurpose Admin & Dashboard Template" name="description"/>
-		<meta content="Themesbrand" name="author"/>
-
-		{% block stylesheets %}
-
-			<style>
-				body {
-					background-color: whitesmoke !important;
-				}
-			.logo-lg {
-                    padding: 11px;
-            }
-
-			</style>
-		{% endblock %}
-		{{ include('admin/links/cssLink.html.twig') }}
-	</head>
+    {% block stylesheets %}
+    <style>
+        body {
+            background-color: whitesmoke !important;
+        }
+        .logo-lg {
+            padding: 11px;
+        }
+    </style>
+    {% endblock %}
+    
+    <!-- Include Additional CSS -->
+    {{ include('admin/links/cssLink.html.twig') }}
+</head>
 
 	<body>
 
@@ -278,7 +276,13 @@
 						<div id="two-column-menu"></div>
 						<ul class="navbar-nav" id="navbar-nav">
 							<li class="menu-title">
-								<span data-key="t-menu">Menu</span>
+								<span data-key="t-menu">Menu App</span>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link menu-link" href="{{ path('camera_chart') }}">
+									<i class="ri-pie-chart-line"></i>
+									<span data-key="t-charts">Charts</span>
+								</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link menu-link" href="{{ path('camera') }}" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
@@ -304,18 +308,14 @@
 								</a>
 							</li>
 
+							
 							<li class="nav-item">
-								<a class="nav-link menu-link" href="{{ path('camera_chart') }}">
-									<i class="ri-pie-chart-line"></i>
-									<span data-key="t-charts">Charts</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link menu-link" href="{{ path('app_blog_index') }}">
-									<i class="ri-pie-chart-line"></i>
-									<span data-key="t-charts">Blogs</span>
-								</a>
-							</li>
+    <a class="nav-link menu-link" href="{{ path('app_blog_index') }}">
+        <i class="ri-book-line"></i>
+        <span data-key="t-blog">Blogs</span>
+    </a>
+</li>
+
 							<li class="nav-item">
 								<a class="nav-link menu-link" href="{{ path('users_index') }}" role="button" aria-expanded="false" aria-controls="sidebarAuth">
 									<i class="ri-account-circle-line"></i>

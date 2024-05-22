@@ -49,7 +49,7 @@ class AuthenticatorControllerAuthenticator extends AbstractLoginFormAuthenticato
         }
 
         // Redirect to a specific route after successful authentication
-        return new RedirectResponse($this->urlGenerator->generate('camera')); // Replace 'app_home' with the name of your desired route
+        return new RedirectResponse($this->urlGenerator->generate('camera_chart')); // Replace 'app_home' with the name of your desired route
     }
 
     protected function getLoginUrl(Request $request): string
