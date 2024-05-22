@@ -18,7 +18,7 @@ class PaypalProcessor extends AbstractPaymentProcessor
     
     public function getPaymentGateWay(): string
     {
-        return '';
+        return $this->onSuccess();
     }
 
 

@@ -41,172 +41,21 @@
 			<div class="content">
 				<div class="content-panel">
 					<div class="vertical-tabs">
-						<a href="#" class="active">Dashboard</a>
-						<a href="#">Track Order</a>
-						<a href="#">order History</a>
+						<a href="{{path('app_profile')}}">Dashboard</a>
+						<a href="{{path('track_order')}}">Track Order</a>
+						<a href="{{path('app_orders')}}">order History</a>
 						<a href="#">Edit Profile</a>
 						<a href="#">Edit Password</a>
 						<a href="#">Logout</a>
 					</div>
 				</div>
-				<div class="content-main">
-					<h2>Order History</h2>
-					<div class="container table-container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table id="country-table" class="table table-bordered table-hover dt-responsive">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Order Date</th>
-                                            <th>Status</th>
-                                            <th>Total Amount</th>
-                                            <th>Payment Method</th>
-                                            <th>Shipping Address</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2024-05-02 14:00</td>
-                                            <td class="status-shipped">Shipped</td>
-                                            <td>$150.00</td>
-                                            <td>Credit Card</td>
-                                            <td>123 Main St, City, Country</td>
-                                        </tr>
-                                       
-                                        <!-- Ajoutez d'autres lignes ici -->
-                                    </tbody>
-                                </table>
-                                <nav>
-                                    <ul id="pagination" class="pagination"></ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-
-					
-				</div>
+                <div class="content-main">
+					{% block content %}{% endblock %}
+                </div>
+				
 			</div>
 		</div>
 	</main>
 {% endblock %}
 
-{% block javascripts %}
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const rowsPerPage = 5;
-        const table = document.getElementById('country-table');
-        const rows = table.querySelectorAll('tbody tr');
-        const pagination = document.getElementById('pagination');
-        const pageCount = Math.ceil(rows.length / rowsPerPage);
-        let currentPage = 1;
-
-        function displayPage(page) {
-            const start = (page - 1) * rowsPerPage;
-            const end = start + rowsPerPage;
-
-            rows.forEach((row, index) => {
-                if (index >= start && index < end) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            updatePagination(page);
-        }
-
-        function updatePagination(page) {
-            pagination.innerHTML = '';
-
-            for (let i = 1; i <= pageCount; i++) {
-                const pageItem = document.createElement('li');
-                pageItem.classList.add('page-item');
-                if (i === page) {
-                    pageItem.classList.add('active');
-                }
-                const pageLink = document.createElement('a');
-                pageLink.classList.add('page-link');
-                pageLink.href = '#';
-                pageLink.textContent = i;
-                pageLink.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    displayPage(i);
-                });
-
-                pageItem.appendChild(pageLink);
-                pagination.appendChild(pageItem);
-            }
-        }
-
-        displayPage(currentPage);
-    });
-</script>
-        
-{% endblock %}
