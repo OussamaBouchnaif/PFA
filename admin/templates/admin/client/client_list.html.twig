@@ -54,12 +54,8 @@
 
 										<div class="col-xl-6">
 											<div class="row g-3">
-												<div class="col-sm-4">
-													<div>
-														<input type="date" class="form-control" id="datepicker" placeholder="Select date">
-													</div>
-												</div>
-												<!--end col-->
+												
+												
 												<div class="col-sm-4">
 													<div>
 														<select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
@@ -151,48 +147,36 @@ $(document).ready(function() {
             let table = new DataTable('#myTable');
         });
 
-// appliquer les filtres
+   $('#filterButton').on('click', function () {
+    applyFilters();
+});
+
+// Fonction pour appliquer les filtres
 function applyFilters() {
-	var statusFilter = $('#idStatus').val();
-	var dateFilter = $('#datepicker').val();
-	var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
+    var statusFilter = $('#idStatus').val(); // Récupérer la valeur sélectionnée du statut du compte
 
-	var table = $('#myTable').DataTable();
+    $('#myTable tbody tr').each(function () {
+        var statusColumn = $(this).find('td:eq(6)').text(); // Colonne contenant le statut du compte (index 6)
 
-	// Réinitialiser les lignes affichées
-	table.rows().every(function () {
-	this.nodes().to$().show();
-	});
-
-	// Appliquer le filtre par statut
-	if (statusFilter !== 'all') {
-	table.column(6).search('^' + statusFilter + '$', true, false).draw();
-	} else {
-	table.column(6).search('').draw();
-	}
-
-
-		if (dateFilter) {
-		table.rows().every(function () {
-		var rowData = this.data();
-		var clientDate = moment(rowData[5], 'DD/MM/YYYY');
-		if (clientDate.isValid() && clientDate.isBefore(selectedDate)) { // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
-		this.nodes().to$().hide();
-		}
-		});
-		}
+        // Vérifier si le statut de la ligne correspond au filtre sélectionné
+        if (statusFilter === 'all' || statusColumn === statusFilter) {
+            $(this).show(); // Afficher la ligne si elle correspond au filtre
+        } else {
+            $(this).hide(); // Masquer la ligne sinon
+        }
+    });
 }
 
 
-$('#filterButton').on('click', function () {
- applyFilters();
-});
+
+
+
+
 
 
 $('.btn-toggle-account').on('click', function () {
     var clientId = $(this).data('client-id');
     var accountStatus = $(this).data('account-status');
-
     var button = $(this);
 
     // Déterminer le nouveau statut du compte
@@ -207,8 +191,7 @@ $('.btn-toggle-account').on('click', function () {
             accountStatus: newAccountStatus
         },
         success: function (response) {
-            console.log(response);
-            if (response === 'success') {
+            if (response.success) {
                 // Mettre à jour le bouton avec le nouveau statut du compte
                 if (newAccountStatus === 'active') {
                     button.removeClass('btn-danger').addClass('btn-success');
@@ -219,14 +202,16 @@ $('.btn-toggle-account').on('click', function () {
                 // Appliquer les filtres après le changement de statut
                 applyFilters();
             } else {
-                alert('Erreur lors de la mise à jour de l\'état du compte.');
+                alert(response.message);
             }
         },
-        error: function () {
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText); // Pour voir les erreurs du serveur
             alert('Erreur lors de la requête AJAX.');
         }
     });
 });
+
 
 
 
@@ -238,7 +223,7 @@ $('#printTableButton').on('click', function () {
 });
 
 
-	</script>
+</script>
 
 
 {% endblock %}

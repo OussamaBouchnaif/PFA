@@ -72,14 +72,13 @@ class ClientController extends AbstractController
 
         // Vérifier si le client existe
         if (!$client) {
-            return new JsonResponse('error', JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['success' => false, 'message' => 'Client not found'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        // Basculer l'état du compte entre actif et inactif
-        $newStatus = 'active' === $accountStatus ? 'inactive' : 'active';
-        $client->setStatusCompte($newStatus);
+        // Mettre à jour le statut du compte
+        $client->setStatusCompte($accountStatus);
         $entityManager->flush();
 
-        return new JsonResponse('success', JsonResponse::HTTP_OK);
+        return new JsonResponse(['success' => true, 'message' => 'Account status updated successfully'], JsonResponse::HTTP_OK);
     }
 }
