@@ -5,79 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af26218f-4f5f-4efb-a0c8-aef27b4081ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20240508175737.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/admin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/preload.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/preload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/importmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/importmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20240423191956.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20240423191956.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20240502234620.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20240502234620.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20240508002718.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20240508002718.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BlogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BlogController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CameraController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CameraController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ClientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReductionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReductionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/CameraFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/CameraFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/OrderFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/OrderFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/AvisCamera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/AvisCamera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Blog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Camera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Camera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Categorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Categorie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Client.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/CodePromo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CodePromo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/FavoritCamera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/FavoritCamera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ImageCamera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ImageCamera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/LigneCommande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/LigneCommande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/LigneReduction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/LigneReduction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Livraison.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Livraison.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Paiement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Paiement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Personne.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personne.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Reduction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reduction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/BlogType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/BlogType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/CameraType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CameraType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ChangePasswordFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/LigneReductionTypeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/LigneReductionTypeForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PhotoType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PhotoType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ReductionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ReductionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/ResetPasswordRequestFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ResetPasswordRequestFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/AvisCameraRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/AvisCameraRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/BlogRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/BlogRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CameraRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CameraRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CategorieRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CategorieRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ClientRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CodePromoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CodePromoRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CommandeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CommandeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/FactureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FactureRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/FavoritCameraRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FavoritCameraRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ImageCameraRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ImageCameraRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/LigneCommandeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/LigneCommandeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/LigneReductionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/LigneReductionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/LivraisonRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/LivraisonRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PaiementRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PaiementRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ReductionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ReductionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AuthenticatorControllerAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AuthenticatorControllerAuthenticator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/BlogModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/BlogModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/CameraModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/CameraModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User/UserManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/User/UserManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/reduction/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/reduction/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Controller/BlogControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/BlogControllerTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/bootstrap.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/bootstrap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/Service/Api/Cameras/AbstractCameraFetcher.php" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/Service/Api/Cameras/AbstractCameraFetcher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/Service/Api/Cameras/CameraFetcher.php" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/Service/Api/Cameras/CameraFetcher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/templates/client/pages/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../client/templates/client/pages/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,6 +219,7 @@
       <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/ux-chartjs" />
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/vendor/beberlei/doctrineextensions" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -333,7 +264,7 @@
       <recent name="D:\PFA_Project\public" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.BlogControllerTest.testIndex">
+  <component name="RunManager" selected="PHPUnit.BlogControllerTest.testNew">
     <configuration name="BlogControllerTest.testIndex" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="App\Test\Controller\BlogControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/Controller/BlogControllerTest.php" method="testIndex" scope="Method" />
       <method v="2" />
@@ -348,8 +279,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.BlogControllerTest.testIndex" />
         <item itemvalue="PHPUnit.BlogControllerTest.testNew" />
+        <item itemvalue="PHPUnit.BlogControllerTest.testIndex" />
       </list>
     </recent_temporary>
   </component>
@@ -394,6 +325,9 @@
       <workItem from="1715154707742" duration="7685000" />
       <workItem from="1715187328174" duration="13037000" />
       <workItem from="1715286723985" duration="103000" />
+      <workItem from="1716401771695" duration="110000" />
+      <workItem from="1716401903488" duration="1366000" />
+      <workItem from="1716411336801" duration="1702000" />
     </task>
     <servers />
   </component>
@@ -411,7 +345,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/yassine_chidmi" />
+                        <option value="origin/chidmi" />
                       </list>
                     </value>
                   </entry>
@@ -425,6 +359,18 @@
   </component>
   <component name="WfRunsListSearchHistory"><![CDATA[{
   "history": [
+    {
+      "branch": "chidmi",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "chidmi",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "chidmi",
+      "currentBranchFilter": true
+    },
     {
       "branch": "chidmi",
       "currentBranchFilter": true
