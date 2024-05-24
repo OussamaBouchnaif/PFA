@@ -54,12 +54,8 @@
 
 										<div class="col-xl-6">
 											<div class="row g-3">
-												<div class="col-sm-4">
-													<div>
-														<input type="date" class="form-control" id="datepicker" placeholder="Select date">
-													</div>
-												</div>
-												<!--end col-->
+												
+												
 												<div class="col-sm-4">
 													<div>
 														<select class="form-control" data-plugin="choices" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
@@ -147,80 +143,78 @@
 	<script src="{{ asset('public/assets/js/client.js') }}"></script>
 	<script>
 
-// appliquer les filtres
+$(document).ready(function() {
+            let table = new DataTable('#myTable');
+        });
+
+   $('#filterButton').on('click', function () {
+    applyFilters();
+});
+
+// Fonction pour appliquer les filtres
 function applyFilters() {
-	var statusFilter = $('#idStatus').val();
-	var dateFilter = $('#datepicker').val();
-	var selectedDate = moment(dateFilter, 'YYYY-MM-DD');
+    var statusFilter = $('#idStatus').val(); // Récupérer la valeur sélectionnée du statut du compte
 
-	var table = $('#myTable').DataTable();
+    $('#myTable tbody tr').each(function () {
+        var statusColumn = $(this).find('td:eq(6)').text(); // Colonne contenant le statut du compte (index 6)
 
-	// Réinitialiser les lignes affichées
-	table.rows().every(function () {
-	this.nodes().to$().show();
-	});
-
-	// Appliquer le filtre par statut
-	if (statusFilter !== 'all') {
-	table.column(6).search('^' + statusFilter + '$', true, false).draw();
-	} else {
-	table.column(6).search('').draw();
-	}
-
-
-		if (dateFilter) {
-		table.rows().every(function () {
-		var rowData = this.data();
-		var clientDate = moment(rowData[5], 'DD/MM/YYYY');
-		if (clientDate.isValid() && clientDate.isBefore(selectedDate)) { // Si la date du client est avant la date sélectionnée par l'utilisateur et le statut du compte correspond au filtre, masquer la ligne
-		this.nodes().to$().hide();
-		}
-		});
-		}
+        // Vérifier si le statut de la ligne correspond au filtre sélectionné
+        if (statusFilter === 'all' || statusColumn === statusFilter) {
+            $(this).show(); // Afficher la ligne si elle correspond au filtre
+        } else {
+            $(this).hide(); // Masquer la ligne sinon
+        }
+    });
 }
 
 
-$('#filterButton').on('click', function () {
- applyFilters();
-});
+
+
+
+
 
 
 $('.btn-toggle-account').on('click', function () {
-	var clientId = $(this).data('client-id');
-	var accountStatus = $(this).data('account-status');
+    var clientId = $(this).data('client-id');
+    var accountStatus = $(this).data('account-status');
+    var button = $(this);
 
+    // Déterminer le nouveau statut du compte
+    var newAccountStatus = (accountStatus === 'active' || accountStatus === 'actif') ? 'inactive' : 'active';
 
-	var button = $(this);
-
-
-	$.ajax({
-	url: 'update-account-status',
-	method: 'POST',
-	data: {
-	clientId: clientId,
-	accountStatus: accountStatus
-	},
-	success: function (response) {
-	console.log(response);
-	if (response === 'success') {
-	if (accountStatus === 'active' || accountStatus === 'actif') { // Si oui, le changer à "inactive"
-	button.removeClass('btn-success').addClass('btn-danger');
-	button.data('account-status', 'inactive');
-	} else if (accountStatus === 'inactive' || accountStatus === 'innactif') { // Sinon, le changer à "active"
-	button.removeClass('btn-danger').addClass('btn-success');
-	button.data('account-status', 'active');
-	}
-	// Appliquer les filtres après le changement de statut
-	applyFilters();
-	} else {
-	alert('Erreur lors de la mise à jour de l\'état du compte.');
-	}
-	},
-	error: function () {
-	alert('Erreur lors de la requête AJAX.');
-	}
-	});
+    // Envoyer la requête AJAX pour mettre à jour le statut du compte
+    $.ajax({
+        url: '{{ path("update_account_status") }}',
+        method: 'POST',
+        data: {
+            clientId: clientId,
+            accountStatus: newAccountStatus
+        },
+        success: function (response) {
+            if (response.success) {
+                // Mettre à jour le bouton avec le nouveau statut du compte
+                if (newAccountStatus === 'active') {
+                    button.removeClass('btn-danger').addClass('btn-success');
+                } else {
+                    button.removeClass('btn-success').addClass('btn-danger');
+                }
+                button.data('account-status', newAccountStatus);
+                // Appliquer les filtres après le changement de statut
+                applyFilters();
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText); // Pour voir les erreurs du serveur
+            alert('Erreur lors de la requête AJAX.');
+        }
+    });
 });
+
+
+
+
 
 
 $('#printTableButton').on('click', function () {
@@ -228,10 +222,8 @@ $('#printTableButton').on('click', function () {
 	printJS({printable: 'myTable', type: 'html', style: '.table { font-size: 12px; }'});
 });
 
-{# 
-initDataTable();
-}); #}
-	</script>
+
+</script>
 
 
 {% endblock %}
