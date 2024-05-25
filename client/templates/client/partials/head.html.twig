@@ -27,7 +27,7 @@
                             <li><a href="#"><i class="icon-social-pinterest icons"></i></a></li>
                         </ul>
                     </div>
-                    <div class="language_currency">
+                    {# <div class="language_currency">
                         <ul class="d-flex">
                             <li class="language"><a href="#"> Eng <i class="icon-right ion-ios-arrow-down"></i></a>
                                 <ul class="dropdown_language">
@@ -44,7 +44,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    </div> #}
                     <div id="menu" class="text-left ">
                         <ul class="offcanvas_main_menu">
                             <li class="menu-item-has-children active">
@@ -122,7 +122,7 @@
                                     <li><a href="#"><i class="icon-social-pinterest icons"></i></a></li>
                                 </ul>
                             </div>
-                            <div class="language_currency">
+                           {#  <div class="language_currency">
                                 <ul class="d-flex">
                                     <li class="language"><a href="#"> Eng <i class="icon-right ion-ios-arrow-down"></i></a>
                                         <ul class="dropdown_language">
@@ -139,7 +139,7 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> #}
                         </div>
                     </div>
                 </div>
@@ -168,21 +168,20 @@
                                 <ul class="d-flex">
                                     <li><a href="{{path('app_home')}}" class="active">Home</a> </li>
                                     <li><a  href="{{path('fetch')}}">shop</a></li>
-                                    <li><a href="{{path('product')}}">product</a></li>
-                                    <li><a href="#">sale</a></li>
+                                    <li><a href="{{path('track_order')}}">Track</a></li>
                                     <li><a href="#">pages</a>
                                         <ul class="sub_menu">
                                             <li><a href="{{path('cart')}}">Cart Pages</a></li>
                                             <li><a href="{{path('order')}}">Checkout Pages</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="blog.html">blog</a>
+                                   {#  <li><a href="blog.html">blog</a>
                                         <ul class="sub_menu">
                                             <li><a href="{{path('blog')}}">Blog Pages</a></li>
                                             <li><a href="{{path('blogd')}}">Blog Details</a></li>
                                         </ul>
-                                    </li>
-                                    <li><a href="#">buy</a></li>
+                                    </li> #}
+                                    <li><a href="{{path('app_profile')}}">dashboard</a></li>
                                 </ul>
                             </nav>
                         </div>
