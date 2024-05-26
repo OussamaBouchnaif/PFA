@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Forms\EditProfileType;
 use App\Forms\TrackOrderType;
+use App\Repository\CameraRepository;
+use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +19,13 @@ class ProfileController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $manager,
-        private Security $security
     ) {
     }
 
     #[Route('/profile', name: 'app_profile')]
     public function index(): Response
     {
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $orders = $this->manager->getRepository(Cart::class)->findBy(
             ['Client' => $user],
             ['createdAt' => 'DESC']
@@ -32,7 +34,7 @@ class ProfileController extends AbstractController
         $lastThreeOrders = array_slice($orders, 0, 2);
         return $this->render('client/pages/profile/profile.html.twig', [
             'orders' => $lastThreeOrders,
-            'customer' => $this->security->getUser(),
+            'customer' => $this->getUser(),
             'orderCount' => $orders,
         ]);
     }
@@ -81,14 +83,35 @@ class ProfileController extends AbstractController
     #[Route('/orders', name: 'app_orders')]
     public function orders(): Response
     {
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $orders = $this->manager->getRepository(Cart::class)->findBy(
             ['Client' => $user],
         );
 
         return $this->render('client/pages/profile/orders.html.twig', [
-            'customer' => $this->security->getUser(),
+            'customer' => $this->getUser(),
             'orders'=>$orders,
+        ]);
+    }
+
+    #[Route('/Edit_Profil',name:'edit_profil')]
+    public function editProfile(Request $request ,ClientRepository $clientRepository):Response
+    {
+        $client = $this->getUser();
+        $form = $this->createForm(EditProfileType::class,$client);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            $clientRepository->updateClient($client,$data);
+            $this->addFlash(
+                'success',
+                'le client a ete bien Modifier'
+            );
+            
+        }
+        return $this->render('client/pages/profile/edit_profile.html.twig',[
+            'form'=>$form->createView(),
         ]);
     }
 }

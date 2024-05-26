@@ -126,12 +126,15 @@ function setupQuickViewButtons() {
             var description = this.getAttribute("data-description");
             var image = this.getAttribute("data-image");
             var id = this.getAttribute("data-camera");
-            console.log(name)
+            var stock = this.getAttribute("data-stock"); 
+    
+            console.log(stock);
+    
             document.querySelector("#modal_box .modal_title h2").textContent = name;
             document.querySelector("#idcamera").value = id;
             document.querySelector("#modal_box .modal_description p").textContent = description;
             document.querySelector("#modal_box .modal_zoom_gallery .product_zoom_thumb img").src = image;
-            
+    
             if (parseFloat(discountedPrice) < parseFloat(originalPrice)) {
                 document.querySelector("#modal_box .modal_price .new_price").textContent = "$" + discountedPrice;
                 document.querySelector("#modal_box .modal_price .old_price").textContent = "$" + originalPrice;
@@ -140,6 +143,11 @@ function setupQuickViewButtons() {
                 document.querySelector("#modal_box .modal_price .new_price").textContent = "$" + originalPrice;
                 document.querySelector("#modal_box .modal_price .old_price").style.display = 'none';
             }
+    
+            var quantityInput = document.querySelector("#modal_box input[name='quantity']");
+            quantityInput.setAttribute("max", stock); 
+            quantityInput.value = 1; 
         });
     });
+    
 }

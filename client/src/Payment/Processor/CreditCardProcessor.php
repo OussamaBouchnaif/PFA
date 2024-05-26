@@ -4,15 +4,15 @@ namespace App\Payment\Processor;
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
-use App\Cart\Handler\CartStorageInterface;
 use App\Payment\Processor\AbstractPaymentProcessor;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CreditCardProcessor extends AbstractPaymentProcessor
 {
     public function __construct(
         protected string $successUrl,
         protected string $cancelUrl,
-        private CartStorageInterface $products
+        private RequestStack $stack,
     ) {
         parent::__construct($successUrl, $cancelUrl);
         Stripe::setApiKey($_ENV['STRIPE_SECRETKEY']);
@@ -20,6 +20,7 @@ class CreditCardProcessor extends AbstractPaymentProcessor
 
     public  function processPayment()
     {
+        
         [$lineItems, $total] = $this->getLines();
         return Session::create([
             'line_items' => $lineItems,
@@ -42,25 +43,20 @@ class CreditCardProcessor extends AbstractPaymentProcessor
 
     private function getLines()
     {
-        $line_items = [];
-        $total = 0;
-        foreach ($this->products->getCart()->getLines() as $product) {
-            $price = intval($product->getPrice());
-            $quantity = $product->getQuantity();
-
-            $line_items[] = [
-                'price_data' => [
-                    'currency' => $_ENV['STRIPE_CURRENCY'],
-                    'product_data' => [
-                        'name' => $product->getName(),
-                    ],
-                    'unit_amount' => $price * 100,
+        $session = $this->stack->getSession();
+        $total = $session->get('voucher')['discount'];
+        
+        $line_items = [[
+            'price_data' => [
+                'currency' => $_ENV['STRIPE_CURRENCY'],
+                'product_data' => [
+                    'name' => 'Total Purchase',
                 ],
-                'quantity' => $quantity,
-            ];
-            $total += $price * $quantity;
-        }
-
+                'unit_amount' => $total * 100, 
+            ],
+            'quantity' => 1,
+        ]];
+        
         return [$line_items, $total];
     }
 }

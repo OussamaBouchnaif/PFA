@@ -1,0 +1,61 @@
+{% extends "client/pages/profile/index.html.twig" %}
+
+
+{% block stylesheets %}
+   
+
+{% endblock %}
+
+{% block content %}
+    
+    <div class="container table-container " style="margin: auto;">
+        <h3>Edit Profil</h3>
+        <div class="row">
+            <div class="col-xs-12">
+                {{form_start(form)}}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                    <div class="checkout_info coupon_info">
+                        <div class="mb-3">
+                            {{ form_widget(form.nom, {'attr': {'placeholder': 'Enter your first name', 'class': 'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.nom) }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.prenom, {'attr': {'placeholder': 'Enter your last name', 'class': 'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.prenom) }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.email, {'attr': {'placeholder': 'Email', 'class': 'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.email) }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.phoneNumber, {'attr': {'placeholder': 'Phone Number', 'class': 'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.phoneNumber) }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.adresse, {'attr': {'placeholder': 'Your Address', 'class': 'form-control'}}) }}
+                            <span class="text-danger">{{ form_errors(form.adresse) }}</span>
+                        </div>
+                        
+
+
+                    <div class="form_group group_3 mt-3">
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Edit Profil
+                        </button>
+                    </div>
+                    </div>
+                
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
