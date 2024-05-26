@@ -28,7 +28,7 @@
             <div class="returning_coupon_area">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
-                        <div class="user-actions">
+                       {#  <div class="user-actions">
                             <h3>
                                 <i class="fa fa-comment-o" aria-hidden="true"></i>
                                 Returning customer?
@@ -38,7 +38,7 @@
                                 <div id="checkout_login" class="collapse" data-parent="#accordion">
                                 <div class="checkout_info">
                                     <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>
-                                    {#<form action="#">#}
+                                    <form action="#">
                                         <div class="form_group">
                                             <label>Username or email <span>*</span></label>
                                             <input type="text">
@@ -55,10 +55,10 @@
                                             </label>
                                         </div>
                                         <a href="#">Lost your password?</a>
-                                    {#</form>#}
+                                    </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> #}
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="user-actions">
@@ -84,19 +84,7 @@
                     <div class="col-lg-7 col-md-6">
                         
                             <h3>Billing Details</h3>
-                            <div class="checkout_form_input">
-                                <label for="country">country <span>*</span></label>
-                                    <select class="select_option" name="cuntry" id="country">
-                                    <option value="2">United Kingdom (UK)  </option>
-                                    <option value="3">Algeria</option>
-                                    <option value="4">Afghanistan</option>
-                                    <option value="5">Ghana</option>
-                                    <option value="6">Albania</option>
-                                    <option value="7">Bahrain</option>
-                                    <option value="8">Colombia</option>
-                                    <option value="9">Dominican Republic</option>
-                                </select>
-                            </div>
+                            
                             <div class="checkout_form_input">
                                 <label>First Name <span>*</span></label>
                                 <input type="text">
@@ -105,10 +93,7 @@
                                 <label>Last Name  <span>*</span></label>
                                 <input type="text">
                             </div>
-                            <div class="checkout_form_input">
-                                <label>Company Name</label>
-                                <input type="text">
-                            </div>
+                           
                             <div class="checkout_form_input">
                                <label>Address  <span>*</span></label>
                                 <input type="text">
@@ -142,27 +127,7 @@
                                     <option value="9">Dominican Republic</option>
                                 </select>
                             </div>
-                            <div class="checkout_form_input">
-                                <label>First Name <span>*</span></label>
-                                <input type="text">
-                            </div>
-                            <div class="checkout_form_input">
-                                <label>Last Name  <span>*</span></label>
-                                <input type="text">
-                            </div>
-                            <div class="checkout_form_input">
-                                <label>Company Name</label>
-                                <input type="text">
-                            </div>
-                            <div class="checkout_form_input">
-                                <label>Town / City <span>*</span></label>
-                                <input  type="text">
-                            </div>
-                            <div class="checkout_form_input">
-                                <label>Order Notes</label>
-                                <textarea></textarea>
-                            </div>
-                        
+                            
                     </div>
                     <div class="col-lg-5 col-md-6">
                         <div class="order_table_right">

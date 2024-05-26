@@ -82,6 +82,12 @@ services:
     App\EventListener\VoucherUsedListener:
         tags:
             - { name: 'kernel.event_listener', event: 'voucher.used', method: 'onVoucherUsed', when: 'VoucherUsedListener' }
+    
+    App\EventListener\ExceptionListener:
+        arguments:
+            $twig: '@twig'
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception', method: 'onKernelException',when: 'ExceptionListener' }
 
     # Notifier
 
