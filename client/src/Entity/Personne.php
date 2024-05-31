@@ -106,7 +106,12 @@ abstract class Personne implements UserInterface, PasswordAuthenticatedUserInter
 
     public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+
+        // pour s'assurer que tous les utilisateurs aient au moins ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
     public function setRoles(array $roles): static

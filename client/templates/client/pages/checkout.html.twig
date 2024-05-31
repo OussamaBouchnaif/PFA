@@ -114,19 +114,7 @@
                                 <input  type="text">
                             </div>
                             <p class="different_address"><i class="ion-android-checkbox-outline"></i> Ship to a different address?</p>
-                            <div class="checkout_form_input">
-                                <label for="country2">country <span>*</span></label>
-                                    <select class="select_option" name="cuntry" id="country2">
-                                    <option value="2">United Kingdom (UK)  </option>
-                                    <option value="3">Algeria</option>
-                                    <option value="4">Afghanistan</option>
-                                    <option value="5">Ghana</option>
-                                    <option value="6">Albania</option>
-                                    <option value="7">Bahrain</option>
-                                    <option value="8">Colombia</option>
-                                    <option value="9">Dominican Republic</option>
-                                </select>
-                            </div>
+                            
                             
                     </div>
                     <div class="col-lg-5 col-md-6">
@@ -135,6 +123,11 @@
                                 <h3>Your order</h3>
                                 <div class="order_table table-responsive">
                                     <table>
+                                        {% for message in app.flashes('warning') %}
+                                            <div class="alert alert-warning">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
                                         <thead>
                                             <tr>
                                                 <th>Product</th>

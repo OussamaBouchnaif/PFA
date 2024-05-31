@@ -19,7 +19,7 @@ class CheckoutType extends AbstractType
             ->add('payment', ChoiceType::class, [
                 'choices' => [
                     'PayPal' => 'paypal',
-                    'Credit Card' => 'credit_card'
+                    'Stripe' => 'credit_card'
                 ],
                 'expanded' => true,  // Set to true to use radio buttons
                 'multiple' => false  // Keep as false for single selection

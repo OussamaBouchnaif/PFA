@@ -135,7 +135,17 @@ services:
         volumes:
           - caddy_data:/data
           - caddy_config:/config
-    
+    varnish:
+        image: varnish:stable
+        container_name: "varnish"
+        volumes:
+            - ./docker/varnish/default.vcl:/etc/varnish/default.vcl
+        ports:
+            - "8081:80"
+        depends_on:
+            - client
+        networks:
+            - inner_net
 
     
 volumes:

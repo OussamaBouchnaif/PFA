@@ -34,11 +34,8 @@ class ClientRepository extends ServiceEntityRepository
         $this->doSave($client,true);
     }
 
-    public function updateClient(Client $client,$data)
+    public function updateClient(Client $client)
     {
-        $client->setNom($data->getNom());
-        $client->setPrenom($data->getNom());
-        $client->setEmail($data->getEmail());
         $this->doSave($client);
     }
     private function doSave($object,bool $isPersist = false):void

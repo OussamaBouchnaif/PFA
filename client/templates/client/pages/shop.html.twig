@@ -38,7 +38,7 @@
                                     <li class="widget_sub_categories category"><a href="javascript:void(0)" data-toggle="collapse" data-target="#men">Camera</a>
                                         <ul class="widget_dropdown_categories collapse show" id="men">  
                                             {% for cat in categories %}
-                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} <span>69</span></a></li>
+                                                <li><a href="{{path('camera_search',{categorie:cat.nom})}}"  data-turbo-frame="recherch" >{{cat.nom}} </a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -383,7 +383,7 @@
                                                 <input type="hidden" name="idcamera" id="idcamera">
                                             
                                                 
-                                                  <input min="1" max="100" step="2" value="1" type="number" name="quantity">
+                                                  <input min="1" max="100" step="1" value="1" type="number" name="quantity">
                                                   <button type="submit" id="addtc">add to cart</button>
                                                   
                                             </form>
