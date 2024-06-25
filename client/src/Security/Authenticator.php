@@ -44,19 +44,14 @@ class Authenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $referer = $request->getSession()->get('referer');
-        $request->getSession()->remove('referer');
-        if(null === $referer)
-        {
-            $referer = 'http://localhost:9898/';
-        }
+       
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
         // For example:
-        return  new RedirectResponse($referer);
+        return  new RedirectResponse('/');
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

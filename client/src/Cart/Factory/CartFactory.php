@@ -24,7 +24,7 @@ final class CartFactory
     {
         $cart = new Cart();
         $cartInfo = $this->normaliser->getCart();
-        $cart->setStatus(CartStatus::placed)
+        $cart->setStatus(CartStatus::pending)
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdateAt(new \DateTimeImmutable())
             ->setClient($this->security->getUser());

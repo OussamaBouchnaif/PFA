@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Service\Api\Cameras\CameraFetcherInterface;
 use App\Service\PriceCalculation\PriceCalculationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Attribute\Cache;
 
 class HomeController extends AbstractController
 {
@@ -17,6 +18,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'app_home')]
+    #[Cache(smaxage: 3600, public: true,mustRevalidate:true)]
     public function index(): Response
     {
         $last =$this->fetcher->getLastCameras();

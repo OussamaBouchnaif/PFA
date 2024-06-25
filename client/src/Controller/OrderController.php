@@ -6,14 +6,14 @@ use App\Forms\CheckoutType;
 use App\Cart\Factory\CartFactory;
 use App\Voucher\VoucherInterface;
 use App\Cart\Handler\CartStorageInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('ROLE_USER')]
 class OrderController extends AbstractController
 {
     public function __construct(
@@ -28,16 +28,7 @@ class OrderController extends AbstractController
     public function check(
         Request $request,
         VoucherInterface $voucherManager,
-        Security $security
     ): Response {
-
-        $url = $this->generator->generate("order", [], UrlGeneratorInterface::ABSOLUTE_URL);
-        
-        if (!$security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $request->getSession()->set('referer', $url);
-            return $this->redirectToRoute('app_login');
-        }
-
         $cart = $this->cartFactory->build();
         $formOrder = $this->createForm(CheckoutType::class);
         $formOrder->handleRequest($request);
@@ -46,7 +37,6 @@ class OrderController extends AbstractController
         if ($formOrder->isSubmitted() && $formOrder->isValid()) {
             if ($formOrder->getClickedButton() && 'applyVoucher' === $formOrder->getClickedButton()->getName()) {
                 $voucherCode = $formOrder->get('voucher')->getData();
-                $voucherManager->applyVoucher($voucherCode, $cart);
                 $voucherData = [
                     'voucher' => $voucherCode,
                     'discount' => $voucherManager->applyVoucher($voucherCode, $cart)->getTotal(),
@@ -55,8 +45,15 @@ class OrderController extends AbstractController
                 $session->set('voucher', $voucherData);
             }
             if ($formOrder->getClickedButton() && 'placeOrder' === $formOrder->getClickedButton()->getName()) {
-                $session->set('payment', $formOrder->getData()['payment']);
 
+                $session->set('payment', $formOrder->getData()['payment']);
+                if (count($cart->getItems()) === 0) {
+                    $this->addFlash(
+                        'warning',
+                        'the cart is empty'
+                    );
+                    return $this->redirectToRoute('order');
+                }
                 return $this->redirectToRoute('app_payment');
             }
         }
@@ -69,9 +66,4 @@ class OrderController extends AbstractController
             'rate' => $session->get('voucher')['rate'] ?? null,
         ]);
     }
-
-
-    
-
-   
 }

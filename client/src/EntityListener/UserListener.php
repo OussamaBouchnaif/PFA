@@ -24,7 +24,7 @@ class UserListener
         $this->encodePassword($object, $object->getPlainPassword());
     }
 
-    public function encodePassword(Personne $object, string $plainPassword)
+    public function encodePassword(Personne $object, ?string $plainPassword)
     {
         if ($plainPassword === null) {
             return;

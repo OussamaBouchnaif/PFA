@@ -26,8 +26,8 @@
                                     <td>{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
                                     <td class="status-shipped">{{ order.status.getValue() }}</td>
                                     <td>{{ order.total }}</td>
-                                    <td>Credit Card</td>
-                                    <td>123 Main St, City, Country</td>
+                                    <td>Stripe</td>
+                                    <td>{{ customer.adresse }}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
