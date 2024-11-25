@@ -9,10 +9,9 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                // Construire l'image Docker
-                sh 'docker-compose build'
+         stage ('Run Docker Compose') {
+            steps{
+                sh 'sudo docker-compose up -d'
             }
         }
 
