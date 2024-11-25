@@ -29,7 +29,7 @@ abstract class AbstractCameraFetcher implements CameraFetcherInterface
     public function getCameraData(String $endpoint):array
     {
         
-        $cacheKey = md5($endpoint);
+        $cacheKey = 'oussama';
         
 
         $data = $this->cache->get($cacheKey, function (ItemInterface $item) use ($endpoint) {

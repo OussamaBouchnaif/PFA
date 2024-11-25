@@ -43,7 +43,7 @@ services:
             - inner_net
     
     database:
-        container_name: "database_server"
+        container_name: "db_server"
         healthcheck:
             test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
             interval: 5s
@@ -62,7 +62,7 @@ services:
         networks:
             - inner_net
     myadmin:
-        container_name: "phpmyadmin"
+        container_name: "myadmin"
         image: phpmyadmin/phpmyadmin:5
         environment:
             PMA_HOST: database
@@ -146,6 +146,8 @@ services:
             - client
         networks:
             - inner_net
+    
+    
 
     
 volumes:

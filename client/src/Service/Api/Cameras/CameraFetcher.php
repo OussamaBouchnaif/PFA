@@ -10,7 +10,7 @@ class CameraFetcher extends AbstractCameraFetcher
 
     public function getAllCamera(int $page): array
     {
-        $this->clearCache();
+        /* $this->clearCache(); */
         return $this->getCameraData('api/cameras?page=' . $page);
     }
 

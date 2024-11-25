@@ -23,35 +23,35 @@ class QueryStringBuilderTest extends TestCase
             [
                 (new QueryStringBuilder())
                     ->appendParameter('param', 'value')
-                    ->addPriceRangeParameter(200.0, 400.0)
+                    ->addPriceRangeParameter('200..400')
                     ->setLimitPerPage(10)
                     ->setPage(1),
                 'param=value&prix%5Bbetween%5D=200..400&itemsPerPage=10&page=1',
             ],
             [
                 (new QueryStringBuilder())
-                    ->addGreatherThanPriceParameter(200.0)
+                    ->appendParameter('prix[gte]', '200')
                     ->setLimitPerPage(10)
                     ->setPage(1),
                 'prix%5Bgte%5D=200&itemsPerPage=10&page=1',
             ],
             [
                 (new QueryStringBuilder())
-                    ->addGreatherThanPriceParameter(200.0, true)
+                    ->appendParameter('prix[gt]', '200')
                     ->setLimitPerPage(10)
                     ->setPage(1),
                 'prix%5Bgt%5D=200&itemsPerPage=10&page=1',
             ],
             [
                 (new QueryStringBuilder())
-                    ->addLessThanPriceParameter(200.0, true)
+                    ->appendParameter('prix[lt]', '200')
                     ->setLimitPerPage(10)
                     ->setPage(1),
                 'prix%5Blt%5D=200&itemsPerPage=10&page=1',
             ],
             [
                 (new QueryStringBuilder())
-                    ->addLessThanPriceParameter(200.0)
+                    ->appendParameter('prix[lte]', '200')
                     ->setLimitPerPage(10)
                     ->setPage(1)
                     ->addOrder('field'),
