@@ -2,20 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Verify Docker and Compose') {
             steps {
-                // Récupérer le code source depuis le dépôt Git
-                checkout scm
+                echo 'Vérification de Docker et Docker Compose...'
+                bat 'docker --version'
+                bat 'docker-compose --version'
             }
         }
 
-         stage ('Run Docker Compose') {
-            steps{
-                sh 'docker-compose up -d'
+        stage('Run Pipeline Steps') {
+            steps {
+                echo 'Démarrage des services avec Docker Compose...'
+                bat 'docker-compose up -d'
             }
         }
 
         
+
+        stage('Run Tests') {
+            steps {
+                echo 'Exécution des tests unitaires avec PHPUnit...'
+                bat 'docker exec client vendor/bin/phpunit'
+            }
+        }
     }
 
     post {
@@ -23,10 +32,10 @@ pipeline {
             echo 'Pipeline terminé.'
         }
         success {
-            echo 'Tests exécutés avec succès !'
+            echo 'Pipeline exécuté avec succès !'
         }
         failure {
-            echo 'Des tests ont échoué.'
+            echo 'Le pipeline a échoué. Veuillez vérifier les logs.'
         }
     }
 }
