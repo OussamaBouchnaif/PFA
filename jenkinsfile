@@ -23,7 +23,7 @@ pipeline {
                 script {
                     echo 'Construction de l’image Docker...'
                 }
-                sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} build'
+                sh 'docker-compose up -d'
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
                 script {
                     echo 'Exécution des tests PHPUnit...'
                 }
-                sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} run --rm tests'
+                sh 'docker exec client vendor/bin/phpunit'
             }
         }
     }
